@@ -6,3 +6,7 @@ measure-theory:
   name: Measure Theory
 dast:
   name: DAST
+linear-algebra:
+  topics:
+    linear-algebra-done-right-by-axler: Linear Algebra Done Right by Axler
+    chapter-1-vector-spaces: "Chapter 1: Vector Spaces"

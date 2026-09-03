@@ -15,12 +15,17 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     env:
       HUGO_VERSION: 0.134.3
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Hugo
         run: |
@@ -50,13 +55,14 @@ jobs:
         with:
           path: ./public
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Email subscribers
+        env:
+          MAILERLITE_TOKEN: ${{ secrets.MAILERLITE_TOKEN }}
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: python3 scripts/notify.py

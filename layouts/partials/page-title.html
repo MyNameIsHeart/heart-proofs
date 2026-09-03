@@ -1,0 +1,9 @@
+{{- $items := slice -}}
+{{- range .Ancestors.Reverse -}}
+  {{- if or .IsHome (and .Parent .Parent.IsHome) -}}{{- else -}}{{- $items = $items | append . -}}{{- end -}}
+{{- end -}}
+{{- if gt (len $items) 1 }}{{ $items = after 1 $items }}{{ end -}}
+{{- $parts := slice -}}
+{{- range $items }}{{ $parts = $parts | append (partial "section-name.html" .) }}{{ end -}}
+{{- if .IsSection }}{{ $parts = $parts | append (partial "section-name.html" .) }}{{ else }}{{ $parts = $parts | append .Title }}{{ end -}}
+{{- delimit $parts (site.Data.text.title_separator | default " ") -}}
