@@ -9,7 +9,7 @@ home:
       url: "study-spaces/"
     - label: "Thoughts & recommendations"
       url: "thoughts/"
-    - label: "About this site"
+    - label: "About"
       url: "about/"
   stats: "%d math posts so far · %d subjects"
   all_math: "All math posts →"
