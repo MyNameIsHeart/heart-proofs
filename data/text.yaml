@@ -1,0 +1,46 @@
+home:
+  latest_heading: "Latest"
+  subjects_heading: "By subject"
+  elsewhere_heading: "Elsewhere"
+  elsewhere:
+    - label: "Study resources"
+      url: "resources/"
+    - label: "Where to study"
+      url: "study-spaces/"
+    - label: "Thoughts & recommendations"
+      url: "thoughts/"
+    - label: "About this site"
+      url: "about/"
+  stats: "%d math posts so far · %d subjects"
+  all_math: "All math posts →"
+  empty: "Nothing here yet — the first proof is on its way."
+
+kinds:
+  proofs: "Proof"
+  summaries: "Summary"
+  thoughts: "Thought"
+  recommendations: "Recommendation"
+
+subscribe:
+  heading: "Get the proofs by email"
+  blurb: "New proofs and lecture summaries by email (no off-topic)"
+  placeholder: "you@gmail.com"
+  button: "Subscribe"
+  not_connected: "Newsletter not connected yet — set buttondown in hugo.toml"
+
+post:
+  pdf: "PDF"
+  tex: ".tex source"
+  lyx: ".lyx source"
+  tags_prefix: "Tagged:"
+  older: "Older"
+  newer: "Newer"
+
+lists:
+  empty: "Nothing here yet."
+
+notfound:
+  title: "404 — page not found"
+  home_link: "Home"
+
+skip_link: "Skip to content"

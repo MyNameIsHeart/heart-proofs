@@ -1,0 +1,22 @@
+{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) -}}
+{{- $desc := .Params.summary | default .Description | default (cond .IsPage (.Summary | plainify | truncate 160) site.Params.description) -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+{{ with $desc }}<meta name="description" content="{{ . }}">{{ end }}
+{{ with site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fbf8f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "favicon.svg" | relURL }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+{{ with $desc }}<meta property="og:description" content="{{ . }}">{{ end }}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<link rel="preload" href="{{ "katex/fonts/KaTeX_Main-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "katex/fonts/KaTeX_Math-Italic.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}">
+<link rel="stylesheet" href="{{ "css/style.css" | relURL }}?v={{ now.Unix }}">

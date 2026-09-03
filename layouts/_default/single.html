@@ -1,0 +1,42 @@
+{{ define "main" }}
+{{- $t := site.Data.text.post -}}
+{{- $isPost := in site.Params.postSections .Section -}}
+{{- $isMath := in site.Params.mathSections .Section -}}
+<article class="post{{ if $isMath }} math-post{{ end }}">
+  <header class="post-header">
+    {{ if $isPost }}
+    <div class="card-meta">
+      {{ with index site.Data.text.kinds .Section }}<span class="badge badge-{{ $.Section }}">{{ . }}</span>{{ end }}
+      {{ with .Params.subject }}<span class="subject-path"><a class="subject-link" href="{{ printf "subjects/%s/" (urlize .) | relURL }}">{{ partial "subject-name.html" . }}</a>{{ with $.Params.topic }} <span class="sep">›</span> <span class="topic">{{ partial "topic-name.html" (dict "subject" $.Params.subject "topic" .) }}</span>{{ end }}</span>{{ end }}
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+    </div>
+    {{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="lede">{{ . }}</p>{{ end }}
+    {{ if or .Params.pdf .Params.tex .Params.lyx }}
+    <p class="downloads">
+      {{ with .Params.pdf }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.pdf }}</a>{{ end }}
+      {{ with .Params.tex }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.tex }}</a>{{ end }}
+      {{ with .Params.lyx }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.lyx }}</a>{{ end }}
+    </p>
+    {{ end }}
+  </header>
+
+  <div class="post-body">
+    {{ .Content | replaceRE `(href|src)="/` (printf `$1="%s/` (strings.TrimSuffix "/" ("" | relURL))) | safeHTML }}
+  </div>
+
+  {{ with .Params.tags }}
+  <p class="tags">{{ with $t.tags_prefix }}{{ . }} {{ end }}{{ range . }}<a href="{{ printf "tags/%s/" (urlize .) | relURL }}">#{{ . }}</a> {{ end }}</p>
+  {{ end }}
+
+  {{ if $isPost }}
+  <nav class="post-nav">
+    {{ with .PrevInSection }}<a class="prev" href="{{ .RelPermalink }}">{{ with $t.older }}<span class="muted small">{{ . }}</span><br>{{ end }}← {{ .Title }}</a>{{ end }}
+    {{ with .NextInSection }}<a class="next" href="{{ .RelPermalink }}">{{ with $t.newer }}<span class="muted small">{{ . }}</span><br>{{ end }}{{ .Title }} →</a>{{ end }}
+  </nav>
+  {{ end }}
+</article>
+
+{{ if $isMath }}{{ partial "subscribe.html" (dict "compact" false) }}{{ end }}
+{{ end }}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "en" }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body class="{{ if .IsHome }}home{{ else }}page kind-{{ .Kind }} section-{{ .Section }}{{ end }}">
+  {{ with site.Data.text.skip_link }}<a class="skip" href="#main">{{ . }}</a>{{ end }}
+  {{ partial "header.html" . }}
+  <main id="main" class="container">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "katex.html" . }}
+</body>
+</html>

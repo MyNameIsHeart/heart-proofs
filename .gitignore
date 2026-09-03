@@ -1,0 +1,22 @@
+public/
+resources/_gen/
+.hugo_build.lock
+
+content/proofs/**/*.html
+content/summaries/**/*.html
+static/files/
+
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.lyx~
+*.lyx#
+*.bak
+*.emergency
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+Lyx files/

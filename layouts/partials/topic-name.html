@@ -1,0 +1,3 @@
+{{- $name := "" -}}
+{{- with index site.Data.subjects .subject }}{{ with .topics }}{{ with index . $.topic }}{{ $name = . }}{{ end }}{{ end }}{{ end -}}
+{{- $name | default (.topic | humanize | title) -}}

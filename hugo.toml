@@ -1,0 +1,90 @@
+baseURL = "https://example.com/"
+title = "Heart Proofs"
+languageCode = "en"
+defaultContentLanguage = "en"
+enableRobotsTXT = true
+timeZone = "Asia/Jerusalem"
+summaryLength = 40
+
+[params]
+  tagline = "One proof a day keeps the doctor away"
+  description = ""
+  author = ""
+  buttondown = ""
+  buttondownTag = "math"
+  github = ""
+  email = ""
+  postSections = ["proofs", "summaries", "thoughts", "recommendations"]
+  mathSections = ["proofs", "summaries"]
+
+[security]
+  allowContent = ['.*']
+
+[frontmatter]
+  date = [":filename", ":default"]
+
+[taxonomies]
+  subject = "subjects"
+  tag = "tags"
+
+[outputs]
+  home = ["HTML"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block = [['\[', '\]'], ['$$', '$$']]
+      inline = [['\(', '\)'], ['$', '$']]
+  [markup.highlight]
+    style = "friendly"
+    noClasses = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[menus]
+  [[menus.main]]
+    name = "Proofs"
+    pageRef = "/proofs"
+    weight = 10
+  [[menus.main]]
+    name = "Summaries"
+    pageRef = "/summaries"
+    weight = 20
+  [[menus.main]]
+    name = "Thoughts"
+    pageRef = "/thoughts"
+    weight = 30
+  [[menus.main]]
+    name = "Recommendations"
+    pageRef = "/recommendations"
+    weight = 40
+  [[menus.main]]
+    name = "Resources"
+    pageRef = "/resources"
+    weight = 50
+  [[menus.main]]
+    name = "Study spaces"
+    pageRef = "/study-spaces"
+    weight = 60
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 70
+  [[menus.main]]
+    name = "Subscribe"
+    pageRef = "/subscribe"
+    weight = 80
+    [menus.main.params]
+      highlight = true
+
+[build]
+  [[build.cachebusters]]
+    source = "static/css/.*"
+    target = "css"

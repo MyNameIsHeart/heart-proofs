@@ -1,0 +1,46 @@
+{{ define "main" }}
+{{ $t := site.Data.text.home }}
+<section class="hero">
+  <div class="hero-text">
+    <h1>{{ site.Title }}</h1>
+    {{ with site.Params.tagline }}<p class="tagline">{{ . }}</p>{{ end }}
+    {{ with .Content }}<div class="hero-body">{{ . }}</div>{{ end }}
+  </div>
+  {{ partial "subscribe.html" (dict "compact" true) }}
+</section>
+
+{{ $posts := where site.RegularPages "Section" "in" site.Params.postSections }}
+{{ $math := where site.RegularPages "Section" "in" site.Params.mathSections }}
+<div class="home-grid">
+  <section class="latest">
+    {{ with $t.latest_heading }}<h2>{{ . }}</h2>{{ end }}
+    {{ range first 8 $posts }}
+      {{ partial "card.html" . }}
+    {{ else }}
+      {{ with $t.empty }}<p class="muted">{{ . }}</p>{{ end }}
+    {{ end }}
+    {{ if gt (len $posts) 8 }}{{ with $t.all_math }}<p><a class="more" href="{{ "math/" | relURL }}">{{ . }}</a></p>{{ end }}{{ end }}
+  </section>
+  <aside class="sidebar">
+    {{ with site.Taxonomies.subjects }}
+    <section>
+      {{ with $t.subjects_heading }}<h2>{{ . }}</h2>{{ end }}
+      <ul class="subject-list">
+        {{ range .ByCount }}
+        <li><a href="{{ .Page.RelPermalink }}">{{ partial "subject-name.html" .Page.Data.Term }}</a> <span class="count">{{ .Count }}</span></li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+    {{ with $t.elsewhere }}
+    <section>
+      {{ with $t.elsewhere_heading }}<h2>{{ . }}</h2>{{ end }}
+      <ul class="plain-list">
+        {{ range . }}<li><a href="{{ .url | relURL }}">{{ .label }}</a></li>{{ end }}
+      </ul>
+    </section>
+    {{ end }}
+    {{ with $t.stats }}<section class="stats"><p class="muted small">{{ printf . (len $math) (len site.Taxonomies.subjects) }}</p></section>{{ end }}
+  </aside>
+</div>
+{{ end }}

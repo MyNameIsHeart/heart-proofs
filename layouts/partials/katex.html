@@ -1,0 +1,41 @@
+<script defer src="{{ "katex/katex.min.js" | relURL }}"></script>
+<script defer src="{{ "katex/auto-render.min.js" | relURL }}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof renderMathInElement !== "function") return;
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$", right: "$", display: false }
+      ],
+      macros: {
+        "\\R": "\\mathbb{R}",
+        "\\N": "\\mathbb{N}",
+        "\\Z": "\\mathbb{Z}",
+        "\\Q": "\\mathbb{Q}",
+        "\\C": "\\mathbb{C}",
+        "\\eps": "\\varepsilon",
+        "\\abs": "\\left|#1\\right|",
+        "\\norm": "\\left\\lVert#1\\right\\rVert"
+      },
+      throwOnError: false,
+      ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option"]
+    });
+    document.querySelectorAll(".katex:not(.katex-display .katex)").forEach(function (k) {
+      var el = k;
+      while (!el.nextSibling && el.parentNode && el.parentNode.tagName === "SPAN") el = el.parentNode;
+      var n = el.nextSibling;
+      if (!n || n.nodeType !== 3) return;
+      var m = /^[,.;:!?)\]]+/.exec(n.nodeValue);
+      if (!m) return;
+      var wrap = document.createElement("span");
+      wrap.className = "nobr";
+      el.parentNode.insertBefore(wrap, el);
+      wrap.appendChild(el);
+      wrap.appendChild(document.createTextNode(m[0]));
+      n.nodeValue = n.nodeValue.slice(m[0].length);
+    });
+  });
+</script>

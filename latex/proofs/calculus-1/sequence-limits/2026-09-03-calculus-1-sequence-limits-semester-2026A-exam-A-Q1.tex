@@ -1,0 +1,100 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+
+\begin{document}
+\title{{\Large HUJI, Infinitesimal Calculus 1, Semester 2026A, Exam A, Q1\vspace{-2em}}}
+\maketitle
+\begin{problem*}
+Prove that a bounded sequence is converging if and only if it has
+exactly one partial limit. 
+\end{problem*}
+\begin{proof}
+We prove the two implications separately.
+
+\medskip{}
+
+\textbf{First direction:} 
+
+Let $\left(a_{n}\right)_{n=1}^{\infty}$ be a bounded sequence and
+let us assume that it's converging to $L\in\mathbb{R}$.
+
+\emph{Existence:} by the Bolzano-Weierstrass theorem, $\left(a_{n}\right)$
+has a converging sub-sequence.
+
+\emph{Uniqueness:} Let $\left(a_{n_{k}}\right)_{k=1}^{\infty}$ be
+a converging sub-sequence of $\left(a_{n}\right).$
+
+Then from the inheritance theorem (every sub-sequence of a convergent
+sequence converges to the same limit), it also converges to $L$,
+as needed.
+
+\medskip{}
+
+\textbf{Second direction:}
+
+Let $\left(a_{n}\right)_{n=1}^{\infty}$ be a bounded sequence such
+that it has exactly one partial limit, $L\in\mathbb{R}$.
+
+Let us assume for the sake of contradiction that $\left(a_{n}\right)_{n=1}^{\infty}$
+doesn't converge.
+
+In particular, it doesn't converge to $L$, so there exists $\varepsilon_{1}>0$
+such that $|a_{n}-L|>\varepsilon_{1}$ is a property that holds for
+infinitely many $n$ (otherwise it would converge to $L$).
+
+Since it's a frequent property of $\left(a_{n}\right)$, there exists
+a sub-sequence $\left(a_{n_{j}}\right)_{j=1}^{\infty}$ of which all
+elements fulfill this property.
+
+In particular, $\left(a_{n_{j}}\right)_{j=1}^{\infty}$ inherits the
+boundedness, therefore by the Bolzano-Weierstrass theorem it has a
+converging sub-sequence $\left(a_{n_{j_{w}}}\right)_{w=1}^{\infty}$
+, i.e. there exists $L'\in\mathbb{R}$ such that $\underset{w\rightarrow\infty}{\lim}a_{n_{j_{w}}}=L'$.
+
+However, every element of this sub-sequence fulfills the property
+of being far from $L$ by at least $\varepsilon_{1}$, and since limits
+weakly preserve sequence inequalities, $|L'-L|\geq\varepsilon_{1}>0$,
+therefore $L'\neq L$.
+
+$L'$ is also a partial limit of $\left(a_{n}\right)$, since the
+sub-sequence of a sub-sequence is also a sub-sequence, which contradicts
+our assumption.
+\end{proof}
+
+\end{document}

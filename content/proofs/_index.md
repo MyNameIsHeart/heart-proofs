@@ -1,0 +1,4 @@
+---
+title: "Proofs"
+layout: bysubject
+---

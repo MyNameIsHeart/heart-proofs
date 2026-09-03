@@ -1,0 +1,17 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ "" | relURL }}" aria-label="{{ site.Title }}">
+      {{ partial "logo.html" . }}
+      <span class="brand-text">
+        <span class="brand-name">{{ site.Title }}</span>
+        {{ with site.Params.tagline }}<span class="brand-tagline">{{ . }}</span>{{ end }}
+      </span>
+    </a>
+    <nav class="site-nav">
+      {{ $current := . }}
+      {{ range site.Menus.main }}
+      <a href="{{ .URL }}"{{ if .Params.highlight }} class="nav-highlight"{{ end }}{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </div>
+</header>
