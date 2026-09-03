@@ -26,6 +26,7 @@ subscribe:
   blurb: "New proofs and lecture summaries by email (no off-topic)"
   placeholder: "you@gmail.com"
   button: "Subscribe"
+  success: ""
 
 post:
   pdf: "PDF"
