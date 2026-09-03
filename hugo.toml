@@ -13,7 +13,7 @@ summaryLength = 40
   author = ""
   mailerlite = "https://assets.mailerlite.com/jsonp/1861265/forms/197585548322277007/subscribe"
   github = ""
-  email = "heartproofs.proton.me@send.mailerlite.eu"
+  email = "proofs_subscription@heartproofs.com"
   postSections = ["proofs", "summaries", "thoughts", "recommendations"]
   mathSections = ["proofs", "summaries"]
 
