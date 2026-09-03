@@ -311,6 +311,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
         f"subject: {yaml_str(subject)}",
         f"subjects: [{yaml_str(subject)}]",
         f"topic: {yaml_str(topic)}",
+        f"topics_path: [{', '.join(yaml_str(t) for t in topic.split('/') if t)}]",
         f"summary: {yaml_str(summary)}",
         f"tags: [{', '.join(yaml_str(t) for t in tags)}]",
     ]
@@ -367,11 +368,8 @@ def main() -> int:
             if len(parts) == 0:
                 print(f"  ! skipping {tex_path.name}: put it inside a subject folder, e.g. latex/{folder}/calculus-1/", file=sys.stderr)
                 continue
-            if len(parts) > 2:
-                print(f"  ! skipping {tex_path.relative_to(ROOT)}: only subject/topic nesting is supported (two folder levels)", file=sys.stderr)
-                continue
             subject = parts[0]
-            topic = parts[1] if len(parts) == 2 else ""
+            topic = "/".join(parts[1:])
             try:
                 convert_one(tex_path, section, subject, topic, verbose=not args.quiet)
                 n_ok += 1
