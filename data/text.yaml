@@ -13,7 +13,7 @@ home:
       url: "about/"
   stats: "%d math posts so far · %d subjects"
   all_math: "All math posts →"
-  empty: "Nothing here yet — the first proof is on its way."
+  empty: ""
 
 kinds:
   proofs: "Proof"
@@ -36,7 +36,7 @@ post:
   newer: "Newer"
 
 lists:
-  empty: "Nothing here yet."
+  empty: ""
 
 notfound:
   title: "404 — page not found"

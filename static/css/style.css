@@ -125,6 +125,10 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .subject-group { max-width: 48rem; margin-bottom: 2.5rem; }
 .subject-group h2 { margin-top: 0; }
 .subject-group h2 a { color: var(--text); }
+.subject-group.level-3, .subject-group.level-4, .subject-group.level-5 { margin: 1.2rem 0 0 1.2rem; }
+.subject-group.level-3 h3, .subject-group.level-4 h4, .subject-group.level-5 h5 { font-family: var(--sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 1.2rem 0 0.4rem; }
+.subject-group h3 a, .subject-group h4 a, .subject-group h5 a { color: var(--muted); }
+.page-header .subject-path { font-family: var(--sans); font-size: 0.85rem; display: block; margin-bottom: 0.5rem; }
 .topic-heading { font-family: var(--sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 1.6rem 0 0.4rem; }
 .subject-path .sep { color: var(--muted); }
 .subject-path .topic { color: var(--muted); }

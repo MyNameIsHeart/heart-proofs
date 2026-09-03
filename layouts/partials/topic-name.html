@@ -1,8 +1,0 @@
-{{- $subject := .subject -}}
-{{- $names := dict -}}
-{{- with index site.Data.subjects $subject }}{{ with .topics }}{{ $names = . }}{{ end }}{{ end -}}
-{{- $out := slice -}}
-{{- range split .topic "/" -}}
-  {{- if . -}}{{- $out = $out | append (index $names . | default (. | humanize | title)) -}}{{- end -}}
-{{- end -}}
-{{- delimit $out " › " -}}

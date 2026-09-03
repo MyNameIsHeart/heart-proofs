@@ -3,6 +3,7 @@ title = "Heart Proofs"
 languageCode = "en"
 defaultContentLanguage = "en"
 enableRobotsTXT = true
+buildFuture = true
 timeZone = "Asia/Jerusalem"
 summaryLength = 40
 
@@ -24,7 +25,6 @@ summaryLength = 40
   date = [":filename", ":default"]
 
 [taxonomies]
-  subject = "subjects"
   tag = "tags"
 
 [outputs]

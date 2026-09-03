@@ -1,0 +1,12 @@
+{{- $items := slice -}}
+{{- range .Ancestors.Reverse -}}
+  {{- if or .IsHome (and .Parent .Parent.IsHome) -}}{{- else -}}{{- $items = $items | append . -}}{{- end -}}
+{{- end -}}
+{{- if $items -}}
+<span class="subject-path">
+  {{- range $i, $a := $items -}}
+    {{- if $i }} <span class="sep">›</span> {{ end -}}
+    <a class="subject-link" href="{{ $a.RelPermalink }}">{{ partial "section-name.html" $a }}</a>
+  {{- end -}}
+</span>
+{{- end -}}

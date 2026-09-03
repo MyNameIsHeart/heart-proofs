@@ -3,9 +3,6 @@
   <h1>{{ .Title }}</h1>
 </header>
 <ul class="term-cloud">
-  {{ $isSubjects := eq .Data.Plural "subjects" }}
-  {{ range .Data.Terms.ByCount }}
-    <li><a href="{{ .Page.RelPermalink }}">{{ if $isSubjects }}{{ partial "subject-name.html" .Page.Data.Term }}{{ else }}{{ .Page.Title }}{{ end }}</a> <span class="count">{{ .Count }}</span></li>
-  {{ end }}
+  {{ range .Data.Terms.ByCount }}<li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> <span class="count">{{ .Count }}</span></li>{{ end }}
 </ul>
 {{ end }}

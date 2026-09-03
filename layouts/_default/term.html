@@ -1,20 +1,8 @@
 {{ define "main" }}
-{{ $isSubject := eq .Data.Plural "subjects" }}
-{{ $slug := .Data.Term }}
 <header class="page-header">
-  <h1>{{ if $isSubject }}{{ partial "subject-name.html" $slug }}{{ else }}#{{ $slug }}{{ end }}</h1>
-  {{ if $isSubject }}{{ with index site.Data.subjects $slug }}{{ with .description }}<p class="lede">{{ . }}</p>{{ end }}{{ end }}{{ end }}
+  <h1>#{{ .Data.Term }}</h1>
 </header>
 <section class="post-list">
-  {{ if $isSubject }}
-    {{ range .RegularPages.GroupByParam "topic" }}
-      {{ if .Key }}<h2 class="topic-heading">{{ partial "topic-name.html" (dict "subject" $slug "topic" .Key) }}</h2>{{ end }}
-      {{ range .Pages }}{{ partial "card.html" . }}{{ end }}
-    {{ else }}
-      {{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}
-    {{ end }}
-  {{ else }}
-    {{ range .RegularPages }}{{ partial "card.html" . }}{{ else }}{{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}
-  {{ end }}
+  {{ range .RegularPages }}{{ partial "card.html" . }}{{ else }}{{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}
 </section>
 {{ end }}
