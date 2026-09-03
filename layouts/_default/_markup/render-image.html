@@ -1,0 +1,6 @@
+{{- $url := .Destination -}}
+{{- if hasPrefix $url "/" }}{{ $url = strings.TrimPrefix "/" $url | relURL }}{{ end -}}
+<figure class="figure">
+  <img src="{{ $url | safeURL }}" alt="{{ .Text }}" loading="lazy"{{ with .Title }} title="{{ . }}"{{ end }}>
+  {{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>

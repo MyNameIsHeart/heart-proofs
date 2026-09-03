@@ -1,0 +1,19 @@
+{{- $t := site.Data.text.subscribe -}}
+{{- $compact := .compact | default false -}}
+<section class="subscribe{{ if $compact }} subscribe-compact{{ end }}">
+  {{ if not $compact }}{{ with $t.heading }}<h2>{{ . }}</h2>{{ end }}{{ end }}
+  {{ with $t.blurb }}<p class="muted">{{ . }}</p>{{ end }}
+  {{ with site.Params.buttondown }}
+  <form action="https://buttondown.com/api/emails/embed-subscribe/{{ . }}" method="post" target="popupwindow"
+        onsubmit="window.open('https://buttondown.com/{{ . }}', 'popupwindow')" class="subscribe-form">
+    <input type="email" name="email" aria-label="email" placeholder="{{ $t.placeholder }}" required autocomplete="email">
+    {{ with site.Params.buttondownTag }}<input type="hidden" name="tag" value="{{ . }}">{{ end }}
+    <button type="submit">{{ $t.button }}</button>
+  </form>
+  {{ else }}
+  <form class="subscribe-form" onsubmit="event.preventDefault(); alert({{ $t.not_connected }});">
+    <input type="email" aria-label="email" placeholder="{{ $t.placeholder }}" required>
+    <button type="submit">{{ $t.button }}</button>
+  </form>
+  {{ end }}
+</section>

@@ -1,0 +1,13 @@
+{{ define "main" }}
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
+</header>
+<section class="post-list">
+  {{ range where site.RegularPages "Section" "in" site.Params.mathSections }}
+    {{ partial "card.html" . }}
+  {{ else }}
+    {{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}
+  {{ end }}
+</section>
+{{ end }}

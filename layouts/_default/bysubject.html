@@ -1,0 +1,31 @@
+{{ define "main" }}
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
+</header>
+
+{{ $groups := .RegularPages.GroupByParam "subject" }}
+{{ if gt (len $groups) 1 }}
+<nav class="subject-jump">
+  {{ range $groups }}{{ $slug := .Key }}<a href="#{{ $slug | urlize }}">{{ partial "subject-name.html" $slug }}</a>{{ end }}
+</nav>
+{{ end }}
+
+{{ range $groups }}
+  {{ $slug := .Key }}
+  <section class="subject-group" id="{{ $slug | urlize }}">
+    <h2><a href="{{ printf "subjects/%s/" (urlize $slug) | relURL }}">{{ partial "subject-name.html" $slug }}</a> <span class="count">{{ len .Pages }}</span></h2>
+    {{ with index site.Data.subjects $slug }}{{ with .description }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}
+    {{ range .Pages.GroupByParam "topic" }}
+      {{ if .Key }}<h3 class="topic-heading" id="{{ printf "%s-%s" $slug .Key | urlize }}">{{ partial "topic-name.html" (dict "subject" $slug "topic" .Key) }} <span class="count">{{ len .Pages }}</span></h3>{{ end }}
+      <ol class="compact-list">
+        {{ range .Pages }}
+        <li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> <a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ol>
+    {{ end }}
+  </section>
+{{ else }}
+  {{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}
+{{ end }}
+{{ end }}
