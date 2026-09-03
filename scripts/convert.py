@@ -158,6 +158,16 @@ STYLE_OF = {name: style for style, names in THEOREM_STYLES.items() for name in n
 DIV_RE = re.compile(r'<div( id="[^"]*")? class="([A-Za-z]+)(\*?)">')
 
 
+STAR_RE = re.compile(r"\\newtheorem\*\{([^}]+)\}")
+
+
+def strip_star_numbers(html: str, tex: str) -> str:
+    for env in STAR_RE.findall(tex):
+        pat = re.compile(r'(<div(?: id="[^"]*")? class="' + re.escape(env) + r'">\s*<p>)(<(?:strong|em)>)([^<]*?) \d+(</(?:strong|em)>)')
+        html = pat.sub(r"\1\2\3\4", html)
+    return html
+
+
 def postprocess(html: str) -> str:
 
     def add_classes(m: re.Match) -> str:
@@ -271,7 +281,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
 
     tex = preprocess(read_tex(tex_path))
     meta = extract_meta(tex)
-    body = postprocess(to_html(tex))
+    body = postprocess(strip_star_numbers(to_html(tex), tex))
     side = parse_sidecar(tex_path.with_suffix(".yaml"))
 
     title = side.get("title") or meta.get("title") or slug.replace("-", " ").title()
@@ -309,9 +319,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
         f"title: {yaml_str(title)}",
         f"date: {date.isoformat()}",
         f"subject: {yaml_str(subject)}",
-        f"subjects: [{yaml_str(subject)}]",
         f"topic: {yaml_str(topic)}",
-        f"topics_path: [{', '.join(yaml_str(t) for t in topic.split('/') if t)}]",
         f"summary: {yaml_str(summary)}",
         f"tags: [{', '.join(yaml_str(t) for t in tags)}]",
     ]
@@ -332,12 +340,38 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     return out_path
 
 
+def write_section_indexes(base: Path, section: str) -> None:
+    dirs = {tex.parent for tex in base.rglob("*.tex")}
+    all_dirs = set()
+    for d in dirs:
+        while d != base:
+            all_dirs.add(d)
+            d = d.parent
+    for d in sorted(all_dirs):
+        rel = d.relative_to(base)
+        out = CONTENT_DIR / section / rel / "_index.md"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        folder = d.name
+        title = folder.replace("-", " ").replace("_", " ").title()
+        out.write_text(
+            "---\n"
+            f"title: {yaml_str(title)}\n"
+            "layout: bysubject\n"
+            f"folder: {yaml_str(folder)}\n"
+            f"subject: {yaml_str(rel.parts[0])}\n"
+            "---\n"
+        )
+
+
 def clean() -> None:
     for section in TYPES.values():
         base = CONTENT_DIR / section
         if base.exists():
             for p in base.rglob("*.html"):
                 p.unlink()
+            for p in base.rglob("_index.md"):
+                if p.parent != base:
+                    p.unlink()
             for d in sorted((d for d in base.rglob("*") if d.is_dir()), reverse=True):
                 if not any(d.iterdir()):
                     d.rmdir()
@@ -363,6 +397,7 @@ def main() -> int:
         base = LATEX_DIR / folder
         if not base.exists():
             continue
+        write_section_indexes(base, section)
         for tex_path in sorted(base.rglob("*.tex")):
             parts = tex_path.relative_to(base).parts[:-1]
             if len(parts) == 0:

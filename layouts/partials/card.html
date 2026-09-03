@@ -1,7 +1,7 @@
 <article class="card kind-{{ .Section }}">
   <div class="card-meta">
     {{ with index site.Data.text.kinds .Section }}<span class="badge badge-{{ $.Section }}">{{ . }}</span>{{ end }}
-    {{ with .Params.subject }}<span class="subject-path"><a class="subject-link" href="{{ printf "subjects/%s/" (urlize .) | relURL }}">{{ partial "subject-name.html" . }}</a>{{ with $.Params.topic }} <span class="sep">›</span> <span class="topic">{{ partial "topic-name.html" (dict "subject" $.Params.subject "topic" .) }}</span>{{ end }}</span>{{ end }}
+    {{ partial "crumbs.html" . }}
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time>
   </div>
   <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>

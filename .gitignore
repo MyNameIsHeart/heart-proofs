@@ -2,8 +2,8 @@ public/
 resources/_gen/
 .hugo_build.lock
 
-content/proofs/**/*.html
-content/summaries/**/*.html
+content/proofs/*/
+content/summaries/*/
 static/files/
 
 *.aux

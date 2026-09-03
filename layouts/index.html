@@ -22,13 +22,13 @@
     {{ if gt (len $posts) 8 }}{{ with $t.all_math }}<p><a class="more" href="{{ "math/" | relURL }}">{{ . }}</a></p>{{ end }}{{ end }}
   </section>
   <aside class="sidebar">
-    {{ with site.Taxonomies.subjects }}
+    {{ $subjects := slice }}
+    {{ range site.Params.mathSections }}{{ with site.GetPage (printf "/%s" .) }}{{ range .Sections.ByTitle }}{{ $subjects = $subjects | append . }}{{ end }}{{ end }}{{ end }}
+    {{ with $subjects }}
     <section>
       {{ with $t.subjects_heading }}<h2>{{ . }}</h2>{{ end }}
       <ul class="subject-list">
-        {{ range .ByCount }}
-        <li><a href="{{ .Page.RelPermalink }}">{{ partial "subject-name.html" .Page.Data.Term }}</a> <span class="count">{{ .Count }}</span></li>
-        {{ end }}
+        {{ range . }}<li><a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a> <span class="count">{{ len .RegularPagesRecursive }}</span></li>{{ end }}
       </ul>
     </section>
     {{ end }}
@@ -40,7 +40,7 @@
       </ul>
     </section>
     {{ end }}
-    {{ with $t.stats }}<section class="stats"><p class="muted small">{{ printf . (len $math) (len site.Taxonomies.subjects) }}</p></section>{{ end }}
+    {{ with $t.stats }}<section class="stats"><p class="muted small">{{ printf . (len $math) (len $subjects) }}</p></section>{{ end }}
   </aside>
 </div>
 {{ end }}

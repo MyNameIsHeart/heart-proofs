@@ -1,2 +1,0 @@
-{{- $slug := . -}}
-{{- with index site.Data.subjects $slug -}}{{ .name }}{{- else -}}{{ $slug | humanize | title }}{{- end -}}

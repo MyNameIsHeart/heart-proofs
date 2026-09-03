@@ -1,0 +1,13 @@
+{{- $p := . -}}
+{{- $name := "" -}}
+{{- with $p.Params.folder -}}
+  {{- $subject := $p.Params.subject -}}
+  {{- with index site.Data.subjects $subject -}}
+    {{- if eq $subject $p.Params.folder -}}
+      {{- $name = .name -}}
+    {{- else -}}
+      {{- with .topics }}{{ with index . $p.Params.folder }}{{ $name = . }}{{ end }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $name | default $p.Title -}}
