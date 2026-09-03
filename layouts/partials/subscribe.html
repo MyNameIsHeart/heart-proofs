@@ -1,13 +1,13 @@
 {{- $t := site.Data.text.subscribe -}}
 {{- $compact := .compact | default false -}}
-{{- with site.Params.buttondown }}
+{{- with site.Params.mailerlite }}
 <section class="subscribe{{ if $compact }} subscribe-compact{{ end }}">
   {{ if not $compact }}{{ with $t.heading }}<h2>{{ . }}</h2>{{ end }}{{ end }}
   {{ with $t.blurb }}<p class="muted">{{ . }}</p>{{ end }}
-  <form action="https://buttondown.com/api/emails/embed-subscribe/{{ . }}" method="post" target="popupwindow"
-        onsubmit="window.open('https://buttondown.com/{{ . }}', 'popupwindow')" class="subscribe-form">
-    <input type="email" name="email" aria-label="email" placeholder="{{ $t.placeholder }}" required autocomplete="email">
-    {{ with site.Params.buttondownTag }}<input type="hidden" name="tag" value="{{ . }}">{{ end }}
+  <form class="subscribe-form" action="{{ . }}" method="post" target="_blank" data-success="{{ $t.success }}">
+    <input type="email" name="fields[email]" aria-label="email" placeholder="{{ $t.placeholder }}" required autocomplete="email">
+    <input type="hidden" name="ml-submit" value="1">
+    <input type="hidden" name="anticsrf" value="true">
     <button type="submit">{{ $t.button }}</button>
   </form>
 </section>
