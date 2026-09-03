@@ -1,7 +1,7 @@
 {{- $lvl := .level -}}
 {{- range .section.Sections.ByTitle -}}
 <section class="subject-group level-{{ $lvl }}" id="{{ .File.ContentBaseName | urlize }}">
-  {{ printf "<h%d>" $lvl | safeHTML }}<a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a> <span class="count">{{ len .RegularPagesRecursive }}</span>{{ printf "</h%d>" $lvl | safeHTML }}
+  {{ printf "<h%d>" $lvl | safeHTML }}<a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a>{{ printf "</h%d>" $lvl | safeHTML }}
   {{ if eq $lvl 2 }}{{ with index site.Data.subjects .Params.folder }}{{ with .description }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}{{ end }}
   {{ with .RegularPages }}
   <ol class="compact-list">
