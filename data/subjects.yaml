@@ -1,7 +1,6 @@
-calculus-1:
-  name: Calculus 1
+calculus:
   topics:
-    sequence-limits: Sequence limits
+    huji-infinitesimal-calculus-1: HUJI Infinitesimal Calculus 1
 measure-theory:
   name: Measure Theory
 dast:
