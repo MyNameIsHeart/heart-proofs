@@ -1,4 +1,4 @@
-{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) -}}
+{{- $title := cond .IsHome site.Title (printf "%s · %s" (partial "page-title.html" .) site.Title) -}}
 {{- $desc := .Params.summary | default .Description | default (cond .IsPage (.Summary | plainify | truncate 160) site.Params.description) -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

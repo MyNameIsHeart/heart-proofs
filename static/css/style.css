@@ -173,7 +173,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .nobr { white-space: nowrap; }
 
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.4em 0; margin: 0.8em 0; }
-.katex { font-size: 1.05em; }
+.katex { font-size: 1.05em; white-space: nowrap; }
 
 .subscribe { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.5rem; background: var(--bg-2); max-width: var(--measure); margin: 2rem auto; }
 .subscribe h2 { margin-top: 0; font-size: 1.3rem; }

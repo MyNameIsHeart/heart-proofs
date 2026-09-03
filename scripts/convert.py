@@ -273,11 +273,27 @@ def yaml_str(s: str) -> str:
 FILENAME_RE = re.compile(r"^(?:(\d{4}-\d{2}-\d{2})-)?(.+)$")
 
 
-def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose: bool) -> Path:
-    stem = tex_path.stem
+def split_stem(stem: str) -> tuple[str | None, str]:
     m = FILENAME_RE.match(stem)
     date_str, slug = m.group(1), m.group(2)
-    slug = re.sub(r"[^a-z0-9-]+", "-", slug.lower()).strip("-")
+    return date_str, re.sub(r"[^a-z0-9-]+", "-", slug.lower()).strip("-")
+
+
+def locate(tex_path: Path) -> tuple[str, str, str, str] | None:
+    for folder, section in TYPES.items():
+        base = LATEX_DIR / folder
+        try:
+            parts = tex_path.relative_to(base).parts[:-1]
+        except ValueError:
+            continue
+        if not parts:
+            return None
+        return section, parts[0], "/".join(parts[1:]), split_stem(tex_path.stem)[1]
+    return None
+
+
+def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose: bool) -> Path:
+    date_str, slug = split_stem(tex_path.stem)
 
     tex = preprocess(read_tex(tex_path))
     meta = extract_meta(tex)
