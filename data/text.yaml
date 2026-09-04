@@ -40,7 +40,7 @@ lists:
   empty: ""
 
 notfound:
-  title: "404 — page not found"
+  title: "404 - page not found"
   home_link: "Home"
 
 skip_link: "Skip to content"
