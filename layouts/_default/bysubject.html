@@ -4,7 +4,7 @@
   {{ if not $isRoot }}{{ partial "crumbs.html" . }}{{ end }}
   <h1>{{ if $isRoot }}{{ .Title }}{{ else }}{{ partial "section-name.html" . }}{{ end }}</h1>
   {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
-  {{ if not $isRoot }}{{ with index site.Data.subjects .Params.subject }}{{ if eq $.Params.folder $.Params.subject }}{{ with .description }}<p class="lede">{{ . }}</p>{{ end }}{{ end }}{{ end }}{{ end }}
+  {{ if not $isRoot }}{{ with .Params.subject }}{{ with index site.Data.subjects . }}{{ if eq $.Params.folder $.Params.subject }}{{ with .description }}<p class="lede">{{ . }}</p>{{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
 </header>
 
 {{ if and $isRoot (gt (len .Sections) 1) }}

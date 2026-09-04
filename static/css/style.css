@@ -114,6 +114,8 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .badge-summaries::before { background: #2f6f9f; }
 .badge-thoughts::before { background: #8a6d2f; }
 .badge-recommendations::before { background: #4c8a58; }
+.badge-study-spaces::before { background: #7a5c9e; }
+.latest-col .latest + .latest { margin-top: 2.5rem; }
 .subject-link { color: var(--text); border-bottom: 1px dotted var(--border); }
 .subject-link:hover { text-decoration: none; border-bottom-color: var(--accent); }
 

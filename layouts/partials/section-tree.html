@@ -2,7 +2,7 @@
 {{- range .section.Sections.ByTitle -}}
 <section class="subject-group level-{{ $lvl }}" id="{{ .File.ContentBaseName | urlize }}">
   {{ printf "<h%d>" $lvl | safeHTML }}<a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a>{{ printf "</h%d>" $lvl | safeHTML }}
-  {{ if eq $lvl 2 }}{{ with index site.Data.subjects .Params.folder }}{{ with .description }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}{{ end }}
+  {{ if eq $lvl 2 }}{{ with .Params.folder }}{{ with index site.Data.subjects . }}{{ with .description }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}{{ end }}{{ end }}
   {{ with .RegularPages }}
   <ol class="compact-list">
     {{ range . }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> <a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
