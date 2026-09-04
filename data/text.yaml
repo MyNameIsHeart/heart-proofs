@@ -21,7 +21,7 @@ kinds:
   summaries: "Summary"
   thoughts: "Thought"
   recommendations: "Recommendation"
-  study-spaces: "Study space"
+  study-spaces: "Study spaces"
 
 subscribe:
   heading: "Get the proofs by email"
