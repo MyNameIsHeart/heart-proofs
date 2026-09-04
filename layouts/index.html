@@ -11,16 +11,27 @@
 
 {{ $posts := where site.RegularPages "Section" "in" site.Params.postSections }}
 {{ $math := where site.RegularPages "Section" "in" site.Params.mathSections }}
+{{ $other := where $posts "Section" "not in" site.Params.mathSections }}
 <div class="home-grid">
+  <div class="latest-col">
   <section class="latest">
-    {{ with $t.latest_heading }}<h2>{{ . }}</h2>{{ end }}
-    {{ range first 8 $posts }}
+    {{ with $t.latest_math_heading }}<h2>{{ . }}</h2>{{ end }}
+    {{ range first 8 $math }}
       {{ partial "card.html" . }}
     {{ else }}
       {{ with $t.empty }}<p class="muted">{{ . }}</p>{{ end }}
     {{ end }}
-    {{ if gt (len $posts) 8 }}{{ with $t.all_math }}<p><a class="more" href="{{ "math/" | relURL }}">{{ . }}</a></p>{{ end }}{{ end }}
+    {{ if gt (len $math) 8 }}{{ with $t.all_math }}<p><a class="more" href="{{ "math/" | relURL }}">{{ . }}</a></p>{{ end }}{{ end }}
   </section>
+  {{ with $other }}
+  <section class="latest">
+    {{ with $t.latest_other_heading }}<h2>{{ . }}</h2>{{ end }}
+    {{ range first 8 . }}
+      {{ partial "card.html" . }}
+    {{ end }}
+  </section>
+  {{ end }}
+  </div>
   <aside class="sidebar">
     {{ $subjects := slice }}
     {{ range site.Params.mathSections }}{{ with site.GetPage (printf "/%s" .) }}{{ range .Sections.ByTitle }}{{ $subjects = $subjects | append . }}{{ end }}{{ end }}{{ end }}

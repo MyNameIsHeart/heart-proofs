@@ -1,5 +1,6 @@
 ---
 title: "London"
+date: 2026-09-04
 ---
 <div class="gallery">
 
