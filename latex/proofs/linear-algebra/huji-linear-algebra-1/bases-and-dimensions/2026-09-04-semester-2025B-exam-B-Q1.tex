@@ -1,0 +1,110 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+
+\begin{document}
+\title{{\Large Semester 2025B, Exam B, Q1\vspace{-2em}}}
+\maketitle
+\begin{problem*}
+Let $V$ be a finitely generated vector space such that $\dim\ V=n$,
+and let $\left(v_{1},\dots,v_{n}\right)$ be a sequence of vectors
+from $V$. Prove that $\left(v_{1},\dots,v_{n}\right)$ is linearly
+independent if and only if $\left(v_{1},\dots,v_{n}\right)$ spans
+$V$.
+\end{problem*}
+\begin{proof}
+We prove the two implications separately.
+
+\medskip{}
+
+\textbf{$\left(\Rightarrow\right)$: }
+
+Let us assume that $\left(v_{1},\dots,v_{n}\right)$ is linearly independent.
+That means that the only solution to the equation $a_{1}v_{1}+\dots+a_{n}v_{n}=0$
+s.t $a_{1},\dots,a_{n}\in\mathbb{F}$ is $a_{1}=\dots=a_{n}=0$. 
+
+Let us assume for the sake of contradiction that $\left(v_{1},\dots,v_{n}\right)$
+doesn't span $V$. 
+
+In that case, $\exists w\in V\ s.t\ w\notin\text{Span }\left(v_{1},\dots,v_{n}\right)$.
+
+In other words, w is not a linear combination of this sequence.
+
+Recall the following: if a vector is not a linear combination of a
+sequence, and if the sequence is linearly independent, then we can
+add it to the sequence and the new sequence will also be linearly
+independent - which means $\left(v_{1},\dots,v_{n},w\right)$ is still
+linearly independent.
+
+On the other hand, recall that if $\dim\ V=n$ and a sequence of vectors
+is of length $k>n$, then it must be linearly dependent. 
+
+We concluded that $\left(v_{1},\dots,v_{n},w\right)$, a sequence
+of vectors from $V$ of length $n+1>n$ is still linearly independent,
+which is a contradiction; so $\left(v_{1},\dots,v_{n}\right)$ must
+span $V$, as required.
+
+\medskip{}
+
+\textbf{$\left(\Leftarrow\right)$: }
+
+Let us assume that $\left(v_{1},\dots,v_{n}\right)$ spans $V$ and
+assume for the sake of contradiction that $\left(v_{1},\dots,v_{n}\right)$
+is linearly dependent. 
+
+Recall that if a sequence is linearly dependent, one of its vectors
+can be presented as a linear combination of the other vectors.
+
+Then $\exists1\le i\le n$ s.t $v_{i}$ is a linear combination of
+$\hat{v}=\left(v_{1},\dots,v_{i-1},v_{i+1},\dots,v_{n}\right)$.
+
+Recall that if a sequence of vectors spans $V$ and is linearly dependent,
+we can remove a vector that is a linear combination of the other vectors
+and the sequence will maintain its spanning property. Therefore, $\hat{v}$
+spans $V$. 
+
+However, $\hat{v}$ is of length $n-1$, and another standard result
+specifies that for every sequence $\bar{v}$ which spans $V$, $\dim\ V\le len(\bar{v})$.
+This means $n\le n-1$ which is a contradiction; therefore $\left(v_{1},\dots,v_{n}\right)$
+must be linearly independent, as required.
+\end{proof}
+\begin{quote}
+My thanks to one ordered 100-tuple 
+\end{quote}
+
+\end{document}
