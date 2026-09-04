@@ -1,13 +1,22 @@
 {{ define "main" }}
+{{- $isRoot := and .Parent .Parent.IsHome -}}
 <header class="page-header">
+  {{ if not $isRoot }}{{ partial "crumbs.html" . }}{{ end }}
   <h1>{{ .Title }}</h1>
   {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
 </header>
+{{ if in site.Params.postSections .Section }}
 <section class="post-list">
-  {{ range .RegularPages }}
+  {{ range .RegularPagesRecursive }}
     {{ partial "card.html" . }}
   {{ else }}
     {{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}
   {{ end }}
 </section>
+{{ else }}
+<ul class="plain-list">
+  {{ range .Sections.ByTitle }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+  {{ range .RegularPages.ByTitle }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+</ul>
+{{ end }}
 {{ end }}
