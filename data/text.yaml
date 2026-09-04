@@ -1,5 +1,6 @@
 home:
-  latest_heading: "Latest"
+  latest_math_heading: "Latest proofs"
+  latest_other_heading: "Latest off-topic"
   subjects_heading: "By subject"
   elsewhere_heading: "Elsewhere"
   elsewhere:
@@ -20,6 +21,7 @@ kinds:
   summaries: "Summary"
   thoughts: "Thought"
   recommendations: "Recommendation"
+  study-spaces: "Study space"
 
 subscribe:
   heading: "Get the proofs by email"

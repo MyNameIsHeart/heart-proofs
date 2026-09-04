@@ -1,3 +1,4 @@
 ---
 title: "England"
+layout: bysubject
 ---
