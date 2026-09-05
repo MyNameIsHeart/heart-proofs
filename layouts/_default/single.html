@@ -13,18 +13,17 @@
     {{ else }}
     {{ with partial "crumbs.html" . }}<div class="card-meta">{{ . }}</div>{{ end }}
     {{ end }}
-    <h1>{{ .Title }}</h1>
+    <h1{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</h1>
     {{ with .Params.subtitle }}<p class="lede">{{ . }}</p>{{ end }}
-    {{ if or .Params.pdf .Params.tex .Params.lyx }}
+    {{ if or .Params.pdf .Params.tex }}
     <p class="downloads">
       {{ with .Params.pdf }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.pdf }}</a>{{ end }}
       {{ with .Params.tex }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.tex }}</a>{{ end }}
-      {{ with .Params.lyx }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.lyx }}</a>{{ end }}
     </p>
     {{ end }}
   </header>
 
-  <div class="post-body">
+  <div class="post-body"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>
     {{ .Content | replaceRE `(href|src)="/` (printf `$1="%s/` (strings.TrimSuffix "/" ("" | relURL))) | safeHTML }}
   </div>
 
@@ -32,7 +31,15 @@
   <p class="tags">{{ with $t.tags_prefix }}{{ . }} {{ end }}{{ range . }}<a href="{{ printf "tags/%s/" (urlize .) | relURL }}">#{{ . }}</a> {{ end }}</p>
   {{ end }}
 
-  {{ if $isPost }}
+  {{ if .Params.part }}
+  {{ $parts := .Parent.RegularPages.ByWeight }}
+  {{ $i := 0 }}{{ range $k, $p := $parts }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $i = $k }}{{ end }}{{ end }}
+  <nav class="post-nav parts-nav"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>
+    {{ if gt $i 0 }}{{ with index $parts (sub $i 1) }}<a class="prev" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }}
+    <a class="up" href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a>
+    {{ if lt (add $i 1) (len $parts) }}{{ with index $parts (add $i 1) }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }}
+  </nav>
+  {{ else if $isPost }}
   <nav class="post-nav">
     {{ with .PrevInSection }}<a class="prev" href="{{ .RelPermalink }}">{{ with $t.older }}<span class="muted small">{{ . }}</span><br>{{ end }}← {{ .Title }}</a>{{ end }}
     {{ with .NextInSection }}<a class="next" href="{{ .RelPermalink }}">{{ with $t.newer }}<span class="muted small">{{ . }}</span><br>{{ end }}{{ .Title }} →</a>{{ end }}

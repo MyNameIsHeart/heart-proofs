@@ -4,7 +4,8 @@
   {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
 </header>
 <section class="post-list">
-  {{ range where site.RegularPages "Section" "in" site.Params.mathSections }}
+  {{ $sums := where site.Pages "Layout" "summary" }}
+  {{ range sort ((where (where site.RegularPages "Section" "in" site.Params.mathSections) "Params.part" "!=" true) | union $sums) "Date" "desc" }}
     {{ partial "card.html" . }}
   {{ else }}
     {{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}
