@@ -1,0 +1,42 @@
+{{ define "main" }}
+{{- $t := site.Data.text.post -}}
+{{- $lang := .Params.lang -}}
+<article class="post math-post">
+  <header class="post-header">
+    <div class="card-meta">
+      {{ with index site.Data.text.kinds .Section }}<span class="badge badge-{{ $.Section }}">{{ . }}</span>{{ end }}
+      {{ partial "crumbs.html" . }}
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+    </div>
+    <h1{{ with $lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</h1>
+    {{ if or .Params.pdf .Params.tex }}
+    <p class="downloads">
+      {{ with .Params.pdf }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.pdf }}</a>{{ end }}
+      {{ with .Params.tex }}<a href="{{ strings.TrimPrefix "/" . | relURL }}" download>{{ $t.tex }}</a>{{ end }}
+    </p>
+    {{ end }}
+  </header>
+
+  <div class="post-body"{{ with $lang }} lang="{{ . }}"{{ end }}>
+    {{ .Content | replaceRE `(href|src)="/` (printf `$1="%s/` (strings.TrimSuffix "/" ("" | relURL))) | safeHTML }}
+  </div>
+
+  <nav class="parts"{{ with $lang }} lang="{{ . }}"{{ end }}>
+    <ol class="parts-list">
+      {{ range .RegularPages.ByWeight }}
+      {{ $part := . }}
+      <li>
+        <a class="part-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{ with .Params.toc }}
+        <ul class="part-toc">
+          {{ range . }}<li class="toc-l{{ .level }}"><a href="{{ $part.RelPermalink }}#{{ .id }}">{{ .text }}</a></li>{{ end }}
+        </ul>
+        {{ end }}
+      </li>
+      {{ end }}
+    </ol>
+  </nav>
+</article>
+
+{{ partial "subscribe.html" (dict "compact" false) }}
+{{ end }}

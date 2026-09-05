@@ -130,6 +130,8 @@ def build(tex: Path, mode: str, base_url: str, sender: str, from_name: str) -> d
     section, subject, topic, slug = loc
     content = CONTENT_DIR / section / subject / topic / f"{slug}.html"
     if not content.exists():
+        content = CONTENT_DIR / section / subject / topic / slug / "_index.html"
+    if not content.exists():
         return None
     fm = front_matter(content)
     if fm.get("draft") == "true":

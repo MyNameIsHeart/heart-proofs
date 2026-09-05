@@ -62,6 +62,145 @@ def read_tex(path: Path) -> str:
             continue
     return raw.decode("utf-8", errors="replace")
 
+HEBREW_RE = re.compile(r"\\documentclass\[[^\]]*hebrew[^\]]*\]|\\usepackage\[[^\]]*hebrew[^\]]*\]\{babel\}|\\setmainlanguage\{hebrew\}")
+MATH_ENVS = ("align", "align*", "equation", "equation*", "gather", "gather*", "multline", "multline*", "eqnarray", "eqnarray*", "displaymath")
+
+
+def brace_arg(s: str, i: int) -> int:
+    depth = 0
+    j = i
+    while j < len(s):
+        c = s[j]
+        if c == "\\":
+            j += 2
+            continue
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return j
+        j += 1
+    return -1
+
+
+def rewrap(tex: str, macro: str, lang: str) -> str:
+    out = []
+    i = 0
+    pat = "\\" + macro + "{"
+    while True:
+        k = tex.find(pat, i)
+        if k < 0 or (k > 0 and tex[k - 1] == "\\"):
+            if k < 0:
+                out.append(tex[i:])
+                break
+            out.append(tex[i:k + 1])
+            i = k + 1
+            continue
+        end = brace_arg(tex, k + len(pat) - 1)
+        if end < 0:
+            out.append(tex[i:])
+            break
+        out.append(tex[i:k])
+        out.append("\\foreignlanguage{%s}{%s}" % (lang, tex[k + len(pat):end]))
+        i = end + 1
+    return "".join(out)
+
+
+def unbox(tex: str) -> str:
+    out = []
+    i = 0
+    pat = "\\fbox{"
+    while True:
+        k = tex.find(pat, i)
+        if k < 0:
+            out.append(tex[i:])
+            break
+        end = brace_arg(tex, k + len(pat) - 1)
+        if end < 0:
+            out.append(tex[i:])
+            break
+        out.append(tex[i:k])
+        out.append("\\begin{boxed}" + tex[k + len(pat):end] + "\\end{boxed}")
+        i = end + 1
+    return "".join(out)
+
+
+def bidi(tex: str) -> str:
+    tex = rewrap(tex, "L", "english")
+    tex = rewrap(tex, "R", "hebrew")
+    tex = re.sub(r"\\beginL\s*(.*?)\\endL", lambda m: "\\foreignlanguage{english}{%s}" % m.group(1), tex, flags=re.S)
+    tex = re.sub(r"\\beginR\s*(.*?)\\endR", lambda m: "\\foreignlanguage{hebrew}{%s}" % m.group(1), tex, flags=re.S)
+    tex = re.sub(r"\\detokenize\{([^}]*)\}", r"\1", tex)
+    return tex
+
+
+def unmirror(tex: str) -> str:
+    head, sep, body = tex.partition("\\begin{document}")
+    if not sep:
+        return tex
+    out = []
+    i = 0
+    n = len(body)
+    math = 0
+    ltr: list[int] = []
+    depth = 0
+    while i < n:
+        c = body[i]
+        if c == "\\":
+            m = re.match(r"\\(begin|end)\{([^}]*)\}", body[i:])
+            if m:
+                if m.group(2) in MATH_ENVS:
+                    math += 1 if m.group(1) == "begin" else -1
+                out.append(m.group(0))
+                i += len(m.group(0))
+                continue
+            if body.startswith("\\foreignlanguage{english}{", i):
+                out.append("\\foreignlanguage{english}{")
+                i += len("\\foreignlanguage{english}{")
+                depth += 1
+                ltr.append(depth)
+                continue
+            if body.startswith("\\[", i) or body.startswith("\\(", i):
+                math += 1
+                out.append(body[i:i + 2]); i += 2
+                continue
+            if body.startswith("\\]", i) or body.startswith("\\)", i):
+                math = max(0, math - 1)
+                out.append(body[i:i + 2]); i += 2
+                continue
+            out.append(body[i:i + 2]); i += 2
+            continue
+        if c == "$":
+            if body.startswith("$$", i):
+                out.append("$$"); i += 2
+            else:
+                out.append("$"); i += 1
+            math = 0 if math else 1
+            continue
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            if ltr and ltr[-1] == depth:
+                ltr.pop()
+            depth -= 1
+        if not math and not ltr:
+            if c == "(":
+                c = ")"
+            elif c == ")":
+                c = "("
+            elif c == "[" and body[i - 1:i] == "{" and body[i + 1:i + 2] == "}":
+                c = "]"
+            elif c == "]" and body[i - 1:i] == "{" and body[i + 1:i + 2] == "}":
+                c = "["
+        out.append(c)
+        i += 1
+    return head + sep + "".join(out)
+
+
+def is_hebrew(tex: str) -> bool:
+    return HEBREW_RE.search(tex) is not None
+
 
 def preprocess(tex: str) -> str:
 
@@ -82,6 +221,10 @@ def preprocess(tex: str) -> str:
 
 
     tex = re.sub(r"\\inputencoding\{[^}]*\}", "", tex)
+    tex = unbox(tex)
+    tex = bidi(tex)
+    if is_hebrew(tex):
+        tex = unmirror(tex)
     return tex
 
 
@@ -292,6 +435,90 @@ def locate(tex_path: Path) -> tuple[str, str, str, str] | None:
     return None
 
 
+COLOR_RE = re.compile(r'<span style="color: ([a-zA-Z]+)">')
+KNOWN_COLORS = {"blue", "violet", "teal", "magenta", "red", "green", "orange", "gray", "grey", "brown", "cyan", "purple", "olive", "lime", "pink"}
+IMG_RE = re.compile(r'<img src="([^"]+)"([^>]*)/?>')
+H2_RE = re.compile(r'<h2( id="[^"]*")?>(.*?)</h2>', re.S)
+HEAD_RE = re.compile(r'<h([2-6]) id="([^"]*)">(.*?)</h\1>', re.S)
+
+
+def colorize(html: str) -> str:
+    def repl(m: re.Match) -> str:
+        c = m.group(1).lower()
+        return f'<span class="tc tc-{c}">' if c in KNOWN_COLORS else m.group(0)
+    return COLOR_RE.sub(repl, html)
+
+
+def copy_images(html: str, tex_dir: Path, rel: str) -> str:
+    def repl(m: re.Match) -> str:
+        src, attrs = m.group(1), m.group(2)
+        if src.startswith(("http://", "https://", "/", "data:")):
+            return m.group(0)
+        p = (tex_dir / src).resolve()
+        try:
+            inner = p.relative_to(tex_dir.resolve())
+        except ValueError:
+            return m.group(0)
+        if not p.is_file():
+            return m.group(0)
+        dst = FILES_DIR / rel / inner
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(p, dst)
+        attrs = re.sub(r'\s*alt="image"', ' alt=""', attrs)
+        return f'<img src="/files/{rel}/{inner.as_posix()}"{attrs}>'
+    return IMG_RE.sub(repl, html)
+
+
+def strip_tags(s: str) -> str:
+    return re.sub(r"\s+", " ", unescape(TAG_RE.sub("", s))).strip()
+
+
+def shift_headings(html: str, by: int) -> str:
+    def repl(m: re.Match) -> str:
+        lvl = max(2, min(6, int(m.group(1)) - by))
+        return f'<h{lvl} id="{m.group(2)}">{m.group(3)}</h{lvl}>'
+    return HEAD_RE.sub(repl, html)
+
+
+def normalize_levels(html: str) -> str:
+    levels = sorted({int(l) for l in re.findall(r"<h([2-6]) id=", html)})
+    if not levels:
+        return html
+    mapping = {l: i + 2 for i, l in enumerate(levels)}
+    def repl(m: re.Match) -> str:
+        lvl = mapping[int(m.group(1))]
+        return f'<h{lvl} id="{m.group(2)}">{m.group(3)}</h{lvl}>'
+    return HEAD_RE.sub(repl, html)
+
+
+def toc_of(html: str, max_level: int = 3) -> list[dict]:
+    out = []
+    for m in HEAD_RE.finditer(html):
+        lvl = int(m.group(1))
+        if lvl <= max_level:
+            out.append({"level": lvl, "id": m.group(2), "text": strip_tags(m.group(3))})
+    return out
+
+
+def split_parts(html: str) -> tuple[str, list[tuple[str, str]]]:
+    heads = list(H2_RE.finditer(html))
+    if not heads:
+        return html, []
+    intro = html[: heads[0].start()]
+    parts = []
+    for i, m in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(html)
+        parts.append((strip_tags(m.group(2)), html[m.end():end]))
+    return intro, parts
+
+
+def should_split(side: dict, html: str) -> bool:
+    if "split" in side:
+        return side["split"] is True
+    return len(html) > 80000 and len(H2_RE.findall(html)) >= 2
+
+
+
 def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose: bool) -> Path:
     date_str, slug = split_stem(tex_path.stem)
 
@@ -323,13 +550,14 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     out_files = FILES_DIR / rel
     out_files.mkdir(parents=True, exist_ok=True)
     links = {}
-    for ext in ("pdf", "tex", "lyx"):
+    for ext in ("pdf", "tex"):
         src = tex_path.with_suffix("." + ext)
         if src.exists():
             dst = out_files / f"{slug}.{ext}"
             shutil.copyfile(src, dst)
             links[ext] = f"/files/{rel}/{slug}.{ext}"
 
+    lang = side.get("lang") or ("he" if is_hebrew(tex) else "")
     fm = [
         "---",
         f"title: {yaml_str(title)}",
@@ -341,6 +569,8 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     ]
     for ext, url in links.items():
         fm.append(f"{ext}: {yaml_str(url)}")
+    if lang:
+        fm.append(f"lang: {yaml_str(lang)}")
     if side.get("draft") is True:
         fm.append("draft: true")
     if side.get("weight"):
@@ -349,6 +579,35 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
 
     out_dir = CONTENT_DIR / rel
     out_dir.mkdir(parents=True, exist_ok=True)
+    body = colorize(copy_images(body, tex_path.parent, f"{rel}"))
+    if should_split(side, body):
+        intro, parts = split_parts(body)
+        part_dir = out_dir / slug
+        part_dir.mkdir(parents=True, exist_ok=True)
+        head = fm[:-1] + ["layout: summary", "---"]
+        out_path = part_dir / "_index.html"
+        out_path.write_text("\n".join(head) + "\n" + intro, encoding="utf-8")
+        for i, (ptitle, chunk) in enumerate(parts, 1):
+            chunk = normalize_levels(chunk)
+            pfm = [
+                "---",
+                f"title: {yaml_str(ptitle)}",
+                f"date: {date.isoformat()}",
+                f"subject: {yaml_str(subject)}",
+                f"topic: {yaml_str(topic)}",
+                f"weight: {i}",
+                "part: true",
+                f"toc: {json.dumps(toc_of(chunk), ensure_ascii=False)}",
+            ]
+            if lang:
+                pfm.append(f"lang: {yaml_str(lang)}")
+            if side.get("draft") is True:
+                pfm.append("draft: true")
+            pfm.append("---")
+            (part_dir / f"{i:02d}.html").write_text("\n".join(pfm) + "\n" + chunk, encoding="utf-8")
+        if verbose:
+            print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)} (+{len(parts)})")
+        return out_path
     out_path = out_dir / f"{slug}.html"
     out_path.write_text("\n".join(fm) + "\n" + body, encoding="utf-8")
     if verbose:
@@ -385,7 +644,7 @@ def clean() -> None:
         if base.exists():
             for p in base.rglob("*.html"):
                 p.unlink()
-            for p in base.rglob("_index.md"):
+            for p in list(base.rglob("_index.md")) + list(base.rglob("_index.html")):
                 if p.parent != base:
                     p.unlink()
             for d in sorted((d for d in base.rglob("*") if d.is_dir()), reverse=True):

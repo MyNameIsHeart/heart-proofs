@@ -181,6 +181,33 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .proof::after { content: ""; display: table; clear: both; }
 
 [lang="he"], [lang="ar"] { direction: rtl; unicode-bidi: isolate; }
+[lang="en"] { direction: ltr; unicode-bidi: isolate; }
+.katex, .katex-display { direction: ltr; unicode-bidi: isolate; }
+.tc-blue { color: #2457c5; } .tc-violet { color: #7a3fb5; } .tc-teal { color: #0f7f7a; } .tc-magenta { color: #b5178f; } .tc-red { color: #c0262d; } .tc-green { color: #1f8a3b; } .tc-orange { color: #c9651a; } .tc-gray, .tc-grey { color: #6b6b6b; } .tc-brown { color: #8a5a2b; } .tc-cyan { color: #0e7c9c; } .tc-purple { color: #7a3fb5; } .tc-olive { color: #6f7d1f; } .tc-lime { color: #5f9a1a; } .tc-pink { color: #c2447e; }
+@media (prefers-color-scheme: dark) {
+  .tc-blue { color: #7fa6ff; } .tc-violet { color: #c39bff; } .tc-teal { color: #5fd3cc; } .tc-magenta { color: #f07ad2; } .tc-red { color: #ff7b7b; } .tc-green { color: #6fd98a; } .tc-orange { color: #ffab5e; } .tc-gray, .tc-grey { color: #b0b0b0; } .tc-brown { color: #d9a06a; } .tc-cyan { color: #6dd0ec; } .tc-purple { color: #c39bff; } .tc-olive { color: #c5d55a; } .tc-lime { color: #a8e05a; } .tc-pink { color: #ff9ccb; }
+}
+.boxed { border: 1px solid var(--border); border-radius: var(--radius); padding: 0.8rem 1.2rem; margin: 0 0 1.2em; background: var(--bg-2); }
+.boxed p:last-child { margin-bottom: 0; }
+.post-body img { max-height: 28rem; width: auto; }
+.parts { margin: 2rem 0; max-width: var(--measure); }
+.parts-list { padding-inline-start: 1.4rem; margin: 0; }
+.parts-list > li { margin: 0.6rem 0; }
+.part-link { font-weight: 600; }
+.part-toc { list-style: none; padding-inline-start: 0.8rem; margin: 0.25rem 0 0.8rem; font-size: 0.95em; border-inline-start: 2px solid var(--border); }
+.part-toc li { padding: 0.1rem 0; }
+.part-toc a { color: var(--text); }
+.part-toc a:hover { color: var(--accent); }
+.toc-l3 { padding-inline-start: 1.2rem; }
+.toc-l4 { padding-inline-start: 2.4rem; }
+.parts-nav { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+.parts-nav .prev { text-align: start; }
+.parts-nav .up { text-align: center; color: var(--muted); font-family: var(--sans); font-size: 0.9rem; }
+.parts-nav .next { text-align: end; }
+.parts-nav .prev::before { content: "← "; }
+.parts-nav .next::after { content: " →"; }
+[lang="he"].parts-nav .prev::before { content: "→ "; }
+[lang="he"].parts-nav .next::after { content: " ←"; }
 
 .nobr { white-space: nowrap; }
 

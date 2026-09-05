@@ -7,7 +7,7 @@
 </header>
 {{ if in site.Params.postSections .Section }}
 <section class="post-list">
-  {{ range .RegularPagesRecursive }}
+  {{ range where .RegularPagesRecursive "Params.part" "!=" true }}
     {{ partial "card.html" . }}
   {{ else }}
     {{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}
