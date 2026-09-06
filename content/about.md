@@ -2,7 +2,7 @@
 layout: "page"
 title: "About"
 ---
-I study mathematics and computer science at HUJI and I like pretty math proofs.
+I study mathematics and computer science at HUJI, and I like pretty math proofs.
 
 ## Credit and copyright
 
