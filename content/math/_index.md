@@ -1,4 +1,4 @@
 ---
-title: "All math"
+title: "All math posts"
 layout: math
 ---

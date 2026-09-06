@@ -1,15 +1,17 @@
 home:
   latest_math_heading: "Latest proofs"
   latest_other_heading: "Latest off-topic"
-  subjects_heading: "By subject"
+  subjects_heading: "Proofs by subject"
   elsewhere_heading: "Elsewhere"
   elsewhere:
-    - label: "Study resources"
-      url: "resources/"
-    - label: "Where to study"
-      url: "study-spaces/"
-    - label: "Thoughts & recommendations"
+    - label: "Thoughts"
       url: "thoughts/"
+    - label: "Recommendations"
+      url: "recommendations/"
+    - label: "Resources"
+      url: "resources/"
+    - label: "Study spaces"
+      url: "study-spaces/"
     - label: "About"
       url: "about/"
   stats: "%d math posts so far · %d subjects"
@@ -17,10 +19,10 @@ home:
   empty: ""
 
 kinds:
-  proofs: "Proof"
-  summaries: "Summary"
-  thoughts: "Thought"
-  recommendations: "Recommendation"
+  proofs: "Proofs"
+  summaries: "Summaries"
+  thoughts: "Thoughts"
+  recommendations: "Recommendations"
   study-spaces: "Study spaces"
 
 subscribe:

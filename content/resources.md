@@ -1,3 +1,4 @@
 ---
-title: "Study resources"
+layout: "page"
+title: "Resources"
 ---

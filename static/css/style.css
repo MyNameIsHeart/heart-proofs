@@ -124,6 +124,9 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .lede { font-size: 1.15rem; color: var(--muted); max-width: var(--measure); }
 .lede p:last-child { margin-bottom: 0; }
 .post-list { max-width: 48rem; }
+.page-body { max-width: var(--measure); font-size: 1.08rem; padding-bottom: 2rem; }
+.page-body h2 { margin-top: 2em; }
+.page-body p { margin-bottom: 1.1em; }
 
 .subject-jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2rem; font-family: var(--sans); font-size: 0.85rem; }
 .subject-jump a { border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.8rem; color: var(--text); }
@@ -235,7 +238,6 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .footer-brand .logo { width: 20px; height: 20px; color: var(--accent); }
 .footer-links { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-family: var(--sans); }
 
-.kind-page .post .post-body h2 { border-top: 0; padding-top: 0; }
 .resource-list dt { font-weight: 600; margin-top: 0.9em; }
 .resource-list dd { margin: 0.15em 0 0; color: var(--muted); }
 
