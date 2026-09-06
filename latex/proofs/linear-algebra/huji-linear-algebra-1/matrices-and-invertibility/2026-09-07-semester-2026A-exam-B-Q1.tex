@@ -1,0 +1,91 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{{\Large Semester 2026A, Exam B, Q1\vspace{-2em}}}
+
+\maketitle
+\textbf{Problem.} Let $A,B\in M_{n\times n}(\mathbb{F})$ be such
+that $AB=I_{n}$. Prove that $A$ and $B$ are inverses of each other.
+
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+As we know, the homogeneous system $Bx=0$ has at least one solution
+(the trivial solution), hence we can mark the set of its solutions
+as $U$, and definitionally $\ker(T_{B})=U$. 
+
+Let $x\in U$, and let us multiply both sides on the left by A:
+
+\[
+A\cdot Bx=A\cdot0\therefore\quad A\cdot Bx=0
+\]
+
+matrix multiplication is associative, hence 
+\[
+AB\cdot x=0\therefore\quad I_{n}\cdot x=0\therefore\quad x=0
+\]
+
+Which means $\ker(T_{B})=\{0\}$.
+
+Recall the theorem that $T_{B}$ is injective if and only if its kernel
+is 0, which means $T_{B}:\mathbb{\mathbb{F}}^{n}\rightarrow\mathbb{\mathbb{F}}^{n}$
+is injective.
+
+Furthermore, recall that a linear transformation between finite dimensional
+vector spaces of the same dimension is surjective if and only if it
+is injective. $\mathbb{\mathbb{F}}^{n}$ is a finite dimensional vector
+space of dimension $n\in\mathbb{N}$, therefore $T_{B}$ is bijective,
+which means $B$ is invertible, therefore B has an inverse $B^{-1}$
+and $BB^{-1}=B^{-1}B=I_{n}$.
+
+If we prove that $B^{-1}=A$, we get $BA=AB=I_{n}$, as required. 
+
+\[
+I_{n}B^{-1}=B^{-1}\underset{\text{substitution}}{\therefore}(AB)B^{-1}=B^{-1}\underset{\text{associativity}}{\therefore}A\left(BB^{-1}\right)=B^{-1}
+\]
+
+\[
+\therefore AI_{n}=B^{-1}\therefore A=B^{-1}
+\]
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
