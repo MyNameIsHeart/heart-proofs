@@ -15,8 +15,9 @@ home:
       url: "study-spaces/"
     - label: "About"
       url: "about/"
-  stats: "%d math posts so far · %d subjects"
-  all_math: "All math posts →"
+  stats: "%d proofs so far · %d subjects"
+  all_math: "All math posts"
+  all_summaries: "Summaries"
   empty: ""
 
 kinds:
