@@ -1,5 +1,6 @@
 home:
   latest_math_heading: "Latest proofs"
+  latest_summaries_heading: "Latest summaries"
   latest_other_heading: "Latest off-topic"
   subjects_heading: "Proofs by subject"
   elsewhere_heading: "Elsewhere"
