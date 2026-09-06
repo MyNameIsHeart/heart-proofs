@@ -1,0 +1,189 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+
+\begin{document}
+\newgeometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+\title{{\Large Semester 2026A, Exam A, Q3\vspace{-2em}}}
+\maketitle
+\begin{problem*}
+For each $a\in\mathbb{R}$ we will define a system of linear equations
+over $\mathbb{R}$ by 
+\[
+\begin{cases}
+7x+2ay+z & =a\\
+8x+3ay+z & =a\\
+10x+5ay+2z & =2a
+\end{cases}
+\]
+\end{problem*}
+Determine, for each value of $a$, whether the system has no solution,
+a unique solution, or infinitely many solutions.
+
+In the case where at least one solution exists, write the solution
+set in parametric form.\medskip{}
+
+We shall represent the system by its augmented matrix and reduce it
+to RREF using elementary row operations, keeping $a$ as a parameter.
+
+\[
+\begin{bmatrix}\begin{array}{ccc|c}
+7 & 2a & 1 & a\\
+8 & 3a & 1 & a\\
+10 & 5a & 2 & 2a
+\end{array}\end{bmatrix}\overset{R_{1}\leftrightarrow R_{3}}{\Longrightarrow}\begin{bmatrix}\begin{array}{ccc|c}
+10 & 5a & 2 & 2a\\
+8 & 3a & 1 & a\\
+7 & 2a & 1 & a
+\end{array}\end{bmatrix}\overset{R_{1}\rightarrow\frac{1}{10}R_{1}}{\Longrightarrow}\begin{bmatrix}\begin{array}{ccc|c}
+1 & \frac{1}{2}a & \frac{1}{5} & \frac{1}{5}a\\
+8 & 3a & 1 & a\\
+7 & 2a & 1 & a
+\end{array}\end{bmatrix}
+\]
+
+\[
+\overset{R_{2}\rightarrow R_{2}-8R_{1}}{\underset{R_{3}\rightarrow R_{3}-7R_{1}}{\Longrightarrow}}\begin{bmatrix}\begin{array}{ccc|c}
+1 & \frac{1}{2}a & \frac{1}{5} & \frac{1}{5}a\\
+0 & (3-\frac{8}{2})a & 1-\frac{8}{5} & (1-\frac{8}{5})a\\
+0 & (2-\frac{7}{2})a & 1-\frac{7}{5} & (1-\frac{7}{5})a
+\end{array}\end{bmatrix}=\begin{bmatrix}\begin{array}{ccc|c}
+1 & \frac{1}{2}a & \frac{1}{5} & \frac{1}{5}a\\
+0 & -a & -\frac{3}{5} & -\frac{3}{5}a\\
+0 & -\frac{3}{2}a & -\frac{2}{5} & -\frac{2}{5}a
+\end{array}\end{bmatrix}\overset{R_{2}\rightarrow-\frac{1}{a}R_{2}}{\underset{R_{3}\rightarrow-\frac{1}{a}R_{3}\ (*)}{\Longrightarrow}}\begin{bmatrix}\begin{array}{ccc|c}
+1 & \frac{1}{2}a & \frac{1}{5} & \frac{1}{5}a\\
+0 & 1 & \frac{3}{5a} & \frac{3}{5}\\
+0 & \frac{3}{2} & \frac{2}{5a} & \frac{2}{5}
+\end{array}\end{bmatrix}
+\]
+
+$(*)$ this step assumes that $a\neq0$, since we divide by $a$.
+The case $a=0$ is handled separately below. 
+
+\[
+\overset{R_{1}\rightarrow R_{1}-\frac{1}{2}aR_{2}}{\underset{R_{3}\rightarrow R_{3}-\frac{3}{2}R_{2}}{\Longrightarrow}}\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & \left(\frac{1}{5}-\frac{a}{2}\cdot\frac{3}{5a}\right) & \left(\frac{1}{5}a-\frac{a}{2}\cdot\frac{3}{5}\right)\\
+0 & 1 & \frac{3}{5a} & \frac{3}{5}\\
+0 & 0 & \left(\frac{2}{5a}-\frac{3}{2}\cdot\frac{3}{5a}\right) & \left(\frac{2}{5}-\frac{3}{2}\cdot\frac{3}{5}\right)
+\end{array}\end{bmatrix}=\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & \left(\frac{1}{5}-\frac{3a}{10a}\right) & \left(\frac{1}{5}a-\frac{3a}{10}\right)\\
+0 & 1 & \frac{3}{5a} & \frac{3}{5}\\
+0 & 0 & \left(\frac{2}{5a}-\frac{9}{10a}\right) & \left(\frac{2}{5}-\frac{9}{10}\right)
+\end{array}\end{bmatrix}=\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & \left(-\frac{1}{10}\right) & \left(-\frac{1}{10}a\right)\\
+0 & 1 & \frac{3}{5a} & \frac{3}{5}\\
+0 & 0 & \left(-\frac{1}{2a}\right) & \left(-\frac{5}{10}\right)
+\end{array}\end{bmatrix}
+\]
+
+\[
+\overset{R_{3}\rightarrow-2a\cdot R_{3}}{\underset{}{\Longrightarrow}}\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & \left(-\frac{1}{10}\right) & \left(-\frac{1}{10}a\right)\\
+0 & 1 & \frac{3}{5a} & \frac{3}{5}\\
+0 & 0 & 1 & a
+\end{array}\end{bmatrix}\overset{R_{1}\rightarrow R_{1}+\frac{1}{10}R_{3}}{\underset{R_{2}\rightarrow R_{2}-\frac{3}{5a}R_{3}}{\Longrightarrow}}\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & a
+\end{array}\end{bmatrix}
+\]
+
+Which gives the solution 
+\[
+\left\{ \begin{pmatrix}0\\
+0\\
+a
+\end{pmatrix}\right\} 
+\]
+
+Therefore, for each $a\in\mathbb{R}\setminus\{0\}$ , there is a unique
+solution.
+
+\medskip{}
+
+Case $a=0$. we return to the matrix obtained just before $(*)$ and
+substitute $a=0$:
+
+\[
+\begin{bmatrix}\begin{array}{ccc|c}
+1 & \frac{1}{2}a & \frac{1}{5} & \frac{1}{5}a\\
+0 & -a & -\frac{3}{5} & -\frac{3}{5}a\\
+0 & -\frac{3}{2}a & -\frac{2}{5} & -\frac{2}{5}a
+\end{array}\end{bmatrix}\underset{a=0}{\Longrightarrow}\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & \frac{1}{5} & 0\\
+0 & 0 & -\frac{3}{5} & 0\\
+0 & 0 & -\frac{2}{5} & 0
+\end{array}\end{bmatrix}\overset{R_{2}\rightarrow-5R_{2}}{\underset{R_{3}\rightarrow-5R_{3}}{\Longrightarrow}}\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & \frac{1}{5} & 0\\
+0 & 0 & 3 & 0\\
+0 & 0 & 2 & 0
+\end{array}\end{bmatrix}\overset{R_{1}\rightarrow R_{1}-\frac{1}{15}R_{2}}{\underset{R_{3}\rightarrow R_{3}-\frac{2}{3}R_{2}\text{ then }R_{2}\rightarrow\frac{1}{3}R_{2}}{\Longrightarrow}}\begin{bmatrix}\begin{array}{ccc|c}
+1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0
+\end{array}\end{bmatrix}
+\]
+
+and the set of solutions is therefore
+\[
+\left\{ \begin{pmatrix}0\\
+y\\
+0
+\end{pmatrix}:y\in\mathbb{R}\right\} 
+\]
+
+so the system has infinitely many solutions.
+
+\medskip{}
+
+To conclude, 
+\[
+\begin{cases}
+0\text{ solutions} & \text{No such }a\\
+1\text{\text{ solution}} & a\in\mathbb{R}\setminus\{0\}\\
+\infty\text{ solutions} & a\in\{0\}
+\end{cases}
+\]
+
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
