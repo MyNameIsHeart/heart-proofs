@@ -1,4 +1,4 @@
 ---
-title: "Lecture summaries"
+title: "Summaries"
 layout: bysubject
 ---
