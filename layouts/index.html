@@ -44,14 +44,6 @@
   <aside class="sidebar">
     {{ $subjects := slice }}{{ $seen := slice }}
     {{ range site.Params.mathSections }}{{ with site.GetPage (printf "/%s" .) }}{{ range .Sections.ByTitle }}{{ if not (in $seen .Params.folder) }}{{ $subjects = $subjects | append . }}{{ $seen = $seen | append .Params.folder }}{{ end }}{{ end }}{{ end }}{{ end }}
-    {{ with $t.all_math }}
-    <section class="all-math">
-      <ul class="subject-list">
-        <li><a href="{{ "math/" | relURL }}">{{ . }}</a> <span class="count">{{ len $math }}</span></li>
-        {{ with $t.all_summaries }}<li><a href="{{ "summaries/" | relURL }}">{{ . }}</a> <span class="count">{{ len (where $math "Section" "summaries") }}</span></li>{{ end }}
-      </ul>
-    </section>
-    {{ end }}
     {{ with $subjects }}
     <section>
       {{ with $t.subjects_heading }}<h2>{{ . }}</h2>{{ end }}
@@ -59,6 +51,14 @@
         {{ range . }}{{ $s := . }}<li><a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a> <span class="count">{{ $n := len (where (where $posts "Section" $s.Section) "Params.subject" $s.Params.folder) }}{{ if eq $s.Section "summaries" }}{{ $n = add $n (len (where $sums "Params.subject" $s.Params.folder)) }}{{ end }}{{ $n }}</span></li>{{ end }}
       </ul>
       {{ with $t.stats }}<p class="muted small stats-line">{{ printf . (len (where $posts "Section" "proofs")) (len $subjects) }}</p>{{ end }}
+    </section>
+    {{ end }}
+    {{ with $t.all_math }}
+    <section class="all-math">
+      <ul class="subject-list">
+        <li><a href="{{ "math/" | relURL }}">{{ . }}</a> <span class="count">{{ len $math }}</span></li>
+        {{ with $t.all_summaries }}<li><a href="{{ "summaries/" | relURL }}">{{ . }}</a> <span class="count">{{ len (where $math "Section" "summaries") }}</span></li>{{ end }}
+      </ul>
     </section>
     {{ end }}
     {{ with $t.elsewhere }}
