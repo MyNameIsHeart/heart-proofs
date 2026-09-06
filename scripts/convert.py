@@ -107,10 +107,10 @@ def rewrap(tex: str, macro: str, lang: str) -> str:
     return "".join(out)
 
 
-def unbox(tex: str) -> str:
+def wrap_macro(tex: str, macro: str, env: str) -> str:
     out = []
     i = 0
-    pat = "\\fbox{"
+    pat = "\\" + macro + "{"
     while True:
         k = tex.find(pat, i)
         if k < 0:
@@ -121,9 +121,15 @@ def unbox(tex: str) -> str:
             out.append(tex[i:])
             break
         out.append(tex[i:k])
-        out.append("\\begin{boxed}" + tex[k + len(pat):end] + "\\end{boxed}")
+        out.append("\\begin{%s}%s\\end{%s}" % (env, tex[k + len(pat):end], env))
         i = end + 1
     return "".join(out)
+
+
+def unbox(tex: str) -> str:
+    tex = wrap_macro(tex, "fbox", "boxed")
+    tex = wrap_macro(tex, "centerline", "center")
+    return tex
 
 
 def bidi(tex: str) -> str:
@@ -218,6 +224,8 @@ def preprocess(tex: str) -> str:
         return names.get(key, key[:-4].capitalize())
 
     tex = re.sub(r"\\protect\s*\\(\w+name)\b", repl, tex)
+    tex = re.sub(r"\\text\{\\ensuremath\{([^{}]*)\}\}", r"\1", tex)
+    tex = re.sub(r"\\protect\s*", "", tex)
 
 
     tex = re.sub(r"\\inputencoding\{[^}]*\}", "", tex)
@@ -528,13 +536,23 @@ def split_trailing_box(chunk: str) -> tuple[str, str]:
     return chunk, ""
 
 
-def move_boxes(intro: str, parts: list[tuple[str, str]]) -> tuple[str, list[tuple[str, str]]]:
+def with_notice(box: str, notice: str) -> str:
+    if not box or not notice:
+        return box
+    k = box.rstrip().rfind("</div>")
+    if k < 0:
+        return box
+    from html import escape
+    return box[:k] + '<p class="notice">' + escape(notice) + "</p>" + box[k:]
+
+
+def move_boxes(intro: str, parts: list[tuple[str, str]], notice: str = "") -> tuple[str, list[tuple[str, str]]]:
     if not parts:
         return intro, parts
     intro, box = split_trailing_box(intro)
     out = []
     for i, (title, chunk) in enumerate(parts):
-        chunk = box + chunk
+        chunk = with_notice(box, notice) + chunk
         if i + 1 < len(parts):
             chunk, box = split_trailing_box(chunk)
         out.append((title, chunk))
@@ -610,7 +628,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     out_dir.mkdir(parents=True, exist_ok=True)
     body = colorize(copy_images(body, tex_path.parent, f"{rel}"))
     if should_split(side, body):
-        intro, parts = move_boxes(*split_parts(body))
+        intro, parts = move_boxes(*split_parts(body), notice=str(side.get("notice") or ""))
         part_dir = out_dir / slug
         part_dir.mkdir(parents=True, exist_ok=True)
         head = fm[:-1] + ["layout: summary", "---"]
