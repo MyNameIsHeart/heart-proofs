@@ -158,8 +158,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .downloads a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 .downloads a::before { content: "↓ "; color: var(--accent); }
 .post-body { font-size: 1.08rem; }
-.post-body h2 { margin-top: 2.2em; padding-top: 0.6em; border-top: 1px solid var(--border); }
-.post-body hr + h2 { margin-top: 1.2em; padding-top: 0; border-top: 0; }
+.post-body h2 { margin-top: 2.2em; }
 .post-body p { margin-bottom: 1.1em; }
 .post-body li > p { margin-bottom: 0; }
 .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 0 0 2rem; }
