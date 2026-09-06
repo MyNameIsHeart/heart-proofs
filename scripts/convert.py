@@ -221,6 +221,7 @@ def preprocess(tex: str) -> str:
 
 
     tex = re.sub(r"\\inputencoding\{[^}]*\}", "", tex)
+    tex = re.sub(r"\\textbar(\{\})?", "|", tex)
     tex = unbox(tex)
     tex = bidi(tex)
     if is_hebrew(tex):
@@ -512,6 +513,34 @@ def split_parts(html: str) -> tuple[str, list[tuple[str, str]]]:
     return intro, parts
 
 
+def split_trailing_box(chunk: str) -> tuple[str, str]:
+    k = chunk.rfind('<div class="boxed">')
+    if k < 0:
+        return chunk, ""
+    depth = 0
+    for m in re.finditer(r"<div\b|</div>", chunk[k:]):
+        depth += 1 if m.group(0) == "<div" else -1
+        if depth == 0:
+            end = k + m.end()
+            if chunk[end:].strip():
+                return chunk, ""
+            return chunk[:k], chunk[k:end] + "\n"
+    return chunk, ""
+
+
+def move_boxes(intro: str, parts: list[tuple[str, str]]) -> tuple[str, list[tuple[str, str]]]:
+    if not parts:
+        return intro, parts
+    intro, box = split_trailing_box(intro)
+    out = []
+    for i, (title, chunk) in enumerate(parts):
+        chunk = box + chunk
+        if i + 1 < len(parts):
+            chunk, box = split_trailing_box(chunk)
+        out.append((title, chunk))
+    return intro, out
+
+
 def should_split(side: dict, html: str) -> bool:
     if "split" in side:
         return side["split"] is True
@@ -581,7 +610,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     out_dir.mkdir(parents=True, exist_ok=True)
     body = colorize(copy_images(body, tex_path.parent, f"{rel}"))
     if should_split(side, body):
-        intro, parts = split_parts(body)
+        intro, parts = move_boxes(*split_parts(body))
         part_dir = out_dir / slug
         part_dir.mkdir(parents=True, exist_ok=True)
         head = fm[:-1] + ["layout: summary", "---"]
