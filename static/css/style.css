@@ -195,6 +195,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .boxed { border: 1px solid var(--border); border-radius: var(--radius); padding: 0.8rem 1.2rem; margin: 0 0 1.2em; background: var(--bg-2); }
 .boxed p:last-child { margin-bottom: 0; }
 .boxed .notice { margin-top: 0.5em; font-size: 0.92em; color: var(--muted); }
+.post-body .boxed + * { margin-top: 1.6em; padding-top: 1.6em; border-top: 1px solid var(--border); }
 .post-body img { max-height: 28rem; width: auto; }
 .post-body .center { text-align: center; }
 .post-body .boxed .center { text-align: start; }
