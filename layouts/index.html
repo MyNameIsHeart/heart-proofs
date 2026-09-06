@@ -40,7 +40,7 @@
     <section>
       {{ with $t.subjects_heading }}<h2>{{ . }}</h2>{{ end }}
       <ul class="subject-list">
-        {{ range . }}{{ $s := . }}<li><a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a> <span class="count">{{ add (len (where $posts "Params.subject" $s.Params.folder)) (len (where $sums "Params.subject" $s.Params.folder)) }}</span></li>{{ end }}
+        {{ range . }}{{ $s := . }}<li><a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a> <span class="count">{{ $n := len (where (where $posts "Section" $s.Section) "Params.subject" $s.Params.folder) }}{{ if eq $s.Section "summaries" }}{{ $n = add $n (len (where $sums "Params.subject" $s.Params.folder)) }}{{ end }}{{ $n }}</span></li>{{ end }}
       </ul>
     </section>
     {{ end }}
