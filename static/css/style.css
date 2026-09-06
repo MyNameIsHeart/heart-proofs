@@ -198,6 +198,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .post-body img { max-height: 28rem; width: auto; }
 .post-body .center { text-align: center; }
 .post-body .boxed .center { text-align: start; }
+.post-body .boxed .center .center { text-align: center; }
 .post-body p:has(> img:only-child), .post-body p:has(> span:only-child > img:only-child) { text-align: center; }
 .parts { margin: 2rem 0; max-width: var(--measure); }
 .parts-list { padding-inline-start: 1.4rem; margin: 0; }
