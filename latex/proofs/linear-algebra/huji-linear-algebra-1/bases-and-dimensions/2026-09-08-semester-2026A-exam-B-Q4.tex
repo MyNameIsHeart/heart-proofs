@@ -1,0 +1,87 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{{\Large Semester 2026A, Exam A, Q4\vspace{-2em}}}
+
+\maketitle
+\textbf{Problem.} Let $V$ be a vector space and let $v_{1},\dots,v_{n},u,w\in V$
+be such that the sequence $(v_{1},v_{2},\dots,v_{n},u)$ is linearly
+dependent, while the sequence $(v_{1},\dots,v_{n},w)$ is linearly
+independent. 
+
+Is it necessarily the case that $w\notin\operatorname{Span}(v_{1},v_{2},\dots,v_{n},u)$?
+
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+The sequence $(v_{1},\dots,v_{n},w)$ is linearly independent, which
+means that the sequence $(v_{1},\dots,v_{n})$ is also linearly independent
+(recall that if a sequence is linearly dependent one of the vectors
+is a linear combination of the others, hence a sequence that is already
+linearly dependent will stay linearly dependent when we add a vector
+to it). 
+
+Recall that if you add a vector to a linearly independent sequence
+which does not belong to the span of this sequence, you receive a
+new sequence which is still linearly independent, hence since $(v_{1},v_{2},\dots,v_{n},u)$
+is linearly dependent we get that 
+\[
+u\in\operatorname{Span}(v_{1},v_{2},\dots,v_{n})
+\]
+
+Recall that if a vector belongs to the span of a sequence, the span
+of this sequence is equal to the span of this sequence along with
+said vector, hence 
+
+\[
+\operatorname{Span}(v_{1},v_{2},\dots,v_{n})=\operatorname{Span}(v_{1},v_{2},\dots,v_{n},u)
+\]
+Which means $w$ cannot belong to $\operatorname{Span}(v_{1},v_{2},\dots,v_{n},u)$,
+because in that 
+\[
+w\in\operatorname{Span}(v_{1},v_{2},\dots,v_{n})
+\]
+
+which would mean the sequence $(v_{1},\dots,v_{n},w)$ is linearly
+dependent.
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
