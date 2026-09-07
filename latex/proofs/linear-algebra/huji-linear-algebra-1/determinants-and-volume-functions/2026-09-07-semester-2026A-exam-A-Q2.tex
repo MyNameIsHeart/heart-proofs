@@ -1,0 +1,205 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{{\Large Semester 2026A, Exam A, Q2\vspace{-2em}}}
+
+\maketitle
+\textbf{Problem.} Let $D\colon M_{n\times n}(\mathbb{F})\to\mathbb{F}$
+be a volume function, and let $A\in M_{n\times n}(\mathbb{F})$.
+
+We will denote by $\varepsilon$ the elementary row operation $R_{i}\to R_{i}+cR_{j}$,
+where $1\le i,j\le n$, $i\ne j$, and $c\in\mathbb{F}$.
+
+Prove that $D(\varepsilon(A))=D(A)$.
+
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+Let us mark $A$ with $\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}\\
+\vdots\\
+R_{n}
+\end{pmatrix}$ (we assume without loss of generality that $j<i$).
+
+Then the matrix $A$ after operation $\varepsilon$ will be 
+
+\[
+\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}+cR_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}=\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}\\
+\vdots\\
+R_{n}
+\end{pmatrix}+\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+cR_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}
+\]
+
+Since a volume function is in particular a multi-linear function,
+
+\[
+D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}+cR_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)=D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)+D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+cR_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)=D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)+cD\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)
+\]
+
+Recall that for a matrix $B$ and for the elementary row operation
+$R_{i}\leftrightarrow R_{j}$ , $D\left(\varepsilon'\left(B\right)\right)=-D\left(B\right)$.
+
+\[
+\therefore D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)+cD\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)=D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)+c\cdot-D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+R_{j}\\
+\vdots\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)
+\]
+
+And since $D$ is a volume function, it's an alternating function
+in particular, which means it returns zero on a matrix that has two
+adjacent identical rows: 
+\[
+c\cdot-D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+R_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)=c\cdot-0=0
+\]
+
+Hence 
+
+\[
+D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}+cR_{j}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)=D\left(\begin{pmatrix}R_{1}\\
+\vdots\\
+R_{j}\\
+\vdots\\
+R_{i}\\
+\vdots\\
+R_{n}
+\end{pmatrix}\right)
+\]
+
+Which means $D(\varepsilon(A))=D(A)$ as required. 
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
