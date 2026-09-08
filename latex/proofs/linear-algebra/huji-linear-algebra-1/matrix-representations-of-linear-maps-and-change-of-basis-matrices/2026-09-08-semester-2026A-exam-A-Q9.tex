@@ -1,0 +1,222 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+
+\begin{document}
+\title{{\Large Semester 2026A, Exam A, Q9\vspace{-2em}}}
+\maketitle
+\begin{problem*}
+Are the following matrices similar? 
+\[
+A=\begin{pmatrix}1 & -1 & 1 & -1 & 1\\
+-1 & 1 & -1 & 1 & -1\\
+1 & -1 & 1 & -1 & 1\\
+-1 & 1 & -1 & 1 & -1\\
+1 & -1 & 1 & -1 & 1
+\end{pmatrix},\qquad B=\begin{pmatrix}1 & 0 & 1 & 0 & 1\\
+0 & 1 & 0 & 1 & 0\\
+1 & 0 & 1 & 0 & 1\\
+0 & 1 & 0 & 1 & 0\\
+1 & 0 & 1 & 0 & 1
+\end{pmatrix}\;\in M_{5\times5}(\mathbb{R})
+\]
+\end{problem*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+Let us recall the claim that if matrices are similar, they have the
+same rank; thus, if matrices have different ranks, they are not similar.
+
+\[
+\text{rk}\text{A =\text{rk} }T_{A}=\text{dim}\left(Ax\mid x\in\mathbb{R}^{5}\right)
+\]
+
+\[
+\text{rk}\text{B =\text{rk} }T_{B}=\text{dim}\left(Bx\mid x\in\mathbb{R}^{5}\right)
+\]
+
+For $x\in\mathbb{R}^{5}$,
+
+\[
+Ax=\begin{pmatrix}1 & -1 & 1 & -1 & 1\\
+-1 & 1 & -1 & 1 & -1\\
+1 & -1 & 1 & -1 & 1\\
+-1 & 1 & -1 & 1 & -1\\
+1 & -1 & 1 & -1 & 1
+\end{pmatrix}\begin{pmatrix}x_{1}\\
+x_{2}\\
+x_{3}\\
+x_{4}\\
+x_{5}
+\end{pmatrix}=\begin{pmatrix}x_{1}-x_{2}+x_{3}-x_{4}+x_{5}\\
+-x_{1}+x_{2}-x_{3}+x_{4}-x_{5}\\
+x_{1}-x_{2}+x_{3}-x_{4}+x_{5}\\
+-x_{1}+x_{2}-x_{3}+x_{4}-x_{5}\\
+x_{1}-x_{2}+x_{3}-x_{4}+x_{5}
+\end{pmatrix}
+\]
+
+so 
+\[
+\text{Im}\left(T_{A}\right)=\left\{ t\begin{pmatrix}1\\
+-1\\
+1\\
+-1\\
+1
+\end{pmatrix}\mid t=x_{1}-x_{2}+x_{3}-x_{4}+x_{5}\in\mathbb{R}\right\} 
+\]
+
+And since the scalar $t=x_{1}-x_{2}+x_{3}-x_{4}+x_{5}\in\mathbb{R}$
+attains every value in $\mathbb{R}$,
+
+\[
+=\text{Span}\left(\begin{pmatrix}1\\
+-1\\
+1\\
+-1\\
+1
+\end{pmatrix}\right)
+\]
+
+A sequence of one non zero vector is always linearly independent,
+hence this sequence is a base of $\text{Im}\left(T_{A}\right)$ ,
+so $\text{rk}A=1$.
+
+For $x\in\mathbb{R}^{5}$,
+
+\[
+Bx=\begin{pmatrix}1 & 0 & 1 & 0 & 1\\
+0 & 1 & 0 & 1 & 0\\
+1 & 0 & 1 & 0 & 1\\
+0 & 1 & 0 & 1 & 0\\
+1 & 0 & 1 & 0 & 1
+\end{pmatrix}\begin{pmatrix}x_{1}\\
+x_{2}\\
+x_{3}\\
+x_{4}\\
+x_{5}
+\end{pmatrix}=\begin{pmatrix}x_{1}+x_{3}+x_{5}\\
+x_{2}+x_{4}\\
+x_{1}+x_{3}+x_{5}\\
+x_{2}+x_{4}\\
+x_{1}+x_{3}+x_{5}
+\end{pmatrix}
+\]
+
+so 
+\[
+\text{Im}\left(T_{B}\right)=\left\{ t\begin{pmatrix}1\\
+0\\
+1\\
+0\\
+1
+\end{pmatrix}+k\begin{pmatrix}0\\
+1\\
+0\\
+1\\
+0
+\end{pmatrix}\mid t=x_{1}+x_{3}+x_{5}\in\mathbb{R},k=x_{2}+x_{4}\right\} 
+\]
+
+These scalars reach every value in $\mathbb{R}$ so
+
+\[
+=\text{Span }\left\{ \begin{pmatrix}1\\
+0\\
+1\\
+0\\
+1
+\end{pmatrix},\begin{pmatrix}0\\
+1\\
+0\\
+1\\
+0
+\end{pmatrix}\right\} 
+\]
+
+It's obvious this sequence is linearly independent (recall that a
+sequence of two vectors is linearly dependent if and only if one vector
+is a scalar multiple of the other):
+
+\[
+\forall x\in\mathbb{R}\quad x\begin{pmatrix}1\\
+0\\
+1\\
+0\\
+1
+\end{pmatrix}=\begin{pmatrix}x\\
+0\\
+x\\
+0\\
+x
+\end{pmatrix}\neq\begin{pmatrix}0\\
+1\\
+0\\
+1\\
+0
+\end{pmatrix},\quad\wedge\quad\forall x\in\mathbb{R}\quad x\begin{pmatrix}0\\
+1\\
+0\\
+1\\
+0
+\end{pmatrix}=\begin{pmatrix}0\\
+x\\
+0\\
+x\\
+0
+\end{pmatrix}\neq\begin{pmatrix}1\\
+0\\
+1\\
+0\\
+1
+\end{pmatrix}
+\]
+
+Therefore it's a basis for $\text{Im}\left(T_{B}\right)$, and $\text{rk}B=2\neq\text{rk}A$
+which means these matrices are not similar.
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
