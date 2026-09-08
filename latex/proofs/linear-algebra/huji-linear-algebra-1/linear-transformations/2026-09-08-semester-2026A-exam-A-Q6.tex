@@ -10,6 +10,10 @@
 \usepackage{amssymb}
 
 \makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{graphicx}
@@ -31,11 +35,13 @@
 \makeatother
 
 \usepackage{babel}
+\providecommand{\problemname}{Problem}
 \begin{document}
 \title{{\Large Semester 2026A, Exam A, Q6\vspace{-2em}}}
 
 \maketitle
-\textbf{Problem.} Let $\mathbb{F}$ be a field and let $V=\mathbb{F}[X]_{\le3}$. 
+\begin{problem*}
+Let $\mathbb{F}$ be a field and let $V=\mathbb{F}[X]_{\le3}$. 
 
 We shall define the linear map $T\colon V\to V$ by 
 \[
@@ -43,6 +49,7 @@ We shall define the linear map $T\colon V\to V$ by
 \]
 Find bases for $\ker(T)$ and for $\operatorname{Im}(T)$. Prove your
 answers.
+\end{problem*}
 
 \medskip{}
 

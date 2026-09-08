@@ -10,6 +10,10 @@
 \usepackage{amssymb}
 
 \makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{graphicx}
@@ -31,12 +35,14 @@
 \makeatother
 
 \usepackage{babel}
+\providecommand{\problemname}{Problem}
 \begin{document}
 \newgeometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
 \title{{\Large Semester 2026A, Exam A, Q8\vspace{-2em}}}
 
 \maketitle
-\textbf{Problem.} Let $A,B\in M_{m\times n}(\mathbb{R})$ be matrices
+\begin{problem*}
+Let $A,B\in M_{m\times n}(\mathbb{R})$ be matrices
 and let $b\in\mathbb{R}^{m}$, such that the system of linear equations
 $Ax=b$ has a unique solution. Which of the following claims are true?
 If a claim is true, prove it; if not, give a counterexample. 
@@ -48,6 +54,8 @@ a unique solution.
 such that $B=AP$, then the system of linear equations $Bx=b$ has
 a unique solution. 
 \end{enumerate}
+\end{problem*}
+
 \medskip{}
 
 \rule[0.5ex]{1\columnwidth}{1pt}

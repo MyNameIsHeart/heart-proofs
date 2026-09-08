@@ -9,6 +9,10 @@
 \usepackage{amsthm}
 
 \makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{graphicx}
@@ -30,16 +34,19 @@
 \makeatother
 
 \usepackage{babel}
+\providecommand{\problemname}{Problem}
 \begin{document}
 \title{{\Large Semester 2026A, Exam A, Q4\vspace{-2em}}}
 
 \maketitle
-\textbf{Problem.} Let $V$ be a vector space and let $v_{1},\dots,v_{n},u,w\in V$
+\begin{problem*}
+Let $V$ be a vector space and let $v_{1},\dots,v_{n},u,w\in V$
 be such that the sequence $(v_{1},v_{2},\dots,v_{n},u)$ is linearly
 dependent, while the sequence $(v_{1},\dots,v_{n},w)$ is linearly
 independent. 
 
 Is it necessarily the case that $w\notin\operatorname{Span}(v_{1},v_{2},\dots,v_{n},u)$?
+\end{problem*}
 
 \medskip{}
 

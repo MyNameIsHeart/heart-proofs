@@ -10,6 +10,10 @@
 \usepackage{amssymb}
 
 \makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{graphicx}
@@ -31,12 +35,15 @@
 \makeatother
 
 \usepackage{babel}
+\providecommand{\problemname}{Problem}
 \begin{document}
 \title{{\Large Semester 2026A, Exam B, Q1\vspace{-2em}}}
 
 \maketitle
-\textbf{Problem.} Let $A,B\in M_{n\times n}(\mathbb{F})$ be such
+\begin{problem*}
+Let $A,B\in M_{n\times n}(\mathbb{F})$ be such
 that $AB=I_{n}$. Prove that $A$ and $B$ are inverses of each other.
+\end{problem*}
 
 \medskip{}
 

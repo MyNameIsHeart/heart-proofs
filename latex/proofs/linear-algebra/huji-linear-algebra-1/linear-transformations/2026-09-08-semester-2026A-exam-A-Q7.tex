@@ -9,6 +9,10 @@
 \usepackage{amsthm}
 
 \makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{graphicx}
@@ -30,13 +34,16 @@
 \makeatother
 
 \usepackage{babel}
+\providecommand{\problemname}{Problem}
 \begin{document}
 \title{{\Large Semester 2026A, Exam A, Q7\vspace{-2em}}}
 
 \maketitle
-\textbf{Problem.} Let $V$ be a vector space with $\dim V=n$, and
+\begin{problem*}
+Let $V$ be a vector space with $\dim V=n$, and
 let $T\colon V\to V$ be a linear map such that $\operatorname{Im}(T)\cap\ker(T)\ne\{0_{V}\}$.
 Prove that $\operatorname{rk}(T\circ T)\le n-2$.
+\end{problem*}
 
 \medskip{}
 

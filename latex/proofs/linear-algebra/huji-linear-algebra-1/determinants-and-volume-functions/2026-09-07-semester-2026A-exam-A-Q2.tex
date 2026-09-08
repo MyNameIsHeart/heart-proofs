@@ -10,6 +10,10 @@
 \usepackage{amssymb}
 
 \makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{graphicx}
@@ -31,17 +35,20 @@
 \makeatother
 
 \usepackage{babel}
+\providecommand{\problemname}{Problem}
 \begin{document}
 \title{{\Large Semester 2026A, Exam A, Q2\vspace{-2em}}}
 
 \maketitle
-\textbf{Problem.} Let $D\colon M_{n\times n}(\mathbb{F})\to\mathbb{F}$
+\begin{problem*}
+Let $D\colon M_{n\times n}(\mathbb{F})\to\mathbb{F}$
 be a volume function, and let $A\in M_{n\times n}(\mathbb{F})$.
 
 We will denote by $\varepsilon$ the elementary row operation $R_{i}\to R_{i}+cR_{j}$,
 where $1\le i,j\le n$, $i\ne j$, and $c\in\mathbb{F}$.
 
 Prove that $D(\varepsilon(A))=D(A)$.
+\end{problem*}
 
 \medskip{}
 

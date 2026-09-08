@@ -9,6 +9,10 @@
 \usepackage{amsthm}
 
 \makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
 \@ifundefined{date}{}{\date{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{graphicx}
@@ -30,16 +34,19 @@
 \makeatother
 
 \usepackage{babel}
+\providecommand{\problemname}{Problem}
 \begin{document}
 \title{{\Large Semester 2026A, Exam A, Q1\vspace{-2em}}}
 
 \maketitle
-\textbf{Problem.} Let $V,W$ be vector spaces, let $T\colon V\to W$
+\begin{problem*}
+Let $V,W$ be vector spaces, let $T\colon V\to W$
 be a linear map, let $\mathcal{B},\mathcal{C}$ be bases of $V$ and
 $W$ respectively, and let $v\in V$. Prove that 
 \[
 [T]_{\mathcal{C}}^{\mathcal{B}}\,[v]_{\mathcal{B}}=[T(v)]_{\mathcal{C}}
 \]
+\end{problem*}
 
 \medskip{}
 
