@@ -1,0 +1,188 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{{\Large Semester 2026A, Exam A, Q6\vspace{-2em}}}
+
+\maketitle
+\textbf{Problem.} Let $\mathbb{F}$ be a field and let $V=\mathbb{F}[X]_{\le3}$. 
+
+We shall define the linear map $T\colon V\to V$ by 
+\[
+(T(p))(X)=p(X)-p(1-X).
+\]
+Find bases for $\ker(T)$ and for $\operatorname{Im}(T)$. Prove your
+answers.
+
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+The standard basis of $V$ is $\left(1,x,x^{2},x^{3}\right)$.
+
+Let us compute $T$ on the standard basis. 
+
+\[
+T(1)=1-1=0
+\]
+
+\[
+T(x)=x-(1-x)=2x-1
+\]
+
+\[
+T(x^{2})=x^{2}-(1-x)^{2}=x^{2}-(1-2x+x^{2})=2x-1
+\]
+
+\[
+T(x^{3})=x^{3}-(1-x)^{3}=x^{3}-(1-x)^{2}(1-x)=x^{3}-(1-2x+x^{2})(1-x)=
+\]
+
+\[
+x^{3}-(1-3x+3x^{2}-x^{3})=2x^{3}-3x^{2}+3x-1
+\]
+
+Let us recall that if $S$ spans $V$ and the domain of a linear transformation
+$T$ is $V$ then $T(S)$ spans $\operatorname{im}(T)$.
+
+This means that
+\[
+\text{Span}\left(0,2x-1,2x-1,2x^{3}-3x^{2}+3x-1\right)=\operatorname{Im}(T)
+\]
+
+Let us recall that for a span of a sequence of vectors, if one vector
+is a linear combination of the others, we can remove it and not change
+the span. 
+
+In any field, 
+\[
+0\cdot(2x-1)=0\quad\wedge1\cdot(2x-1)=2x-1
+\]
+
+\[
+\therefore\quad\text{Span}\left(2x-1,2x^{3}-3x^{2}+3x-1\right)=\text{Im}\left(T\right)
+\]
+
+Let $a,b\in\mathbb{F}$
+
+\[
+a(2x-1)+b(2x^{3}-3x^{2}+3x-1)=0
+\]
+
+\[
+2bx^{3}-3bx^{2}+(3b+2a)x+(-a-b)\cdot1=0
+\]
+
+Since $\left(1,x,x^{2},x^{3}\right)$ is a basis of $V$ there is
+exactly one way to reach any element of $V$ as a linear combination
+of it. 
+
+This gives us 
+
+\[
+2b=0\wedge-3b=0\quad\therefore\quad b=3b-2b=0
+\]
+
+\[
+-a-b\underset{\text{plug in b=0}}{=}-a\underset{-a-b=0}{=}0\therefore a=0
+\]
+Recall the claim that a sequence is linearly independent if the only
+way to reach zero as a linear combination of its elements is by setting
+all of the scalars to zero, then $\left(2x-1,2x^{3}-3x^{2}+3x-1\right)$
+is linearly independent. 
+
+This means $\left(2x-1,2x^{3}-3x^{2}+3x-1\right)$ is a base for $\operatorname{Im}(T)$
+since it is linearly independent and spans it.
+
+Now the kernel. It's all of the values that are mapped to $0_{V}$.
+i.e. since we know the basis for $V$, every 
+
+\[
+p=\alpha\cdot1+\beta\cdot x+\gamma\cdot x^{2}+\delta\cdot x^{3}\quad s.t.\quad T(p)=0_{V}
+\]
+
+We already have a basis for $\text{\text{Im} }T$, which means there
+is one way to represent $T(p)$ as a linear combination of the vectors
+in the basis:
+
+\[
+T(p)=T\left(\alpha\cdot1+\beta\cdot x+\gamma\cdot x^{2}+\delta\cdot x^{3}\right)=0
+\]
+
+This is a linear transformation so we get
+
+\[
+T(\alpha\cdot1)+T(\beta x)+T(\gamma x^{2})+T(\delta x^{3})=0
+\]
+\[
+\alpha\cdot T(1)+\beta\cdot T(x)+\gamma\cdot T(x^{2})+\delta\cdot T(x^{3})=0
+\]
+
+\[
+\alpha\cdot0+\beta\cdot\left(2x-1\right)+\gamma\cdot\left(2x-1\right)+\delta\cdot\left(2x^{3}-3x^{2}+3x-1\right)=0
+\]
+
+\[
+(\beta+\gamma)\left(2x-1\right)+\delta\left(2x^{3}-3x^{2}+3x-1\right)=0
+\]
+
+And since we know that the only way to reach zero as a linear combination
+of $(2x-1,2x^{3}-3x^{2}+3x-1)$ is by taking all of the scalars as
+zero, we get 
+
+\[
+\beta=-\gamma,\quad\delta=0
+\]
+Therefore 
+
+\[
+\ker(T)=\left\{ \alpha+\left(-\gamma\right)\cdot x+\gamma\cdot x^{2}\mid\alpha,\gamma\in\mathbb{F}\right\} =\left\{ \alpha\cdot1+\gamma\cdot(x^{2}-x)\mid\alpha,\gamma\in\mathbb{F}\right\} =\text{Span}\left(1,x^{2}-x\right)
+\]
+
+\[
+a\cdot1+b\cdot(x^{2}-x)=0\iff bx^{2}-bx+a=0
+\]
+
+Again, there is a unique way to represent 0 using the base $(1,x,x^{2},x^{3})$
+and this gives us $b=0,a=0$ therefore this sequence spans the kernel
+and is linearly independent, i.e. a base for the kernel. 
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}

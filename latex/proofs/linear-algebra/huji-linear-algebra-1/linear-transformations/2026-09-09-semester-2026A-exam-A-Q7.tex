@@ -1,0 +1,101 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{{\Large Semester 2026A, Exam A, Q7\vspace{-2em}}}
+
+\maketitle
+\textbf{Problem.} Let $V$ be a vector space with $\dim V=n$, and
+let $T\colon V\to V$ be a linear map such that $\operatorname{Im}(T)\cap\ker(T)\ne\{0_{V}\}$.
+Prove that $\operatorname{rk}(T\circ T)\le n-2$.
+
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+\[
+\text{rk}(T\circ T)=\dim\left(\text{Im}(T\circ T)\right)=\dim\left(\left\{ T\left(T\left(v\right)\right)\mid v\in V\right\} \right)=\dim\left(\left\{ T(v)\mid v\in\text{Im}T\right\} \right)
+\]
+
+Let us look at the function $T':\operatorname{Im}(T)\rightarrow V$
+which is defined by $\forall x\in\operatorname{Im}(T),T'(x)=T(x)$
+(It's also a linear transformation from inheritance)
+
+\[
+x\in\text{ker}(T')\iff x\in\operatorname{Im}(T)\wedge T'(x)=0\iff x\in\operatorname{Im}(T)\wedge T(x)=0\iff x\in\operatorname{Im}(T)\wedge x\in\ker(T)
+\]
+
+Then 
+\[
+\text{ker}(T')=\operatorname{im}(T)\cap\ker(T)\ne\{0_{V}\}
+\]
+Which means 
+\[
+\dim\left(\text{ker}(T')\right)\ge1
+\]
+
+Furthermore, we know that $\operatorname{Im}(T)\cap\ker(T)\ne\{0_{V}\}$
+so in particular $\ker(T)\ne\{0_{V}\}$ and $\dim\left(\text{ker}(T)\right)\ge1$
+as well.
+
+According to the second dimensions theorem,
+
+\[
+\dim\left(\text{Im}(T)\right)=\dim\left(V\right)-\dim\left(\text{ker}(T)\right)\le n-1
+\]
+
+and
+
+\[
+\dim\left(\text{Im}(T')\right)=\dim\left(\operatorname{Im}(T)\right)-\dim\left(\text{ker}(T')\right)\le\dim\left(\operatorname{Im}(T)\right)-1\le n-1-1=n-2
+\]
+
+Let us notice that 
+
+\[
+\operatorname{Im}(T')=\left\{ T'(x)\mid x\in\operatorname{Im}(T)\right\} =\left\{ T(x)\mid x\in\operatorname{Im}(T)\right\} =\left\{ T\left(T\left(x\right)\right)\mid x\in V\right\} =\text{Im}(T\circ T)
+\]
+Therefore
+
+\[
+\text{rk}(T\circ T)=\dim\left(\text{Im}(T\circ T)\right)=\dim\left(\text{Im}(T')\right)\le n-2
+\]
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
