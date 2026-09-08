@@ -1,0 +1,77 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{{\Large Semester 2026A, Exam A, Q1\vspace{-2em}}}
+
+\maketitle
+\textbf{Problem.} Let $V,W$ be vector spaces, let $T\colon V\to W$
+be a linear map, let $\mathcal{B},\mathcal{C}$ be bases of $V$ and
+$W$ respectively, and let $v\in V$. Prove that 
+\[
+[T]_{\mathcal{C}}^{\mathcal{B}}\,[v]_{\mathcal{B}}=[T(v)]_{\mathcal{C}}
+\]
+
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+Let us mark $\mathcal{B}=\left(v_{1},\dots,v_{n}\right)$, $\mathcal{C}=\left(w_{1},\dots,w_{m}\right)$
+and $v=a_{1}v_{1}+\dots+a_{n}v_{n}$.
+
+\[
+[T]_{\mathcal{C}}^{\mathcal{B}}\,[v]_{\mathcal{B}}=\begin{pmatrix}| &  & |\\
+\left[T(v_{1})\right]_{\mathcal{C}} & \dots & \left[T(v_{n})\right]_{\mathcal{C}}\\
+| &  & |
+\end{pmatrix}\,\begin{pmatrix}a_{1}\\
+\vdots\\
+a_{n}
+\end{pmatrix}=a_{1}\left[T(v_{1})\right]_{\mathcal{C}}+\dots+a_{n}\left[T(v_{n})\right]_{\mathcal{C}}
+\]
+
+Let us recall that $\left[C_{1}\right]_{\mathcal{D}}+\left[C_{2}\right]_{\mathcal{D}}=\left[C_{1}+C_{2}\right]_{\mathcal{D}}$
+and that $a_{1}\left[C_{1}\right]_{\mathcal{D}}=\left[a_{1}C_{1}\right]_{\mathcal{D}}$.
+Thus
+
+\[
+=\left[a_{1}T(v_{1})+\dots a_{n}T(v_{n})\right]_{\mathcal{C}}\underset{\text{T is linear}}{=}\left[T(a_{1}v_{1}+\dots+a_{n}v_{n})\right]_{\mathcal{C}}=\left[T(v)\right]_{\mathcal{C}}
+\]
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
