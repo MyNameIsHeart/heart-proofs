@@ -1,0 +1,126 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+
+\begin{document}
+\title{{\Large Semester 2026A, Exam B, Q3\vspace{-2em}}}
+\maketitle
+\begin{problem*}
+Let $V$ be a vector space over $\mathbb{R}$ and let $(v_{1},v_{2},v_{3})$
+be a linearly independent sequence of vectors from $V$. Determine
+for which values $a\in\mathbb{R}$ the sequence 
+\[
+S=(v_{1}+av_{2},\;v_{2}+av_{3},\;v_{3}+av_{1})
+\]
+is also linearly independent. Prove your answer.
+\end{problem*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+Let us recall the theorem which states that a sequence of vectors
+is linearly independent if and only if the only way to reach $0$
+as a linear combination of it is by taking all of the scalars as zero. 
+
+Let us examine the following equation 
+
+\[
+\alpha_{1}\left(v_{1}+av_{2}\right)+\alpha_{2}\left(v_{2}+av_{3}\right)+\alpha_{3}\left(v_{3}+av_{1}\right)=0
+\]
+\[
+\alpha_{1}v_{1}+\alpha_{1}av_{2}+\alpha_{2}v_{2}+\alpha_{2}av_{3}+\alpha_{3}v_{3}+\alpha_{3}av_{1}=0
+\]
+\[
+\left(\alpha_{1}+\alpha_{3}a\right)v_{1}+\left(\alpha_{1}a+\alpha_{2}\right)v_{2}+\left(\alpha_{2}a+\alpha_{3}\right)v_{3}=0
+\]
+
+And from the same theorem, since $(v_{1},v_{2},v_{3})$ is linearly
+independent, we know that 
+\[
+\begin{cases}
+\left(\alpha_{1}+\alpha_{3}a\right)=0\\
+\left(\alpha_{1}a+\alpha_{2}\right)=0\\
+\left(\alpha_{2}a+\alpha_{3}\right)=0
+\end{cases}
+\]
+
+We will use this linear system to determine which $a$ values give
+us $\alpha_{1}=\alpha_{2}=\alpha_{3}=0$, i.e. that the only solution
+is the trivial solution.
+
+\[
+\begin{pmatrix}\begin{array}{ccc|c}
+1 & 0 & a & 0\\
+a & 1 & 0 & 0\\
+0 & a & 1 & 0
+\end{array}\end{pmatrix}\overset{R_{2}\rightarrow R_{2}-aR_{1}}{\Longrightarrow}\begin{pmatrix}\begin{array}{ccc|c}
+1 & 0 & a & 0\\
+0 & 1 & -a^{2} & 0\\
+0 & a & 1 & 0
+\end{array}\end{pmatrix}\overset{R_{3}\rightarrow R_{3}-aR_{2}}{\Longrightarrow}\begin{pmatrix}\begin{array}{ccc|c}
+1 & 0 & a & 0\\
+0 & 1 & -a^{2} & 0\\
+0 & 0 & 1+a^{3} & 0
+\end{array}\end{pmatrix}
+\]
+
+$\left(1+a^{3}\right)\alpha_{3}=0$ means $\alpha_{3}=0$ or $a^{3}=-1\iff a=-1$.
+
+Considering this, $\alpha_{2}-a^{2}\alpha_{3}=0$ means that if $\alpha_{3}=0$
+then $\alpha_{2}=0$ and if $a=-1$ then $\alpha_{2}=\alpha_{3}$.
+
+Similarly, $\alpha_{1}+a\alpha_{3}=0$ means that if $\alpha_{3}=0$
+then $\alpha_{1}=0$ and if $a=-1$ then $\alpha_{1}=\alpha_{3}$. 
+
+Which means that if $a\neq-1$ the set of solutions is $\left\{ \begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}\right\} $ and if $a=-1$ it's $\left\{ \begin{pmatrix}x\\
+x\\
+x
+\end{pmatrix}\mid x\in\mathbb{R}\right\} $, which means that the sequence is linearly independent for $a\in\mathbb{R}\setminus\{-1\}$.
+\end{proof}
+\begin{quote}
+This is an exam problem I translated and solved. The original exam
+was written by the Linear Algebra 1 course lecturers at HUJI.
+\end{quote}
+
+\end{document}
