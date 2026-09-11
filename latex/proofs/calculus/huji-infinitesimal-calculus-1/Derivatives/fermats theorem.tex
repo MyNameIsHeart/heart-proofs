@@ -1,0 +1,120 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\title{{\Large Fermat's Theorem\vspace{-2em}}}
+\maketitle
+\begin{thm*}
+Let $f:\left(a,b\right)\rightarrow\mathbb{R}$ be a function from
+$\left(a,b\right)$ to $\mathbb{R}$ and suppose that $x_{0}\in\left(a,b\right)$
+is a point where $f$ has a local extremum. If $f$ is differentiable
+at $x_{0}$, then $f'(x_{0})=0$.
+\end{thm*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+Since $x_{0}$ is a local extremum point of $f$, it's either a local
+maximum point or a local minimum point. Let us assume $x_{0}$ is
+a local maximum point. Then since it's also in particular an interior
+point, 
+\[
+\exists\delta>0\quad s.t.\quad\forall x\in\left(x_{0}-\delta,x_{0}+\delta\right)\subseteq\left(a,b\right),f(x)\le f(x_{0})
+\]
+
+Since $f$ is differentiable at $x_{0}$ it's in particular differentiable
+from the right and from the left while maintaining 
+\[
+f'_{-}(x_{0})=f'(x_{0})=f'_{+}(x_{0})
+\]
+
+We shall examine each one-sided derivative of $f$ at $x_{0}$ in
+turn.
+
+For every $x\in\left(x_{0}-\delta,x_{0}\right)$ we get $f(x)\le f(x_{0})$
+and $x<x_{0}$, which gives 
+\[
+\forall x\in\left(x_{0}-\delta,x_{0}\right),\frac{f(x)-f(x_{0})}{x-x_{0}}\ge0
+\]
+
+Let us recall that limits weakly preserve inequalities. Hence
+
+\[
+f'_{-}\left(x_{0}\right)=\underset{x\rightarrow x_{0}^{-}}{\lim}\frac{f(x)-f(x_{0})}{x-x_{0}}\ge0
+\]
+For every $x\in\left(x_{0},x_{0}+\delta\right)$ we get $f(x)\le f(x_{0})$
+and $x>x_{0}$, which gives 
+
+\[
+\forall x\in\left(x_{0},x_{0}+\delta\right),\frac{f(x)-f(x_{0})}{x-x_{0}}\le0
+\]
+
+And again since limits weakly preserve inequalities,
+
+\[
+f'_{+}\left(x_{0}\right)=\underset{x\rightarrow x_{0}^{+}}{\lim}\frac{f(x)-f(x_{0})}{x-x_{0}}\le0
+\]
+This gives us 
+\[
+0\le f'(x_{0})\le0
+\]
+Hence 
+\[
+f'(x_{0})=0
+\]
+As required. 
+
+Now let us assume $x_{0}$ is a local minimum of $f$.
+
+Let us recall that $c$ is a local minimum of $f$ if and only if
+$c$ is a local maximum of $-f$.
+
+Let us also recall that by the differentiable functions arithmetic
+theorem, $f$ is differentiable at point $c$ and $f'(c)=\alpha$
+if and only if $-f$ is differentiable at point $c$ and $\left(-f\right)'(c)=-\alpha$.
+
+Let us notice that $\left(-f\right)$ fulfills the requirements for
+the case we just proved, hence the derivative of $-f$ at point $x_{0}$
+is zero, which in turn means $f'(x_{0})=0$, as required.
+\end{proof}
+
+\end{document}
