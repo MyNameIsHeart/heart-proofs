@@ -8,10 +8,9 @@ I study mathematics and computer science at HUJI, and I like pretty math proofs.
 
 Heart Proofs is a personal, non-commercial site run by a student.
 
-Credit for the original material (such as lectures, books, and exam problems which I translate and solve) belongs to the respective lecturers and authors who wrote it. Each page names the relevant course, university, or book. 
-The summaries and solutions are unofficial and were not approved by any faculty, so any mistakes in them are mine.
+Credit and rights to the original material (such as lectures, books, and the exam problems that I translate and solve) belong to the lecturers and authors who wrote it or to the respective university. Each page names the relevant course, university, or book. The summaries and solutions are unofficial and haven't been reviewed by the lecturers or course staff, so any mistakes in them are my own.
 
-If you are a lecturer, an author, or a rights holder and something here bothers you, please write to me and I will take it down.
+If you are a lecturer, an author, or a rights holder and something here bothers you, please write to me and I will fix it or take it down.
 
 ## Contact
 
