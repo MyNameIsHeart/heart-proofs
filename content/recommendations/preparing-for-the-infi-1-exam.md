@@ -3,6 +3,8 @@ title: "Preparing for the Infi 1 exam"
 date: 2026-09-13
 ---
 
+This is mainly about the HUJI Infi 1 exam, but the method could work in other universities and even courses.
+
 ## What's on the exam
 
 From what I noticed, Yves' Calculus 1 course (HUJI) includes four topics: the field of real numbers, sequences, functions and derivatives. The five questions usually follow a structure that resembles this:
