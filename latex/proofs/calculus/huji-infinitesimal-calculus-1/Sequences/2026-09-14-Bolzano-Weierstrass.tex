@@ -1,0 +1,141 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{remark}
+\newtheorem*{rem*}{\protect\remarkname}
+\theoremstyle{plain}
+\newtheorem*{lem*}{\protect\lemmaname}
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\lemmaname}{Lemma}
+\providecommand{\remarkname}{Remark}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\title{{\Large The Bolzano-Weierstrass Theorem\vspace{-2em}}}
+\maketitle
+\begin{rem*}
+When I write monotonically increasing or decreasing, I refer to the
+weak sense.
+
+For the strong sense, I add the word ``strictly''. 
+\end{rem*}
+\begin{lem*}
+Every sequence $\left(a_{n}\right)_{n=1}^{\infty}$ in $\mathbb{R}$
+has a monotone subsequence (a subsequence that is either non-decreasing
+or non-increasing).
+\end{lem*}
+\begin{proof}
+Let $\left(a_{n}\right)_{n=1}^{\infty}$ be a sequence in $\mathbb{R}$. 
+
+Let us look at 
+\[
+A=\left\{ m\in\mathbb{N}:\forall n>m,a_{m}\ge a_{n}\right\} 
+\]
+
+This is commonly called the set of peaks of $\left(a_{n}\right)$.
+
+\textbf{Case 1:} $A=\emptyset$ or $A$ has an upper bound.
+
+If $A=\emptyset$, we will take $j=1$. Otherwise, we will assume
+$A\ne\emptyset$ and that $A$ is bounded from above.
+
+Let $M\in\mathbb{R}$ be an upper bound of $A$, thus, the Archimedean
+property allows us to take a $j\in\mathbb{N}$ s.t. $j>M$.
+
+Thus, every index that is bigger or equal to $j$ is not in $A$,
+hence
+
+\[
+\forall n\ge j,\ \exists n'>n,\ s.t.\ a_{n}<a_{n'}
+\]
+
+We shall inductively construct a subsequence. Our first index will
+be $n_{1}=j$, and for every index $j\le n_{k}$ the formula above
+provides a $n_{k}'>n_{k}\ge j$ such that $a_{n_{k}}<a_{n_{k}'}$,
+so we shall define $n_{k+1}$ as this $n_{k}'$.
+
+Then $\left(n_{k}\right)_{k=1}^{\infty}$ is a strictly monotonically
+increasing sequence of natural numbers, which means it successfully
+defines a subsequence of $\left(a_{n}\right)$, and again from our
+formula $\forall k\in\mathbb{N},\ a_{n_{k}}<a_{n_{k+1}}$ which means
+this subsequence is strictly monotonically increasing, thus monotonically
+increasing in particular, as required.\\
+
+\textbf{Case 2:} Otherwise, $A$ has no upper bound and isn't empty.
+
+This means that for every index $m\in A$, there exists an index $w>m$
+s.t. $w\in A$.
+
+We shall inductively construct a subsequence. 
+
+As a set defined by indexes and by our assumption, $\emptyset\ne A\subseteq\mathbb{N}$,
+so by the well-ordering principle of $\mathbb{N}$ it has a minimum.
+
+Our first index will be $n_{1}=\min\left(A\right)$, and for every
+index $n_{k}$ such that $n_{k}\in A$, we know there is another index
+$p>n_{k}$ s.t. $p\in A$.
+
+We shall define $n_{k+1}=p$.
+
+Then $\left(n_{k}\right)_{k=1}^{\infty}$ is a strictly monotonically
+increasing sequence of natural numbers, which means it successfully
+defines a subsequence of $\left(a_{n}\right)$, and by the definition
+of $A$,
+
+\[
+\forall k\in\mathbb{N},\quad a_{n_{k+1}}\le a_{n_{k}}
+\]
+
+thus $\left(a_{n_{k}}\right)_{k=1}^{\infty}$ is monotonically decreasing,
+as needed. 
+\end{proof}
+\begin{thm*}[The Bolzano-Weierstrass theorem]
+Every bounded sequence $\left(a_{n}\right)_{n=1}^{\infty}$ in $\mathbb{R}$
+has a convergent subsequence.
+\end{thm*}
+\begin{proof}
+Let $\left(a_{n}\right)_{n=1}^{\infty}$ be a bounded sequence in
+$\mathbb{R}$. 
+
+By the lemma we proved, there exists a subsequence $\left(a_{n_{k}}\right)_{k=1}^{\infty}$
+that is monotone, and it is also bounded since boundedness is inherited
+by subsequences. Let us recall that a sequence that is both monotone
+and is bounded converges (the Monotone Convergence Theorem), therefore
+$\left(a_{n_{k}}\right)_{k=1}^{\infty}$ converges and our proof is
+finished.
+\end{proof}
+
+\end{document}
