@@ -1,0 +1,83 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\title{{\Large Archimedean Property\vspace{-2em}}}
+\maketitle
+\begin{thm*}[The Archimedean Property]
+$\mathbb{N}$ is not bounded from above in $\mathbb{R}$.
+\end{thm*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+Let us assume by negation that $\mathbb{N}$ is bounded from above
+in $\mathbb{R}$. 
+
+Let us notice $\mathbb{N}\ne\emptyset$ since $1\in\mathbb{N}$.
+
+Then by the upper bound theorem, $\mathbb{N}$ has a supremum. 
+
+In particular, according to the characterization of the supremum,
+
+\[
+\forall\varepsilon>0,\ \exists n\in\mathbb{N},\ s.t.\ \sup\left(\mathbb{N}\right)-\varepsilon<n\le\sup\left(\mathbb{N}\right)
+\]
+
+Choosing $\varepsilon=1$ provides such $n_{0}\in\mathbb{N}$: 
+\[
+\sup\left(\mathbb{N}\right)-1<n_{0}\le\sup\left(\mathbb{N}\right)
+\]
+\[
+\therefore\sup\left(\mathbb{N}\right)<n_{0}+1\underset{*}{\in}\mathbb{N}
+\]
+$(*)$ $\mathbb{N}$ is closed under addition. 
+
+By the supremum definition we get the contradiction
+\[
+n_{0}+1\le\sup\left(\mathbb{N}\right)<n_{0}+1
+\]
+
+Hence $\mathbb{N}$ is not bounded from above in $\mathbb{R}$. 
+\end{proof}
+
+\end{document}
