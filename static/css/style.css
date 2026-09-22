@@ -201,6 +201,14 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .post-body .boxed .center { text-align: start; }
 .post-body .boxed .center .center { text-align: center; }
 .post-body p:has(> img:only-child), .post-body p:has(> span:only-child > img:only-child) { text-align: center; }
+.post-body img.fig-wrap { float: right; max-width: 38%; max-height: none; border-radius: var(--radius); margin: 0.3em 0 0.9em 1.5em; }
+.post-body img.fig-left { float: left; margin: 0.3em 1.5em 0.9em 0; }
+.post-body p:has(> img.fig-wrap:only-child), .post-body p:has(> span:only-child > img.fig-wrap:only-child) { text-align: start; margin: 0; }
+.post-body hr, .post-body h2, .post-body h3, .post-body .katex-display { clear: both; }
+@media (max-width: 700px) {
+  .post-body img.fig-wrap { float: none; max-width: 100%; margin: 0 0 1em; }
+  .post-body p:has(> img.fig-wrap:only-child), .post-body p:has(> span:only-child > img.fig-wrap:only-child) { text-align: center; margin: 0 0 1em; }
+}
 .parts { margin: 2rem 0; max-width: var(--measure); }
 .parts-list { padding-inline-start: 1.4rem; margin: 0; }
 .parts-list > li { margin: 0.6rem 0; }
