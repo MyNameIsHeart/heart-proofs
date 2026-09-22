@@ -1,0 +1,108 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\title{{\Large Weierstrass boundedness theorem\vspace{-2em}}}
+\maketitle
+\begin{thm*}
+Let $f:\left[a,b\right]\rightarrow\mathbb{R}$ be a continuous function
+from $\left[a,b\right]$ to $\mathbb{R}$.
+
+Then $f$ is bounded on that interval. 
+\end{thm*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+We will first prove that $f$ is bounded from above. 
+
+Let us assume for the sake of contradiction that $f$ is not bounded
+from above. Then 
+\[
+\forall M\in\mathbb{R}\ \exists x\in\left[a,b\right]\ s.t.\ f(x)>M
+\]
+and in particular, since $\mathbb{N}\subseteq\mathbb{R}$,
+
+\[
+\forall n\in\mathbb{N}\ \exists x_{n}\in\left[a,b\right]\ s.t.\ f(x_{n})>n
+\]
+
+Let us look at the sequence $\left(x_{n}\right)_{n=1}^{\infty}$.
+Note that $\forall n\in\mathbb{N},a\le x_{n}\le b$, i.e. this is
+a bounded sequence.
+
+Thus, the Bolzano-Weierstrass theorem states it has a convergent subsequence,
+$\left(x_{n_{k}}\right)_{k=1}^{\infty}$.
+
+Since limits of sequences weakly preserve inequalities maintained
+by all elements of the sequence,
+\[
+a\le\underset{k\rightarrow\infty}{\lim}x_{n_{k}}\le b
+\]
+This gives $\underset{k\rightarrow\infty}{\lim}x_{n_{k}}=x_{0}\in\left[a,b\right]\subseteq\mathbb{R}$.
+
+Therefore, by Heine's characterization of continuous functions, 
+
+\[
+\underset{k\rightarrow\infty}{\lim}f\left(x_{n_{k}}\right)=f(x_{0})\in\mathbb{R}
+\]
+
+However, notice that 
+\[
+\forall k\in\mathbb{N},\ f(x_{n_{k}})>n_{k}\ge k
+\]
+
+hence
+\[
+\underset{k\rightarrow\infty}{\lim}f\left(x_{n_{k}}\right)=\infty
+\]
+
+This is a contradiction. This means that $f$ is bounded from above.
+
+To show that $f$ is bounded from below, we can apply the same argument
+to $-f$ since $-f$ is also continuous as a scalar multiple of a
+continuous function.
+
+Thus, we get the same contradiction again, hence $f$ is bounded.
+\end{proof}
+
+\end{document}

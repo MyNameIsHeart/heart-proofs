@@ -126,6 +126,34 @@ def wrap_macro(tex: str, macro: str, env: str) -> str:
     return "".join(out)
 
 
+WRAP_MARK = "::wrap-"
+WRAP_SIDE = {"r": "right", "R": "right", "o": "right", "O": "right",
+             "l": "left", "L": "left", "i": "left", "I": "left"}
+WRAPFIG_RE = re.compile(
+    r"\\begin\{(wrapfigure|wraptable|wrapfloat)\}"
+    r"(?:\[[^\]]*\])?"
+    r"(?:\{(?:figure|table)\})?"
+    r"\{\s*([rRlLioIO])\s*\}"
+    r"(?:\[[^\]]*\])?"
+    r"\{[^{}]*\}"
+    r"(.*?)\\end\{\1\}",
+    re.S,
+)
+INCLUDEGRAPHICS_RE = re.compile(r"(\\includegraphics(?:\[[^\]]*\])?\{)([^{}]*?)(\})")
+
+
+def dewrapfig(tex: str) -> str:
+    """pandoc ignores wrapfigure. Drop the wrapper, tag the image with its side."""
+    def repl(m: re.Match) -> str:
+        side = WRAP_SIDE.get(m.group(2), "right")
+        inner = m.group(3)
+        inner = re.sub(r"\\(centering|small|footnotesize)\b", "", inner)
+        inner = INCLUDEGRAPHICS_RE.sub(
+            lambda g: g.group(1) + g.group(2) + WRAP_MARK + side + g.group(3), inner, count=1)
+        return inner
+    return WRAPFIG_RE.sub(repl, tex)
+
+
 def unbox(tex: str) -> str:
     tex = wrap_macro(tex, "fbox", "boxed")
     tex = wrap_macro(tex, "centerline", "center")
@@ -230,6 +258,7 @@ def preprocess(tex: str) -> str:
 
     tex = re.sub(r"\\inputencoding\{[^}]*\}", "", tex)
     tex = re.sub(r"\\textbar(\{\})?", "|", tex)
+    tex = dewrapfig(tex)
     tex = unbox(tex)
     tex = bidi(tex)
     if is_hebrew(tex):
@@ -458,23 +487,44 @@ def colorize(html: str) -> str:
     return COLOR_RE.sub(repl, html)
 
 
+IMG_EXTS = (".png", ".jpg", ".jpeg", ".svg", ".webp", ".gif")
+WRAP_SUFFIX_RE = re.compile(re.escape(WRAP_MARK) + r"(right|left)$")
+
+
+def resolve_image(p: Path) -> Path:
+    """LaTeX lets \\includegraphics omit the extension; pandoc does not. Fill it in."""
+    if p.is_file() or p.suffix:
+        return p
+    for ext in IMG_EXTS:
+        cand = p.with_name(p.name + ext)
+        if cand.is_file():
+            return cand
+    return p
+
+
 def copy_images(html: str, tex_dir: Path, rel: str) -> str:
     def repl(m: re.Match) -> str:
         src, attrs = m.group(1), m.group(2)
+        wrap = ""
+        w = WRAP_SUFFIX_RE.search(src)
+        if w:
+            wrap, src = w.group(1), src[:w.start()]
         if src.startswith(("http://", "https://", "/", "data:")):
             return m.group(0)
-        p = (tex_dir / src).resolve()
+        p = resolve_image((tex_dir / src).resolve())
         try:
             inner = p.relative_to(tex_dir.resolve())
         except ValueError:
             return m.group(0)
         if not p.is_file():
+            print(f"  ! missing image: {src} (in {tex_dir.name})", file=sys.stderr)
             return m.group(0)
         dst = FILES_DIR / rel / inner
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(p, dst)
         attrs = re.sub(r'\s*alt="image"', ' alt=""', attrs)
-        return f'<img src="/files/{rel}/{inner.as_posix()}"{attrs}>'
+        cls = f' class="fig-wrap fig-{wrap}"' if wrap else ""
+        return f'<img src="/files/{rel}/{inner.as_posix()}"{cls}{attrs}>'
     return IMG_RE.sub(repl, html)
 
 
