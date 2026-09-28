@@ -528,6 +528,38 @@ def copy_images(html: str, tex_dir: Path, rel: str) -> str:
     return IMG_RE.sub(repl, html)
 
 
+def copy_asset(src: str, tex_dir: Path, rel: str) -> str | None:
+    """Copy a file referenced relative to the .tex into static/files and return its site URL."""
+    if src.startswith(("http://", "https://", "/")):
+        return src
+    p = resolve_image((tex_dir / src).resolve())
+    try:
+        inner = p.relative_to(tex_dir.resolve())
+    except ValueError:
+        return None
+    if not p.is_file():
+        print(f"  ! missing file: {src} (in {tex_dir.name})", file=sys.stderr)
+        return None
+    dst = FILES_DIR / rel / inner
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(p, dst)
+    return f"/files/{rel}/{inner.as_posix()}"
+
+
+PROOF_DIV = '<div class="proof">'
+
+
+def add_figure(html: str, url: str, alt: str, caption: str, side: str) -> str:
+    """Float a sidecar figure next to the proof (or the start of the body if there is no proof)."""
+    from html import escape
+    fig = f'<figure class="fig-wrap fig-{side}"><img src="{escape(url)}" alt="{escape(alt)}" loading="lazy">'
+    if caption:
+        fig += f"<figcaption>{escape(caption)}</figcaption>"
+    fig += "</figure>\n"
+    k = html.find(PROOF_DIV)
+    return fig + html if k < 0 else html[:k] + fig + html[k:]
+
+
 def strip_tags(s: str) -> str:
     return re.sub(r"\s+", " ", unescape(TAG_RE.sub("", s))).strip()
 
@@ -677,6 +709,12 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     out_dir = CONTENT_DIR / rel
     out_dir.mkdir(parents=True, exist_ok=True)
     body = colorize(copy_images(body, tex_path.parent, f"{rel}"))
+    if side.get("figure"):
+        fig_url = copy_asset(str(side["figure"]), tex_path.parent, rel)
+        if fig_url:
+            fig_side = "left" if str(side.get("figure_side", "")).lower() == "left" else "right"
+            body = add_figure(body, fig_url, str(side.get("figure_alt", "")), str(side.get("figure_caption", "")), fig_side)
+            fm.insert(-1, f"figure: {yaml_str(fig_url)}")
     if should_split(side, body):
         intro, parts = move_boxes(*split_parts(body), notice=str(side.get("notice") or ""))
         part_dir = out_dir / slug

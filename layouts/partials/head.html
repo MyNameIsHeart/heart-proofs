@@ -16,6 +16,7 @@
 {{ with $desc }}<meta property="og:description" content="{{ . }}">{{ end }}
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
+{{ with .Params.figure }}<meta property="og:image" content="{{ strings.TrimPrefix "/" . | absURL }}">{{ end }}
 <link rel="preload" href="{{ "katex/fonts/KaTeX_Main-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "katex/fonts/KaTeX_Math-Italic.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}">
