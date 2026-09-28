@@ -1,0 +1,127 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\title{{\Large Weierstrass Extreme Value Theorem\vspace{-2em}}}
+\maketitle
+\begin{thm*}
+Let $f:\left[a,b\right]\rightarrow\mathbb{R}$ be a continuous function
+from $\left[a,b\right]$ to $\mathbb{R}$.
+
+Then $f$ attains a global maximum and a global minimum on $\left[a,b\right]$.
+\[
+\exists c,d\in\left[a,b\right]\ :\ \forall x\in\left[a,b\right]\quad f(c)\le f(x)\le f(d)
+\]
+\end{thm*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+We will first prove that $f$ attains a global maximum.
+
+According to the Weierstrass Boundedness Theorem, $f$ is bounded
+on $\left[a,b\right]$.
+
+Hence $\operatorname{Im}(f)$ is a bounded subset of $\mathbb{R}$
+and it is also a non-empty set (since $f(a)\in\operatorname{Im}(f)$).
+
+The upper bound theorem states that every non-empty subset of $\mathbb{R}$
+which is bounded from above has a supremum, so $\operatorname{Im}(f)$
+has a supremum. 
+
+Denote $\beta=\sup\left(\operatorname{Im}(f)\right)$.
+
+Also recall that since $\beta$ is a supremum, it fulfills the supremum
+characterization 
+\[
+\forall\varepsilon>0\ \exists y\in\operatorname{Im}(f)\ :\ \beta-\varepsilon<y\le\beta
+\]
+And in particular,
+\[
+\forall n\in\mathbb{N}\ \exists y_{n}\in\operatorname{Im}(f)\ :\ \beta-\frac{1}{n}<y_{n}\le\beta
+\]
+\[
+\therefore\ \forall n\in\mathbb{N}\ \exists x_{n}\in\left[a,b\right]\ :\ \beta-\frac{1}{n}<f(x_{n})\le\beta
+\]
+We shall examine $\left(x_{n}\right)_{n=1}^{\infty}$. 
+
+It is a bounded sequence, therefore according to the Bolzano-Weierstrass
+theorem, it has a convergent subsequence $\left(x_{n_{k}}\right)_{k=1}^{\infty}$.
+
+Denote $\underset{k\rightarrow\infty}{\lim}x_{n_{k}}=d$. 
+
+Since limits of sequences weakly preserve inequalities maintained
+by all elements of the sequence, $d\in\left[a,b\right]$.
+
+Because $f$ is continuous, Heine's characterization of continuous
+functions dictates $\underset{k\rightarrow\infty}{\lim}f\left(x_{n_{k}}\right)=f(d)$.
+
+Moreover, let us notice that since $n_{k}\ge k$ we get
+\[
+\forall k\in\mathbb{N},\ \beta\ge f\left(x_{n_{k}}\right)>\beta-\frac{1}{n_{k}}\ge\beta-\frac{1}{k}
+\]
+
+Since $\underset{k\rightarrow\infty}{\lim}\left(\beta-\frac{1}{k}\right)=\beta$,
+the squeeze theorem implies 
+\[
+f(d)=\underset{k\rightarrow\infty}{\lim}f\left(x_{n_{k}}\right)=\beta
+\]
+
+Recall that a supremum which belongs to the set is always the maximum
+of the set, hence $\beta=\max\left(\operatorname{Im}(f)\right)$ and
+$d$ is a global maximum point in $\left[a,b\right]$, as needed.
+
+As for the global minimum: we know that a scalar multiple of a continuous
+function is also continuous, hence $-f$ is a continuous function,
+and the global maximum result applies to it:
+\[
+\exists c\in\left[a,b\right]\ :\ \forall x\in\left[a,b\right]\quad-f(x)\le-f(c)
+\]
+
+\[
+\therefore\quad\exists c\in\left[a,b\right]\ :\ \forall x\in\left[a,b\right]\quad f(x)\ge f(c)
+\]
+
+This gives us the global minimum result.
+\end{proof}
+
+\end{document}
