@@ -210,10 +210,21 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
   .post-body p:has(> img.fig-wrap:only-child), .post-body p:has(> span:only-child > img.fig-wrap:only-child) { text-align: center; margin: 0 0 1em; }
 }
 .parts { margin: 2rem 0; max-width: var(--measure); }
-.parts-list { padding-inline-start: 1.4rem; margin: 0; }
-.parts-list > li { margin: 0.6rem 0; }
+.parts-head { display: flex; justify-content: flex-end; margin: 0 0 0.5rem; }
+.parts-toggle { font: inherit; font-family: var(--sans); font-size: 0.85rem; padding: 0.2rem 0.85rem; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text); cursor: pointer; }
+.parts-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.parts-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--border); }
+.parts-list > li { margin: 0; border-bottom: 1px solid var(--border); }
 .part-link { font-weight: 600; }
-.part-toc { list-style: none; padding-inline-start: 0.8rem; margin: 0.25rem 0 0.8rem; font-size: 0.95em; border-inline-start: 2px solid var(--border); }
+.part-solo { margin: 0; padding: 0.55rem 0.3rem; }
+.part > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 0.6rem; padding: 0.55rem 0.3rem; border-radius: var(--radius); }
+.part > summary::-webkit-details-marker { display: none; }
+.part > summary:hover { background: var(--bg-2); }
+.part > summary::before { content: ""; flex: none; align-self: center; width: 0.5em; height: 0.5em; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(-45deg); transition: transform 0.15s ease; }
+.part[open] > summary::before { transform: rotate(45deg); border-color: var(--accent); }
+[lang="he"] .part > summary::before, [lang="ar"] .part > summary::before { transform: rotate(135deg); }
+[lang="he"] .part[open] > summary::before, [lang="ar"] .part[open] > summary::before { transform: rotate(45deg); }
+.part-toc { list-style: none; padding-inline-start: 0.8rem; margin: 0 0 0.9rem; margin-inline-start: 1.55rem; font-size: 0.95em; border-inline-start: 2px solid var(--border); }
 .part-toc li { padding: 0.1rem 0; }
 .part-toc a { color: var(--text); }
 .part-toc a:hover { color: var(--accent); }

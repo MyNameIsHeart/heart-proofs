@@ -51,3 +51,10 @@ notfound:
 
 skip_link: "Skip to content"
 title_separator: " › "
+
+parts:
+  expand_all: "Expand all"
+  collapse_all: "Collapse all"
+  he:
+    expand_all: "הרחב הכל"
+    collapse_all: "כווץ הכל"

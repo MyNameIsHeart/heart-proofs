@@ -21,21 +21,51 @@
     {{ .Content | replaceRE `(href|src)="/` (printf `$1="%s/` (strings.TrimSuffix "/" ("" | relURL))) | safeHTML }}
   </div>
 
+  {{ with .RegularPages.ByWeight }}
+  {{ $p := site.Data.text.parts }}
+  {{ with $lang }}{{ with index $p . }}{{ $p = merge $p . }}{{ end }}{{ end }}
   <nav class="parts"{{ with $lang }} lang="{{ . }}"{{ end }}>
+    {{ with $p }}
+    <div class="parts-head">
+      <button type="button" class="parts-toggle" data-expand="{{ .expand_all }}" data-collapse="{{ .collapse_all }}" hidden>{{ .expand_all }}</button>
+    </div>
+    {{ end }}
     <ol class="parts-list">
-      {{ range .RegularPages.ByWeight }}
+      {{ range . }}
       {{ $part := . }}
       <li>
-        <a class="part-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
         {{ with .Params.toc }}
-        <ul class="part-toc">
-          {{ range . }}<li class="toc-l{{ .level }}"><a href="{{ $part.RelPermalink }}#{{ .id }}">{{ .text }}</a></li>{{ end }}
-        </ul>
+        <details class="part">
+          <summary><a class="part-link" href="{{ $part.RelPermalink }}">{{ $part.Title }}</a></summary>
+          <ul class="part-toc">
+            {{ range . }}<li class="toc-l{{ .level }}"><a href="{{ $part.RelPermalink }}#{{ .id }}">{{ .text }}</a></li>{{ end }}
+          </ul>
+        </details>
+        {{ else }}
+        <p class="part-solo"><a class="part-link" href="{{ .RelPermalink }}">{{ .Title }}</a></p>
         {{ end }}
       </li>
       {{ end }}
     </ol>
   </nav>
+  <script>
+    document.querySelectorAll("nav.parts").forEach(function (nav) {
+      var btn = nav.querySelector(".parts-toggle");
+      var items = Array.prototype.slice.call(nav.querySelectorAll("details.part"));
+      if (!btn || !items.length) return;
+      function allOpen() { return items.every(function (d) { return d.open; }); }
+      function refresh() { btn.textContent = allOpen() ? btn.dataset.collapse : btn.dataset.expand; }
+      btn.addEventListener("click", function () {
+        var open = !allOpen();
+        items.forEach(function (d) { d.open = open; });
+        refresh();
+      });
+      items.forEach(function (d) { d.addEventListener("toggle", refresh); });
+      btn.hidden = false;
+      refresh();
+    });
+  </script>
+  {{ end }}
 </article>
 
 {{ partial "subscribe.html" (dict "compact" false) }}
