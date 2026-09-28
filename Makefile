@@ -1,9 +1,12 @@
-.PHONY: convert build serve clean
+.PHONY: convert pdf build serve clean
 
 convert:
 	python3 scripts/convert.py
 
-build: convert
+pdf:
+	python3 scripts/convert.py --pdf
+
+build: pdf
 	hugo --minify
 
 serve: convert

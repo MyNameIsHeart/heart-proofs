@@ -7,11 +7,15 @@ import os
 import re
 import subprocess
 import sys
-import tomllib
 import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python < 3.11 (local runs); CI has 3.11+
+    tomllib = None
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from convert import CONTENT_DIR, LATEX_DIR, ROOT, TYPES, locate, parse_sidecar
@@ -20,6 +24,28 @@ API = "https://connect.mailerlite.com/api"
 PUBLIC_DIR = ROOT / "public"
 MATH_DELIMS = re.compile(r"\\[()\[\]]")
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S)
+CRUMB_SEP = " › "
+
+KIND_LABEL = {"proofs": "New proof", "summaries": "New summary"}
+BUTTON = {"proofs": "Download PDF", "summaries": "Read the summary"}
+READ_ONLINE = "Read on the site"
+
+# Colours mirror static/css/style.css (light theme); email clients need them inline.
+INK, MUTED, ACCENT, BORDER = "#1f1d1a", "#6b655c", "#b8323f", "#e4dcd0"
+SERIF = "Georgia, 'Times New Roman', serif"
+SANS = "Helvetica, Arial, sans-serif"
+
+
+def read_config() -> dict:
+    text = (ROOT / "hugo.toml").read_text(encoding="utf-8")
+    if tomllib:
+        cfg = tomllib.loads(text)
+        return {"baseURL": cfg.get("baseURL", ""), "title": cfg.get("title", ""),
+                "email": cfg.get("params", {}).get("email", "")}
+    def top(key: str) -> str:
+        m = re.search(rf'^{key}\s*=\s*"([^"]*)"', text, re.M)
+        return m.group(1) if m else ""
+    return {"baseURL": top("baseURL"), "title": top("title"), "email": top("  email").strip() or top("email")}
 
 
 def api(method: str, path: str, token: str, body: dict | None = None, params: dict | None = None) -> dict:
@@ -65,7 +91,7 @@ def front_matter(path: Path) -> dict:
             break
         key, _, val = line.partition(":")
         val = val.strip()
-        if val.startswith('"'):
+        if val[:1] in ('"', '['):
             try:
                 val = json.loads(val)
             except ValueError:
@@ -95,10 +121,37 @@ def page_title(rel: str, site_title: str) -> str:
     return title[: -len(suffix)] if site_title and title.endswith(suffix) else title
 
 
-def email_html(title: str, url: str, summary: str) -> str:
-    parts = [f'<p><a href="{html.escape(url)}">{html.escape(title)}</a></p>']
-    if summary:
-        parts.append(f"<p>{html.escape(MATH_DELIMS.sub('', summary))}</p>")
+def button(label: str, href: str) -> str:
+    return (f'<a href="{html.escape(href)}" style="display:inline-block;background:{ACCENT};color:#ffffff;'
+            f'font-family:{SANS};font-weight:bold;font-size:14px;line-height:1;padding:12px 18px;'
+            f'border-radius:6px;text-decoration:none;">{html.escape(label)}</a>')
+
+
+def email_html(section: str, title: str, crumb: str, url: str, pdf: str, previews: list[str],
+               summary: str, lang: str) -> str:
+    rtl = ' dir="rtl"' if lang in ("he", "ar") else ""
+    kicker = KIND_LABEL.get(section, "New post")
+    if crumb:
+        kicker += " · " + crumb
+    parts = [
+        f'<div style="max-width:600px;margin:0 auto;padding:12px 16px 16px;background:#ffffff;font-family:{SERIF};color:{INK};line-height:1.5;">',
+        f'<p style="margin:0 0 6px;font-family:{SANS};font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:{MUTED};">{html.escape(kicker)}</p>',
+        f'<h1{rtl} style="margin:0 0 16px;font-size:26px;line-height:1.2;font-weight:600;"><a href="{html.escape(url)}" style="color:{INK};text-decoration:none;">{html.escape(title)}</a></h1>',
+    ]
+    if section == "proofs" and pdf:
+        parts.append(f'<p style="margin:0 0 18px;">{button(BUTTON["proofs"], pdf)}'
+                     f'&nbsp;&nbsp;&nbsp;<a href="{html.escape(url)}" style="color:{ACCENT};font-family:{SANS};font-size:14px;">{READ_ONLINE}</a></p>')
+        for i, src in enumerate(previews, 1):
+            alt = f"{title}, page {i}" if len(previews) > 1 else title
+            parts.append(f'<a href="{html.escape(pdf)}"><img src="{html.escape(src)}" width="600" alt="{html.escape(alt)}" '
+                         f'style="display:block;width:100%;max-width:600px;height:auto;border:1px solid {BORDER};border-radius:6px;margin:0 0 12px;"></a>')
+        if not previews and summary:
+            parts.append(f'<p style="margin:0 0 1em;">{html.escape(MATH_DELIMS.sub("", summary))}</p>')
+    else:
+        if summary:
+            parts.append(f'<p{rtl} style="margin:0 0 1em;font-size:17px;">{html.escape(MATH_DELIMS.sub("", summary))}</p>')
+        parts.append(f'<p style="margin:6px 0 18px;">{button(BUTTON.get(section, READ_ONLINE), url)}</p>')
+    parts.append("</div>")
     return "\n".join(parts)
 
 
@@ -140,17 +193,20 @@ def build(tex: Path, mode: str, base_url: str, sender: str, from_name: str) -> d
     if rel is None:
         return None
     url = f"{base_url}/{rel}/"
-    title = page_title(rel, from_name) or fm.get("title") or slug
+    full_title = page_title(rel, from_name) or fm.get("title") or slug
+    crumb, _, title = full_title.rpartition(CRUMB_SEP)
+    pdf = f"{base_url}{fm['pdf']}" if fm.get("pdf") else ""
+    previews = [f"{base_url}{p}" for p in (fm.get("previews") or []) if isinstance(p, str)]
     return {
         "mode": mode,
         "campaign": {
             "name": rel,
             "type": "regular",
             "emails": [{
-                "subject": title,
+                "subject": full_title,
                 "from_name": from_name,
                 "from": sender,
-                "content": email_html(title, url, fm.get("summary", "")),
+                "content": email_html(section, title, crumb, url, pdf, previews, fm.get("summary", ""), fm.get("lang", "")),
             }],
         },
     }
@@ -177,19 +233,27 @@ def group_ids(token: str) -> list[str]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("files", nargs="*")
+    ap.add_argument("--dry-run", action="store_true", help="print the campaigns as JSON instead of sending")
+    ap.add_argument("--html", metavar="DIR", help="with --dry-run: also write each email body to DIR for previewing")
+    ap.add_argument("files", nargs="*", help=".tex files to treat as newly added (default: git range BEFORE..AFTER)")
     args = ap.parse_args()
 
-    cfg = tomllib.loads((ROOT / "hugo.toml").read_text(encoding="utf-8"))
-    base_url = (os.environ.get("BASE_URL") or cfg.get("baseURL", "")).rstrip("/")
-    sender = cfg.get("params", {}).get("email", "")
-    from_name = cfg.get("title", "")
+    cfg = read_config()
+    base_url = (os.environ.get("BASE_URL") or cfg["baseURL"]).rstrip("/")
+    sender = cfg["email"]
+    from_name = cfg["title"]
 
     added = {ROOT / f for f in args.files} if args.files else added_files(os.environ.get("BEFORE"), os.environ.get("AFTER"))
     jobs = [j for j in (build(tex, mode, base_url, sender, from_name) for tex, mode in collect(added)) if j]
 
     if args.dry_run:
+        if args.html:
+            out = Path(args.html)
+            out.mkdir(parents=True, exist_ok=True)
+            for job in jobs:
+                name = job["campaign"]["name"].replace("/", "__") + ".html"
+                (out / name).write_text(job["campaign"]["emails"][0]["content"], encoding="utf-8")
+                print(f"notify: wrote {out / name}", file=sys.stderr)
         print(json.dumps(jobs, indent=2, ensure_ascii=False))
         return 0
     if not jobs:

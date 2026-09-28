@@ -34,18 +34,22 @@ jobs:
           sudo dpkg -i "${{ runner.temp }}/hugo.deb"
           hugo version
 
-      - name: Install pandoc
+      - name: Install pandoc, TeX Live and poppler
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq pandoc
+          sudo apt-get install -y -qq --no-install-recommends pandoc \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-lang-english cm-super poppler-utils
           pandoc --version | head -1
+          pdflatex --version | head -1
+          pdftoppm -v 2>&1 | head -1
 
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Convert LaTeX → HTML
-        run: python3 scripts/convert.py
+      - name: Convert LaTeX → HTML, build proof PDFs and previews
+        run: python3 scripts/convert.py --pdf
 
       - name: Build site
         run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"

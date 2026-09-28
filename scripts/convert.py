@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from html import unescape
 from pathlib import Path
 
@@ -648,7 +649,107 @@ def should_split(side: dict, html: str) -> bool:
 
 
 
-def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose: bool) -> Path:
+LATEX_ERR_RE = re.compile(r"^(?:!.*|.*:\d+: .*)$", re.M)
+
+
+def build_pdf(tex_path: Path, out_pdf: Path) -> bool:
+    """Compile a .tex with pdflatex (cwd = its folder, aux files in a temp dir) into out_pdf."""
+    if shutil.which("pdflatex") is None:
+        print("  ! pdflatex not found; skipping PDF for " + tex_path.name, file=sys.stderr)
+        return False
+    with tempfile.TemporaryDirectory() as tmp:
+        cmd = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "-file-line-error",
+               f"-output-directory={tmp}", tex_path.name]
+        for _ in range(2):
+            proc = subprocess.run(cmd, cwd=tex_path.parent, capture_output=True, text=True, errors="replace")
+            if proc.returncode != 0:
+                errs = LATEX_ERR_RE.findall(proc.stdout)
+                print(f"  ! pdflatex failed for {tex_path.name}: {errs[0] if errs else 'see log'}", file=sys.stderr)
+                return False
+            log = Path(tmp, tex_path.stem + ".log")
+            if not log.exists() or "Rerun" not in log.read_text(errors="replace"):
+                break
+        pdf = Path(tmp, tex_path.stem + ".pdf")
+        if not pdf.is_file():
+            return False
+        out_pdf.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(pdf, out_pdf)
+    return True
+
+
+PGM_HEAD_RE = re.compile(rb"P5\s+(\d+)\s+(\d+)\s+(\d+)\s")
+INK = 250  # gray level below which a pixel counts as ink
+
+
+def pgm_pages(pdf: Path, dpi: int) -> list[tuple[int, int, bytes]]:
+    out = subprocess.run(["pdftoppm", "-r", str(dpi), "-gray", str(pdf)], capture_output=True, check=True).stdout
+    pages, i = [], 0
+    while i < len(out):
+        m = PGM_HEAD_RE.match(out, i)
+        if not m:
+            break
+        w, h = int(m.group(1)), int(m.group(2))
+        start = m.end()
+        pages.append((w, h, out[start:start + w * h]))
+        i = start + w * h
+    return pages
+
+
+def ink_box(w: int, h: int, px: bytes, dpi: int) -> tuple[int, int, int, int] | None:
+    """Bounding box of the page's ink, ignoring a lone page number at the bottom."""
+    first = re.compile(rb"[\x00-\xf9]")
+    last = re.compile(rb"[\x00-\xf9][\xfa-\xff]*$")
+    rows = [k for k in range(h) if min(px[k * w:(k + 1) * w]) < INK]
+    if not rows:
+        return None
+    blocks, start, prev = [], rows[0], rows[0]
+    for r in rows[1:]:
+        if r - prev > dpi // 15:
+            blocks.append((start, prev))
+            start = r
+        prev = r
+    blocks.append((start, prev))
+
+    def hspan(r0: int, r1: int) -> tuple[int, int]:
+        lo, hi = w, 0
+        for k in range(r0, r1 + 1):
+            row = px[k * w:(k + 1) * w]
+            m = first.search(row)
+            if m:
+                lo, hi = min(lo, m.start()), max(hi, last.search(row).start() + 1)
+        return lo, hi
+    if len(blocks) > 1:
+        b0, b1 = blocks[-1]
+        lo, hi = hspan(b0, b1)
+        if b1 - b0 < dpi * 0.3 and hi - lo < dpi * 0.6 and b0 > h * 0.8:
+            blocks.pop()  # centred page number
+    top, bot = blocks[0][0], blocks[-1][1]
+    lo, hi = hspan(top, bot)
+    return lo, top, hi, bot + 1
+
+
+def render_previews(pdf: Path, out_dir: Path, slug: str, dpi: int = 150) -> list[Path]:
+    """One cropped PNG per page, for the email."""
+    if shutil.which("pdftoppm") is None:
+        print("  ! pdftoppm not found; skipping previews for " + pdf.name, file=sys.stderr)
+        return []
+    out = []
+    pad = dpi // 5
+    for n, (w, h, px) in enumerate(pgm_pages(pdf, dpi), 1):
+        box = ink_box(w, h, px, dpi)
+        if box is None:
+            continue
+        x, y = max(0, box[0] - pad), max(0, box[1] - pad)
+        W, H = min(w, box[2] + pad) - x, min(h, box[3] + pad) - y
+        dst = out_dir / f"{slug}-{n}"
+        subprocess.run(["pdftoppm", "-r", str(dpi), "-png", "-f", str(n), "-l", str(n), "-singlefile",
+                        "-x", str(x), "-y", str(y), "-W", str(W), "-H", str(H), str(pdf), str(dst)],
+                       check=True, capture_output=True)
+        out.append(dst.with_suffix(".png"))
+    return out
+
+
+def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose: bool, pdf: bool = False) -> Path:
     date_str, slug = split_stem(tex_path.stem)
 
     tex = preprocess(read_tex(tex_path))
@@ -685,6 +786,12 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
             dst = out_files / f"{slug}.{ext}"
             shutil.copyfile(src, dst)
             links[ext] = f"/files/{rel}/{slug}.{ext}"
+    previews: list[str] = []
+    if pdf and section == "proofs" and side.get("pdf") is not False:
+        dst = out_files / f"{slug}.pdf"
+        if "pdf" in links or build_pdf(tex_path, dst):
+            links["pdf"] = f"/files/{rel}/{slug}.pdf"
+            previews = [f"/files/{rel}/{p.name}" for p in render_previews(dst, out_files, slug)]
 
     lang = side.get("lang") or ("he" if is_hebrew(tex) else "")
     fm = [
@@ -698,6 +805,8 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     ]
     for ext, url in links.items():
         fm.append(f"{ext}: {yaml_str(url)}")
+    if previews:
+        fm.append(f"previews: {json.dumps(previews)}")
     if lang:
         fm.append(f"lang: {yaml_str(lang)}")
     if side.get("draft") is True:
@@ -793,6 +902,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--clean", action="store_true")
     ap.add_argument("-q", "--quiet", action="store_true")
+    ap.add_argument("--pdf", action="store_true", help="compile proofs to PDF and render page previews (needs pdflatex and pdftoppm)")
     args = ap.parse_args()
 
     if shutil.which("pandoc") is None:
@@ -816,7 +926,7 @@ def main() -> int:
             subject = parts[0]
             topic = "/".join(parts[1:])
             try:
-                convert_one(tex_path, section, subject, topic, verbose=not args.quiet)
+                convert_one(tex_path, section, subject, topic, verbose=not args.quiet, pdf=args.pdf)
                 n_ok += 1
             except Exception as e:
                 n_err += 1
