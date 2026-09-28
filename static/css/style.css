@@ -217,7 +217,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
   .post-body p:has(> img.fig-wrap:only-child), .post-body p:has(> span:only-child > img.fig-wrap:only-child) { text-align: center; margin: 0 0 1em; }
 }
 .parts { margin: 2rem 0; max-width: var(--measure); }
-.parts-head { display: flex; justify-content: flex-end; margin: 0 0 0.5rem; }
+.parts-head { display: flex; justify-content: flex-start; margin: 0 0 0.5rem; }
 .parts-toggle { font: inherit; font-family: var(--sans); font-size: 0.85rem; padding: 0.2rem 0.85rem; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text); cursor: pointer; }
 .parts-toggle:hover { border-color: var(--accent); color: var(--accent); }
 .parts-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--border); }
