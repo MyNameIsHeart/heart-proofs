@@ -210,7 +210,8 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .post-body figure.fig-left { float: left; margin: 0.25em 1.6em 0.8em 0; }
 .post-body figure.fig-wrap img { display: block; width: 100%; max-height: none; border-radius: var(--radius); }
 .post-body figure.fig-wrap figcaption { font-family: var(--sans); font-size: 0.76rem; line-height: 1.35; color: var(--muted); text-align: center; margin-top: 0.45em; }
-.post-body hr, .post-body h2, .post-body h3, .post-body .katex-display { clear: both; }
+.post-body h2, .post-body h3 { clear: both; }
+.post-body hr, .post-body .theorem { display: flow-root; }
 @media (max-width: 700px) {
   .post-body img.fig-wrap { float: none; max-width: 100%; margin: 0 0 1em; }
   .post-body figure.fig-wrap { float: none; width: auto; max-width: 13rem; margin: 0 auto 1.4em; }

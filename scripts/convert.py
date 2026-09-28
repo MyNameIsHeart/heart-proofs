@@ -547,18 +547,14 @@ def copy_asset(src: str, tex_dir: Path, rel: str) -> str | None:
     return f"/files/{rel}/{inner.as_posix()}"
 
 
-PROOF_DIV = '<div class="proof">'
-
-
 def add_figure(html: str, url: str, alt: str, caption: str, side: str) -> str:
-    """Float a sidecar figure next to the proof (or the start of the body if there is no proof)."""
+    """Float a sidecar figure at the top of the body; the statement and proof wrap around it."""
     from html import escape
     fig = f'<figure class="fig-wrap fig-{side}"><img src="{escape(url)}" alt="{escape(alt)}" loading="lazy">'
     if caption:
         fig += f"<figcaption>{escape(caption)}</figcaption>"
     fig += "</figure>\n"
-    k = html.find(PROOF_DIV)
-    return fig + html if k < 0 else html[:k] + fig + html[k:]
+    return fig + html
 
 
 def strip_tags(s: str) -> str:
