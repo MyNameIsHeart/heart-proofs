@@ -1,5 +1,5 @@
 ---
-layout: "page"
+layout: "plain"
 title: "About"
 ---
 I study mathematics and computer science at HUJI, and I like pretty math proofs.
