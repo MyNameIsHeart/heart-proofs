@@ -39,19 +39,36 @@
     });
   });
   document.querySelectorAll("form.subscribe-form").forEach(function (form) {
+    if (!window.fetch || !window.FormData) return;
+    form.removeAttribute("target");
+    var btn = form.querySelector("button[type=submit]");
+    var input = form.querySelector("input[type=email]");
+    var fields = form.querySelector(".subscribe-fields");
+    var msg = form.querySelector(".subscribe-msg");
+    var idle = btn.textContent;
+    function show(text, kind) { msg.textContent = text; msg.className = "subscribe-msg " + kind; msg.hidden = false; }
     form.addEventListener("submit", function (ev) {
-      if (!window.fetch) return;
       ev.preventDefault();
-      var btn = form.querySelector("button");
+      if (btn.disabled) return;
       btn.disabled = true;
-      fetch(form.action, { method: "POST", body: new FormData(form) })
+      btn.textContent = form.dataset.busy || idle;
+      msg.hidden = true;
+      fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
         .then(function (r) { return r.json(); })
         .then(function (d) {
-          if (!d || d.success === false) throw new Error();
-          form.querySelector("input[type=email]").value = "";
-          btn.textContent = form.dataset.success || "\u2713";
+          if (!d || !d.success) {
+            var f = d && d.errors && d.errors.fields && d.errors.fields.email;
+            throw new Error(f && f[0] ? f[0] : "");
+          }
+          fields.hidden = true;
+          show(form.dataset.success, "is-success");
         })
-        .catch(function () { btn.disabled = false; form.removeEventListener("submit", arguments.callee); form.submit(); });
+        .catch(function (e) {
+          btn.disabled = false;
+          btn.textContent = idle;
+          show((e && e.message) || form.dataset.error, "is-error");
+          input.focus();
+        });
     });
   });
 </script>
