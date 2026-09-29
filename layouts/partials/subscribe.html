@@ -4,13 +4,14 @@
 <section class="subscribe{{ if $compact }} subscribe-compact{{ end }}">
   {{ if not $compact }}{{ with $t.heading }}<h2>{{ . }}</h2>{{ end }}{{ end }}
   {{ with $t.blurb }}<p class="muted">{{ . }}</p>{{ end }}
-  <form class="subscribe-form" action="{{ . }}" method="post" target="_blank" data-busy="{{ $t.busy }}" data-success="{{ $t.success }}" data-error="{{ $t.error }}">
+  <form class="subscribe-form" method="post" data-action="{{ . }}" data-busy="{{ $t.busy }}" data-success="{{ $t.success }}" data-error="{{ $t.error }}">
     <div class="subscribe-fields">
       <input type="email" name="fields[email]" aria-label="email" placeholder="{{ $t.placeholder }}" required autocomplete="email">
       <input type="hidden" name="ml-submit" value="1">
       <input type="hidden" name="anticsrf" value="true">
-      <button type="submit">{{ $t.button }}</button>
+      <button type="submit" disabled>{{ $t.button }}</button>
     </div>
+    {{ with $t.noscript }}<noscript><p class="muted small">{{ . }}</p></noscript>{{ end }}
     <p class="subscribe-msg" role="status" aria-live="polite" hidden></p>
   </form>
 </section>

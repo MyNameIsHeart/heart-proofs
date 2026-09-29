@@ -35,6 +35,7 @@ subscribe:
   busy: "Subscribing…"
   success: "Subscribed"
   error: "Something went wrong. Please try again, or email heartproofs@proton.me."
+  noscript: "Subscribing needs JavaScript. Or email heartproofs@proton.me."
 
 post:
   pdf: "PDF"

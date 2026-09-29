@@ -48,23 +48,6 @@
       {{ end }}
     </ol>
   </nav>
-  <script>
-    document.querySelectorAll("nav.parts").forEach(function (nav) {
-      var btn = nav.querySelector(".parts-toggle");
-      var items = Array.prototype.slice.call(nav.querySelectorAll("details.part"));
-      if (!btn || !items.length) return;
-      function allOpen() { return items.every(function (d) { return d.open; }); }
-      function refresh() { btn.textContent = allOpen() ? btn.dataset.collapse : btn.dataset.expand; }
-      btn.addEventListener("click", function () {
-        var open = !allOpen();
-        items.forEach(function (d) { d.open = open; });
-        refresh();
-      });
-      items.forEach(function (d) { d.addEventListener("toggle", refresh); });
-      btn.hidden = false;
-      refresh();
-    });
-  </script>
   {{ end }}
 </article>
 
