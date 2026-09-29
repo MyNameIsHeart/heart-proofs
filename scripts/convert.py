@@ -523,6 +523,7 @@ def copy_images(html: str, tex_dir: Path, rel: str) -> str:
         dst = FILES_DIR / rel / inner
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(p, dst)
+        scrub_image(dst)
         attrs = re.sub(r'\s*alt="image"', ' alt=""', attrs)
         cls = f' class="fig-wrap fig-{wrap}"' if wrap else ""
         return f'<img src="/files/{rel}/{inner.as_posix()}"{cls}{attrs}>'
@@ -544,6 +545,7 @@ def copy_asset(src: str, tex_dir: Path, rel: str) -> str | None:
     dst = FILES_DIR / rel / inner
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(p, dst)
+    scrub_image(dst)
     return f"/files/{rel}/{inner.as_posix()}"
 
 
@@ -649,6 +651,145 @@ def should_split(side: dict, html: str) -> bool:
 
 
 
+# ---- metadata scrubbing: nothing the site publishes may carry document, tool or camera metadata ----
+
+PDF_INFO_KEYS = ("Title", "Subject", "Keywords", "Author", "Creator", "Producer", "CreationDate", "ModDate")
+
+
+def pdf_metadata(path: Path) -> list[str]:
+    """Names of metadata still present in a PDF (empty list = clean). Unverifiable counts as dirty."""
+    if shutil.which("pdfinfo") is None:
+        return ["pdfinfo not available to verify"]
+    proc = subprocess.run(["pdfinfo", str(path)], capture_output=True, text=True, errors="replace")
+    found = []
+    for line in proc.stdout.splitlines():
+        key, _, val = line.partition(":")
+        if key.strip() in PDF_INFO_KEYS and val.strip():
+            found.append(key.strip())
+    raw = path.read_bytes()
+    if b"/Metadata" in raw or b"xmpmeta" in raw:
+        found.append("XMP")
+    if PTEX_ENTRY_RE.search(raw):
+        found.append("pdfTeX source entries")
+    return found
+
+
+PTEX_ENTRY_RE = re.compile(rb"/PTEX\.(?:FileName|Fullbanner)\s*\([^)]*\)|/PTEX\.PageNumber\s*\d+|/PTEX\.InfoDict\s*\d+\s+\d+\s+R")
+
+
+def blank_pdf_metadata(path: Path) -> None:
+    """Strip metadata in place without external tools: blank the Info dictionary, detach and blank XMP
+    streams, and blank pdfTeX's source-file entries. Byte lengths are preserved so cross-references stay valid."""
+    data = bytearray(path.read_bytes())
+
+    def blank(a: int, b: int) -> None:
+        data[a:b] = b" " * (b - a)
+
+    def obj_start(num: bytes, gen: bytes) -> int:
+        m = re.search(rb"(?<![0-9])" + num + rb"\s+" + gen + rb"\s+obj\b", data)
+        return m.end() if m else -1
+
+    for m in list(re.finditer(rb"/Info\s+(\d+)\s+(\d+)\s+R", data)):
+        k = obj_start(m.group(1), m.group(2))
+        if k < 0:
+            continue
+        a = data.find(b"<<", k)
+        b = data.find(b">>", a)
+        if 0 <= a < b:
+            blank(a + 2, b)
+    for m in list(re.finditer(rb"/Metadata\s+(\d+)\s+(\d+)\s+R", data)):
+        k = obj_start(m.group(1), m.group(2))
+        blank(m.start(), m.end())
+        if k < 0:
+            continue
+        a = data.find(b"stream", k)
+        b = data.find(b"endstream", a)
+        if 0 <= a < b:
+            blank(a + len(b"stream"), b)
+    for m in list(PTEX_ENTRY_RE.finditer(data)):
+        blank(m.start(), m.end())
+    path.write_bytes(bytes(data))
+
+
+def publish_pdf(src: Path, dst: Path) -> bool:
+    """Copy a PDF into the site with its metadata stripped. qpdf rebuilds the file when available; the
+    built-in stripper runs in every case. Only a file that is still dirty afterwards is left unpublished."""
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    done = False
+    if shutil.which("qpdf"):
+        proc = subprocess.run(["qpdf", "--empty", "--deterministic-id", "--pages", str(src), "--", str(dst)],
+                              capture_output=True, text=True, errors="replace")
+        done = proc.returncode in (0, 3) and dst.is_file()  # 3 = warnings only
+    if not done:
+        shutil.copyfile(src, dst)
+    blank_pdf_metadata(dst)
+    left = pdf_metadata(dst)
+    if left:
+        dst.unlink(missing_ok=True)
+        print(f"  ! not publishing {src.name}: metadata survived stripping ({', '.join(left)})", file=sys.stderr)
+        return False
+    return True
+
+
+COMMENT_LINE_RE = re.compile(r"^[ \t]*%.*\n?", re.M)
+COMMENT_ENV_RE = re.compile(r"\\begin\{comment\}.*?\\end\{comment\}[ \t]*\n?", re.S)
+
+
+def scrub_tex(tex: str) -> str:
+    """The published .tex: no editor banner, no comment lines, no comment environments."""
+    tex = COMMENT_ENV_RE.sub("", tex)
+    tex = COMMENT_LINE_RE.sub("", tex)
+    return re.sub(r"\n{3,}", "\n\n", tex).strip() + "\n"
+
+
+JPEG_DROP = {0xE1, 0xED, 0xFE}  # APP1 (EXIF/XMP), APP13 (Photoshop/IPTC), COM
+PNG_DROP = {b"tEXt", b"zTXt", b"iTXt", b"eXIf", b"tIME"}
+
+
+def scrub_image(path: Path) -> bool:
+    """Strip EXIF/XMP/IPTC/comment segments from a JPEG or text/EXIF/time chunks from a PNG, in place."""
+    data = path.read_bytes()
+    if data[:2] == b"\xff\xd8":
+        out = bytearray(b"\xff\xd8")
+        i = 2
+        while i + 4 <= len(data) and data[i] == 0xFF:
+            marker = data[i + 1]
+            if marker == 0xDA:
+                out += data[i:]
+                break
+            seglen = int.from_bytes(data[i + 2:i + 4], "big")
+            if marker not in JPEG_DROP:
+                out += data[i:i + 2 + seglen]
+            i += 2 + seglen
+        else:
+            return False
+    elif data[:8] == b"\x89PNG\r\n\x1a\n":
+        out = bytearray(data[:8])
+        i = 8
+        while i + 8 <= len(data):
+            length = int.from_bytes(data[i:i + 4], "big")
+            ctype = data[i + 4:i + 8]
+            chunk = data[i:i + 12 + length]
+            if ctype not in PNG_DROP:
+                out += chunk
+            i += 12 + length
+    else:
+        return False
+    if bytes(out) != data:
+        path.write_bytes(bytes(out))
+        return True
+    return False
+
+
+def scrub_images_under(root: Path) -> int:
+    n = 0
+    if root.is_dir():
+        for p in root.rglob("*"):
+            if p.suffix.lower() in (".jpg", ".jpeg", ".png") and scrub_image(p):
+                n += 1
+    return n
+
+
 LATEX_ERR_RE = re.compile(r"^(?:!.*|.*:\d+: .*)$", re.M)
 
 
@@ -658,8 +799,11 @@ def build_pdf(tex_path: Path, out_pdf: Path) -> bool:
         print("  ! pdflatex not found; skipping PDF for " + tex_path.name, file=sys.stderr)
         return False
     with tempfile.TemporaryDirectory() as tmp:
+        # Load pdfprivacy before the document's own preamble so every PDF comes out
+        # without producer, dates, TeX banner, trailer ID or XMP, whatever the source says.
         cmd = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "-file-line-error",
-               f"-output-directory={tmp}", tex_path.name]
+               f"-output-directory={tmp}", f"-jobname={tex_path.stem}",
+               "\\RequirePackage[all]{pdfprivacy}\\input{" + tex_path.name + "}"]
         for _ in range(2):
             proc = subprocess.run(cmd, cwd=tex_path.parent, capture_output=True, text=True, errors="replace")
             if proc.returncode != 0:
@@ -672,9 +816,7 @@ def build_pdf(tex_path: Path, out_pdf: Path) -> bool:
         pdf = Path(tmp, tex_path.stem + ".pdf")
         if not pdf.is_file():
             return False
-        out_pdf.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(pdf, out_pdf)
-    return True
+        return publish_pdf(pdf, out_pdf)
 
 
 PGM_HEAD_RE = re.compile(rb"P5\s+(\d+)\s+(\d+)\s+(\d+)\s")
@@ -745,6 +887,7 @@ def render_previews(pdf: Path, out_dir: Path, slug: str, dpi: int = 150) -> list
         subprocess.run(["pdftoppm", "-r", str(dpi), "-png", "-f", str(n), "-l", str(n), "-singlefile",
                         "-x", str(x), "-y", str(y), "-W", str(W), "-H", str(H), str(pdf), str(dst)],
                        check=True, capture_output=True)
+        scrub_image(dst.with_suffix(".png"))
         out.append(dst.with_suffix(".png"))
     return out
 
@@ -780,12 +923,11 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     out_files = FILES_DIR / rel
     out_files.mkdir(parents=True, exist_ok=True)
     links = {}
-    for ext in ("pdf", "tex"):
-        src = tex_path.with_suffix("." + ext)
-        if src.exists():
-            dst = out_files / f"{slug}.{ext}"
-            shutil.copyfile(src, dst)
-            links[ext] = f"/files/{rel}/{slug}.{ext}"
+    (out_files / f"{slug}.tex").write_text(scrub_tex(read_tex(tex_path)), encoding="utf-8")
+    links["tex"] = f"/files/{rel}/{slug}.tex"
+    ready_pdf = tex_path.with_suffix(".pdf")
+    if ready_pdf.exists() and publish_pdf(ready_pdf, out_files / f"{slug}.pdf"):
+        links["pdf"] = f"/files/{rel}/{slug}.pdf"
     previews: list[str] = []
     if pdf and section == "proofs" and side.get("pdf") is not False:
         dst = out_files / f"{slug}.pdf"
@@ -911,6 +1053,9 @@ def main() -> int:
 
 
     clean()
+    scrubbed = scrub_images_under(ROOT / "static" / "images")
+    if scrubbed and not args.quiet:
+        print(f"  stripped metadata from {scrubbed} image(s) in static/images")
 
     n_ok = n_err = 0
     for folder, section in TYPES.items():
