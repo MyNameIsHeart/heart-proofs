@@ -28,12 +28,12 @@ kinds:
   study-spaces: "Study spaces"
 
 subscribe:
-  heading: "Get notified by email"
-  blurb: "Each new proof by email with its PDF, and a link whenever a new lecture summary is out (no off-topic)"
+  heading: "Get the proofs by email"
+  blurb: "New proofs and lecture summaries by email (no off-topic)"
   placeholder: "you@gmail.com"
   button: "Subscribe"
   busy: "Subscribing…"
-  success: "Subscribed! You'll hear about every new proof and summary."
+  success: "Subscribed"
   error: "Something went wrong. Please try again, or email heartproofs@proton.me."
 
 post:
