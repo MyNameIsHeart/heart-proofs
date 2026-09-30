@@ -279,7 +279,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .subscribe .small { margin: 0; }
 body.layout-subscribe { min-height: 100vh; background: linear-gradient(rgba(22,21,19,0.55), rgba(22,21,19,0.12) 45%, rgba(22,21,19,0.3)), url(/images/subscribe/mathematical-bridge.jpg) center bottom / cover no-repeat #161513; }
 body.layout-subscribe .site-header { position: relative; z-index: 1; box-shadow: 0 8px 28px rgba(0,0,0,0.45); }
-body.layout-subscribe .post { padding: 2.2rem 0 2rem; }
+body.layout-subscribe .post { padding: 0.9rem 0 2rem; }
 body.layout-subscribe .subscribe { padding: 1rem 1.25rem; background: rgba(22,21,19,0.5); border-color: rgba(255,255,255,0.2); color: #ebe6de; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
 body.layout-subscribe .subscribe h2 { font-size: 1.15rem; color: #fff; }
 body.layout-subscribe .subscribe .muted { color: #cfc8bd; }
