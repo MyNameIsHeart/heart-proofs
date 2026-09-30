@@ -5,5 +5,11 @@
     {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
   </header>
   {{ partial "subscribe.html" (dict "compact" false) }}
+  {{ with .Params.figure }}
+  <figure class="figure subscribe-figure">
+    <img src="{{ strings.TrimPrefix "/" . | relURL }}" alt="{{ $.Params.figure_alt }}" loading="lazy">
+    {{ with $.Params.figure_caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+  {{ end }}
 </article>
 {{ end }}

@@ -277,6 +277,8 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .subscribe-form button:hover { background: var(--accent-strong); }
 .subscribe-form button:disabled { opacity: 0.7; cursor: progress; }
 .subscribe .small { margin: 0; }
+.subscribe-figure { max-width: var(--measure); margin: 2.5rem auto 0; }
+.subscribe-figure img { display: block; width: 100%; max-height: none; }
 
 .site-footer { border-top: 1px solid var(--border); margin-top: 3rem; padding: 2rem 0 2.5rem; font-size: 0.9rem; }
 .footer-inner p { margin: 0 0 0.5rem; }
