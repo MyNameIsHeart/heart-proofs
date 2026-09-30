@@ -1053,9 +1053,9 @@ def main() -> int:
 
 
     clean()
-    scrubbed = scrub_images_under(ROOT / "static" / "images")
+    scrubbed = scrub_images_under(ROOT / "static" / "images") + scrub_images_under(LATEX_DIR)
     if scrubbed and not args.quiet:
-        print(f"  stripped metadata from {scrubbed} image(s) in static/images")
+        print(f"  stripped metadata from {scrubbed} image(s) in static/images and latex")
 
     n_ok = n_err = 0
     for folder, section in TYPES.items():
