@@ -1,9 +1,6 @@
 {{ define "main" }}
 <article class="post">
-  <header class="post-header">
-    <h1>{{ .Title }}</h1>
-    {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
-  </header>
+  <h1 class="visually-hidden">{{ .Title }}</h1>
   {{ partial "subscribe.html" (dict "compact" false) }}
   {{ with .Params.figure_caption }}<p class="photo-credit">{{ . }}</p>{{ end }}
 </article>
