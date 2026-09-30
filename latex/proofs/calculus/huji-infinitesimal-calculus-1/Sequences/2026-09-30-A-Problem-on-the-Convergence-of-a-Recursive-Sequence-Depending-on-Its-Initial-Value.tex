@@ -1,0 +1,122 @@
+%% LyX 2.4.4 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+
+\begin{document}
+\title{{\Large A Problem on the Convergence of a Recursive Sequence Depending
+on Its Initial Value\vspace{-2em}}}
+\maketitle
+\begin{problem*}
+Let $\left(a_{n}\right)_{n=1}^{\infty}$ be a sequence s.t. $\forall n\in\mathbb{N}\quad a_{n+1}=a_{n}\cdot(1-a_{n})$.
+
+Prove that $\left(a_{n}\right)_{n=1}^{\infty}$ converges if and only
+if $a_{1}\in\left[0,1\right]$.
+\end{problem*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{proof}
+We will prove both directions separately.
+
+\medskip{}
+
+$\left(\Rightarrow\right)$ Let us assume $\left(a_{n}\right)_{n=1}^{\infty}$
+is a convergent sequence. 
+
+1. Let $\underset{n\rightarrow\infty}{\lim}a_{n}=L$. 
+
+Since the sequence converges, the shifted sequence $\left(a_{n+1}\right)_{n=1}^{\infty}$
+must also converge to $L$.
+
+Taking the limit on both sides of the recurrence relation and applying
+sequence limits arithmetic gives
+\[
+L=L\cdot\left(1-L\right)\iff L=L-L^{2}\iff L^{2}=0\iff L=0
+\]
+
+2. Note the following:
+\[
+a_{n+1}\le a_{n}\iff a_{n}\cdot(1-a_{n})\le a_{n}\iff a_{n}-a_{n}^{2}\le a_{n}\iff-a_{n}^{2}\le0\iff a_{n}^{2}\ge0
+\]
+ which is true for every $n\in\mathbb{N}$ - therefore $\left(a_{n}\right)_{n=1}^{\infty}$
+is a monotonically decreasing sequence.
+
+3. Let us recall that every convergent sequence is bounded, and that
+a monotonically decreasing sequence which is bounded from below converges
+to the infimum of its elements.
+
+Therefore, $0$ is the infimum of the sequence elements and in particular
+$a_{1}\ge0$.
+
+4. If $a_{1}=0$, then $a_{1}\le1$. Otherwise, $a_{1}>0$ and the
+infimum provides $a_{2}\ge0$.
+
+Substituting the recurrence relation gives $a_{1}-a_{1}^{2}\ge0\iff a_{1}\ge a_{1}^{2}\iff1\ge a_{1}$.
+
+5. Overall, $a_{1}\in\left[0,1\right]$ as required.
+
+\medskip{}
+
+$\left(\Leftarrow\right)$ Assume $a_{1}\in\left[0,1\right]$ .
+
+By step 2 of the previous direction (this argument did not use convergence),
+$\left(a_{n}\right)_{n=1}^{\infty}$ is a monotonically decreasing
+sequence.
+
+Let us prove by induction that $\forall n\in\mathbb{N}\ a_{n}\in\left[0,1\right]$.
+
+For $n=1$, the assumption provides $a_{1}\in\left[0,1\right]$.
+
+Assume for some $n\in\mathbb{N}$ that $a_{n}\in\left[0,1\right]$.
+Then,
+\[
+0\le a_{n}\le1\iff0\le a_{n}^{2}\le a_{n}\iff-a_{n}\le a_{n}^{2}-a_{n}\le0\iff a_{n}\ge a_{n}-a_{n}^{2}\ge0\iff a_{n}\ge a_{n+1}\ge0
+\]
+
+The induction assumption provides $1\ge a_{n}$ therefore $a_{n+1}\in\left[0,1\right]$
+and the induction is complete.
+
+Let us recall that a sequence which is monotonically decreasing and
+is bounded from below is convergent, hence $\left(a_{n}\right)_{n=1}^{\infty}$
+is a convergent sequence.
+\end{proof}
+
+\end{document}
