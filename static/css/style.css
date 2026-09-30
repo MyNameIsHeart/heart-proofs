@@ -289,7 +289,7 @@ body.layout-subscribe .subscribe-form input[type="email"] { background: rgba(22,
 body.layout-subscribe .subscribe-msg.is-success { color: #6fd98a; }
 body.layout-subscribe .subscribe-msg.is-error { color: #e5626e; }
 body.layout-subscribe .photo-credit { position: fixed; right: 1.25rem; bottom: 0.9rem; margin: 0; font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.02em; color: rgba(255,255,255,0.72); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
-@media (max-width: 700px) { body.layout-subscribe { background-size: auto 140%; background-position: center top; } }
+@media (max-width: 700px) { body.layout-subscribe { background: linear-gradient(to bottom, #161513 calc(100% - 106vw), rgba(22,21,19,0.15) calc(100% - 88vw), rgba(22,21,19,0.15) 90%, rgba(22,21,19,0.35)), url(/images/subscribe/mathematical-bridge.jpg) 50% 100% / 140% auto no-repeat #161513; } }
 
 .site-footer { border-top: 1px solid var(--border); margin-top: 3rem; padding: 2rem 0 2.5rem; font-size: 0.9rem; }
 .footer-inner p { margin: 0 0 0.5rem; }
