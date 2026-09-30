@@ -250,6 +250,14 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .nobr { white-space: nowrap; }
 
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.4em 0; margin: 0.8em 0; }
+.katex-display::-webkit-scrollbar { height: 6px; }
+.katex-display::-webkit-scrollbar-track { background: transparent; }
+.katex-display::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.katex-display:hover::-webkit-scrollbar-thumb { background: var(--muted); }
+@supports not selector(::-webkit-scrollbar) { .katex-display { scrollbar-width: thin; scrollbar-color: var(--border) transparent; } }
+.katex-display.fade-end { mask-image: linear-gradient(to right, #000 calc(100% - 3em), transparent); }
+.katex-display.fade-start { mask-image: linear-gradient(to right, transparent, #000 3em); }
+.katex-display.fade-start.fade-end { mask-image: linear-gradient(to right, transparent, #000 3em, #000 calc(100% - 3em), transparent); }
 .katex { font-size: 1.05em; white-space: nowrap; }
 
 .subscribe { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.5rem; background: var(--bg-2); max-width: var(--measure); margin: 2rem auto; }
@@ -284,6 +292,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
   .site-header, .site-footer, .subscribe, .post-nav, .downloads, .skip { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .theorem { background: none; }
+  .katex-display { mask-image: none; }
 }
 
 main { padding-bottom: 4rem; }

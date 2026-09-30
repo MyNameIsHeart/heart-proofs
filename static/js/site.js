@@ -39,7 +39,26 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// 2. Subscribe form: always submitted in place with fetch. The form has no action attribute (the
+// 2. Display formulas wider than the page scroll sideways. Mark which edge continues so the
+//    stylesheet can fade it; a hard cut looks like a truncated formula.
+document.addEventListener("DOMContentLoaded", function () {
+  var displays = document.querySelectorAll(".katex-display");
+  if (!displays.length) return;
+  function update(el) {
+    var max = el.scrollWidth - el.clientWidth;
+    el.classList.toggle("fade-start", el.scrollLeft > 1);
+    el.classList.toggle("fade-end", el.scrollLeft < max - 1);
+  }
+  function updateAll() { displays.forEach(update); }
+  displays.forEach(function (el) {
+    el.addEventListener("scroll", function () { update(el); }, { passive: true });
+  });
+  updateAll();
+  window.addEventListener("resize", updateAll);
+  if (document.fonts) document.fonts.ready.then(updateAll);
+});
+
+// 3. Subscribe form: always submitted in place with fetch. The form has no action attribute (the
 //    endpoint is in data-action) and the CSP sets form-action 'none', so the page can never navigate
 //    to MailerLite. The button ships disabled and is enabled here, so without JavaScript nothing is sent.
 document.querySelectorAll("form.subscribe-form").forEach(function (form) {
@@ -76,7 +95,7 @@ document.querySelectorAll("form.subscribe-form").forEach(function (form) {
   });
 });
 
-// 3. Summary pages: "expand all / collapse all" for the lecture list.
+// 4. Summary pages: "expand all / collapse all" for the lecture list.
 document.querySelectorAll("nav.parts").forEach(function (nav) {
   var btn = nav.querySelector(".parts-toggle");
   var items = Array.prototype.slice.call(nav.querySelectorAll("details.part"));
