@@ -277,8 +277,16 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .subscribe-form button:hover { background: var(--accent-strong); }
 .subscribe-form button:disabled { opacity: 0.7; cursor: progress; }
 .subscribe .small { margin: 0; }
-.subscribe-figure { max-width: var(--measure); margin: 2.5rem auto 0; }
-.subscribe-figure img { display: block; width: 100%; max-height: none; }
+body.layout-subscribe { min-height: 100vh; background: linear-gradient(rgba(22,21,19,0.6), rgba(22,21,19,0.3) 60%, rgba(22,21,19,0.45)), url(/images/subscribe/mathematical-bridge.jpg) center bottom / cover no-repeat #161513; }
+body.layout-subscribe h1 { color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,0.6); }
+body.layout-subscribe .subscribe { background: rgba(22,21,19,0.78); border-color: rgba(255,255,255,0.14); color: #ebe6de; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+body.layout-subscribe .subscribe h2 { color: #fff; }
+body.layout-subscribe .subscribe .muted { color: #cfc8bd; }
+body.layout-subscribe .subscribe-form input[type="email"] { background: rgba(22,21,19,0.6); color: #ebe6de; border-color: rgba(255,255,255,0.14); }
+body.layout-subscribe .subscribe-msg.is-success { color: #6fd98a; }
+body.layout-subscribe .subscribe-msg.is-error { color: #e5626e; }
+body.layout-subscribe .photo-credit { position: fixed; right: 1.25rem; bottom: 0.9rem; margin: 0; font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.02em; color: rgba(255,255,255,0.72); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+@media (max-width: 700px) { body.layout-subscribe { background-size: auto 140%; background-position: center top; } }
 
 .site-footer { border-top: 1px solid var(--border); margin-top: 3rem; padding: 2rem 0 2.5rem; font-size: 0.9rem; }
 .footer-inner p { margin: 0 0 0.5rem; }
