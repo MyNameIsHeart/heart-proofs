@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "\\C": "\\mathbb{C}",
       "\\eps": "\\varepsilon",
       "\\abs": "\\left|#1\\right|",
-      "\\norm": "\\left\\lVert#1\\right\\rVert"
+      "\\norm": "\\left\\lVert#1\\right\\rVert",
+      "\\ensuremath": "\\TextOrMath{$#1$}{#1}"
     },
     throwOnError: false,
     ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option"]
