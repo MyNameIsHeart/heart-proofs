@@ -14,6 +14,7 @@
     {{ with partial "crumbs.html" . }}<div class="card-meta">{{ . }}</div>{{ end }}
     {{ end }}
     <h1{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</h1>
+    {{ with .Params.author }}<p class="byline"{{ with $.Params.lang }} lang="{{ . }}"{{ end }}>{{ . }}</p>{{ end }}
     {{ with .Params.subtitle }}<p class="lede">{{ . }}</p>{{ end }}
     {{ if or .Params.pdf .Params.tex }}
     <p class="downloads">

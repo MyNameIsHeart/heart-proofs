@@ -161,6 +161,110 @@ def unbox(tex: str) -> str:
     return tex
 
 
+MARGIN_MARK = "marginnote"
+
+
+def margin_notes(tex: str) -> str:
+    """pandoc drops \\marginpar. Keep the note as a marked span; postprocess makes it a side note."""
+    out = []
+    i = 0
+    for m in re.finditer(r"\\marginpar\s*(?:\[[^\]]*\])?\s*(?=\{)", tex):
+        if m.start() < i:
+            continue
+        end = brace_arg(tex, m.end())
+        if end < 0:
+            break
+        out.append(tex[i:m.start()])
+        out.append("\\textcolor{%s}{%s}" % (MARGIN_MARK, tex[m.end() + 1:end]))
+        i = end + 1
+    out.append(tex[i:])
+    return "".join(out)
+
+
+def keep_layout(tex: str) -> str:
+    """Layout pandoc gets wrong: abstracts (moved to metadata), a \\\\ that ends a paragraph (it swallows the
+    paragraph break while looking for an optional [length]) and paragraphs pushed to the end with \\hfill."""
+    head, sep, body = tex.partition("\\begin{document}")
+    if not sep:
+        return tex
+    body = re.sub(r"\\(begin|end)\{abstract\}", r"\\\1{abstractbox}", body)
+    body = re.sub(r"\\\\\*?[ \t]*\n(?:[ \t]*\n)+", "\n\n", body)
+    body = re.sub(r"(\n[ \t]*\n)[ \t]*\\(?:hfill|hspace\*?\{\\fill\})(?:\{\})?[ \t]*(\S.*?)(?=\n[ \t]*\n|\\end\{document\})",
+                  r"\1\\begin{flushright}\n\2\n\\end{flushright}", body, flags=re.S)
+    return head + sep + body
+
+
+def abstract_name(tex: str) -> str:
+    m = re.search(r"\\(?:renewcommand|providecommand)\*?\{?\\abstractname\}?\{([^{}]*)\}", tex)
+    if m:
+        return m.group(1).strip()
+    return "תקציר" if is_hebrew(tex) else "Abstract"
+
+
+def label_abstract(html: str, name: str) -> str:
+    from html import escape
+    head = f'<div class="abstract">\n<p class="abstract-title">{escape(name)}</p>'
+    return html.replace('<div class="abstractbox">', head)
+
+
+TABULAR_RE = re.compile(r"\\begin\{tabular\*?\}(?:\{[^{}]*\})?\s*(?:\[[^\]]*\])?\s*\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}(.*?)\\end\{tabular\*?\}", re.S)
+
+
+def column_rules(spec: str) -> set[int]:
+    """Column boundaries with a vertical rule in a tabular spec: 0 is before the first column, n after the n-th."""
+    rules: set[int] = set()
+    cols = 0
+    i = 0
+    while i < len(spec):
+        c = spec[i]
+        if c == "|":
+            rules.add(cols)
+        elif c in "lcrX":
+            cols += 1
+        elif c in "pmb":
+            cols += 1
+            if spec.startswith("{", i + 1):
+                i = brace_arg(spec, i + 1)
+        elif c in "><@!" and spec.startswith("{", i + 1):
+            i = brace_arg(spec, i + 1)
+        if i < 0:
+            break
+        i += 1
+    if cols in rules:
+        rules.discard(cols)
+        rules.add(-1)
+    return rules
+
+
+def row_lines(rows: str) -> list[str]:
+    """Classes for the \\hline rules: above the table, between body rows (the one under the first row is
+    the header line, always drawn) and below the table."""
+    segs = [s.strip() for s in re.split(r"\\\\|\\tabularnewline", rows)]
+    cls = []
+    if segs[0].startswith("\\hline"):
+        cls.append("hl-top")
+    if any(s.startswith("\\hline") and s[len("\\hline"):].strip() for s in segs[2:]):
+        cls.append("hl-rows")
+    if len(segs) > 1 and segs[-1].startswith("\\hline"):
+        cls.append("hl-bottom")
+    return cls
+
+
+def rule_tables(html: str, tex: str) -> str:
+    """pandoc keeps no rules from a tabular. Tag each table with its vertical rules and, when it has
+    \\hline between body rows, with row lines; the stylesheet draws them."""
+    it = iter(TABULAR_RE.findall(tex))
+
+    def repl(m: re.Match) -> str:
+        spec = next(it, None)
+        if spec is None:
+            return m.group(0)
+        cls = sorted("vr-end" if r < 0 else f"vr-{r}" for r in column_rules(spec[0])) + row_lines(spec[1])
+        return f'<table class="{" ".join(cls)}"{m.group(1)}>' if cls else m.group(0)
+
+    return re.sub(r"<table\b([^>]*)>", repl, html)
+
+
 def bidi(tex: str) -> str:
     tex = rewrap(tex, "L", "english")
     tex = rewrap(tex, "R", "hebrew")
@@ -261,13 +365,15 @@ def preprocess(tex: str) -> str:
     tex = re.sub(r"\\textbar(\{\})?", "|", tex)
     tex = dewrapfig(tex)
     tex = unbox(tex)
+    tex = margin_notes(tex)
+    tex = keep_layout(tex)
     tex = bidi(tex)
     if is_hebrew(tex):
         tex = unmirror(tex)
     return tex
 
 
-def run_pandoc(args: list[str], stdin: str) -> str:
+def run_pandoc(args: list[str], stdin: str, log: list[str] | None = None) -> str:
     proc = subprocess.run(
         ["pandoc", *args],
         input=stdin,
@@ -276,7 +382,28 @@ def run_pandoc(args: list[str], stdin: str) -> str:
     )
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip())
+    if log is not None:
+        log.append(proc.stderr)
     return proc.stdout
+
+
+SKIPPED_RE = re.compile(r"\[INFO\] Skipped '(.*?)' at line (\d+) column \d+", re.S)
+LAYOUT_RE = re.compile(
+    r"\\(?:begin|end)\{|\\(?:medskip|bigskip|smallskip|noindent|indent|newpage|clearpage|pagebreak|nopagebreak"
+    r"|columnwidth|linewidth|textwidth|textheight|maketitle|tableofcontents|listoffigures|listoftables"
+    r"|tiny|scriptsize|footnotesize|small|normalsize|large|Large|LARGE|huge|Huge|vspace|hspace|quad|qquad"
+    r"|hfill|vfill|newgeometry|restoregeometry|centering|raggedright|raggedleft|par|null|relax|thispagestyle"
+    r"|pagestyle|enskip|addvspace)(?![A-Za-z])"
+)
+
+
+def warn_dropped(log: list[str], tex: str, name: str) -> None:
+    """Report text pandoc dropped from the document body. Spacing and layout commands are expected."""
+    start = tex[:tex.find("\\begin{document}")].count("\n") + 1
+    for m in SKIPPED_RE.finditer("\n".join(log)):
+        if int(m.group(2)) > start and not LAYOUT_RE.match(m.group(1)):
+            snippet = re.sub(r"\s+", " ", m.group(1))[:80]
+            print(f"  ! {name}: line {m.group(2)}, {snippet} is not on the page (pandoc dropped it)", file=sys.stderr)
 
 
 def inlines_to_text(inlines) -> str:
@@ -314,6 +441,8 @@ def meta_value_to_text(v) -> str:
         return inlines_to_text(v["c"])
     if t == "MetaString":
         return v["c"]
+    if t == "MetaList":
+        return ", ".join(s for s in (meta_value_to_text(x) for x in v["c"]) if s)
     if t == "MetaBlocks":
         parts = []
         for b in v["c"]:
@@ -360,12 +489,13 @@ def postprocess(html: str) -> str:
         return f'<div{idattr} class="theorem theorem-{style} env-{name.lower()}">'
 
     html = DIV_RE.sub(add_classes, html)
+    html = html.replace(f'<span style="color: {MARGIN_MARK}">', '<span class="marginnote">')
     html = html.replace(" ◻", ' <span class="qed" aria-label="end of proof">∎</span>')
     html = html.replace("◻", '<span class="qed" aria-label="end of proof">∎</span>')
     return html
 
 
-def to_html(tex: str) -> str:
+def to_html(tex: str, log: list[str] | None = None) -> str:
     return run_pandoc(
         [
             "-f", "latex",
@@ -373,8 +503,10 @@ def to_html(tex: str) -> str:
             "--mathjax",
             "--wrap=none",
             "--shift-heading-level-by=1",
+            "--verbose",
         ],
         tex,
+        log,
     )
 
 
@@ -897,10 +1029,14 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
 
     tex = preprocess(read_tex(tex_path))
     meta = extract_meta(tex)
-    body = postprocess(strip_star_numbers(to_html(tex), tex))
+    log: list[str] = []
+    body = postprocess(strip_star_numbers(to_html(tex, log), tex))
+    warn_dropped(log, tex, tex_path.name)
+    body = rule_tables(label_abstract(body, abstract_name(tex)), tex)
     side = parse_sidecar(tex_path.with_suffix(".yaml"))
 
     title = side.get("title") or meta.get("title") or slug.replace("-", " ").title()
+    author = side.get("author") or meta.get("author", "")
 
     date = None
     if "date" in side:
@@ -945,6 +1081,8 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
         f"summary: {yaml_str(summary)}",
         f"tags: [{', '.join(yaml_str(t) for t in tags)}]",
     ]
+    if author:
+        fm.append(f"author: {yaml_str(author)}")
     for ext, url in links.items():
         fm.append(f"{ext}: {yaml_str(url)}")
     if previews:

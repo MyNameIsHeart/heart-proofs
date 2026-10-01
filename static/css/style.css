@@ -202,6 +202,29 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .post-body .center { text-align: center; }
 .post-body .boxed .center { text-align: start; }
 .post-body .boxed .center .center { text-align: center; }
+.post-body .flushright { text-align: end; }
+.post-body .flushleft { text-align: start; }
+.post-header .byline { margin: 0.2rem 0 0; font-size: 1.1rem; font-style: italic; color: var(--muted); }
+.post-header .byline[lang="he"] { font-style: normal; }
+.abstract { max-width: 36rem; margin: 0 auto 1.2em; font-size: 0.96em; }
+.abstract .abstract-title { margin: 0 0 0.6em; text-align: center; font-family: var(--sans); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+[lang="he"] .abstract .abstract-title { letter-spacing: 0; font-size: 0.85rem; }
+.post-body .abstract p { margin-bottom: 0.55em; }
+.post-body .abstract p:last-child { margin-bottom: 0; }
+.marginnote { float: inline-end; clear: inline-end; width: 12rem; margin-inline-end: -14rem; margin-top: 0.15em; font-family: var(--sans); font-size: 0.8rem; line-height: 1.45; color: var(--muted); }
+@media (max-width: 1200px) { .marginnote { float: none; display: block; width: auto; margin: 0.5em 0; padding-inline-start: 0.8em; border-inline-start: 2px solid var(--border); } }
+.math-post .post-body table { width: auto; margin: 1.2em auto; font-size: 1em; }
+.math-post .post-body .center > table { display: inline-table; margin: 0.6em 1.2rem; vertical-align: top; }
+.math-post .post-body th, .math-post .post-body td { padding: 0.3em 1em; border-bottom: 0; }
+.math-post .post-body th { font-family: inherit; font-size: inherit; font-weight: inherit; text-transform: none; letter-spacing: 0; color: inherit; border-bottom: 1px solid var(--muted); }
+.math-post .post-body table.hl-rows tr + tr td { border-top: 1px solid var(--muted); }
+.math-post .post-body table.hl-top tr:first-child > * { border-top: 1px solid var(--muted); }
+.math-post .post-body table.hl-bottom tr:last-child > td { border-bottom: 1px solid var(--muted); }
+.math-post .post-body table.vr-0 :is(th, td):first-child { border-inline-start: 1px solid var(--muted); }
+.math-post .post-body table.vr-end :is(th, td):last-child { border-inline-end: 1px solid var(--muted); }
+.math-post .post-body table.vr-1 :is(th, td):nth-child(1), .math-post .post-body table.vr-2 :is(th, td):nth-child(2),
+.math-post .post-body table.vr-3 :is(th, td):nth-child(3), .math-post .post-body table.vr-4 :is(th, td):nth-child(4),
+.math-post .post-body table.vr-5 :is(th, td):nth-child(5), .math-post .post-body table.vr-6 :is(th, td):nth-child(6) { border-inline-end: 1px solid var(--muted); }
 .post-body p:has(> img:only-child), .post-body p:has(> span:only-child > img:only-child) { text-align: center; }
 .post-body img.fig-wrap { float: right; max-width: 38%; max-height: none; border-radius: var(--radius); margin: 0.3em 0 0.9em 1.5em; }
 .post-body img.fig-left { float: left; margin: 0.3em 1.5em 0.9em 0; }

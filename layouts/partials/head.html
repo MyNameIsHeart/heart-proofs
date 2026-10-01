@@ -6,7 +6,7 @@
 <meta name="referrer" content="same-origin">
 <title>{{ $title }}</title>
 {{ with $desc }}<meta name="description" content="{{ . }}">{{ end }}
-{{ with site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+{{ with or .Params.author site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#fbf8f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
