@@ -1,0 +1,179 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+
+\begin{document}
+\title{{\Large\vspace{-6em}Semester 2026A, Quiz 4\vspace{-3em}}}
+
+\maketitle
+\rule[0.5ex]{1\columnwidth}{1pt}
+\begin{abstract}
+Quiz 4 in the course Infinitesimal Calculus (1), semester 2026 A.
+
+Quiz instructions: The duration of the quiz is 36 minutes.
+
+The use of calculators and of any other auxiliary material is forbidden.
+\\
+
+This is a quiz that I translated and solved.
+
+The original quiz was written by the Infi Calculus 1 course lecturers
+at HUJI.
+\end{abstract}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{problem*}[Question 1 - 65 points]
+ Prove or disprove:
+\end{problem*}
+If $f:\mathbb{R}\to\mathbb{R}$ is a continuous function at $x_{0}\in\mathbb{R}$
+and in every punctured neighborhood of $x_{0}$ there exists a point
+$z\in\mathbb{R}$ s.t. $f(z)=z^{2}$, then $f(x_{0})=x_{0}^{2}$.
+\begin{proof}
+\textbf{using the $\varepsilon-\delta$ definition:}\medskip{}
+
+1. Since $f$ is continuous at $x_{0}$, 
+\[
+\forall\varepsilon>0\exists\delta>0\ \text{s.t.}\ \forall x\in\left(x_{0}-\delta,x_{0}+\delta\right):\left|f(x)-f(x_{0})\right|<\varepsilon
+\]
+
+2. We shall define $g:\mathbb{R}\rightarrow\mathbb{R}$ by $g(x)=x^{2}$. 
+
+The function $g$ is continuous on $\mathbb{R}$ because it is a polynomial,
+hence the same continuity characterisation as in point 1 applies to
+it.
+
+3. Let us assume for the sake of contradiction that $f(x_{0})\ne x_{0}^{2}$.
+Immediately, $f(x_{0})\ne g(x_{0})$.
+
+4. The law of trichotomy establishes that either $f(x_{0})>g(x_{0})$
+or $f(x_{0})<g(x_{0})$.
+
+We will assume without loss of generality that $f(x_{0})>g(x_{0})$.
+
+Hence, $f(x_{0})-g(x_{0})>0$.
+
+5. The previous point allows us to apply the known technique of halving
+the distance to separate these values and set $\varepsilon:=\frac{f(x_{0})-g(x_{0})}{2}>0$
+in the property of points 1 and 2, which gives us corresponding deltas
+$\delta_{1},\delta_{2}>0$.
+
+We shall define $\delta_{3}:=\min\left\{ \delta_{1},\delta_{2}\right\} $
+and get the combined property: 
+\[
+\forall x\in\left(x_{0}-\delta_{3},x_{0}+\delta_{3}\right)\setminus\left\{ x_{0}\right\} :\left|f(x)-f(x_{0})\right|<\frac{f(x_{0})-g(x_{0})}{2}\ \wedge\left|g(x)-g(x_{0})\right|<\frac{f(x_{0})-g(x_{0})}{2}
+\]
+
+Expanding the absolute values gives:
+\[
+\frac{g(x_{0})-f(x_{0})}{2}<f(x)-f(x_{0})<\frac{f(x_{0})-g(x_{0})}{2}\ \wedge\ \frac{g(x_{0})-f(x_{0})}{2}<g(x)-g(x_{0})<\frac{f(x_{0})-g(x_{0})}{2}
+\]
+
+Isolating $f(x)$ and $g(x)$ on the relevant sides provides a lower
+bound for $f(x)$ and an upper bound for $g(x)$:
+\[
+\frac{g(x_{0})+f(x_{0})}{2}<f(x)\quad\wedge\quad g(x)<\frac{f(x_{0})+g(x_{0})}{2}
+\]
+
+Thus, in particular, 
+\[
+\forall x\in\left(x_{0}-\delta_{3},x_{0}+\delta_{3}\right)\setminus\left\{ x_{0}\right\} :g(x)<f(x)
+\]
+
+6. This means that 
+\[
+\forall x\in\left(x_{0}-\delta_{3},x_{0}+\delta_{3}\right)\setminus\left\{ x_{0}\right\} :f(x)\ne x^{2}
+\]
+In other words, $\left(x_{0}-\delta_{3},x_{0}+\delta_{3}\right)\setminus\left\{ x_{0}\right\} $
+is a punctured neighborhood of $x_{0}$ which contradicts the assumption
+that every punctured neighborhood of $x_{0}$ contains a point $z\in\mathbb{R}$
+s.t.$f(z)=z^{2}$.
+\end{proof}
+\newpage{}
+\begin{proof}
+\textbf{using Heine's sequences:}\medskip{}
+
+1. By the assumption, for each $n\in\mathbb{N}$, there exists a point
+\[
+x_{n}\in\left(x_{0}-\frac{1}{n},x_{0}+\frac{1}{n}\right)\setminus\left\{ x_{0}\right\} \quad\text{s.t.\ensuremath{\quad}}f(x_{n})=x_{n}^{2}
+\]
+Thus, we have a sequence $\left(x_{n}\right)_{n=1}^{\infty}$ such
+that for all $n\in\mathbb{N},$ 
+\[
+x_{0}-\frac{1}{n}<x_{n}<x_{0}+\frac{1}{n}\ \wedge\ x_{n}\ne x_{0}\ \wedge\ f(x_{n})=x_{n}^{2}
+\]
+
+2. Since $\underset{n\rightarrow\infty}{\lim}\left(x_{0}-\frac{1}{n}\right)=\underset{n\rightarrow\infty}{\lim}\left(x_{0}+\frac{1}{n}\right)=x_{0}$,
+the squeeze theorem implies $\underset{n\rightarrow\infty}{\lim}x_{n}=x_{0}$.
+
+3. Points 1 and 2 show that $\left(x_{n}\right)_{n=1}^{\infty}$ satisfies
+the conditions of a Heine sequence for continuity.
+
+By the assumption, $f$ is continuous at $x_{0}$, therefore $\underset{n\rightarrow\infty}{\lim}f(x_{n})=f(x_{0})$.
+
+4. According to the arithmetic of sequence limits,
+\[
+\underset{n\rightarrow\infty}{\lim}f(x_{n})=\underset{n\rightarrow\infty}{\lim}x_{n}^{2}=\underset{n\rightarrow\infty}{\lim}x_{n}\cdot\underset{n\rightarrow\infty}{\lim}x_{n}=x_{0}\cdot x_{0}=x_{0}^{2}
+\]
+ 5. Therefore, $f(x_{0})=x_{0}^{2}$, as required. 
+\end{proof}
+\medskip{}
+
+\begin{problem*}[Question 2 - 35 points]
+ Let $(a_{n})_{n=1}^{\infty}$ be a sequence of natural numbers that
+satisfies $\limi\frac{a_{n}}{n}=\infty$.
+\end{problem*}
+Prove that $\limi\left(1+\frac{1}{n}\right)^{a_{n}}=\infty$.
+\begin{proof}
+Since $\limi\frac{a_{n}}{n}=\infty$, the arithmetic of sequence limits
+ensures $\limi\left(1+\frac{a_{n}}{n}\right)=\infty$.
+
+Additionally, because $a_{n}\in\mathbb{N}$ and $\frac{1}{n}>-1$
+for all $n\in\mathbb{N}$, Bernoulli's inequality holds and 
+\[
+\forall n\in\mathbb{N}:\left(1+\frac{1}{n}\right)^{a_{n}}\ge1+\frac{a_{n}}{n}
+\]
+
+Recall the slice theorem: for two sequences $(b_{n})_{n=1}^{\infty}$
+and $(c_{n})_{n=1}^{\infty}$, if there exists $N\in\mathbb{N}$ such
+that for every $n>N$ the inequality $b_{n}\ge c_{n}$ holds, and
+$\limi c_{n}=\infty$, then $\limi b_{n}=\infty$. 
+
+Therefore, $\limi\left(1+\frac{1}{n}\right)^{a_{n}}=\infty$ as required. 
+\end{proof}
+
+\end{document}
