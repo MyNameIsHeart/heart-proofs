@@ -202,6 +202,8 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .post-body .center { text-align: center; }
 .post-body .boxed .center { text-align: start; }
 .post-body .boxed .center .center { text-align: center; }
+.post-body .blank-line { height: 1.2em; }
+.post-body .blank-line:last-child, .post-body .blank-line:has(+ :is(h2, h3, h4, h5, h6)) { display: none; }
 .post-body .flushright { text-align: end; }
 .post-body .flushleft { text-align: start; }
 .post-header .byline { margin: 0.2rem 0 0; font-size: 1.1rem; font-style: italic; color: var(--muted); }

@@ -182,13 +182,14 @@ def margin_notes(tex: str) -> str:
 
 
 def keep_layout(tex: str) -> str:
-    """Layout pandoc gets wrong: abstracts (moved to metadata), a \\\\ that ends a paragraph (it swallows the
-    paragraph break while looking for an optional [length]) and paragraphs pushed to the end with \\hfill."""
+    """Layout pandoc gets wrong: abstracts (moved to metadata), a \\\\ that ends a paragraph (an empty line
+    in LaTeX; pandoc swallows the paragraph break while looking for an optional [length]) and paragraphs
+    pushed to the end with \\hfill."""
     head, sep, body = tex.partition("\\begin{document}")
     if not sep:
         return tex
     body = re.sub(r"\\(begin|end)\{abstract\}", r"\\\1{abstractbox}", body)
-    body = re.sub(r"\\\\\*?[ \t]*\n(?:[ \t]*\n)+", "\n\n", body)
+    body = re.sub(r"\\\\\*?[ \t]*\n(?:[ \t]*\n)+", "\n\n\\\\begin{blankline}\\\\end{blankline}\n\n", body)
     body = re.sub(r"(\n[ \t]*\n)[ \t]*\\(?:hfill|hspace\*?\{\\fill\})(?:\{\})?[ \t]*(\S.*?)(?=\n[ \t]*\n|\\end\{document\})",
                   r"\1\\begin{flushright}\n\2\n\\end{flushright}", body, flags=re.S)
     return head + sep + body
@@ -490,6 +491,7 @@ def postprocess(html: str) -> str:
 
     html = DIV_RE.sub(add_classes, html)
     html = html.replace(f'<span style="color: {MARGIN_MARK}">', '<span class="marginnote">')
+    html = re.sub(r'<div class="blankline">\s*</div>', '<div class="blank-line" aria-hidden="true"></div>', html)
     html = html.replace(" ◻", ' <span class="qed" aria-label="end of proof">∎</span>')
     html = html.replace("◻", '<span class="qed" aria-label="end of proof">∎</span>')
     return html
@@ -604,6 +606,60 @@ def locate(tex_path: Path) -> tuple[str, str, str, str] | None:
             return None
         return section, parts[0], "/".join(parts[1:]), split_stem(tex_path.stem)[1]
     return None
+
+
+def url_part(s: str) -> str:
+    """A path segment as Hugo writes it into the URL: lowercase, spaces to dashes, other punctuation dropped."""
+    return re.sub(r"[^\w.~+#-]", "", re.sub(r"\s+", "-", s.strip().lower()))
+
+
+def page_url(section: str, subject: str, topic: str, slug: str) -> str:
+    parts = [section, subject, *topic.split("/"), slug]
+    return "/" + "/".join(url_part(p) for p in parts if p) + "/"
+
+
+def previous_locations(tex_path: Path) -> list[tuple[str, str, str, str]]:
+    """Where a .tex lived before it was moved or renamed, from git history. Emails sent then link there."""
+    rel = tex_path.relative_to(ROOT).as_posix()
+    proc = subprocess.run(["git", "-c", "core.quotePath=false", "log", "--follow", "--name-status", "--format=", "--", rel],
+                          cwd=ROOT, capture_output=True, text=True)
+    if proc.returncode != 0:
+        return []
+    out: list[tuple[str, str, str, str]] = []
+    for line in proc.stdout.splitlines():
+        fields = line.split("\t")
+        status = fields[0]
+        if status.startswith(("A", "C")):
+            break  # the file starts here; --follow would go on into the file it was copied from
+        if status.startswith("R"):
+            if int(status[1:] or 0) < 90:
+                break
+            loc = locate(ROOT / fields[1])
+            if loc and loc not in out:
+                out.append(loc)
+    return out
+
+
+CURRENT_URLS: set[str] = set()
+
+
+def keep_old_addresses(tex_path: Path, here: tuple[str, str, str, str], files: list[str]) -> list[str]:
+    """Redirect the page's old URLs to it and keep its files (PDF, page images, .tex) at their old paths too,
+    so links in emails sent before a move still work. Returns the old page URLs for Hugo's aliases."""
+    aliases = []
+    for section, subject, topic, slug in previous_locations(tex_path):
+        url = page_url(section, subject, topic, slug)
+        if url == page_url(*here) or url in CURRENT_URLS:
+            continue
+        aliases.append(url)
+        old_dir = FILES_DIR / section / subject / topic
+        for name in files:
+            src = FILES_DIR / here[0] / here[1] / here[2] / name
+            if src.is_file():
+                dst = old_dir / (slug + name[len(here[3]):])
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(src, dst)
+    return aliases
 
 
 COLOR_RE = re.compile(r'<span style="color: ([a-zA-Z]+)">')
@@ -1071,6 +1127,9 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
             links["pdf"] = f"/files/{rel}/{slug}.pdf"
             previews = [f"/files/{rel}/{p.name}" for p in render_previews(dst, out_files, slug)]
 
+    files = [url.rsplit("/", 1)[1] for url in [*links.values(), *previews]]
+    aliases = keep_old_addresses(tex_path, (section, subject, topic, slug), files)
+
     lang = side.get("lang") or ("he" if is_hebrew(tex) else "")
     fm = [
         "---",
@@ -1093,6 +1152,8 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
         fm.append("draft: true")
     if side.get("weight"):
         fm.append(f"weight: {side['weight']}")
+    if aliases:
+        fm.append(f"aliases: {json.dumps(aliases)}")
     fm.append("---")
 
     out_dir = CONTENT_DIR / rel
@@ -1206,6 +1267,12 @@ def main() -> int:
     scrubbed = scrub_images_under(ROOT / "static" / "images") + scrub_images_under(LATEX_DIR)
     if scrubbed and not args.quiet:
         print(f"  stripped metadata from {scrubbed} image(s) in static/images and latex")
+
+    for folder in TYPES:
+        for tex_path in (LATEX_DIR / folder).rglob("*.tex"):
+            loc = locate(tex_path)
+            if loc:
+                CURRENT_URLS.add(page_url(*loc))
 
     n_ok = n_err = 0
     for folder, section in TYPES.items():
