@@ -1139,6 +1139,18 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     return out_path
 
 
+SMALL_WORDS = {"a", "an", "and", "as", "at", "but", "by", "for", "in", "nor", "of", "on", "or", "the", "to", "vs", "with"}
+
+
+def folder_title(folder: str) -> str:
+    """Title for a folder page. A name with capitals is kept as written; an all-lowercase one is
+    title-cased, leaving short words like "of" and "and" lowercase after the first word."""
+    words = folder.replace("-", " ").replace("_", " ").split()
+    if any(c.isupper() for c in folder):
+        return " ".join(words)
+    return " ".join(w if i and w in SMALL_WORDS else w[:1].upper() + w[1:] for i, w in enumerate(words))
+
+
 def write_section_indexes(base: Path, section: str) -> None:
     dirs = {tex.parent for tex in base.rglob("*.tex")}
     all_dirs = set()
@@ -1151,7 +1163,7 @@ def write_section_indexes(base: Path, section: str) -> None:
         out = CONTENT_DIR / section / rel / "_index.md"
         out.parent.mkdir(parents=True, exist_ok=True)
         folder = d.name
-        title = folder.replace("-", " ").replace("_", " ").title()
+        title = folder_title(folder)
         out.write_text(
             "---\n"
             f"title: {yaml_str(title)}\n"
