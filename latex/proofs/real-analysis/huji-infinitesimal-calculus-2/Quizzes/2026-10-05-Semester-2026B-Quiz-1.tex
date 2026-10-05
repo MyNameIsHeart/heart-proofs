@@ -1,0 +1,215 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\theoremstyle{definition}
+\newtheorem{problem}[thm]{\protect\problemname}
+\theoremstyle{definition}
+\newtheorem*{sol*}{\protect\solutionname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\problemname}{Problem}
+\providecommand{\solutionname}{Solution}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\newgeometry{left=2cm, right=2cm}
+\title{{\Large\vspace{-6em}Semester 2026B, Quiz 1\vspace{-3em}}}
+\maketitle
+\begin{abstract}
+Quiz 1 in the course Infinitesimal Calculus (2), semester 2026 B.
+\\
+
+This is a quiz that I translated and solved.
+
+The original quiz was written by the Infi Calculus 2 course lecturers
+at HUJI.
+\end{abstract}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\begin{problem}
+Find a $q\in\mathbb{Q}\text{ s.t.}\left|e^{-1}-q\right|<10^{-2}$.
+\end{problem}
+
+\begin{sol*}
+Our goal is to find a rational approximation for the function $e^{x}$
+evaluated at $x=-1$, with an error strictly less than $10^{-2}$.
+
+The closest point to $x=-1$ which we can easily evaluate is $x=0$
+since $e^{0}=1$.
+
+The Maclaurin polynomial (the Taylor polynomial at 0) of degree $n$
+of $e^{x}$ is 
+\[
+P_{n,e^{x},0}(x)=\underset{k=0}{\overset{n}{\sum}}\frac{f^{(k)}(0)}{k!}x^{k}=e^{0}+e^{0}\cdot x+\frac{e^{0}}{2!}\cdot x^{2}+\dots+\frac{e^{0}}{n!}\cdot x^{n}=1+x+\frac{x^{2}}{2!}+\dots+\frac{x^{n}}{n!}
+\]
+
+Let $n\in\mathbb{N}$. To apply Taylor's Theorem on $e^{x}$ in the
+interval $\left[-1,0\right]$, $e^{x}$ must have a continuous $n$-th
+derivative on $\left[-1,0\right]$ and be differentiable $n+1$ times
+on $\left(-1,0\right)$.
+
+$e^{x}$ is differentiable $n$ times on $\left[-1,0\right]$ with
+its $n$-th derivative being $e^{x}$, which is continuous on $\mathbb{R}$
+and in particular on $\left[-1,0\right]$.
+
+$e^{x}$ is also differentiable $n+1$ times on $\left(-1,0\right)$.
+
+In fact, $e^{x}$ is a smooth function (it is infinitely differentiable)
+on $\mathbb{R}$.
+
+Hence, the Taylor Theorem with the Lagrange Remainder applies and
+there exists a point $c\in\left(-1,0\right)$ such that 
+\[
+R_{n,e^{x},0}(-1)=e^{-1}-P_{n,e^{x},0}(-1)=\frac{e^{c}}{\left(n+1\right)!}\left(-1\right)^{n+1}
+\]
+ This means that 
+\[
+\left|e^{-1}-P_{n,e^{x},0}(-1)\right|\le\left|\frac{e^{c}}{\left(n+1\right)!}\left(-1\right)^{n+1}\right|=\left|\frac{e^{c}}{\left(n+1\right)!}\right|\underset{\left(*\right)}{\le}\frac{1}{\left(n+1\right)!}
+\]
+
+$\left(*\right)$ since $e^{x}$ is a monotonically increasing function,
+$\forall x\in\left(-1,0\right),e^{x}\le e^{0}=1$.
+
+To guarantee our error is strictly less than $10^{-2}$, we need $\frac{1}{(n+1)!}<\frac{1}{100}$,
+which implies $(n+1)!>100$.
+
+Since $4!=24$ and $5!=120$, the minimum degree required is $n=4$.
+
+Therefore, setting the degree $n=4$ gives the rational approximation:
+\[
+P_{4,e^{x},0}\left(-1\right)=1-1+\frac{1}{2}-\frac{1}{6}+\frac{1}{24}=\frac{3}{8}\in\mathbb{Q}
+\]
+
+which satisfies the error bound:
+\[
+\left|e^{-1}-P_{4,e^{x},0}(-1)\right|\le\frac{1}{5!}<\frac{1}{100}=10^{-2}
+\]
+
+as required.
+\end{sol*}
+\medskip{}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\medskip{}
+
+\newpage{}
+\begin{problem}
+Find all antiderivatives of $f(x)=\frac{x^{2}-4x}{x^{2}-3x+2}$ on
+$\left(1,2\right)$.
+\end{problem}
+
+\begin{sol*}
+Since the degree of the numerator is greater than or equal to the
+degree of the denominator, our first step is to perform polynomial
+division with a remainder.
+
+We can achieve this by expressing the numerator in terms of the denominator.
+\[
+f(x)=\frac{x^{2}-3x+2-x-2}{x^{2}-3x+2}=1+\frac{-x-2}{x^{2}-3x+2}
+\]
+
+Next, we focus on finding the antiderivatives of the remainder, $g(x)=\frac{-x-2}{x^{2}-3x+2}$,
+on the interval $(1,2)$.
+
+As a best practice, we first check if the numerator is a scalar multiple
+of the denominator's derivative, which would allow for direct logarithmic
+integration.
+\[
+\left(x^{2}-3x+2\right)'=2x-3
+\]
+
+Since this is not the case, we proceed with partial fraction decomposition. 
+
+We first split the denominator into coprime polynomials. 
+\[
+x^{2}-3x+2=\left(x-2\right)\left(x-1\right)
+\]
+
+Hence
+\[
+g(x)=\frac{-x-2}{\left(x-2\right)\left(x-1\right)}
+\]
+\[
+\frac{-x-2}{\left(x-2\right)\left(x-1\right)}=\frac{A}{x-2}+\frac{B}{x-1}
+\]
+\[
+-x-2=\left(x-1\right)A+\left(x-2\right)B
+\]
+\[
+\left(A+B\right)x-A-2B=-x-2
+\]
+
+And since two polynomials are equal if and only if their corresponding
+coefficients are equal,
+\[
+\begin{cases}
+A+B=-1\\
+-A-2B=-2
+\end{cases}\Rightarrow\begin{cases}
+A=-4\\
+B=3
+\end{cases}
+\]
+\[
+g(x)=\frac{-4}{x-2}+\frac{3}{x-1}
+\]
+Now we can return to our original function, $f(x)=1+g(x)$, and find
+the antiderivatives term by term.
+
+The antiderivative of 1 is $F_{1}(x)=x+C$. 
+
+The antiderivative of $\frac{-4}{x-2}$ is 
+\[
+F_{2}(x)=-4\ln\left|x-2\right|+C
+\]
+ and the antiderivative of $\frac{3}{x-1}$ is 
+\[
+F_{3}(x)=3\ln\left|x-1\right|+C
+\]
+
+Therefore, the general antiderivative of the function is 
+\[
+F(x)=x-4\ln\left|x-2\right|+3\ln\left|x-1\right|+C
+\]
+
+For $x\in(1,2)$, we have $x-2<0$ and $x-1>0$. Thus, the antiderivative
+simplifies to:
+\[
+F(x)=x-4\ln\left(2-x\right)+3\ln\left(x-1\right)+C
+\]
+\end{sol*}
+
+\end{document}
