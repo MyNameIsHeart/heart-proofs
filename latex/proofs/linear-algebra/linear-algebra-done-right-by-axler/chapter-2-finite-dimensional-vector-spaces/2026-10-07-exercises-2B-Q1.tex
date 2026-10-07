@@ -49,24 +49,24 @@
 \title{{\Large\vspace{-2em}Exercises 2B, Q1\vspace{-2em}}}
 \maketitle
 \begin{xca*}
-Determine all vector spaces that have exactly one basis, even up to
-reordering, and prove that no others exist. Note that this is different
-from the original question. 
+Determine all vector spaces that have exactly one basis, up to reordering,
+and prove that no others exist. Note that this is different from the
+original question. 
 \end{xca*}
 \begin{thm*}
-A vector space $V$ over $\mathbb{F}$ has exactly one basis, even
-up to reordering, if and only if it satisfies one of the two following
-statements:
+A vector space $V$ over $\mathbb{F}$ has exactly one basis, up to
+reordering, if and only if it satisfies one of the two following statements:
 
 1. $V=\left\{ 0\right\} $ over any field $\mathbb{F}$
 
 2. $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$ and $\exists0\ne v\text{ s.t. }V=\left\{ 0,v\right\} $.
 \end{thm*}
 \begin{rem*}
-In the book, a basis is defined as a list, which is a finite object. 
+In the book, a basis is defined ($1.8$) as a list, which is a finite,
+ordered object. 
 
-Therefore, exactly one basis, even up to reordering, means that every
-basis of the vector space is a permutation of a single list.
+Therefore, exactly one basis, up to reordering, means that every basis
+of the vector space is a permutation of a single list.
 \end{rem*}
 \begin{rem*}
 If you did not learn about isomorphism and prime fields, you can think
@@ -75,7 +75,7 @@ with $1+1=0$.
 \end{rem*}
 \begin{lem}
 If $V$ isn't finite-dimensional, then V has no basis. In particular,
-V does not have exactly one basis, even up to reordering.
+V does not have exactly one basis, up to reordering.
 \end{lem}
 
 \begin{proof}
@@ -120,8 +120,8 @@ Let $V$ be a finite-dimensional vector space over field $\mathbb{F}$,
 and let $\mathcal{B}=\left(v_{1},\dots,v_{n}\right)$ be a basis of
 $V$ such that $n=1$. 
 
-Then $V$ has exactly one basis, even up to reordering, if and only
-if $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$.
+Then $V$ has exactly one basis, up to reordering, if and only if
+$\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$.
 \end{lem}
 
 \begin{proof}
@@ -161,7 +161,7 @@ which is a contradiction.
 
 Hence, $\left\{ cv_{1}\right\} \ne\left\{ v_{1}\right\} $, and we
 will show that $\mathcal{B}'=\left(cv_{1}\right)$ is also a basis
-for $V$ (we have shown that they are different even up to reordering). 
+for $V$ (we have shown that they are different up to reordering). 
 
 Because $v_{1}$ isn't the zero vector and $c\ne0$, the contra-positive
 of exercises $1B$ question $2$ gives $cv_{1}\ne0$, and $\mathcal{B}'$
@@ -176,14 +176,14 @@ the two sided inclusion means $\mathcal{B}'$ spans $V$, and therefore
 it is a basis for $V$.
 
 This means that if $\mathbb{F}$ is not isomorphic to $\mathbb{Z}_{2}$,
-$V$ has more than one basis, even up to reordering.
+$V$ has more than one basis, up to reordering.
 \end{proof}
 \newpage{}
 \begin{lem}
 Let $V$ be a finite-dimensional vector space over field $\mathbb{F}$,
 and let $\mathcal{B}=\left(v_{1},\dots,v_{n}\right)$ be a basis of
 $V$ such that $n\ge2$. Then $\mathcal{B}$ is not the only basis
-of $V$, even up to reordering. 
+of $V$, up to reordering. 
 \end{lem}
 
 \begin{proof}
@@ -262,7 +262,7 @@ contradicting the linear independence of $\mathcal{B}$.
 
 Hence $\mathcal{B}'$ contains a vector not in $\mathcal{B}$, so
 $\mathcal{B}'$ is a basis of $V$ different from $\mathcal{B}$,
-even up to reordering.
+up to reordering.
 \end{proof}
 \newpage{}
 \begin{proof}
@@ -278,10 +278,10 @@ statements:
 2. $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$ and $\exists0\ne v\text{ s.t. }V=\left\{ 0,v\right\} $.
 
 In the first case, we proved in lemma 2 that it has exactly one basis,
-even up to reordering.
+up to reordering.
 
 In the second case, $\left(v\right)$ is a basis of $V$ and we proved
-in lemma 3 that $V$ has exactly one basis, even up to reordering.
+in lemma 3 that $V$ has exactly one basis, up to reordering.
 
 $\Rightarrow\text{ via contra-positive}:$ Let us assume that $V$
 satisfies neither of these statements, and cover all possible cases
@@ -290,7 +290,7 @@ of $V$.
 If $V$ is not finite-dimensional, then we proved in lemma 1 that
 it doesn't have exactly one basis.
 
-Otherwise, $V$ is finite-dimensional, therefore it has a basis.
+Otherwise, $V$ is finite-dimensional, therefore it has a basis ($2.31$).
 
 Let $\mathcal{B}=\left(v_{1},\dots,v_{n}\right)$ be a basis of $V$.
 
