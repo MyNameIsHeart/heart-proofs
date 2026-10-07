@@ -1,6 +1,7 @@
 real-analysis:
   topics:
     huji-infinitesimal-calculus-1: HUJI Infinitesimal Calculus 1
+    huji-infinitesimal-calculus-2: HUJI Infinitesimal Calculus 2
 measure-theory:
   name: Measure Theory
 dast:
@@ -10,3 +11,4 @@ linear-algebra:
     huji-linear-algebra-1: HUJI Linear Algebra 1
     linear-algebra-done-right-by-axler: Linear Algebra Done Right by Axler
     chapter-1-vector-spaces: "Chapter 1: Vector Spaces"
+    chapter-2-finite-dimensional-vector-spaces: "Chapter 2: Finite-Dimensional Vector Spaces"

@@ -1205,7 +1205,11 @@ SMALL_WORDS = {"a", "an", "and", "as", "at", "but", "by", "for", "in", "nor", "o
 
 def folder_title(folder: str) -> str:
     """Title for a folder page. A name with capitals is kept as written; an all-lowercase one is
-    title-cased, leaving short words like "of" and "and" lowercase after the first word."""
+    title-cased, leaving short words like "of" and "and" lowercase after the first word.
+    chapter-<n>-<name> becomes "Chapter <n>: <Name>"."""
+    m = re.fullmatch(r"chapter-(\d+)-(.+)", folder, re.I)
+    if m:
+        return f"Chapter {m.group(1)}: {folder_title(m.group(2))}"
     words = folder.replace("-", " ").replace("_", " ").split()
     if any(c.isupper() for c in folder):
         return " ".join(words)

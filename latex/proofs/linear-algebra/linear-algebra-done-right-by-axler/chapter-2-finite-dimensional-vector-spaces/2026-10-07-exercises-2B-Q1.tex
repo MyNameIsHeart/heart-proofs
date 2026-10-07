@@ -1,0 +1,318 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{definition}
+\newtheorem*{xca*}{\protect\exercisename}
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+\theoremstyle{remark}
+\newtheorem*{rem*}{\protect\remarkname}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\theoremstyle{plain}
+\newtheorem{lem}[thm]{\protect\lemmaname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\exercisename}{Exercise}
+\providecommand{\lemmaname}{Lemma}
+\providecommand{\remarkname}{Remark}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\newgeometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+\title{{\Large\vspace{-2em}Exercises 2B, Q1\vspace{-2em}}}
+\maketitle
+\begin{xca*}
+Determine all vector spaces that have exactly one basis, even up to
+reordering, and prove that no others exist. Note that this is different
+from the original question. 
+\end{xca*}
+\begin{thm*}
+A vector space $V$ over $\mathbb{F}$ has exactly one basis, even
+up to reordering, if and only if it satisfies one of the two following
+statements:
+
+1. $V=\left\{ 0\right\} $ over any field $\mathbb{F}$
+
+2. $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$ and $\exists0\ne v\text{ s.t. }V=\left\{ 0,v\right\} $.
+\end{thm*}
+\begin{rem*}
+In the book, a basis is defined as a list, which is a finite object. 
+
+Therefore, exactly one basis, even up to reordering, means that every
+basis of the vector space is a permutation of a single list.
+\end{rem*}
+\begin{rem*}
+If you did not learn about isomorphism and prime fields, you can think
+of ``$\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$'' as $\mathbb{F}=\{0,1\}$
+with $1+1=0$.
+\end{rem*}
+\begin{lem}
+If $V$ isn't finite-dimensional, then V has no basis. In particular,
+V does not have exactly one basis, even up to reordering.
+\end{lem}
+
+\begin{proof}
+According to definition $2.9$, a vector space is finite-dimensional
+iff some list of vectors in it spans the space. 
+
+Therefore, if it isn't finite-dimensional (and by definition $2.13$
+it is then called infinite-dimensional), no list of vectors in it
+spans the space.
+
+Since by definition $2.26$ a basis must span the space, no list of
+vectors can be a basis of the space, hence it has no bases and in
+particular doesn't have exactly one. 
+\end{proof}
+\begin{lem}
+$V=\left\{ 0\right\} $ over any field $\mathbb{F}$ has exactly one
+basis.
+\end{lem}
+
+\begin{proof}
+$\left\{ 0\right\} $ is a vector space over any field $\mathbb{F}$
+- after definition $1.22$, $\left\{ 0\right\} $ is mentioned as
+the simplest vector space.
+
+Definition $2.4$ asserts $\text{Span }()=\left\{ 0\right\} $.
+
+Definition $2.15$ asserts that the empty list is linearly independent. 
+
+Therefore, by definition $2.26$, $\left(\right)$ is a basis for
+$\left\{ 0\right\} $.
+
+Any non-empty list of vectors in $\left\{ 0\right\} $ must contain
+the zero vector, which makes it linearly dependent (according to example
+$2.18$).
+
+Thus, no non-empty list is a basis of $\left\{ 0\right\} $ (by definition
+$2.26$), so $\left(\right)$ is its only basis.
+\end{proof}
+\newpage{}
+\begin{lem}
+Let $V$ be a finite-dimensional vector space over field $\mathbb{F}$,
+and let $\mathcal{B}=\left(v_{1},\dots,v_{n}\right)$ be a basis of
+$V$ such that $n=1$. 
+
+Then $V$ has exactly one basis, even up to reordering, if and only
+if $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$.
+\end{lem}
+
+\begin{proof}
+If $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$, then $\mathbb{F}=\left\{ 0,1\right\} $
+with $1+1=0$, and
+\[
+V=\text{Span }\mathcal{B}=\left\{ av_{1}\mid a\in\mathbb{F}\right\} =\left\{ 0,v_{1}\right\} 
+\]
+and there is no other basis other than $\mathcal{B}=\left(v_{1}\right)$:
+
+Since $\mathcal{B}$ is linearly independent, $v_{1}\ne0$ (by example
+$2.18$).
+
+The empty list is not a basis, since by definition $2.4$, $\text{Span }\left(\right)=\left\{ 0\right\} \ne V$.
+
+Every vector in $V$ is $0$ or $v_{1}$, so every list of vectors
+in $V$ would contain some combination of these two elements.
+
+By example $2.18$, any list containing $0$, or containing $v_{1}$
+more than once, is linearly dependent and therefore not a basis.
+
+Hence, overall, the only possible basis remains $\left(v_{1}\right)$.
+
+If $\mathbb{F}$ is not isomorphic to $\mathbb{Z}_{2}$, then $\mathbb{F}$
+has more than two elements, since every field with exactly two elements
+is isomorphic to $\mathbb{Z}_{2}$. Hence, there exists $c\in\mathbb{F}$
+with $c\notin\{0,1\}$.
+
+Because $c\notin\left\{ 0,1\right\} $ and $v_{1}$ cannot be $0$
+($\mathcal{B}$ would be linearly dependent), $cv_{1}\ne v_{1}$:
+
+Otherwise, 
+\[
+0=v_{1}-cv_{1}\iff0=\left(1-c\right)v_{1}\underset{\text{Exercises 1B Q 2}}{\iff}1-c=0\iff c=1
+\]
+which is a contradiction.
+
+Hence, $\left\{ cv_{1}\right\} \ne\left\{ v_{1}\right\} $, and we
+will show that $\mathcal{B}'=\left(cv_{1}\right)$ is also a basis
+for $V$ (we have shown that they are different even up to reordering). 
+
+Because $v_{1}$ isn't the zero vector and $c\ne0$, the contra-positive
+of exercises $1B$ question $2$ gives $cv_{1}\ne0$, and $\mathcal{B}'$
+contains a single non-zero vector, hence it is linearly independent.
+
+Additionally, 
+\[
+V=\text{Span }\mathcal{B}=\left\{ av_{1}\mid a\in\mathbb{F}\right\} =\left\{ a\cdot1\cdot v_{1}\mid a\in\mathbb{F}\right\} \underset{0\ne c\in\mathbb{F}}{=}\left\{ a\cdot\frac{1}{c}\cdot c\cdot v_{1}\mid a\in\mathbb{F}\right\} =\left\{ \frac{a}{c}\cdot cv_{1}\mid a\in\mathbb{F}\right\} \subseteq\text{Span }\mathcal{B}'
+\]
+and since $\text{Span }\mathcal{B}'$ is a subspace of $V$ (by $2.6$),
+the two sided inclusion means $\mathcal{B}'$ spans $V$, and therefore
+it is a basis for $V$.
+
+This means that if $\mathbb{F}$ is not isomorphic to $\mathbb{Z}_{2}$,
+$V$ has more than one basis, even up to reordering.
+\end{proof}
+\newpage{}
+\begin{lem}
+Let $V$ be a finite-dimensional vector space over field $\mathbb{F}$,
+and let $\mathcal{B}=\left(v_{1},\dots,v_{n}\right)$ be a basis of
+$V$ such that $n\ge2$. Then $\mathcal{B}$ is not the only basis
+of $V$, even up to reordering. 
+\end{lem}
+
+\begin{proof}
+Let us look at $\mathcal{B}'=\left(v_{1}+v_{2},v_{2},\dots,v_{n}\right)$
+and let $v\in V$.
+
+According to definition $2.26$, since $\mathcal{B}$ is a basis of
+$V$, $\mathcal{B}$ spans $V$. 
+
+Therefore, 
+\[
+\exists a_{1},a_{2},a_{3},\dots,a_{n}\in\mathbb{F}\ \text{ s.t. }v=a_{1}v_{1}+a_{2}v_{2}+a_{3}v_{3}+\dots+a_{n}v_{n}
+\]
+
+We can select
+\[
+\begin{cases}
+c_{1}=a_{1} & \in\mathbb{F}\\
+c_{2}=a_{2}-a_{1} & \in\mathbb{F}\\
+c_{3}=a_{3} & \in\mathbb{F}\\
+\vdots\\
+c_{n}=a_{n} & \in\mathbb{F}
+\end{cases}
+\]
+
+we get 
+\[
+v=a_{1}v_{1}+a_{2}v_{2}+a_{3}v_{3}+\dots+a_{n}v_{n}=a_{1}v_{1}+a_{1}v_{2}+a_{2}v_{2}-a_{1}v_{2}+a_{3}v_{3}+\dots+a_{n}v_{n}
+\]
+\[
+=c_{1}\left(v_{1}+v_{2}\right)+c_{2}v_{2}+c_{3}v_{3}+\dots+c_{n}v_{n}\in\text{Span }\mathcal{B}'
+\]
+Hence $\mathcal{B}'$ also spans $V$.
+
+Let $b_{1},b_{2},b_{3},\dots,b_{n}\in\mathbb{F}$ s.t. 
+\[
+b_{1}\left(v_{1}+v_{2}\right)+b_{2}v_{2}+b_{3}v_{3}+\dots+b_{n}v_{n}=0
+\]
+
+Then
+\[
+b_{1}v_{1}+\left(b_{1}+b_{2}\right)v_{2}+\dots+b_{n}v_{n}=0
+\]
+
+According to definition $2.26$, since $\mathcal{B}$ is a basis of
+$V$, $\mathcal{B}$ is linearly independent and
+\[
+b_{1}=0,\quad\left(b_{1}+b_{2}\right)=0,\quad\dots,\quad b_{n}=0
+\]
+hence 
+\[
+b_{1}=b_{2}=\dots=b_{n}=0
+\]
+
+and according to definition $2.15$, $\mathcal{B}'$ is linearly independent
+as well.
+
+According to definition $2.26$, $\mathcal{B}'$ is a basis of $V$.
+
+$\mathcal{B}'\ne\mathcal{B}$, nor is it a reordering of $\mathcal{B}$:
+let us assume for the sake of contradiction that $v_{1}+v_{2}\in\mathcal{B}$.
+
+Then $\exists k\in\left\{ 1,\dots,n\right\} \text{ s.t. }v_{k}=v_{1}+v_{2}$.
+
+If $k=1$ or $k=2$ then accordingly $v_{1}+v_{2}=v_{1}$ or $v_{1}+v_{2}=v_{2}$
+hence $v_{2}$ or $v_{1}$ is the zero vector, contradicting the linear
+independence of $\mathcal{B}$ (according to example $2.18$, any
+list containing the zero vector is linearly dependent).
+
+If $k\ge3$ then $\mathcal{B}$ is of the form $\left(v_{1},v_{2},\dots,v_{1}+v_{2},\dots,v_{n}\right)$
+and that 
+\[
+1\cdot v_{1}+1\cdot v_{2}+0\cdot v_{3}+\dots+0\cdot v_{k-1}+\left(-1\right)\cdot v_{k}+0\cdot v_{k+1}+\dots+0\cdot v_{n}=0
+\]
+contradicting the linear independence of $\mathcal{B}$.
+
+Hence $\mathcal{B}'$ contains a vector not in $\mathcal{B}$, so
+$\mathcal{B}'$ is a basis of $V$ different from $\mathcal{B}$,
+even up to reordering.
+\end{proof}
+\newpage{}
+\begin{proof}
+\textbf{Tying it all together, }
+
+Let $V$ be a vector space over field $\mathbb{F}$.
+
+$\Leftarrow$: Let us assume $V$ satisfies one of the two following
+statements:
+
+1. $V=\left\{ 0\right\} $ over any field $\mathbb{F}$
+
+2. $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$ and $\exists0\ne v\text{ s.t. }V=\left\{ 0,v\right\} $.
+
+In the first case, we proved in lemma 2 that it has exactly one basis,
+even up to reordering.
+
+In the second case, $\left(v\right)$ is a basis of $V$ and we proved
+in lemma 3 that $V$ has exactly one basis, even up to reordering.
+
+$\Rightarrow\text{ via contra-positive}:$ Let us assume that $V$
+satisfies neither of these statements, and cover all possible cases
+of $V$.
+
+If $V$ is not finite-dimensional, then we proved in lemma 1 that
+it doesn't have exactly one basis.
+
+Otherwise, $V$ is finite-dimensional, therefore it has a basis.
+
+Let $\mathcal{B}=\left(v_{1},\dots,v_{n}\right)$ be a basis of $V$.
+
+If $n=0$, then $V=\text{Span }\mathcal{B}=\text{Span }\left(\right)=\left\{ 0\right\} $
+and it contradicts the fact that $V$ doesn't satisfy statement 1.
+
+If $n=1$ and $\mathbb{F}$ isn't isomorphic to $\mathbb{Z}_{2}$,
+then we proved in lemma 3 that $V$ doesn't have exactly one basis.
+
+If $n=1$ and $\mathbb{F}$ is isomorphic to $\mathbb{Z}_{2}$, then
+\[
+V=\text{Span }\left(v_{1}\right)=\left\{ av_{1}\mid a\in\mathbb{F}\right\} =\left\{ 0\cdot v_{1},1\cdot v_{1}\right\} =\left\{ 0,v_{1}\right\} 
+\]
+
+and $v_{1}\ne0$ because $\mathcal{B}$ is a basis and is therefore
+linearly independent - in contradiction to the fact that $V$ doesn't
+satisfy statement 2.
+
+If $n\ge2$, then we proved in lemma 4 that $V$ doesn't have exactly
+one basis.
+
+This covers all of the possibilities, as required. 
+\end{proof}
+
+\end{document}
