@@ -4,7 +4,6 @@
   {{ partial "head.html" . }}
 </head>
 <body class="{{ if .IsHome }}home{{ else }}page kind-{{ .Kind }} section-{{ .Section }}{{ with .Layout }} layout-{{ . }}{{ end }}{{ end }}">
-  {{ with site.Data.text.skip_link }}<a class="skip" href="#main">{{ . }}</a>{{ end }}
   {{ partial "header.html" . }}
   <main id="main" class="container">
     {{ block "main" . }}{{ end }}

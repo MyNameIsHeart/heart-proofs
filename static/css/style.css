@@ -67,8 +67,6 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .small { font-size: 0.875rem; }
 .count { color: var(--muted); font-family: var(--sans); font-size: 0.8rem; font-weight: 400; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff; padding: 0.5rem 1rem; z-index: 10; }
-.skip:focus { left: 1rem; top: 1rem; }
 .qed { color: var(--accent); font-weight: 600; }
 
 .site-header { border-bottom: 1px solid var(--border); background: var(--bg); }
@@ -327,7 +325,7 @@ body.layout-subscribe .photo-credit { position: fixed; right: 1.25rem; bottom: 0
 .resource-list dd { margin: 0.15em 0 0; color: var(--muted); }
 
 @media print {
-  .site-header, .site-footer, .subscribe, .post-nav, .downloads, .skip { display: none !important; }
+  .site-header, .site-footer, .subscribe, .post-nav, .downloads { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .theorem { background: none; }
   .katex-display { mask-image: none; }
