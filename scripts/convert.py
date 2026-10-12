@@ -52,6 +52,7 @@ DEFAULT_THEOREM_NAMES = {
 }
 
 SUMMARY_CHARS = 220
+COVER = "_index.tex"  # cover page of a summary kept as one .tex per lecture in the same folder
 
 
 def read_tex(path: Path) -> str:
@@ -1090,6 +1091,9 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     warn_dropped(log, tex, tex_path.name)
     body = rule_tables(label_abstract(body, abstract_name(tex)), tex)
     side = parse_sidecar(tex_path.with_suffix(".yaml"))
+    cover = tex_path.name == COVER
+    lectures = [] if cover or not (tex_path.parent / COVER).is_file() else sorted(
+        t for t in tex_path.parent.glob("*.tex") if t.name != COVER)
 
     title = side.get("title") or meta.get("title") or slug.replace("-", " ").title()
     author = side.get("author") or meta.get("author", "")
@@ -1099,9 +1103,9 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
         date = parse_date(str(side["date"]))
     if date is None and date_str:
         date = parse_date(date_str)
-    if date is None and meta.get("date"):
+    if date is None and meta.get("date") and not cover:
         date = parse_date(meta["date"])
-    if date is None:
+    if date is None and not cover:
         date = dt.date.fromtimestamp(tex_path.stat().st_mtime)
         print(f"  ! no date for {tex_path.name}; using file mtime {date}", file=sys.stderr)
 
@@ -1115,8 +1119,9 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     out_files = FILES_DIR / rel
     out_files.mkdir(parents=True, exist_ok=True)
     links = {}
-    (out_files / f"{slug}.tex").write_text(scrub_tex(read_tex(tex_path)), encoding="utf-8")
-    links["tex"] = f"/files/{rel}/{slug}.tex"
+    if not cover:
+        (out_files / f"{slug}.tex").write_text(scrub_tex(read_tex(tex_path)), encoding="utf-8")
+        links["tex"] = f"/files/{rel}/{slug}.tex"
     ready_pdf = tex_path.with_suffix(".pdf")
     if ready_pdf.exists() and publish_pdf(ready_pdf, out_files / f"{slug}.pdf"):
         links["pdf"] = f"/files/{rel}/{slug}.pdf"
@@ -1134,7 +1139,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     fm = [
         "---",
         f"title: {yaml_str(title)}",
-        f"date: {date.isoformat()}",
+        *([f"date: {date.isoformat()}"] if date else []),
         f"subject: {yaml_str(subject)}",
         f"topic: {yaml_str(topic)}",
         f"summary: {yaml_str(summary)}",
@@ -1165,7 +1170,17 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
             fig_side = "left" if str(side.get("figure_side", "")).lower() == "left" else "right"
             body = add_figure(body, fig_url, str(side.get("figure_alt", "")), str(side.get("figure_caption", "")), fig_side)
             fm.insert(-1, f"figure: {yaml_str(fig_url)}")
-    if should_split(side, body):
+    if cover:
+        out_path = out_dir / "_index.html"
+        out_path.write_text("\n".join(fm[:-1] + ["layout: summary", "---"]) + "\n" + body, encoding="utf-8")
+        if verbose:
+            print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)}")
+        return out_path
+    if lectures:
+        body = normalize_levels(body)
+        extra = [] if side.get("weight") else [f"weight: {lectures.index(tex_path) + 1}"]
+        fm[-1:-1] = extra + ["part: true", f"toc: {json.dumps(toc_of(body), ensure_ascii=False)}"]
+    elif should_split(side, body):
         intro, parts = move_boxes(*split_parts(body), notice=str(side.get("notice") or ""))
         part_dir = out_dir / slug
         part_dir.mkdir(parents=True, exist_ok=True)
@@ -1224,6 +1239,8 @@ def write_section_indexes(base: Path, section: str) -> None:
             all_dirs.add(d)
             d = d.parent
     for d in sorted(all_dirs):
+        if (d / COVER).is_file():
+            continue
         rel = d.relative_to(base)
         out = CONTENT_DIR / section / rel / "_index.md"
         out.parent.mkdir(parents=True, exist_ok=True)
