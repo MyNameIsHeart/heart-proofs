@@ -1,0 +1,139 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\newgeometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+\title{{\Large\vspace{-4em}The intermediate value theorem\vspace{-2em}}}
+\maketitle
+\begin{thm*}
+Let $a,b,\gamma\in\mathbb{R}$ s.t. $a<b$ and let $f:D\rightarrow\mathbb{R}$
+be a continuous function s.t. $\left[a,b\right]\subseteq D$ and $f(a)\ne f(b)$. 
+
+If $f(a)<\gamma<f(b)$ or $f(b)<\gamma<f(a)$ then there exists $c\in(a,b)\text{ s.t. }f(c)=\gamma$.
+\end{thm*}
+\begin{proof}
+Let us define $g:D\rightarrow\mathbb{R}$ by $g(x)=f(x)-\gamma$.
+
+We will first prove that $\exists x_{0}\in\left(a,b\right)\text{ s.t. }g\left(x_{0}\right)=0$.
+
+$g$ is continuous as a shift of a continuous function. 
+
+Let us assume that $f(a)<\gamma<f(b)$. Then
+\[
+g(a)=f(a)-\gamma<0<f(b)-\gamma=g(b)
+\]
+Let us define the two sequences $\left(a_{n}\right)_{n=1}^{\infty}$
+and $\left(b_{n}\right)_{n=1}^{\infty}$ inductively. 
+
+$a_{1}=a,b_{1}=b$.
+
+For $n\in\mathbb{N}$,
+
+We will assume that $g\left(\frac{a_{n}+b_{n}}{2}\right)\ne0$, otherwise
+$x_{0}=\frac{a_{n}+b_{n}}{2}$ and the theorem holds.
+
+If $g\left(\frac{a_{n}+b_{n}}{2}\right)<0$ we will define $a_{n+1}=\frac{a_{n}+b_{n}}{2}$
+and $b_{n+1}=b_{n}$, otherwise $g\left(\frac{a_{n}+b_{n}}{2}\right)>0$
+and we will define $a_{n+1}=a_{n}$ and $b_{n+1}=\frac{a_{n}+b_{n}}{2}$.
+
+By induction, the following properties are true for each $n\in\mathbb{N}$:
+
+1. $a_{n}\le a_{n+1}$
+
+2. $b_{n}\ge b_{n+1}$
+
+3. $g\left(a_{n}\right)<0<g\left(b_{n}\right)$
+
+4. $a\le a_{n}<b_{n}\le b$ hence $b_{n}-a_{n}>0$.
+
+We will now look at the sequence $\left(d_{n}\right)_{n=1}^{\infty}$
+where $d_{n}=b_{n}-a_{n}$.
+
+Let us notice that in the first case
+\[
+b_{n+1}-a_{n+1}=b_{n}-\frac{a_{n}+b_{n}}{2}=\frac{2b_{n}-a_{n}-b_{n}}{2}=\frac{b_{n}-a_{n}}{2}
+\]
+
+and in the second case
+\[
+b_{n+1}-a_{n+1}=\frac{a_{n}+b_{n}}{2}-a_{n}=\frac{a_{n}+b_{n}-2a_{n}}{2}=\frac{b_{n}-a_{n}}{2}
+\]
+
+So 
+\[
+\forall n\in\mathbb{N},\ d_{n+1}=\frac{d_{n}}{2}
+\]
+
+and $\left(d_{n}\right)_{n=1}^{\infty}$ is a geometric sequence with
+$p=\frac{1}{2}$ and $d_{1}=b-a$, hence
+\[
+\limi d_{n}=\limi\frac{b-a}{2^{n-1}}=0
+\]
+
+Points 1 and 2 and 4 give
+\[
+a_{n}\le a_{n+1}\le b_{n+1}\le b_{n}
+\]
+and along with what we just proved, Cantor's intersection theorem
+provides a $x_{0}\in\left[a,b\right]$ such that
+\[
+x_{0}=\limi a_{n}=\limi b_{n}
+\]
+Therefore, according to Heine's sequence characterisation of continuity,
+\[
+g(x_{0})=\limi g(a_{n})\le0\ \wedge\ g(x_{0})=\limi g(b_{n})\ge0
+\]
+therefore 
+\[
+g(x_{0})=0
+\]
+
+and because $g(a)<0<g(b)$, $x_{0}\in\left(a,b\right)$.
+
+According to the definition of $g$,
+\[
+f(x_{0})-\gamma=0\Rightarrow f(x_{0})=\gamma
+\]
+
+as required.
+
+If $f(b)<\gamma<f(a)$, we can apply the same proof for $-f$ and
+$-\gamma$ because $-f$ is also continuous and 
+\[
+-f(a)<-\gamma<-f(b)
+\]
+\end{proof}
+
+\end{document}
