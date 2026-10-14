@@ -1,0 +1,4 @@
+{{- /* One tag per language of the given pages, from each page's lang (none means English). */ -}}
+{{- $langs := slice -}}
+{{- range . }}{{ $l := .Params.lang | default "en" }}{{ if not (in $langs $l) }}{{ $langs = $langs | append $l }}{{ end }}{{ end -}}
+{{- range sort $langs }} <span class="lang-tag">{{ index site.Data.text.langs . | default (upper .) }}</span>{{ end -}}

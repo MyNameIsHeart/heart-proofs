@@ -190,6 +190,7 @@ def keep_layout(tex: str) -> str:
     if not sep:
         return tex
     body = re.sub(r"\\(begin|end)\{abstract\}", r"\\\1{abstractbox}", body)
+    body = re.sub(r"\\tableofcontents(?:\{\})?", r"\\begin{tocmark}\\end{tocmark}", body)
     body = re.sub(r"\\\\\*?[ \t]*\n(?:[ \t]*\n)+", "\n\n\\\\begin{blankline}\\\\end{blankline}\n\n", body)
     body = re.sub(r"(\n[ \t]*\n)[ \t]*\\(?:hfill|hspace\*?\{\\fill\})(?:\{\})?[ \t]*(\S.*?)(?=\n[ \t]*\n|\\end\{document\})",
                   r"\1\\begin{flushright}\n\2\n\\end{flushright}", body, flags=re.S)
@@ -201,6 +202,27 @@ def abstract_name(tex: str) -> str:
     if m:
         return m.group(1).strip()
     return "תקציר" if is_hebrew(tex) else "Abstract"
+
+
+def toc_name(tex: str) -> str:
+    m = re.search(r"\\(?:renewcommand|providecommand)\*?\{?\\contentsname\}?\{([^{}]*)\}", tex)
+    if m:
+        return m.group(1).strip()
+    return "תוכן עניינים" if is_hebrew(tex) else "Contents"
+
+
+TOC_MARK_RE = re.compile(r'<div class="tocmark">\s*</div>\n?')
+
+
+def place_toc(html: str, name: str) -> str:
+    """pandoc drops \\tableofcontents. Put a linked list of the page's headings where it was."""
+    from html import escape
+    items = toc_of(html)
+    if not items:
+        return TOC_MARK_RE.sub("", html)
+    lis = "".join(f'<li class="toc-l{t["level"]}"><a href="#{escape(t["id"])}">{escape(t["text"])}</a></li>' for t in items)
+    nav = f'<nav class="page-toc">\n<p class="page-toc-title">{escape(name)}</p>\n<ul class="part-toc">{lis}</ul>\n</nav>\n'
+    return TOC_MARK_RE.sub(lambda m: nav, html, count=1)
 
 
 def label_abstract(html: str, name: str) -> str:
@@ -1171,17 +1193,18 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
             body = add_figure(body, fig_url, str(side.get("figure_alt", "")), str(side.get("figure_caption", "")), fig_side)
             fm.insert(-1, f"figure: {yaml_str(fig_url)}")
     if cover:
+        body = TOC_MARK_RE.sub("", body)
         out_path = out_dir / "_index.html"
         out_path.write_text("\n".join(fm[:-1] + ["layout: summary", "---"]) + "\n" + body, encoding="utf-8")
         if verbose:
             print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)}")
         return out_path
     if lectures:
-        body = normalize_levels(body)
+        body = place_toc(normalize_levels(body), toc_name(tex))
         extra = [] if side.get("weight") else [f"weight: {lectures.index(tex_path) + 1}"]
         fm[-1:-1] = extra + ["part: true", f"toc: {json.dumps(toc_of(body), ensure_ascii=False)}"]
     elif should_split(side, body):
-        intro, parts = move_boxes(*split_parts(body), notice=str(side.get("notice") or ""))
+        intro, parts = move_boxes(*split_parts(TOC_MARK_RE.sub("", body)), notice=str(side.get("notice") or ""))
         part_dir = out_dir / slug
         part_dir.mkdir(parents=True, exist_ok=True)
         head = fm[:-1] + ["layout: summary", "---"]
@@ -1209,6 +1232,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
             print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)} (+{len(parts)})")
         return out_path
     out_path = out_dir / f"{slug}.html"
+    body = place_toc(body, toc_name(tex))
     out_path.write_text("\n".join(fm) + "\n" + body, encoding="utf-8")
     if verbose:
         print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)}")

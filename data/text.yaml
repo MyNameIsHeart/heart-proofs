@@ -20,6 +20,10 @@ home:
   all_summaries: "Summaries"
   empty: ""
 
+langs:
+  en: "EN"
+  he: "HE"
+
 kinds:
   proofs: "Proofs"
   summaries: "Summaries"
