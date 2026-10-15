@@ -261,6 +261,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .part-toc a:hover { color: var(--accent); }
 .part-toc .toc-l3 { padding-inline-start: 1.2rem; }
 .part-toc .toc-l4 { padding-inline-start: 2.4rem; }
+.part-toc .toc-l5 { padding-inline-start: 3.6rem; }
 .parts-nav { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
 .parts-nav .prev { text-align: start; }
 .parts-nav .up { text-align: center; color: var(--muted); font-family: var(--sans); font-size: 0.9rem; }
