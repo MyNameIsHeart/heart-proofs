@@ -1,0 +1,222 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\makeatletter
+
+\newcommand*\LyXZeroWidthSpace{\hspace{0pt}}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{חשבון אינפיניטסימלי {\beginL 2\endL} - אוסף נוסחאות}
+\author{נעם לב}
+
+\maketitle
+\tableofcontents{}
+
+\newpage{}
+
+\part{שיטות אינטגרציה}
+
+\section{נוסחאות גזירה ואינטגרציה בסיסיות}
+
+כלל המכפלה וכלל המנה:
+
+\L{%
+\[
+(u\cdot v)'=u'v+uv',\quad\left(\frac{u}{v}\right)'=\frac{u'v-uv'}{v^{2}}
+\]
+}%
+כלל השרשרת:\L{%
+\[
+\left(f(g(x))\right)'=f'(g(x))\cdot g'(x)
+\]
+}%
+
+סינוס וקוסינוס:
+
+\L{%
+\[
+(\sin(x))\prime=\cos(x),\quad(\cos(x))\prime=-\sin(x)
+\]
+}%
+
+טנגנס, קוטנגנס, ארקטנגנס:
+
+\L{%
+\[
+(\tan(x))\prime=\frac{1}{\cos^{2}(x)}\LyXZeroWidthSpace=1+\tan^{2}(x),\quad(\cot x)\prime=-\frac{1}{\sin^{2}(x)},\quad(\arctan x)'=\frac{1}{1+x^{2}}\LyXZeroWidthSpace
+\]
+}%
+
+ארקסינוס וארקקוסינוס:\L{%
+\[
+(\arcsin(x))'=\frac{1}{\sqrt{1-x^{2}}},\quad(\arccos(x))'=-\frac{1}{\sqrt{1-x^{2}}}
+\]
+}%
+
+אינטגרל של פונקציית חזקה:\L{%
+\[
+\int x^{n}\,dx=\frac{x^{n+1}}{n+1}+C
+\]
+}%
+
+אינטגרל של אחד חלקי המשתנה ונגזרת פנימית במונה:\L{%
+\[
+\int\frac{1}{x}\,dx=\ln|x|+C,\quad\int\frac{f'(x)}{f(x)}\,dx=\ln|f(x)|+C
+\]
+}%
+
+\section{אינטגרציה בחלקים}
+
+אפשר להיזכר בה בעזרת כלל המכפלה.\L{%
+\[
+(u\cdot v)'=u'v+uv'
+\]
+}%
+
+לכן\L{%
+\[
+\int(u(x)\cdot v(x))'\ dx=\int\left(u'(x)v(x)+u(x)v'(x)\right)\ dx\Rightarrow u(x)\cdot v(x)=\int\left(u'(x)v(x)+u(x)v'(x)\right)\ dx
+\]
+}%
+\L{%
+\[
+\underset{\text{linearity}}{\Rightarrow}u(x)\cdot v(x)=\int u(x)'v(x)\ dx+\int u(x)v'(x)\ dx
+\]
+}%
+
+לכן לאחר העברת אגפים\L{%
+\[
+\int u(x)v'(x)\,dx=u(x)v(x)-\int u'(x)v(x)\,dx
+\]
+}%
+
+עדיף לקרוא \L{$v'$} למישהו שנוח לעשות לו אינטגרל, ו-\L{$u$} למשהו
+שנוח לגזור. 
+
+דהיינו, בשביל להשתמש בשיטה זו, נזהה באינטגרל מכפלה של ביטוי שקל לגזור
+)למשל, אם גזירה מורידה את המעלה שלו( וביטוי שקל לטנגרל בלי לסבך את
+המבנה שלו.
+
+אם יש פונקציה יחידה, נתייחס אליה כמכפלה בקבוע )אפילו \L{$1$}(.
+
+\section{אינטגרציה בהצבה}
+
+\L{%
+\[
+\int f(\varphi(x))\cdot\varphi'(x)\,dx=F(\varphi(x))+C
+\]
+}%
+
+אפשר להיזכר בה בעזרת כלל השרשרת.
+
+\L{%
+\[
+\left(f(g(x))\right)'=f'(g(x))\cdot g'(x)
+\]
+}%
+לכן\L{%
+\[
+f(g(x))+C=\int f'(g(x))\cdot g'(x)\ dx
+\]
+}%
+
+)לכתיבה הריגורוזית ראו את הנוסחה הראשונה(.
+
+שיטה זו נוחה לשילוב עם כתיב לייבניץ לנגזרת )בוחרים \L{$u=\varphi(x)$}
+ומטנגרלים לפי \L{$u$}(. 
+
+\section{כתיב לייבניץ לנגזרת}
+
+המשמעות של \L{$\int f(x)\ dx$} היא שמטנגרלים את הפונקציה \L{$f(x)$}
+לפי המשתנה \L{$x$}.
+
+לעיתים, נרצה לבצע החלפת משתנה, ולטנגרל אותה לפי משתנה אחר.
+
+נרצה לבחור משתנה \L{$u$} שמצד אחד עוזר לנו לפתור את השאלה )למשל ביטוי
+שהנגזרת שלו כבר קיימת באינטגרל( אך מצד שני לא מסבך את המבנה כשגוזרים
+אותו.
+
+לאחר מכן, נחשב את \L{$dx$} בעזרת \L{$du$}: \L{$\frac{du}{u'}=dx$}. 
+
+נחליף באינטגרל את \L{$dx$} ו-\L{$x$} בהתאם, נפתור, ונציב בחזרה את
+\L{$u$}.
+
+\newpage{}
+
+\part{זהויות טריגונומטריות}
+
+זהויות זווית כפולה הן זהויות שחשוב לזכור:\L{%
+\[
+1.\quad\cos\left(2x\right)=2\cos^{2}(x)-1
+\]
+}%
+\L{%
+\[
+2.\quad\sin(2x)=2\sin(x)\cos(x)
+\]
+}%
+
+לפי משפט פיתגורס, אפשר לקבל ש-\L{%
+\[
+3.\quad\sin^{2}(x)+\cos^{2}(x)=1
+\]
+}%
+
+בעזרת זהויות אלו, אפשר לקבל זהות שימושית של הורדת דרגה:\L{%
+\[
+4.\quad\cos\left(2x\right)=2\cos^{2}(x)-1\underset{(1)}{\Rightarrow}\cos^{2}(x)=\frac{\cos(2x)+1}{2}
+\]
+}%
+\L{%
+\[
+5.\quad\Rightarrow\sin^{2}(x)\underset{4\text{ and }3}{=}\frac{1-\cos(2x)}{2}
+\]
+}%
+
+בנוסף, אפשר לחלק את שני האגפים של זהות שלוש ב-\L{$\cos^{2}(x)$} ובעזרת
+ההגדרה \L{$\tan(x)=\frac{\sin(x)}{\cos(x)}$} לקבל
+
+\L{%
+\[
+6.\quad\tan^{2}(x)+1=\frac{1}{\cos^{2}(x)}
+\]
+}%
+
+סכומים בסינוס וקוסינוס:\L{%
+\[
+7.\quad\sin(\alpha\pm\beta)=\sin(\alpha)\cos(\beta)\pm\cos(\alpha)\sin(\beta)
+\]
+}%
+\L{%
+\[
+8.\quad\cos(\alpha\pm\beta)=\cos(\alpha)\cos(\beta)\mp\sin(\alpha)\sin(\beta)
+\]
+}%
+
+\end{document}

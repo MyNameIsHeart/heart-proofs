@@ -1,0 +1,248 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+\theoremstyle{definition}
+\newtheorem*{sol*}{\protect\solutionname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\addto\captionsenglish{\renewcommand{\problemname}{Problem}}
+\addto\captionsenglish{\renewcommand{\solutionname}{Solution}}
+\addto\captionshebrew{\renewcommand{\problemname}{בעיה}}
+\addto\captionshebrew{\renewcommand{\solutionname}{פתרון}}
+\providecommand{\problemname}{בעיה}
+\providecommand{\solutionname}{פתרון}
+
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{חשבון אינפיניטסימלי {\beginL 2\endL} - לקט שאלות - שבוע {\beginL 1\endL}}
+\author{נעם לב}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} חשבון אינפיניטסימלי ){\beginL 2\endL}(
+- \L{$80132$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{}
+}א' )תשפ\textquotedblleft ז א'( \textbar{} מרצה: דוקטור איב גודין
+\textbar{} מתרגל: מר יואב כהן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+לקט השאלות מכיל שאלות ממקורות שונים.\\
+מקור חלק מן השאלות הוא חומר הקורס, והזכויות עליו שייכות לאוניברסיטה
+העברית ולסגל הקורס.\\
+הלקט אינו רשמי ולא עבר אישור של הסגל. בפרט, אם ישנן טעויות, הן שלי
+ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\part{פונקציות קדומות )אינטגרל לא מסוים(}
+
+הנימוק \L{$\text{linearity}$} מתייחס ללינאריות האינטגרל הלא מסוים.
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים \L{%
+\[
+\int\frac{1}{3x+4}dx
+\]
+}%
+ עבור \L{$x>0$}.
+\end{problem*}
+\begin{sol*}
+על מנת לפתור את הבעיה, נשתמש בכתיב לייבניץ לנגזרת ובמשפט אינטגרציה
+בהצבה.
+
+נזהה שהאינטגרל הלא מסוים \L{$\int\frac{1}{x}dx$} הוא קל לחישוב ודומה
+למבנה האינטגרל הלא מסוים שלנו, על כן נגדיר \L{%
+\[
+u=3x+4
+\]
+}%
+בשביל להציב את \L{$u$} באינטגרל הלא מסוים שלנו, נרצה לחשב את האינטגרל
+הלא מסוים לפי \L{$u$} ולא לפי \L{$x$}.
+
+לשם כך, נצטרך לבטא את \L{$dx$} בעזרת \L{$du$}:\L{%
+\[
+\frac{du}{dx}=u'=3
+\]
+}%
+ועל כן\L{%
+\[
+dx=\frac{1}{3}du
+\]
+}%
+לכן נוכל לכתוב\L{%
+\[
+\int\frac{1}{3x+4}dx=\int\frac{1}{u}\ \frac{1}{3}du\underset{\text{linearity}}{=}\frac{1}{3}\int\frac{1}{u}\ du=\frac{1}{3}\ln u+C=\frac{1}{3}\ln\left(3x+4\right)+C
+\]
+}%
+\end{sol*}
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים \L{%
+\[
+\int\frac{1}{4x^{2}+12x+10}dx
+\]
+}%
+\end{problem*}
+\begin{sol*}
+על מנת לפתור את הבעיה, נשתמש בכתיב לייבניץ לנגזרת ובמשפט אינטגרציה
+בהצבה.
+
+נזהה שהאינטגרל הלא מסוים \L{$\int\frac{1}{x^{2}+1}dx$} הוא קל לחישוב
+ודומה למבנה האינטגרל הלא מסוים שלנו - על כן ננסה \textquotedblleft לייצר\textquotedblright{}
+אותו.\\
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+טיוטה:\L{%
+\[
+mn=4\cdot9=36
+\]
+}%
+\L{%
+\[
+m+n=12
+\]
+}%
+\L{%
+\[
+m=n=6
+\]
+}%
+\L{%
+\[
+4x^{2}+12x+9=\left(2x+3\right)^{2}
+\]
+}%
+\par\end{center}%
+\end{minipage}}
+
+\L{%
+\[
+\frac{1}{4x^{2}+12x+10}=\frac{1}{4x^{2}+12x+9+1}=\frac{1}{\left(2x+3\right)^{2}+1}
+\]
+}%
+
+ולכן נגדיר \L{%
+\[
+u=2x+3
+\]
+}%
+\L{%
+\[
+\frac{du}{dx}=2\Rightarrow dx=\frac{1}{2}du
+\]
+}%
+\L{%
+\[
+\therefore\int\frac{1}{4x^{2}+12x+10}dx\underset{\text{linearity}}{=}\frac{1}{2}\int\frac{1}{u^{2}+1}\ du=\frac{1}{2}\arctan\left(u\right)+C=\frac{1}{2}\arctan\left(2x+3\right)+C
+\]
+}%
+\end{sol*}
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים\L{%
+\[
+\int\sin x\cos x\ dx
+\]
+}%
+\end{problem*}
+\begin{sol*}
+נשים לב שמתקיים\L{%
+\[
+\int\sin x\cos x\ dx=\int\sin x\sin'x\ dx
+\]
+}%
+נציב \L{$u=\sin x$} ונקבל\L{%
+\[
+\frac{du}{dx}=\sin'x\Rightarrow du=\sin'x\ dx
+\]
+}%
+\L{%
+\[
+\therefore\int\sin x\sin'x\ dx=\int u\ du=\frac{u^{2}}{2}+C=\frac{\sin^{2}x}{2}+C
+\]
+}%
+\end{sol*}
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים\L{%
+\[
+\int\sin^{6}(x)\cos^{5}(x)\ dx
+\]
+}%
+\end{problem*}
+\begin{sol*}
+יעלה בהמשך
+\end{sol*}
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים\L{%
+\[
+\int2xe^{x^{2}}\ dx
+\]
+}%
+\end{problem*}
+\begin{sol*}
+יעלה בהמשך
+\end{sol*}
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים\L{%
+\[
+\int e^{x}\sin x\ dx
+\]
+}%
+\end{problem*}
+\begin{sol*}
+יעלה בהמשך
+\end{sol*}
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים\L{%
+\[
+\int\frac{1}{1+x^{2}}\ dx
+\]
+}%
+\end{problem*}
+\begin{sol*}
+יעלה בהמשך
+\end{sol*}
+\begin{problem*}
+חשבו את האינטגרל הלא מסוים\L{%
+\[
+\int\frac{x}{1+x^{2}}\ dx
+\]
+}%
+\end{problem*}
+\begin{sol*}
+יעלה בהמשך
+\end{sol*}
+
+\end{document}
