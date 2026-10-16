@@ -202,27 +202,92 @@ u=2x+3
 }%
 \end{problem*}
 \begin{sol*}
-יעלה בהמשך
+כמו שראינו בשאלה הקודמת, אם נוכל לייצר מבנה שבתוכו יש \L{$\sin(x)$}
+והוא מסתיים ב- \L{$\cos(x)\ dx$} נוכל לבחור \L{$\sin(x)=u$}.
+
+לכן, נרצה להשאיר \L{$\cos(x)$} אחד, ולהוריד את הדרגה של הפונקציות
+האחרות.\L{%
+\[
+\sin^{2}(x)+\cos^{2}(x)=1\Rightarrow\cos^{2}(x)=1-\sin^{2}(x)
+\]
+}%
+\L{%
+\[
+\therefore\int\sin^{6}(x)\cos^{5}(x)\ dx=\int\sin^{6}(x)\cos^{4}(x)\cos(x)\ dx=\int\sin^{6}(x)\left(1-\sin^{2}(x)\right)^{2}\cos(x)\ dx
+\]
+}%
+נבחר \L{$u=\sin(x)$} לכן \L{$du=\cos(x)\ dx$} ונקבל\L{%
+\[
+=\int u^{6}\left(1-u^{2}\right)^{2}\ du=\int u^{6}\left(1-2u^{2}+u^{4}\right)\ du=\int u^{6}-2u^{8}+u^{10}\ du
+\]
+}%
+\L{%
+\[
+\underset{\text{linearity}}{=}\int u^{6}\ du-2\int u^{8}\ du+\int u^{10}\ du=\frac{u^{7}}{7}-\frac{2u^{9}}{9}+\frac{u^{11}}{11}+C
+\]
+}%
+\L{%
+\[
+=\frac{\sin(x)^{7}}{7}-\frac{2\sin(x)^{9}}{9}+\frac{\sin(x)^{11}}{11}+C
+\]
+}%
 \end{sol*}
 \begin{problem*}
 חשבו את האינטגרל הלא מסוים\L{%
 \[
-\int2xe^{x^{2}}\ dx
+\int2xe^{\left(x^{2}\right)}\ dx
 \]
 }%
 \end{problem*}
 \begin{sol*}
-יעלה בהמשך
+נשים לב שמתקיים\L{%
+\[
+\left(x^{2}\right)^{'}=2x,\quad\left(e^{x}\right)^{'}=e^{x}
+\]
+}%
+
+ולכן ישירות לפי אינטגרציה בהצבה\L{%
+\[
+\int2xe^{\left(x^{2}\right)}\ dx=\int e^{\left(x^{2}\right)}\cdot\left(x^{2}\right)^{'}\ dx=e^{\left(x^{2}\right)}+C
+\]
+}%
 \end{sol*}
 \begin{problem*}
 חשבו את האינטגרל הלא מסוים\L{%
 \[
-\int e^{x}\sin x\ dx
+\int e^{x}\sin(x)\ dx
 \]
 }%
 \end{problem*}
 \begin{sol*}
-יעלה בהמשך
+זה מבנה שמתאים לאינטגרציה בחלקים: פונקציה שקל לטנגרל \L{$\left(e^{x}\right)$}
+כפול פונקציה שקל לגזור \L{$\left(\sin x\right)$}. \L{%
+\[
+\int e^{x}\sin(x)\ dx=\int\sin(x)\cdot\left(e^{x}\right)^{'}\ dx=\sin(x)\cdot e^{x}-\int\cos(x)\cdot e^{x}\ dx
+\]
+}%
+
+באופן דומה\L{%
+\[
+\int\cos(x)\cdot e^{x}\ dx=\int\cos(x)\cdot\left(e^{x}\right)'\ dx=\cos(x)\cdot e^{x}-\int-\sin(x)\cdot e^{x}\ dx
+\]
+}%
+
+ובסך הכל קיבלנו\L{%
+\[
+\int e^{x}\sin(x)\ dx=\sin(x)\cdot e^{x}-\cos(x)\cdot e^{x}-\int\sin(x)\cdot e^{x}\ dx
+\]
+}%
+\L{%
+\[
+2\int e^{x}\sin(x)\ dx=\sin(x)\cdot e^{x}-\cos(x)\cdot e^{x}+C
+\]
+}%
+\L{%
+\[
+\int e^{x}\sin(x)\ dx=\frac{\sin(x)\cdot e^{x}-\cos(x)\cdot e^{x}}{2}+C
+\]
+}%
 \end{sol*}
 \begin{problem*}
 חשבו את האינטגרל הלא מסוים\L{%
@@ -232,7 +297,29 @@ u=2x+3
 }%
 \end{problem*}
 \begin{sol*}
-יעלה בהמשך
+המכנה מזכיר את\L{%
+\[
+\left(\tan\left(x\right)\right)^{'}=\frac{1}{\cos^{2}(x)}=1+\tan^{2}\left(x\right)
+\]
+}%
+לכן בשביל להמיר את \L{$x^{2}$} ל-\L{$\tan^{2}(x)$}, נבחר \L{$u=\tan^{-1}(x)$}.
+
+מכאן, \L{$x=\tan(u)$} וגם \L{%
+\[
+\frac{dx}{du}=\left(\tan(u)\right)^{'}=\frac{1}{\cos^{2}(u)}\Rightarrow dx=\frac{1}{\cos^{2}(u)}\cdot du
+\]
+}%
+
+בסה\textquotedblright כ נקבל\L{%
+\[
+\int\frac{1}{1+x^{2}}\ dx=\int\frac{1}{1+\tan(u)^{2}}\cdot\frac{1}{\cos^{2}(u)}\cdot du=\int\frac{1}{\frac{1}{\cos^{2}(x)}}\cdot\frac{1}{\cos^{2}(u)}\cdot du
+\]
+}%
+\L{%
+\[
+=\int1\ du=u+C=\tan^{-1}(x)+C
+\]
+}%
 \end{sol*}
 \begin{problem*}
 חשבו את האינטגרל הלא מסוים\L{%
