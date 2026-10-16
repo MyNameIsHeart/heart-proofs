@@ -289,47 +289,5 @@ u=2x+3
 \]
 }%
 \end{sol*}
-\begin{problem*}
-חשבו את האינטגרל הלא מסוים\L{%
-\[
-\int\frac{1}{1+x^{2}}\ dx
-\]
-}%
-\end{problem*}
-\begin{sol*}
-המכנה מזכיר את\L{%
-\[
-\left(\tan\left(x\right)\right)^{'}=\frac{1}{\cos^{2}(x)}=1+\tan^{2}\left(x\right)
-\]
-}%
-לכן בשביל להמיר את \L{$x^{2}$} ל-\L{$\tan^{2}(x)$}, נבחר \L{$u=\tan^{-1}(x)$}.
-
-מכאן, \L{$x=\tan(u)$} וגם \L{%
-\[
-\frac{dx}{du}=\left(\tan(u)\right)^{'}=\frac{1}{\cos^{2}(u)}\Rightarrow dx=\frac{1}{\cos^{2}(u)}\cdot du
-\]
-}%
-
-בסה\textquotedblright כ נקבל\L{%
-\[
-\int\frac{1}{1+x^{2}}\ dx=\int\frac{1}{1+\tan(u)^{2}}\cdot\frac{1}{\cos^{2}(u)}\cdot du=\int\frac{1}{\frac{1}{\cos^{2}(u)}}\cdot\frac{1}{\cos^{2}(u)}\cdot du
-\]
-}%
-\L{%
-\[
-=\int1\ du=u+C=\tan^{-1}(x)+C
-\]
-}%
-\end{sol*}
-\begin{problem*}
-חשבו את האינטגרל הלא מסוים\L{%
-\[
-\int\frac{x}{1+x^{2}}\ dx
-\]
-}%
-\end{problem*}
-\begin{sol*}
-יעלה בהמשך
-\end{sol*}
 
 \end{document}
