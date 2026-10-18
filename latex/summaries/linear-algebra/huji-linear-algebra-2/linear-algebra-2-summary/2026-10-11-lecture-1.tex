@@ -42,6 +42,7 @@
 האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
 \L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
 )תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
 \par\end{center}%
 \end{minipage}}
 \begin{center}
@@ -58,7 +59,7 @@
 
 \part{מנהלה}
 
-\section{מההרצאה}
+\section{מהרצאה {\beginL 1\endL}}
 
 ספרות מומלצת עבור הקורס: \L{$\text{Linear Algebra Done Right by Axler}$},
 נמצא בחינם באינטרנט וקיימת גם גרסה מתורגמת לעברית.
@@ -74,6 +75,8 @@
 
 מבנה הציון בקורס: \L{$95\%$} מבחן סופי, \L{$5\%$} תרגילי בית. הבחנים
 לא ישפיעו, הם רק למשוב.
+
+האם יש בונוס על תרגולים פעילים - יעודכן בהמשך. 
 
 \section{מהתרגול}
 
@@ -486,12 +489,6 @@ T(v_{j})=\sum_{i=1}^{n}a_{i,j}v_{i},\quad1\leq j\leq n
 \]
 }%
 
-)זו המטריצה המייצגת \L{$\left[T\right]_{\mathcal{B}}^{\mathcal{B}}$}
-מלינארית {\beginL 1\endL} - העמודה ה-\L{$j$} היא \L{$\left[T\left(v_{j}\right)\right]_{\mathcal{B}}$}.
-
-הסימון \L{$M\left(T,\mathcal{B},\mathcal{B}\right)$} הוא הסימון של
-אקסלר.(
-
 נניח כי \L{%
 \[
 M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\left(\begin{array}{ccc|ccc}
@@ -511,6 +508,40 @@ a_{k,1} & \cdots & a_{k,k} & a_{k,k+1} & \cdots & a_{k,n}\\
 
 אז התמ\textquotedblright ו \L{$U=\text{Span}(v_{1},\dots,v_{k})$}
 הוא תמ\textquotedblright ו שמור תחת \L{$T$}.
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$} זו המטריצה המייצגת \L{$\left[T\right]_{\mathcal{B}}^{\mathcal{B}}$}
+מלינארית {\beginL 1\endL} - העמודה ה-\L{$j$} היא \L{$\left[T\left(v_{j}\right)\right]_{\mathcal{B}}$}. 
+
+הסימון \L{$M\left(T,\mathcal{B},\mathcal{B}\right)$} הוא הסימון של
+אקסלר.\\
+
+תזכורת:
+
+עבור מ\textquotedblright ו \L{$V$} מעל \L{$\mathbb{F}$} עם בסיס
+\L{$\mathcal{B}_{V}=\left(v_{1},\dots,v_{n}\right)$} ואופרטור \L{$T\in\mathcal{L}(V)$},\L{%
+\[
+M(T,B_{V},B_{V})=[T]_{B_{V}}^{B_{V}}=\begin{pmatrix}| &  & |\\
+\left[T\left(v_{1}\right)\right]_{B_{V}} & \dots & \left[T\left(v_{n}\right)\right]_{B_{V}}\\
+| &  & |
+\end{pmatrix}=\begin{pmatrix}a_{1,1} &  & a_{1,n}\\
+\vdots & \dots & \vdots\\
+a_{n,1} &  & a_{n,n}
+\end{pmatrix}\text{ s.t.}
+\]
+}%
+\L{%
+\[
+\begin{cases}
+T(v_{1})=a_{1,1}v_{1}+\dots+a_{n,1}v_{n}\\
+\vdots\\
+T(v_{n})=a_{1,n}v_{1}+\dots+a_{n,n}v_{n}
+\end{cases}
+\]
+}%
+
+\rule[0.5ex]{1\columnwidth}{1pt}
 
 \subsection{הוכחה}
 \begin{enumerate}
