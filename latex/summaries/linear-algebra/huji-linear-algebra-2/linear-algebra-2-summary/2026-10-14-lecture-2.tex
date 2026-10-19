@@ -1,0 +1,702 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\addto\captionsenglish{\renewcommand{\theoremname}{Theorem}}
+\addto\captionshebrew{\renewcommand{\theoremname}{משפט}}
+\providecommand{\theoremname}{משפט}
+
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{אלגברה ליניארית {\beginL 2\endL} - הרצאה {\beginL 2\endL} ותוספות}
+\author{נעם לב}
+\date{\L{$14.10.2026$}}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
+\L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
+)תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+הסיכום הוא לא רשמי ולא עבר אישור של הסגל, על כן אין להשתמש בו )ובין
+השאר במספור שלו ובשמות הטענות שבו( כמקור רשמי. אם ישנן טעויות, הן
+שלי ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\part{ערכים עצמיים}
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\section{תזכורת}
+
+\subsection{הגדרה - ערך עצמי של אופרטור \L{$T$} - \L{$\text{Eigenvalue of }T$}}
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{F}$}.
+
+עבור אופרטור \L{$T\in\mathcal{L}(V)$}, אם קיים וקטור \L{$0_{V}\ne v\in V$}
+כך שמתקיים \L{%
+\[
+T(v)=\lambda v
+\]
+}%
+כאשר \L{$\lambda\in\mathbb{F}$}, נאמר כי \L{$\lambda$} הוא ערך עצמי
+)\L{$\text{Eigenvalue}$}( של \L{$T$}.
+
+\section{הגדרה - וקטור עצמי}
+
+לכל \L{$v$} כזה נקרא וקטור עצמי של \L{$T$} השייך ל-\L{$\lambda$}. 
+
+\rule[0.5ex]{1\columnwidth}{1pt}
+
+\section{משפט - אפיון ערכים עצמיים באמצעות דטרמיננטה}
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{F}$} כך ש- \L{%
+\[
+\dim V=n\geq1
+\]
+}%
+\L{%
+\[
+T\in\mathcal{L}(V)
+\]
+}%
+\L{%
+\[
+\mathcal{B}_{V}=(v_{1},\dots,v_{n})
+\]
+}%
+
+)\L{$\mathcal{B}_{V}$} בסיס של \L{$V$}(. 
+
+אז התנאים הבאים שקולים: 
+\begin{enumerate}
+\item \L{$\lambda\in\mathbb{F}$} הוא ערך עצמי של \L{$T$}. 
+\item מתקיים \L{%
+\[
+\det(M(T,\mathcal{B}_{V},\mathcal{B}_{V})-\lambda I_{n})=0_{\mathbb{F}}
+\]
+}%
+\end{enumerate}
+\begin{proof}
+1. \L{$\lambda$} - ערך עצמי של \L{$T$} \L{$\iff$} קיים \L{$0_{V}\ne v\in V$}
+כך ש-\L{$T(v)=\lambda v$}.
+
+{\beginL 2\endL}. \L{$\mathcal{B}_{V}$} בסיס של \L{$V$} לכן ניתן
+להציג את \L{$v$} כצ\textquotedblright ל שלו\L{%
+\[
+v=b_{1}v_{1}+\dots+b_{n}v_{n}
+\]
+}%
+
+מכאן סעיף {\beginL 1\endL} מתקיים אם\textquotedblright ם קיימים \L{%
+\[
+b_{1},\dots,b_{n}\in\mathbb{F}:\exists1\le i\le n\text{ s.t. }b_{i}\ne0
+\]
+}%
+ כך ש-\L{%
+\[
+T\left(b_{1}v_{1}+\dots+b_{n}v_{n}\right)=\lambda\left(b_{1}v_{1}+\dots+b_{n}v_{n}\right)=\lambda b_{1}v_{1}+\dots+\lambda b_{n}v_{n}
+\]
+}%
+{\beginL 3\endL}. נסתכל על \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+{\beginL 4\endL}. לפי לינאריות ו-{\beginL 3\endL} מתקיים \L{%
+\[
+\begin{cases}
+T\left(b_{1}v_{1}+\dots+b_{n}v_{n}\right) & \underset{\text{linearity}}{=}b_{1}T(v_{1})+\dots+b_{n}T(v_{n})\\
+ & \underset{3}{=}b_{1}(a_{1,1}v_{1}+\dots+a_{n,1}v_{n})+\dots+b_{n}(a_{1,n}v_{1}+\dots+a_{n,n}v_{n})\\
+ & =\left(b_{1}a_{1,1}+\dots+b_{n}a_{1,n}\right)v_{1}+\dots+\left(b_{1}a_{n,1}+\dots+b_{n}a_{n,n}\right)v_{n}
+\end{cases}
+\]
+}%
+לכן, לפי המשפט שלמדנו בלינארית {\beginL 1\endL} על הצגה יחידה של וקטור
+לפי בסיס, נקבל ש-\L{$T(v)=\lambda v$} אם\textquotedblright ם \L{%
+\[
+\begin{cases}
+b_{1}a_{1,1}+\dots+b_{n}a_{1,n}=\lambda b_{1}\\
+\quad\vdots\\
+b_{1}a_{n,1}+\dots+b_{n}a_{n,n}=\lambda b_{n}
+\end{cases}
+\]
+}%
+\L{%
+\[
+\iff\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix}\begin{pmatrix}b_{1}\\
+\vdots\\
+b_{n}
+\end{pmatrix}=\lambda\begin{pmatrix}b_{1}\\
+\vdots\\
+b_{n}
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\iff M(T,\mathcal{B}_{V},\mathcal{B}_{V})\cdot\begin{pmatrix}b_{1}\\
+\vdots\\
+b_{n}
+\end{pmatrix}=\lambda\begin{pmatrix}b_{1}\\
+\vdots\\
+b_{n}
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\iff\left(M(T,\mathcal{B}_{V},\mathcal{B}_{V})-\lambda I_{n}\right)\cdot\begin{pmatrix}b_{1}\\
+\vdots\\
+b_{n}
+\end{pmatrix}=\begin{pmatrix}0\\
+\vdots\\
+0
+\end{pmatrix}
+\]
+}%
+
+לכן \L{$\lambda$} ערך עצמי של \L{$T$} אם\textquotedblright ם לממ\textquotedblright ל
+ההומוגנית הזאת יש פתרון לא טריוויאלי )כי \L{$\exists1\le i\le n\text{ s.t }b_{i}\ne0$}(.
+
+לממ\textquotedblright ל זה יש פתרון לא טריוויאלי אם\textquotedblright ם
+המטריצה \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})-\lambda I_{n}$}
+לא הפיכה, שזה מתקיים אם\textquotedblright ם \L{%
+\[
+\det\left(M(T,\mathcal{B}_{V},\mathcal{B}_{V})-\lambda I_{n}\right)=0_{\mathbb{F}}
+\]
+}%
+
+כנדרש.
+\end{proof}
+הערות:
+
+- נוח לעשות כאן את שני הכיוונים יחד, כי כל המעברים הם שקילויות.
+
+- המעבר האחרון הוא שקילות שלמדנו בלינארית {\beginL 1\endL}.
+
+- הדרישה \L{$n\ge1$} היא כי אם \L{$\dim V=0$} אז \L{$V=\{0_{V}\}$},
+ו-\L{$0_{V}$} אינו וקטור עצמי. כעיקרון, הטענה מתקיימת כאן באופן ריק,
+אבל זה לא מעניין. 
+
+\section{הגדרה - הפולינום האופייני}
+
+\L{%
+\[
+p(\lambda)\overset{\text{def}}{=}\det(\lambda I_{n}-M(T,\mathcal{B}_{V},\mathcal{B}_{V}))
+\]
+}%
+
+1. \L{$p(\lambda)$} אינו תלוי בבחירה של \L{$\mathcal{B}_{V}$}.
+
+2. \L{$p(\lambda)$} הוא פולינום עם מקדמים ב-\L{$\mathbb{F}$}.
+
+3. \L{$\deg(p(\lambda))\leq n$}.
+
+)בחישוב הדטרמיננטה החזקה הגבוהה ביותר שאפשר לקבל היא \L{$\lambda^{n}$},
+ולכן המעלה היא לכל היותר \L{$n$}.
+
+למעשה, נראה בהמשך ש-\L{$\deg(p(\lambda))=n$} בדיוק, והמקדם המוביל
+הוא \L{$1$}.(
+
+\subsection{למה הפולינום האופייני לא תלוי בבחירה של הבסיס?}
+
+אם \L{$\mathcal{\mathcal{C}_{V}}$} בסיס אחר של \L{$V$}, אז\L{%
+\[
+M(T,\mathcal{\mathcal{C}_{V}},\mathcal{\mathcal{C}_{V}})=P^{-1}M(T,\mathcal{B}_{V},\mathcal{B}_{V})P
+\]
+}%
+
+עבור מטריצת המעבר ההפיכה \L{$P=[\text{Id}_{V}]_{\mathcal{B}_{V}}^{\mathcal{\mathcal{C}_{V}}}$}.
+לכן,\L{%
+\[
+\lambda I_{n}-M(T,\mathcal{\mathcal{C}_{V}},\mathcal{\mathcal{C}_{V}})=P^{-1}(\lambda I_{n}-M(T,\mathcal{B}_{V},\mathcal{B}_{V}))P
+\]
+}%
+
+ולמטריצות דומות יש אותה דטרמיננטה.\\
+
+לכן מותר לדבר על \textquotedblright הפולינום האופייני של \L{$T$}\textquotedblright . 
+
+\subsection{אלגוריתם למציאת ערכים עצמיים}
+
+שלב {\beginL 1\endL}: לחשב מטריצה מייצגת בבסיס כלשהו.
+
+שלב {\beginL 2\endL}: למצוא את הפולינום האופייני.
+
+שלב {\beginL 3\endL}: למצוא את השורשים של \L{$p(\lambda)$} בשדה \L{$\mathbb{F}$}.
+לפי המשפט הקודם, אלה בדיוק הערכים העצמיים של \L{$T$}.
+
+\subsection{\L{$\det(\lambda I_{n}-M)$} מול \L{$\det(M-\lambda I_{n})$}}
+
+במשפט כתבנו \L{$\det(M-\lambda I_{n})$} ואילו כשחישבנו כתבנו \L{$\det(\lambda I_{n}-M)$},
+כיוון שבצורה הראשונה יותר נוח להוכיח, ובצורה השנייה יותר נוח לחשב.\L{%
+\[
+\lambda I_{n}-M=-(M-\lambda I_{n})
+\]
+}%
+
+וזה שקול להכפלת כל שורה של \L{$(M-\lambda I_{n})$} במינוס אחת.
+
+הדטרמיננטה היא פונ' נפח ולכן לינארית בכל שורה, מכאן הכפלת כל אחת מהשורות
+ב-\L{$(-1)$} נותנת \L{%
+\[
+\det(\lambda I_{n}-M)=(-1)^{n}\det(M-\lambda I_{n})
+\]
+}%
+מאחר ש-\L{$(-1)^{n}\neq0$}, הביטוי \L{$\det(M-\lambda I_{n})$} מתאפס
+אם\textquotedblright ם הביטוי \L{$\det(\lambda I_{n}-M)$} מתאפס.
+
+אנחנו משווים לאפס, ולכן החישוב של שניהם שקול.
+
+\subsection{דוגמה - מציאת ערכים עצמיים}
+
+\L{%
+\[
+V=\mathbb{C}^{2}=\{(z_{1},z_{2})\mid z_{1}\in\mathbb{C},z_{2}\in\mathbb{C}\}
+\]
+}%
+\L{%
+\[
+T((z_{1},z_{2}))\overset{\text{def}}{=}(-z_{2},z_{1})
+\]
+}%
+\L{%
+\[
+T\in\mathcal{L}(\mathbb{C}^{2})
+\]
+}%
+חשבו את כל הערכים העצמיים של \L{$T$}.
+
+\subsubsection{פתרון}
+
+{\beginL 1\endL}. נבחר את הבסיס הסטנדרטי\L{%
+\[
+\mathcal{B}_{V}=\left(\underset{v_{1}}{(1,0)},\underset{v_{2}}{(0,1)}\right)
+\]
+}%
+
+אז \L{%
+\begin{align*}
+T(v_{1}) & =T((1,0))=(0,1)=0\cdot v_{1}+1\cdot v_{2}\\
+T(v_{2}) & =T((0,1))=(-1,0)=-1\cdot v_{1}+0\cdot v_{2}
+\end{align*}
+}%
+לכן\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}
+\]
+}%
+)תזכורת - העמודה הראשונה היא המקדמים של \L{$T(v_{1})$} והעמודה השנייה
+היא המקדמים של \L{$T(v_{2})$}(\\
+
+2. \L{%
+\[
+\det\left[\lambda\begin{pmatrix}1 & 0\\
+0 & 1
+\end{pmatrix}-\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}\right]=\det(\lambda I-M(T,\mathcal{B}_{V},\mathcal{B}_{V}))
+\]
+}%
+\L{%
+\[
+=\det\begin{pmatrix}\lambda & 1\\
+-1 & \lambda
+\end{pmatrix}=\lambda\cdot\lambda-1\cdot\left(-1\right)=\lambda^{2}+1=0
+\]
+}%
+\L{%
+\[
+\lambda_{1}=i,\lambda_{2}=-i
+\]
+}%
+הם הערכים העצמיים של \L{$T$}.
+
+\subsection{תלות בשדה}
+
+אם במקום \L{$\mathbb{C}$} בוחרים את \L{$\mathbb{R}$}, כלומר \L{$V=\mathbb{R}^{2}$}
+ואותה העתקה, אז ל-\L{$\lambda^{2}+1$} אין שורשים ממשיים, ולכן אין
+ערכים עצמיים בכלל - השדה שבוחרים משנה.
+
+\subsection{המחשה על למה \L{$\deg(p(\lambda))=n$} והמקדם המוביל הוא \L{$a_{n}=1$}}
+
+נמחיש בעזרת \L{$n=3$}. אז המטריצה שעליה מפעילים דטרמיננטה בפולינום
+האופייני היא מהצורה\L{%
+\[
+\begin{pmatrix}\lambda-a_{1,1} & -a_{1,2} & -a_{1,3}\\
+-a_{2,1} & \lambda-a_{2,2} & -a_{2,3}\\
+-a_{3,1} & -a_{3,2} & \lambda-a_{3,3}
+\end{pmatrix}
+\]
+}%
+ומתקיים
+
+\L{%
+\[
+\det\begin{pmatrix}\lambda-a_{1,1} & -a_{1,2} & -a_{1,3}\\
+-a_{2,1} & \lambda-a_{2,2} & -a_{2,3}\\
+-a_{3,1} & -a_{3,2} & \lambda-a_{3,3}
+\end{pmatrix}=
+\]
+}%
+\L{%
+\[
+\det\left(\left(\lambda-a_{1,1}\right)\cdot\begin{pmatrix}\lambda-a_{2,2} & -a_{2,3}\\
+-a_{3,2} & \lambda-a_{3,3}
+\end{pmatrix}-\left(-a_{1,2}\right)\cdot\begin{pmatrix}-a_{2,1} & -a_{2,3}\\
+-a_{3,1} & \lambda-a_{3,3}
+\end{pmatrix}+\left(-a_{1,3}\right)\cdot\begin{pmatrix}-a_{2,1} & \lambda-a_{2,2}\\
+-a_{3,1} & -a_{3,2}
+\end{pmatrix}\right)
+\]
+}%
+
+המחובר הראשון נותן פולינום שמתחיל ב-\L{$\lambda^{3}$} והמחוברים השני
+והשלישי נותנים פולינומים ממעלה לכל היותר {\beginL 1\endL}.
+
+לכן, החזקה המקסימלית היא \L{$\lambda^{3}$}, והמקדם שלה הוא \L{$1$}.\\
+
+באופן כללי: בפיתוח המלא של הדטרמיננטה, מכפלת איברי האלכסון \L{$(\lambda-a_{1,1})\cdots(\lambda-a_{n,n})$}
+היא היחידה שמגיעה ל-\L{$\lambda^{n}$}.
+
+כל מכפלה אחרת מדלגת על לפחות שני איברי אלכסון, ולכן היא ממעלה \L{$\leq n-2$}.
+
+לכן \L{%
+\[
+p(\lambda)=\lambda^{n}+\dots
+\]
+}%
+ מעל כל שדה.
+
+דהיינו, המעלה של הפולינום האופייני תמיד שווה למימד, מעל כל שדה.
+
+החזקה הגבוהה ביותר מתקבלת תמיד מהאלכסון של המטריצה, ושאר המחוברים
+נותנים מעלה נמוכה יותר.
+
+\part{המשפט היסודי של האלגברה - \L{$\text{The Fundamental Theorem of Algebra}$}}
+\begin{thm*}
+לכל פולינום )שאינו קבוע( עם מקדמים מרוכבים יש לפחות שורש מרוכב אחד,
+ולכן ניתן לפרק אותו לגורמים לינאריים כך שמספר השורשים הכולל )כולל
+חזרות( שווה בדיוק למעלת הפולינום.
+\end{thm*}
+זו תוצאה שלא מוכיחים בקורס זה, רק משתמשים בה.
+
+זו טענה מאנליזה, ומוכיחים אותה למשל בקורס פונקציות מרוכבות.
+
+יהי \L{%
+\[
+P_{n}(z)=a_{n}z^{n}+a_{n-1}z^{n-1}+\dots+a_{1}z+a_{0}
+\]
+}%
+\L{%
+\[
+\text{s.t. }a_{n},\dots,a_{1},a_{0}\in\mathbb{C},\quad a_{n}\neq0,\quad n\geq1
+\]
+}%
+אז ניתן לכתוב: \L{%
+\[
+P_{n}(z)=a_{n}(z-\lambda_{1})^{m_{1}}(z-\lambda_{2})^{m_{2}}\dots(z-\lambda_{k})^{m_{k}}
+\]
+}%
+עם \L{$1\le k\le n$} ומתקיים \L{%
+\[
+m_{1},\dots,m_{k}\in\mathbb{N},\quad m_{1}+\dots+m_{k}=n,\quad\forall1\le i\le k:m_{i}\ge1,\quad\lambda_{1},\dots,\lambda_{k}\in\mathbb{C}
+\]
+}%
+
+\begin{itemize}
+\item \L{$\lambda_{1},\dots,\lambda_{k}$} שונים זה מזה.
+\item \L{$m_{i}$} נקרא הריבוי של השורש \L{$\lambda_{i}$}.
+\item מאחר ש-\L{$k\geq1$}, לפולינום יש לפחות שורש אחד.
+\item הפולינום האופייני הוא מקרה פרטי, עם \L{$a_{n}=1$}.\\
+עקרונית, אפשר להוכיח את קיום הערך העצמי גם בלי דטרמיננטות )כך עושה
+\L{$\text{Axler}$}(, אבל אין דרך לברוח מהמשפט היסודי של האלגברה:
+תמיד צריך תוצאה כלשהי מאנליזה.
+\end{itemize}
+
+\section{דוגמה}
+
+\L{%
+\[
+p(z)=z^{4}+1
+\]
+}%
+השורשים מקיימים \L{%
+\[
+z^{4}=-1=e^{i\left(\pi+2\pi k\right)}:k\in\mathbb{Z}
+\]
+}%
+\L{%
+\[
+z=e^{\frac{i\left(\pi+2\pi k\right)}{4}}:k\in\mathbb{Z}
+\]
+}%
+ על מעגל היחידה יש ארבע נקודות כאלה: \L{%
+\[
+e^{i\frac{\pi}{4}},\quad e^{i\frac{3\pi}{4}},\quad e^{i\frac{5\pi}{4}},\quad e^{i\frac{7\pi}{4}}
+\]
+}%
+
+לכן\L{%
+\[
+p(z)=(z-e^{i\frac{\pi}{4}})(z-e^{i\frac{3\pi}{4}})(z-e^{i\frac{5\pi}{4}})(z-e^{i\frac{7\pi}{4}})
+\]
+}%
+
+הריבוי של כל שורש כאן הוא {\beginL 1\endL}.
+
+\section{משפט - לכל אופרטור על מ\textquotedblright ו נ\textquotedblright ס
+מעל \L{$\mathbb{C}$} יש ערך עצמי}
+
+)יבגני אמר שהמשפט הזה כנראה יהיה במבחן, ושזו \textquotedblright תופעה
+של טבע\textquotedblright , כמו חוק ניוטון: אחד הדברים הבסיסיים(.\\
+
+יהי \L{$V$} מ\textquotedblright ו נ\textquotedblright ס מעל \L{$\mathbb{C}$}
+כך ש- \L{%
+\[
+\dim V=n\geq1
+\]
+}%
+\L{%
+\[
+T\in\mathcal{L}(V)
+\]
+}%
+אז קיים ערך עצמי של \L{$T$} )לפחות אחד(.
+\begin{proof}
+1. נבחר בסיס \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$} של \L{$V$}.
+
+2. לפי המשפט הקודם, \L{$\lambda$} ערך עצמי של \L{$T$} \L{$\iff$}\L{%
+\[
+p(\lambda)=\det(\lambda I-M(T,\mathcal{B}_{V},\mathcal{B}_{V}))=0
+\]
+}%
+3. \L{%
+\[
+p(\lambda)=\lambda^{n}+b_{n-1}\lambda^{n-1}+\dots+b_{1}\lambda+b_{0}
+\]
+}%
+\L{%
+\[
+b_{0},b_{1},\dots,b_{n-1}\in\mathbb{C}
+\]
+}%
+\L{%
+\[
+\deg(p(\lambda))=n\geq1
+\]
+}%
+
+4. לפי המשפט היסודי של האלגברה, לפולינום ממעלה \L{$n\geq1$} מעל \L{$\mathbb{C}$}
+יש שורש \L{$\lambda_{1}\in\mathbb{C}$}. לפי 2, \L{$\lambda_{1}$}
+הוא ערך עצמי של \L{$T$}. 
+\end{proof}
+
+\subsection{אנטי-דוגמה - אופרטור ללא ערכים עצמיים )מימד אינסופי(}
+
+ראינו שהשדה \L{$\mathbb{C}$} חשוב.
+
+האם גם המימד הסופי הכרחי?
+
+נראה העתקה לינארית במרחב וקטורי מעל \L{$\mathbb{C}$}, ממימד אינסופי,
+בלי ערכים עצמיים.\\
+
+\L{$V=\mathcal{P}(\mathbb{C})$} - כל הפולינומים מעל \L{$\mathbb{C}$}.
+\L{%
+\[
+(T(p))(z)=z\,p(z)
+\]
+}%
+\L{%
+\[
+T\in\mathcal{L}(\mathcal{P}(\mathbb{C}))
+\]
+}%
+האופרטור הזה מכפיל את הפולינום במשתנה.
+
+למשל \L{$T\left(z^{2}+1\right)=z^{3}+z$}.
+
+\L{%
+\[
+(T(p+q))(z)=z(p(z)+q(z))=z\,p(z)+z\,q(z)=(T(p))(z)+(T(q))(z)
+\]
+}%
+\L{%
+\[
+(T(cp))(z)=z\,c\,p(z)=c\,(T(p))(z)
+\]
+}%
+\textbf{טענה:} אין ערכים עצמיים של \L{$T$}.
+\begin{proof}
+נניח בשלילה כי \L{$\lambda$} ערך עצמי, כלומר קיים \L{$p\neq0$} )פולינום
+שאינו פולינום האפס( כך ש- \L{%
+\[
+(T(p))(z)=\lambda p(z)
+\]
+}%
+\L{%
+\[
+\Rightarrow z\,p(z)=\lambda p(z)
+\]
+}%
+\L{%
+\[
+\Rightarrow(z-\lambda)p(z)=0
+\]
+}%
+
+היות ו-\L{$p$} הוא לא פולינום האפס,\L{%
+\[
+\deg((z-\lambda)p(z))=1+\deg p\geq1
+\]
+}%
+
+לכן \L{$(z-\lambda)p(z)$} הוא לא פולינום האפס כלומר \L{%
+\[
+(z-\lambda)p(z)\ne0
+\]
+}%
+
+והגענו לסתירה.
+\end{proof}
+
+\section{משפט - וקטורים עצמיים השייכים לערכים עצמיים שונים הם בת\textquotedblright ל}
+
+)יבגני אמר שגם המשפט הזה כנראה יופיע במבחן, הוא מאוד בסיסי.
+
+הוא חשוב כי הוא מאפשר, בתנאים מסוימים, לבנות בסיסים של וקטורים עצמיים,
+ובבסיסים כאלה המטריצה של ההעתקה מאוד פשוטה. שימו לב: במשפט הזה מדובר
+על כל שדה ועל כל מרחב, כלומר אין הגבלות(\\
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{F}$} ו-\L{$T\in\mathcal{L}(V)$}
+כך ש-\L{%
+\begin{align*}
+T(v_{1}) & =\lambda_{1}v_{1}\\
+ & \vdots\\
+T(v_{m}) & =\lambda_{m}v_{m}
+\end{align*}
+}%
+
+כאשר \L{$\lambda_{1},\dots,\lambda_{m}$} שונים זה מזה וגם\L{%
+\[
+\forall1\le i\le m:\lambda_{i}\in\mathbb{F}\wedge0_{V}\ne v_{i}\in V
+\]
+}%
+כלומר לכל \L{$i$}, \L{$v_{i}$} הוא וקטור עצמי השייך ל-\L{$\lambda_{i}$}.\\
+
+אז \L{$(v_{1},\dots,v_{m})$} בלתי תלויה לינארית.
+\begin{proof}
+באינדוקציה על \L{$m$}.
+
+1. \L{$m=1$}: הסדרה \L{$(v_{1})$} היא בלתי תלויה לינארית, כי \L{$v_{1}\neq0_{V}$}.
+
+2. נניח כי המשפט מתקיים עבור \L{$m=k-1$}. נוכיח כי הוא מתקיים גם
+עבור \L{$m=k$}.
+
+3. נניח בשלילה כי \L{$(v_{1},\dots,v_{m})$} תלויה לינארית. אז קיימים
+\L{$d_{1},\dots,d_{m}\in\mathbb{F}$} כך ש- \L{%
+\[
+d_{1}v_{1}+\dots+d_{m}v_{m}=0_{V}
+\]
+}%
+ולא כולם שווים ל-\L{$0_{\mathbb{F}}$}.
+
+4. נפעיל אופרטור חדש, \L{%
+\[
+\left(T-\lambda_{m}I\right)\left(v\right)=T(v)-\lambda_{m}I(v)=T(v)-\lambda_{m}v
+\]
+}%
+על שני האגפים: \L{%
+\begin{align*}
+0_{V} & =(T-\lambda_{m}I)(d_{1}v_{1}+\dots+d_{m-1}v_{m-1}+d_{m}v_{m})\\
+ & =d_{1}\cdot(T-\lambda_{m}I)(v_{1})+\dots+d_{m}\cdot(T-\lambda_{m}I)(v_{m})\\
+ & =d_{1}\cdot\left(T(v_{1})-\lambda_{m}v_{1}\right)+\dots+d_{m}\cdot\left(T(v_{m})-\lambda_{m}v_{m}\right)\\
+ & =d_{1}\cdot\left(\lambda_{1}v_{1}-\lambda_{m}v_{1}\right)+\dots+d_{m}\cdot\left(\lambda_{m}v_{m}-\lambda_{m}v_{m}\right)\\
+ & =d_{1}\underset{\neq0_{\mathbb{F}}}{\underbrace{(\lambda_{1}-\lambda_{m})}}v_{1}+\dots+d_{m-1}\underset{\neq0_{\mathbb{F}}}{\underbrace{(\lambda_{m-1}-\lambda_{m})}}v_{m-1}+\underset{=0_{V}}{\underbrace{d_{m}(\lambda_{m}-\lambda_{m})v_{m}}}
+\end{align*}
+}%
+)\L{$\lambda_{1},\dots,\lambda_{m}$} שונים זה מזה, ולכן ההפרשים שונים
+מ-\L{$0_{\mathbb{F}}$}(.
+
+5. קיבלנו צ\textquotedblright ל של \L{$(v_{1},\dots,v_{m-1})$} ששווה
+ל-\L{$0_{V}$}.
+
+לפי הנחת האינדוקציה \L{$(v_{1},\dots,v_{m-1})$} בלתי תלויה לינארית,
+ולכן \L{%
+\[
+\forall1\le i\le m-1:d_{i}(\lambda_{i}-\lambda_{m})=0_{\mathbb{F}}
+\]
+}%
+ ומאחר ש- \L{$\lambda_{i}-\lambda_{m}\neq0_{\mathbb{F}}$},\L{%
+\[
+d_{1}=\dots=d_{m-1}=0_{\mathbb{F}}
+\]
+}%
+
+6. נציב בשוויון מסעיף 3 ונקבל \L{$d_{m}v_{m}=0_{V}$}.
+
+אבל \L{$v_{m}\neq0_{V}$}, לכן \L{$d_{m}=0_{\mathbb{F}}$}.
+
+כלומר, כל המקדמים שווים ל- \L{$0_{\mathbb{F}}$}, בסתירה לסעיף 3. 
+\end{proof}
+מסקנה )לקראת ההמשך(: אם \L{$\dim V=n$}, אז בסדרה בת\textquotedblright ל
+יש לכל היותר \L{$n$} וקטורים, ולכן ל-\L{$T$} יש לכל היותר \L{$n$}
+ערכים עצמיים שונים.
+
+אם יש ל-\L{$T$} בדיוק \L{$n$} ערכים עצמיים שונים \L{$\lambda_{1},\dots,\lambda_{n}$},
+אז וקטורים עצמיים מתאימים \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$}
+מהווים בסיס של \L{$V$} )סדרה בת\textquotedblright ל באורך \L{$\dim V$}(,
+ובבסיס הזה \L{$T(v_{j})=\lambda_{j}v_{j}$}, ולכן \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}
+אלכסונית עם \L{$\lambda_{1},\dots,\lambda_{n}$} על האלכסון. זו \textquotedblright המטריצה
+המאוד פשוטה\textquotedblright{} שיבגני דיבר עליה.
+\end{document}
