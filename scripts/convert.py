@@ -234,6 +234,19 @@ def label_abstract(html: str, name: str) -> str:
     return html.replace('<div class="abstractbox">', head)
 
 
+def proof_name(tex: str) -> str:
+    m = re.search(r"\\(?:renewcommand|providecommand)\*?\{?\\proofname\}?\{([^{}]*)\}", tex)
+    if m:
+        return m.group(1).strip()
+    return "הוכחה" if is_hebrew(tex) else "Proof"
+
+
+def label_proofs(html: str, name: str) -> str:
+    """pandoc always labels a proof "Proof"; use the document's name for it, as LaTeX does."""
+    from html import escape
+    return re.sub(r'(<div class="proof">\s*<p>)<em>Proof\.</em>', lambda m: f"{m.group(1)}<em>{escape(name)}.</em>", html)
+
+
 TABULAR_RE = re.compile(r"\\begin\{tabular\*?\}(?:\{[^{}]*\})?\s*(?:\[[^\]]*\])?\s*\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}(.*?)\\end\{tabular\*?\}", re.S)
 
 
@@ -1114,7 +1127,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     log: list[str] = []
     body = postprocess(strip_star_numbers(to_html(tex, log), tex))
     warn_dropped(log, tex, tex_path.name)
-    body = rule_tables(label_abstract(body, abstract_name(tex)), tex)
+    body = rule_tables(label_proofs(label_abstract(body, abstract_name(tex)), proof_name(tex)), tex)
     side = parse_sidecar(tex_path.with_suffix(".yaml"))
     cover = tex_path.name == COVER
     lectures = [] if cover or not (tex_path.parent / COVER).is_file() else sorted(

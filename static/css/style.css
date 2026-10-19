@@ -182,7 +182,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .proof { margin: 1.2em 0 1.6em; }
 .proof > p:first-child > em:first-child { font-family: var(--sans); font-style: normal; font-size: 0.9em; font-weight: 600; color: var(--muted); }
 .proof > p:last-child { margin-bottom: 0; }
-.proof .qed { float: right; margin-left: 0.8em; }
+.proof .qed { float: inline-end; margin-inline-start: 0.8em; }
 .proof::after { content: ""; display: table; clear: both; }
 
 [lang="he"], [lang="ar"] { direction: rtl; unicode-bidi: isolate; }
