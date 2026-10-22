@@ -1,0 +1,191 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\theoremstyle{definition}
+\newtheorem{problem}[thm]{\protect\problemname}
+\theoremstyle{definition}
+\newtheorem*{sol*}{\protect\solutionname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\addto\captionsenglish{\renewcommand{\problemname}{Problem}}
+\addto\captionsenglish{\renewcommand{\solutionname}{Solution}}
+\addto\captionsenglish{\renewcommand{\theoremname}{Theorem}}
+\addto\captionshebrew{\renewcommand{\problemname}{בעיה}}
+\addto\captionshebrew{\renewcommand{\solutionname}{פתרון}}
+\addto\captionshebrew{\renewcommand{\theoremname}{משפט}}
+\providecommand{\problemname}{בעיה}
+\providecommand{\solutionname}{פתרון}
+\providecommand{\theoremname}{משפט}
+
+\begin{document}
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=1cm}
+\title{סמסטר {\beginL 2027\endL}א, בוחן {\beginL \vspace{-1em}1\endL}}
+\maketitle
+\begin{abstract}
+בוחן {\beginL 1\endL} בקורס אינפי {\beginL 2\endL}, סמסטר תשפ\textquotedblright ז
+א'. השאלות נכתבו על ידי צוות הקורס באוניברסיטה העברית. הפתרון הוא
+שלי ולא רשמי. \\
+\end{abstract}
+\begin{problem}
+מצאו את כל הפונקציות הקדומות של הפונקציה \L{$f(x)=e^{2x}\cos\left(e^{x}\right)$}.
+\end{problem}
+
+\begin{sol*}
+מבין הכלים שלמדנו, אין כאן גזירה ישירה, אין כאן מנת פולינומים ולינאריות
+לא תעזור כאן. 
+
+שתי השיטות הרלוונטיות הן אינטגרציה בהצבה או אינטגרציה בחלקים. 
+
+בשביל אינטגרציה בחלקים צריך ביטוי שנרצה לגזור כפול ביטוי שנוח לנו
+לטנגרל, וזה לא המצב.
+
+מכאן, כנראה שהכלי הרלוונטי הוא אינטגרציה בהצבה.
+
+בשביל אינטגרציה בהצבה צריך ביטוי שהנגזרת שלו מתחבאת בביטוי, וזה בדיוק
+מה שקורה.
+
+נבחר \L{$t=e^{x}$} )בבחנים אני כותב \L{$t$} כי \L{$u$} נראה כמו
+{\beginL 4\endL}(. אז \L{%
+\[
+\frac{dt}{dx}=e^{x}\Rightarrow dt=e^{x}dx
+\]
+}%
+\L{%
+\[
+\int e^{2x}\cos\left(e^{x}\right)dx=\int\left(e^{x}\right)^{2}\cos\left(e^{x}\right)dx=\int e^{x}\cos\left(e^{x}\right)e^{x}dx
+\]
+}%
+\L{%
+\[
+=\int t\cos\left(t\right)dt
+\]
+}%
+
+כאן יש ביטוי שנרצה לגזור כפול ביטוי שנוח לנו לטנגרל, לכן נשתמש באינטגרציה
+בחלקים\L{%
+\[
+=\int t\cdot\left(\sin(t)\right)^{'}dt=t\sin(t)-\int1\cdot\sin(t)dt=t\sin(t)+\cos(t)+C
+\]
+}%
+\L{%
+\[
+=e^{x}\sin\left(e^{x}\right)+\cos\left(e^{x}\right)+C
+\]
+}%
+\end{sol*}
+\begin{problem}
+נסתכל על הפונקציה\L{%
+\[
+\tanh(x)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+\]
+}%
+
+האם יש לה גבול כאשר \L{$x\rightarrow\infty$}? אם כן, מהו?
+
+האם יש לה גבול כאשר \L{$x\rightarrow-\infty$}? אם כן, מהו?
+
+האם הפונ' מונוטונית?
+\end{problem}
+
+\begin{sol*}
+נשים לב כי היות ו-\L{$\forall x\in\mathbb{R}:e^{x}\in\left(0,\infty\right)$}
+מתקיים גם\L{%
+\[
+\tanh(x)=\frac{e^{x}-\frac{1}{e^{x}}}{e^{x}+\frac{1}{e^{x}}}=\frac{e^{2x}-1}{e^{2x}+1}=\frac{1-\frac{1}{e^{2x}}}{1+\frac{1}{e^{2x}}}
+\]
+}%
+
+ניזכר כי \L{$\underset{x\rightarrow\infty}{\lim}e^{x}=\infty$}, לכן
+לפי אריתמטיקה של גבולות במובן הרחב \L{%
+\[
+\underset{x\rightarrow\infty}{\lim}\frac{1}{e^{2x}}=\underset{x\rightarrow\infty}{\lim}\frac{1}{e^{x}}\cdot\underset{x\rightarrow\infty}{\lim}\frac{1}{e^{x}}=0\cdot0=0
+\]
+}%
+ ומכאן\L{%
+\[
+\underset{x\rightarrow\infty}{\lim}\tanh(x)=\underset{x\rightarrow\infty}{\lim}\frac{1-\frac{1}{e^{2x}}}{1+\frac{1}{e^{2x}}}=\frac{1-0}{1+0}=1
+\]
+}%
+
+בנוסף ניזכר כי \L{$\underset{x\rightarrow-\infty}{\lim}e^{x}=0$}
+לכן לפי אריתמטיקה\L{%
+\[
+\underset{x\rightarrow-\infty}{\lim}\left(\frac{e^{2x}-1}{e^{2x}+1}\right)=\left(\frac{0-1}{0+1}\right)=-1
+\]
+}%
+
+למדנו כי הפונקציה \L{$e^{x}$} היא פונקציה רציפה.
+
+לפי אריתמטיקה של פונ' רציפות, גם הפונקציות \L{$e^{2x}-1,e^{2x}+1$}
+רציפות.
+
+בנוסף, הפונ' \L{$e^{2x}+1$} אף פעם לא מתאפסת לפי מה שציינו על הטווח
+של \L{$e^{x}$}, לכן מאריתמטיקה הפונ' כולה רציפה.
+
+יהיו \L{$x_{1},x_{2}\in\mathbb{R}$} כך ש-\L{%
+\[
+\tanh(x_{1})=\tanh(x_{2})
+\]
+}%
+
+אז\L{%
+\[
+\frac{e^{2x_{1}}-1}{e^{2x_{1}}+1}=\frac{e^{2x_{2}}-1}{e^{2x_{2}}+1}
+\]
+}%
+\L{%
+\[
+\underset{e^{2t}>0}{\iff}\left(e^{2x_{1}}-1\right)\left(e^{2x_{2}}+1\right)=\left(e^{2x_{1}}+1\right)\left(e^{2x_{2}}-1\right)
+\]
+}%
+\L{%
+\[
+\iff e^{2(x_{1}+x_{2})}+e^{2x_{1}}-e^{2x_{2}}-1=e^{2(x_{1}+x_{2})}-e^{2x_{1}}+e^{2x_{2}}-1
+\]
+}%
+\L{%
+\[
+\iff e^{2x_{1}}-e^{2x_{2}}=-e^{2x_{1}}+e^{2x_{2}}
+\]
+}%
+\L{%
+\[
+\iff2e^{2x_{1}}=2e^{2x_{2}}
+\]
+}%
+ניזכר שהפונ' \L{$\exp$} היא מונוטונית ממש ורציפה, לכן היא חח\textquotedblright ע
+ומכאן \L{$x_{1}=x_{2}$} כלומר גם הפונ' \L{$\tanh$} היא חח\textquotedblright ע.
+
+מכך שפונ' רציפה וחח\textquotedblright ע היא מונוטונית ממש, הפונ' \L{$\tanh$}
+מונטונית ממש וסיימנו.
+\end{sol*}
+
+\end{document}
