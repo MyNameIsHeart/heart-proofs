@@ -1,0 +1,723 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{אלגברה ליניארית {\beginL 2\endL} - הרצאה {\beginL 3\endL}}
+\author{נעם לב}
+\date{\L{$18.10.2026$}}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
+\L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
+)תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+הסיכום הוא לא רשמי ולא עבר אישור של הסגל, על כן אין להשתמש בו )ובין
+השאר במספור שלו ובשמות הטענות שבו( כמקור רשמי. אם ישנן טעויות, הן
+שלי ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\section{משפט - תכונות אופרטור עם \L{$n$} ערכים עצמיים שונים}
+
+יהי \L{$V$} מ\textquotedblright ו מעל שדה כלשהו \L{$\mathbb{F}$}
+כך ש- \L{%
+\[
+\dim V=n\geq1
+\]
+}%
+\L{%
+\[
+T\in\mathcal{L}(V)
+\]
+}%
+ויש ל-\L{$T$} בדיוק \L{$n$} ערכים עצמיים \L{$\lambda_{1},\dots,\lambda_{n}$}
+שונים זה מזה. אז:\\
+
+)I( קיים בסיס \L{$\mathcal{B}_{V}$} של \L{$V$} כך שמתקיים \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}\lambda_{1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & \lambda_{2} & \cdots & 0_{\mathbb{F}}\\
+\vdots &  & \ddots & \vdots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} & \cdots & \lambda_{n}
+\end{pmatrix}
+\]
+}%
+כלומר, המטריצה המייצגת \L{$\left[T\right]_{\mathcal{B}}^{\mathcal{B}}$}
+היא מטריצה אלכסונית.
+
+הערה: מטריצה מייצגת כזאת זה המצב הטוב ביותר שיכול להיות. למשל, חזקות
+של מטריצה או פונקציות של מטריצה כמו אקספוננט דרך טור, קל לחשב כשהמטריצה
+אלכסונית. מצד אחד, יש הרבה דרישות, אך מצד שני זה נכון מעל כל שדה והחלק
+החשוב ביותר במשפט הזה הוא )I(.\\
+
+)II( לכל \L{$j\in\left\{ 1,\dots,n\right\} $}, \L{%
+\[
+\text{Null}(T-\lambda_{j}I)=\left\{ v\in V\mid T(v)=\lambda_{j}v\right\} 
+\]
+}%
+הוא תמ\textquotedblright ו שמור תחת \L{$T$}.
+
+זה למעשה אוסף כל הוקטורים העצמיים של הערך העצמי \L{$\lambda_{j}$}
+יחד עם \L{$0_{V}$}.
+
+אצל \L{$\text{Axler}$} הוא נקרא המרחב העצמי \L{$E(\lambda_{j},T)$}.
+
+\L{$I$} כאן הוא \L{$\text{Id}_{V}$}.\\
+
+)III(\L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{n}I)
+\]
+}%
+דהיינו, המרחב מתפרק לסכום ישר של התמ\textquotedblright ו-ים שמשרים
+הערכים העצמיים. \\
+
+)V\textbf{I}( נניח כי\L{%
+\begin{align*}
+T(v_{1}) & =\lambda_{1}v_{1}\\
+ & \vdots\\
+T(v_{n}) & =\lambda_{n}v_{n}
+\end{align*}
+}%
+וכי \L{$\forall1\le i\le n:v_{i}\ne0_{V}$}. אזי\L{%
+\begin{align*}
+\text{Null}(T-\lambda_{1}I) & =\text{Span}(v_{1})\\
+ & \vdots\\
+\text{Null}(T-\lambda_{n}I) & =\text{Span}(v_{n})
+\end{align*}
+}%
+
+\begin{proof}
+\textbf{)I(} 1. נסמן \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$}, כאשר
+\L{$v_{j}$} וקטור עצמי השייך ל-\L{$\lambda_{j}$}.
+
+לפי המשפט {]}וקטורים עצמיים השייכים לערכים עצמיים שונים הם בת\textquotedblright ל{[}
+מהרצאה 2, \L{$(v_{1},\dots,v_{n})$} בלתי תלויה לינארית, ויש בה \L{$n=\dim V$}
+וקטורים, לכן {]}לפי משפט מלינארית {\beginL 1\endL}{[} היא בסיס של
+\L{$V$}.
+
+2. נחשב את המטריצה המייצגת בבסיס הזה: \L{%
+\begin{align*}
+T(v_{1}) & =\lambda_{1}v_{1}+0_{\mathbb{F}}v_{2}+\dots+0_{\mathbb{F}}v_{n}\\
+T(v_{2}) & =0_{\mathbb{F}}v_{1}+\lambda_{2}v_{2}+\dots+0_{\mathbb{F}}v_{n}\\
+ & \vdots\\
+T(v_{n}) & =0_{\mathbb{F}}v_{1}+0_{\mathbb{F}}v_{2}+\dots+\lambda_{n}v_{n}
+\end{align*}
+}%
+\L{%
+\[
+\Rightarrow M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}\lambda_{1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & \lambda_{2} & \cdots & 0_{\mathbb{F}}\\
+\vdots &  & \ddots & \vdots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} & \cdots & \lambda_{n}
+\end{pmatrix}
+\]
+}%
+\end{proof}
+\begin{proof}
+\textbf{)II(} 1. יהי \L{$j\in\left\{ 1,\dots,n\right\} $}, נסתכל
+על \L{$\text{Null}(T-\lambda_{j}I)$}.
+
+\L{$T-\lambda_{j}I$} זה אופרטור )כצ\textquotedblright ל של אופרטורים(.
+
+בהרצאה {\beginL 15\endL} באלגברה לינארית {\beginL 1\endL} הוכחנו שגרעין
+של כל ה\textquotedblright ל הוא תמ\textquotedblright ו, לכן \L{$\text{Null}(T-\lambda_{j}I)$}
+זה תמ\textquotedblright ו ונותר להוכיח שזה תמ\textquotedblright ו
+שמור תחת \L{$T$}.
+
+{\beginL 2\endL}. יהי \L{$u\in\text{Null}(T-\lambda_{j}I)$} ונוכיח
+כי \L{$T(u)\in\text{Null}(T-\lambda_{j}I)$}. מהגדרת הגרעין \L{%
+\[
+(T-\lambda_{j}I)(u)=0_{V}\implies T(u)=\lambda_{j}u
+\]
+}%
+
+{\beginL 3\endL}. \L{%
+\[
+(T-\lambda_{j}I)\left(T(u)\right)\underset{(2)}{=}(T-\lambda_{j}I)(\lambda_{j}u)=T\left(\lambda_{j}u\right)-\lambda_{j}^{2}u=\lambda_{j}\cdot T\left(u\right)-\lambda_{j}^{2}u\underset{(2)}{=}\lambda_{j}^{2}u-\lambda_{j}^{2}u=0_{V}
+\]
+}%
+\L{%
+\[
+\Rightarrow T(u)\in\text{Null}(T-\lambda_{j}I)
+\]
+}%
+כנדרש.
+\end{proof}
+\begin{proof}
+\textbf{)III(} 1. צריך להראות כי כל וקטור \L{$v\in V$} ניתן להציג
+באופן יחיד כ- \L{%
+\[
+v=u_{1}+\dots+u_{n}
+\]
+}%
+כאשר\L{%
+\begin{align*}
+u_{1}\in & \text{\ Null}(T-\lambda_{1}I)\\
+ & \vdots\\
+u_{n}\in & \text{\ Null}(T-\lambda_{n}I)
+\end{align*}
+}%
+
+2. הוכחת קיום: נשתמש בבסיס \L{$\mathcal{B}_{V}$} מההוכחה של )I(.
+אז \L{%
+\[
+\exists\alpha_{1},\dots,\alpha_{n}\in\mathbb{F}\text{ s.t. }v=\alpha_{1}v_{1}+\dots+\alpha_{n}v_{n}
+\]
+}%
+ונסמן\L{%
+\begin{align*}
+u_{1}= & \ \alpha_{1}v_{1}\\
+ & \vdots\\
+u_{n}= & \ \alpha_{n}v_{n}
+\end{align*}
+}%
+נשים לב כי לכל \L{$1\le i\le n$} מתקיים\L{%
+\[
+(T-\lambda_{i}I)\left(u_{i}\right)=T(u_{i})-\lambda_{i}u_{i}=T(\alpha_{i}v_{i})-\lambda_{i}\alpha_{i}v_{i}
+\]
+}%
+\L{%
+\[
+=\alpha_{i}\left(T(v_{i})-\lambda_{i}v_{i}\right)=\alpha_{i}\left(\lambda_{i}v_{i}-\lambda_{i}v_{i}\right)=0_{V}
+\]
+}%
+\L{%
+\[
+\Rightarrow u_{i}\in\text{Null}(T-\lambda_{i}I)
+\]
+}%
+כלומר, ההצגה קיימת. 
+
+{\beginL 3\endL}. הוכחת יחידות: אם\L{%
+\[
+u_{1}+\dots+u_{n}=v=u_{1}'+\dots+u_{n}'
+\]
+}%
+
+כך שלכל \L{$1\le i\le n$} מתקיים \L{$u_{i},u_{i}'\in\text{Null}(T-\lambda_{i}I)$},
+אז נגדיר\L{%
+\[
+\forall1\le i\le n,\quad w_{i}=u_{i}-u_{i}'
+\]
+}%
+בנוסף, \L{$\text{Null}(T-\lambda_{i}I)$} הוא תמ\textquotedblright ו
+לכן סגור לחיבור וכפל בסקלר מכאן \L{$w_{i}\in\text{Null}(T-\lambda_{i}I)$}
+
+ונקבל\L{%
+\[
+w_{1}+\dots+w_{n}=v-v=0_{V}
+\]
+}%
+נניח בשלילה שקיימים \L{$w_{i}\ne0_{V}$}.
+
+אז הם לא שווים ל-\L{$0_{V}$} וכל אחד מהם מקיים \L{$w_{i}\in\text{Null}(T-\lambda_{i}I)$},
+לכן הם וקטורים עצמיים.
+
+אז גם הסכום שלהם שווה ל-\L{$0_{V}$} )כי אלה שכבר שווים ל-\L{$0_{V}$}
+לא תורמים(, אבל הם וקטורים עצמיים של ערכים עצמיים שונים ולכן לפי המשפט
+שהוכחנו בסוף הרצאה {\beginL 2\endL} הם בת\textquotedblright ל, וזאת
+סתירה כי כאן הם שווים ל-\L{$0_{V}$} בתור צ\textquotedblright ל לא
+טריוויאלי )עם מקדמים {\beginL 1\endL}(.
+
+{\beginL 4\endL}. לכן לכל \L{$i$}, \L{$w_{i}=0_{V}$} מכאן \L{$u_{i}=u_{i}'$}
+וההצגה היא יחידה כנדרש.
+\end{proof}
+הערה מיבגני: דרך קלה לזכור מה זה סכום ישר היא לחשוב על \L{$\mathbb{R}^{3}$}:
+הוא סכום ישר של ציר ה-\L{$x$}, ציר ה-\L{$y$} וציר ה-\L{$z$}\L{$;$}
+כל וקטור ניתן להציג באופן יחיד כסכום של וקטורים על כל אחד מהצירים
+האלו.
+\begin{proof}
+\textbf{)VI(} 1. יהי \L{$1\le i\le n$}. 
+
+אז מההנחה \L{$T(v_{i})-\lambda_{i}v_{i}=0_{V}$} לכן \L{$v_{i}\in\text{Null}(T-\lambda_{i}I)$}.
+
+אבל \L{$\text{Null}(T-\lambda_{i}I)$} הוא תמ\textquotedblright ו,
+לכן לפי המשפט שלמדנו בלינארית {\beginL 1\endL} לפיו פרוש של וקטור
+הוא התמ\textquotedblright ו המינימלי המכיל אותו, \L{$\text{Span}(v_{i})\subseteq\text{Null}(T-\lambda_{i}I)$}.
+בנוסף, מתקיים \L{$\dim\left(\text{Span}(v_{i})\right)=1$}.
+
+2. לכן \L{$\dim\left(\text{Null}(T-\lambda_{i}I)\right)\ge1$}.
+
+{\beginL 3\endL}. מצד שני, לפי )III(, \L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{n}I)
+\]
+}%
+
+לכן לפי המשפט בלינארית {\beginL 1\endL} המציין כי המימד של סכום ישר
+הוא סכום המימדים\L{%
+\[
+n=\underset{\geq1}{\underbrace{\dim(\text{Null}(T-\lambda_{1}I))}}+\dots+\underset{\geq1}{\underbrace{\dim(\text{Null}(T-\lambda_{n}I))}}
+\]
+}%
+
+מכאן, חייב להתקיים\L{%
+\[
+\forall1\le i\le n:\dim\left(\text{Null}(T-\lambda_{i}I)\right)=1
+\]
+}%
+ {\beginL 4\endL}. קיבלנו ש-\L{%
+\[
+\forall1\le i\le n:\dim\left(\text{Null}(T-\lambda_{i}I)\right)=\dim\left(\text{Span}(v_{i})\right)
+\]
+}%
+
+אבל תמ\textquotedblright ו המוכל בתמ\textquotedblright ו מאותו מימד
+שווה לו, לכן\L{%
+\[
+\forall1\le i\le n:\text{Null}(T-\lambda_{i}I)=\text{Span}(v_{i})
+\]
+}%
+\end{proof}
+
+\section{טענה - אם ל־\L{$T_{A}$} יש \L{$n$} ערכים עצמיים שונים זה מזה, אז
+\L{$A$} דומה למטריצה האלכסונית של הערכים העצמיים, ומטריצת המעבר היא
+זו שעמודותיה הן הוקטורים העצמיים}
+
+תהא \L{$A$} מטריצה מעל שדה כלשהו \L{$\mathbb{F}$}:
+
+\L{%
+\[
+A=\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix}\in\text{Mat}(n\times n,\mathbb{F})
+\]
+}%
+ונסתכל על המרחב \L{%
+\[
+V=\mathbb{F}^{n}=\left\{ \begin{pmatrix}d_{1}\\
+\vdots\\
+d_{n}
+\end{pmatrix}\,\middle|\,\forall1\le i\le n:d_{i}\in\mathbb{F}\right\} 
+\]
+}%
+
+נסמן ב-\L{$\check{v}$} איבר ב-\L{$\mathbb{F}^{n}$}, כלומר \L{$\check{v}\in\text{Mat}(n\times1,\mathbb{F})$}. 
+
+בנוסף נגדיר\L{%
+\[
+T_{A}\in\mathcal{L}(\mathbb{F}^{n},\mathbb{F}^{n}):T_{A}(\check{v})\overset{\text{def}}{=}A\check{v}
+\]
+}%
+)זו העתקה לינארית מ-\L{$\mathbb{F}^{n}$} ל-\L{$\mathbb{F}^{n}$},
+כפל מטריצה \L{$n\times n$} במטריצה \L{$n\times1$}.(
+
+נניח כי \L{%
+\begin{align*}
+T_{A}(\check{v}_{1}) & =A\check{v}_{1}=\lambda_{1}\check{v}_{1},\quad\lambda_{1}\in\mathbb{F}\\
+ & \vdots\\
+T_{A}(\check{v}_{n}) & =A\check{v}_{n}=\lambda_{n}\check{v}_{n},\quad\lambda_{n}\in\mathbb{F}
+\end{align*}
+}%
+כאשר \L{$\check{v}_{1},\dots,\check{v}_{n}\neq\check{0}$} וכאשר \L{$\lambda_{1},\dots,\lambda_{n}$}
+שונים זה מזה.\\
+
+\emph{הערה על הטרמינולוגיה: \L{$\lambda_{1},\dots,\lambda_{n}$} נקראים
+ערכים עצמיים של המטריצה \L{$A$}, ו-\L{$\check{v}_{1},\dots,\check{v}_{n}$}
+נקראים וקטורים עצמיים של המטריצה \L{$A$}. יבגני: זו השפה של מהנדסים
+ושל חלק מהספרות. הכוונה המתמטית היא לערכים ולוקטורים העצמיים של ההעתקה
+\L{$T_{A}$}.}\\
+
+אז עבור המטריצה שעמודותיה הן הוקטורים העצמיים:\L{%
+\[
+Q=\begin{pmatrix}\check{v}_{1} & \check{v}_{2} & \cdots & \check{v}_{n}\end{pmatrix}\in\text{Mat}(n\times n,\mathbb{F})
+\]
+}%
+
+מתקיים
+
+\L{%
+\[
+(*)\quad A=Q\begin{pmatrix}\lambda_{1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & \lambda_{2} & \cdots & 0_{\mathbb{F}}\\
+\vdots &  & \ddots & \vdots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} & \cdots & \lambda_{n}
+\end{pmatrix}Q^{-1}
+\]
+}%
+
+\begin{proof}
+1. צריך להראות כי \L{$(*)$} מוגדר היטב, כלומר כי \L{$Q$} הפיכה.
+
+\L{$\check{v}_{1},\dots,\check{v}_{n}$} הם וקטורים עצמיים השייכים
+לערכים עצמיים שונים זה מזה של ההעתקה הלינארית \L{$T_{A}$}.
+
+מכאן \L{$\check{v}_{1},\dots,\check{v}_{n}$} בלתי תלויים לינארית
+לכן העמודות של \L{$Q$} בת\textquotedblright ל, אז \L{$Q$} הפיכה
+ו-\L{$Q^{-1}$} קיימת.
+
+2. \L{$(*)$} שקולה למשוואה \L{%
+\[
+(**)\quad AQ=Q\begin{pmatrix}\lambda_{1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & \lambda_{2} & \cdots & 0_{\mathbb{F}}\\
+\vdots &  & \ddots & \vdots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} & \cdots & \lambda_{n}
+\end{pmatrix}
+\]
+}%
+)מכפילים את שני האגפים ב-\L{$Q$} מימין, ו-\L{$Q^{-1}Q$} מצטמצם(
+
+3. נחשב: \L{%
+\begin{align*}
+AQ & =A\begin{pmatrix}\check{v}_{1} & \dots & \check{v}_{n}\end{pmatrix}\underset{(1)}{=}\begin{pmatrix}A\check{v}_{1} & \dots & A\check{v}_{n}\end{pmatrix}=\begin{pmatrix}\lambda_{1}\check{v}_{1} & \dots & \lambda_{n}\check{v}_{n}\end{pmatrix}\\
+ & =\underset{Q}{\underbrace{\begin{pmatrix}\check{v}_{1} & \cdots & \check{v}_{n}\end{pmatrix}}}\begin{pmatrix}\lambda_{1} & 0_{\mathbb{F}} & \dots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & \lambda_{2} & \dots & 0_{\mathbb{F}}\\
+\vdots &  & \ddots & \vdots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} & \dots & \lambda_{n}
+\end{pmatrix}
+\end{align*}
+}%
+\L{$(1)$} כפל מטריצה במטריצה הוא כפל בכל עמודה ועמודה.
+
+קיבלנו בדיוק את \L{$(**)$}, כנדרש. 
+\end{proof}
+\L{$Q$} חייבת להיות משמאל. למה?
+
+כי כפל במטריצה אלכסונית מימין מכפיל את העמודה ה-\L{$j$} ב-\L{$\lambda_{j}$},
+ואילו כפל משמאל מכפיל את השורות. 
+
+יבגני: תשכנעו את עצמכם שהחישוב נכון. אם אין מספיק ניסיון עם כפל מטריצות,
+לעשות דוגמאות.\\
+
+האלגוריתם: מוצאים ערכים עצמיים )בכל דרך(, בודקים שהם שונים זה מזה
+ושמספרם הוא \L{$n$}, מוצאים וקטורים עצמיים מהערכים העצמיים השונים
+ולכן מקבלים וקטורים עצמיים בת\textquotedblright ל, בונים מהם את \L{$Q$}
+)כעמודות(, ואז \L{$A=QDQ^{-1}$} עם \L{$D$} אלכסונית.
+
+ל-\L{$Q$} יש תפקיד גיאומטרי של מעבר בסיס, אבל כאן זה פשוט שוויון
+מטריציוני.\\
+
+הקשר ללינארית 1: \L{$A=M(T_{A},\varepsilon,\varepsilon)$} בבסיס הסטנדרטי
+\L{$\varepsilon$}, \L{$Q=[\text{Id}]_{\varepsilon}^{\mathcal{B}}$}
+היא מטריצת המעבר מהבסיס \L{$\mathcal{B}=(\check{v}_{1},\dots,\check{v}_{n})$}
+לסטנדרטי, ו-\L{$(*)$} היא בדיוק \L{$M(T_{A},\mathcal{B},\mathcal{B})=Q^{-1}AQ$},
+כלומר \L{$A$} דומה למטריצה אלכסונית.
+
+\textquotedblright לכסון מטריצה\textquotedblright{} פירושו למצוא \L{$Q$}
+כזאת.\\
+
+זו תוצאה בסיסית בתורה הספקטרלית של העתקות לינאריות: במימד סופי, אם
+יודעים מראש שיש \L{$n$} ערכים עצמיים שונים, ניתן ללכסן. 
+
+במימד אינסופי אין תוצאות שנוכל להציג בקורס ולכן נישאר במימד סופי )הנושא
+שייך לאנליזה פונקציונלית ודורש כלים מאנליזה. לדוגמה, המשפט הספקטרלי
+לאופרטורים קומפקטיים צמודים לעצמם(.
+
+השדה עדיין שדה כלשהו, אבל מעל \L{$\mathbb{C}$} יש משהו לומר אפילו
+במקרה הכללי, בלי הנחה על הערכים העצמיים.
+
+\section{הגדרה - מטריצה משולשית עליונה \L{$(\text{Upper triangular matrix})$}}
+
+\L{%
+\[
+M=\begin{pmatrix}a_{1,1} & a_{1,2} & \cdots & a_{1,n}\\
+0_{\mathbb{F}} & a_{2,2} & \cdots & a_{2,n}\\
+\vdots & \ddots & \ddots & \vdots\\
+0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}} & a_{n,n}
+\end{pmatrix}
+\]
+}%
+כלומר, \L{$a_{i,j}=0_{\mathbb{F}}$} כאשר \L{$i>j$} )מספר השורה גדול
+ממספר העמודה(. 
+
+מטריצה מסוג זה נקראת מטריצה משולשית עליונה.
+
+אין שום דרישה על האיברים על האלכסון ומעליו, כל סקלר מתאים.
+
+בפרט, כל מטריצה \L{$1\times1$} היא משולשית עליונה.
+
+\section{למה - אפיון מטריצה משולשית עליונה}
+
+יהי \L{$V$} מ\textquotedblright ו מעל שדה כלשהו \L{$\mathbb{F}$}
+כך ש- \L{%
+\[
+\dim V=n\geq1
+\]
+}%
+\L{%
+\[
+T\in\mathcal{L}(V)
+\]
+}%
+\L{%
+\[
+\mathcal{B}_{V}=(v_{1},\dots,v_{n})
+\]
+}%
+אז התנאים הבאים שקולים:\\
+
+)I( \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$} משולשית עליונה.
+
+)II( לכל \L{$1\leq j\leq n$}, \L{$T(v_{j})\in\text{Span}(v_{1},\dots,v_{j})$}.
+
+)III( לכל \L{$1\leq j\leq n$}, \L{$U_{j}=\text{Span}(v_{1},\dots,v_{j})$}
+הוא תת-מרחב שמור תחת \L{$T$}.
+\begin{proof}
+\textbf{)I( \L{$\iff$} )II(}
+
+נסמן \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix}
+\]
+}%
+לפי הגדרת המטריצה המייצגת, \L{%
+\[
+T(v_{j})=\sum_{i=1}^{n}\left(a_{i,j}\cdot v_{i}\right)
+\]
+}%
+לכן, לפי משפט יחידות ההצגה לפי בסיס,\L{%
+\begin{align*}
+T(v_{1})=\sum_{i=1}^{n}a_{i,1}v_{i}=a_{1,1}v_{1} & \iff T(v_{1})\in\text{Span}(v_{1})\\
+T(v_{2})=\sum_{i=1}^{n}a_{i,2}v_{i}=a_{1,2}v_{1}+a_{2,2}v_{2} & \iff T(v_{2})\in\text{Span}(v_{1},v_{2})\\
+ & \vdots\\
+T(v_{j})=a_{1,j}v_{1}+\dots+a_{j,j}v_{j} & \iff T(v_{j})\in\text{Span}(v_{1},\dots,v_{j})
+\end{align*}
+}%
+באגף שמאל: \L{$a_{i,j}=0_{\mathbb{F}}$} לכל \L{$i>j$}, כלומר המטריצה
+משולשית עליונה: תנאי )I(.
+
+באגף ימין: תנאי )II(.
+
+\textbf{)II( \L{$\Leftarrow$} )III(}
+
+1. יהי \L{$u\in\text{Span}(v_{1},\dots,v_{j})$}. אז קיימים \L{$d_{1},\dots,d_{j}$}
+כך ש- \L{%
+\[
+u=d_{1}v_{1}+\dots+d_{j}v_{j}\implies T(u)=d_{1}T(v_{1})+\dots+d_{j}T(v_{j})
+\]
+}%
+
+2. אבל לפי )II(, \L{%
+\begin{align*}
+T(v_{1})\in\text{Span}(v_{1}) & \subseteq\text{Span}(v_{1},\dots,v_{j})\\
+ & \vdots\\
+T(v_{j})\in\  & \text{Span}(v_{1},\dots,v_{j})
+\end{align*}
+}%
+\L{$\Leftarrow$} \L{$T(u)\in\text{Span}(v_{1},\dots,v_{j})$}, כלומר
+\L{$U_{j}$} שמור תחת \L{$T$}.
+
+\textbf{)III( \L{$\Leftarrow$} )II(}
+
+1. נניח כי \L{%
+\[
+\forall1\le j\le n:U_{j}=\text{Span}(v_{1},\dots,v_{j})
+\]
+}%
+ הוא תמ\textquotedblright ו שמור תחת \L{$T$}.
+
+יהי \L{$1\le j\le n$}. באופן טריוויאלי,\L{%
+\[
+v_{j}\in\text{Span}\left(v_{1},\dots,v_{j}\right)=U_{j}
+\]
+}%
+ אבל \L{$U_{j}$} שמור תחת \L{$T$} לכן \L{$T(v_{j})\in U_{j}$}.
+
+כלומר \L{$T(v_{j})\in\text{Span}\left(v_{1},\dots,v_{j}\right)$}
+כנדרש.
+\end{proof}
+
+\section{משפט - מעל \L{$\mathbb{C}$}, כל אופרטור ניתן לייצוג על ידי מטריצה
+משולשית עליונה}
+
+יהי \L{$V$} מ\textquotedblright ו \textbf{מעל \L{$\mathbb{C}$}}
+כך ש- \L{%
+\[
+\dim V=n\geq1
+\]
+}%
+\L{%
+\[
+T\in\mathcal{L}(V)
+\]
+}%
+אז קיים בסיס \L{$\mathcal{B}_{V}$} של \L{$V$} כך ש-\L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}
+משולשית עליונה.\\
+
+יבגני: זה אחד המשפטים הבסיסיים בתורה הספקטרלית, וכנראה ברשימה למבחן.\\
+
+זה לא נכון מעל כל שדה, אפילו לא מעל \L{$\mathbb{R}$}. 
+
+דוגמה נגדית אפשרית היא הסיבוב ב-\L{$90^{\circ}$} מהרצאה 2. 
+
+למטריצה משולשית עליונה יש ערך עצמי )\L{$a_{1,1}$}, כי \L{$T(v_{1})=a_{1,1}v_{1}$}(,
+ולסיבוב אין ערכים עצמיים ממשיים.
+\begin{proof}
+נוכיח באינדוקציה )חזקה( על \L{$n=\dim V$}.
+
+1( עבור \L{$n=1$}:
+
+\L{%
+\[
+\mathcal{B}_{V}=\left(v_{1}\right)
+\]
+}%
+\L{%
+\[
+\therefore\exists a_{1,1}\in\mathbb{F}=\mathbb{C}\text{ s.t. }T(v_{1})=a_{1,1}v_{1}
+\]
+}%
+\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\left(a_{1,1}\right)
+\]
+}%
+וכל מטריצה \L{$1\times1$} היא משולשית עליונה, לכן המשפט מתקיים עבור
+\L{$n=1$}.
+
+2( יהי \L{$n\geq2$}.
+
+נניח כי המשפט מתקיים עבור כל מרחב וקטורי \L{$\widetilde{V}$} מעל
+\L{$\mathbb{C}$} עם \L{$1\leq\dim\widetilde{V}\leq n-1$}, ועבור
+כל אופרטור לינארי \L{$\widetilde{T}\in\mathcal{L}(\widetilde{V})$}.
+
+נוכיח עבור \L{$V$} עם \L{$\dim V=n$}.
+
+3. קיים ערך עצמי \L{$\lambda$} של \L{$T$} )כי \L{$V$} הוא מ\textquotedblright ו
+נ\textquotedblright ס \textbf{מעל \L{$\mathbb{C}$}}, אז לפי המשפט
+מהרצאה 2(.
+
+4. נגדיר \L{%
+\[
+U\overset{\text{def}}{=}\text{Range}(T-\lambda I)
+\]
+}%
+\L{$\lambda$} ערך עצמי, ולכן קיים \L{$v\neq0_{V}$} עם \L{$T(v)=\lambda v$},
+כלומר \L{$(T-\lambda I)(v)=0_{V}$}.
+
+\L{$0_{V}$} גם בגרעין, ולכן \L{$T-\lambda I$} אינה חח\textquotedblright ע.
+
+מכאן, היא גם לא על, כי אופרטור על מרחב נ\textquotedblright ס הוא חח\textquotedblright ע
+אם\textquotedblright ם הוא על.
+
+אז\L{%
+\[
+\dim\text{Range}(T-\lambda I)\leq n-1
+\]
+}%
+)אילו היה מתקיים \L{$\dim U=n$}, אז \L{$U=V$} וההעתקה הייתה על,
+בסתירה(.
+
+5. נסתכל על \L{$T|_{U}$} )הצמצום של \L{$T$} ל-\L{$U$}(.
+
+א. כדי ש-\L{$T|_{U}$} יהיה אופרטור על \L{$U$} )כלומר \L{$T|_{U}\in\mathcal{L}(U)$}(
+צריך ש-\L{$U$} יהיה שמור תחת \L{$T$}.
+
+לכל \L{$u\in U$} מתקיים: \L{%
+\[
+T(u)=T\left(u\right)-\lambda u+\lambda u=(T-\lambda I)(u)+\lambda u
+\]
+}%
+כאשר \L{%
+\[
+(T-\lambda I)(u)\in\text{Range}(T-\lambda I)=U
+\]
+}%
+וגם \L{$\lambda u\in U$} כי \L{$U$} הוא תמ\textquotedblright ו.מכאן,
+\L{$T(u)\in U$}.\\
+
+ב. הנחת האינדוקציה דורשת גם \L{$\dim U\geq1$}.
+
+אם זה לא המקרה, לא נשתמש בה, אלא בנימוק הבא:
+
+אם \L{$\dim U=0$}, אז \L{$T-\lambda I=0$}, כלומר \L{$T=\lambda I$},
+ואז בכל בסיס \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\lambda I_{n}$},
+שהיא אלכסונית ובפרט משולשית עליונה. במקרה הזה \L{$m=0$}.\\
+
+ג. לפי הנחת האינדוקציה )2(, קיים בסיס \L{$\mathcal{B}_{U}=(u_{1},\dots,u_{m})$}
+של \L{$U$} כך ש-\L{$M(T|_{U},\mathcal{B}_{U},\mathcal{B}_{U})$}
+משולשית עליונה.
+
+לפי למת האפיון, זה אומר כי \L{%
+\[
+\forall1\le j\le m:T(u_{j})\in\text{Span}(u_{1},\dots,u_{j})
+\]
+}%
+
+6. נשלים את \L{$(u_{1},\dots,u_{m})$} )שהיא בת\textquotedblright ל
+כבסיס של \L{$U$} ולכן אפשר להשלים אותה לבסיס של \L{$V$} לפי משפט
+ההשלמה מהקורס לינארית {\beginL 1\endL}( לבסיס של \L{$V$}: \L{%
+\[
+\mathcal{B}_{V}=(\underset{n}{\underbrace{u_{1},\dots,u_{m},v_{1},\dots,v_{k}}})
+\]
+}%
+
+כאשר \L{$k=n-m$}. לכל \L{$1\le j\le k$} מתקיים: \L{%
+\[
+T\left(v_{j}\right)=T\left(v_{j}\right)-\lambda v_{j}+\lambda v_{j}=\underset{\in\text{Range}(T-\lambda I)=U}{\underbrace{(T-\lambda I)(v_{j})}}+\lambda v_{j}
+\]
+}%
+\L{%
+\[
+\implies T(v_{j})\in\text{Span}(u_{1},\dots,u_{m},v_{j})\subseteq\text{Span}(u_{1},\dots,u_{m},v_{1},\dots,v_{j})
+\]
+}%
+יחד עם 5, כל וקטור בבסיס \L{$\mathcal{B}_{V}$} נשלח לספאן של הוקטורים
+שלפניו )כולל עצמו(.
+
+אז שוב לפי למת האפיון, \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}
+משולשית עליונה.
+\end{proof}
+
+\subsection{צמצום של העתקה לתת-מרחב}
+
+אם \L{$T:V\rightarrow V$} העתקה לינארית ו-\L{$U\subseteq V$} תמ\textquotedblright ו
+שמור, אפשר להתרכז רק בוקטורים שבתוך \L{$U$}.
+
+במקרה זה, מתעסקים עם הצמצום הזה במקום עם ההעתקה המקורית, שמסומן \L{$T|_{U}$}
+)בפועל פשוט שוכחים מכל הוקטורים שמחוץ ל-\L{$U$}(.\L{%
+\[
+T|_{U}:U\rightarrow U,\ T|_{U}(u)=T(u)
+\]
+}%
+
+לעיתים לא מציינים זאת במפורש אלא אומרים \textquotedblright נתרכז בתמ\textquotedblright ו
+\L{$U$} עם אותה \L{$T$}\textquotedblright .
+
+זה מוגדר היטב )עם טווח \L{$U$}( בדיוק כאשר \L{$U$} שמור תחת \L{$T$},
+וזו העתקה לינארית כי \L{$T$} לינארית.
+\end{document}
