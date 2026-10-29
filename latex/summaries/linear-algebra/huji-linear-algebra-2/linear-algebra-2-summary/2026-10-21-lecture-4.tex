@@ -1,0 +1,965 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{אלגברה ליניארית {\beginL 2\endL} - הרצאה {\beginL 4\endL}}
+\author{נעם לב}
+\date{\L{$21.10.2026$}}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
+\L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
+)תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+הסיכום הוא לא רשמי ולא עבר אישור של הסגל, על כן אין להשתמש בו )ובין
+השאר במספור שלו ובשמות הטענות שבו( כמקור רשמי. אם ישנן טעויות, הן
+שלי ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\part{ערכים עצמיים ולכסון מטריצה )המשך(}
+
+\section{דוגמה - חישוב ערכים עצמיים, וקטורים עצמיים ולכסון של מטריצה}
+
+תהי \L{%
+\[
+A\in\text{Mat}\left(3\times3,\mathbb{C}\right)
+\]
+}%
+\L{%
+\[
+A=\begin{pmatrix}-1 & -2 & 2\\
+-3 & -1 & 3\\
+-3 & -2 & 4
+\end{pmatrix}
+\]
+}%
+
+)א( מצאו את כל הערכים העצמיים של \L{$A$} )ערכים עצמיים של מטריצה
+פירושם ערכים עצמיים של ההעתקה הלינארית על \L{$\mathbb{C}^{3}$} שהמטריצה
+מגדירה. זהו תרגיל סטנדרטי שיופיע בכל מועד של המבחן, ולכן חשוב לעשות
+לפחות דוגמה אחת לא טריוויאלית(.
+
+)ב( מצאו את הוקטורים העצמיים השייכים לערכים העצמיים.
+
+)ג( מצאו מטריצה הפיכה \L{$Q$} כך שמתקיים \L{$A=QDQ^{-1}$} כאשר \L{$D$}
+היא מטריצה אלכסונית.
+
+\subsection{פתרון )א(}
+
+ערך עצמי של \L{$A$} הוא כל פתרון \L{$\lambda\in\mathbb{C}$} של המשוואה
+\L{%
+\[
+\det\left(A-\lambda I\right)=\begin{vmatrix}-1-\lambda & -2 & 2\\
+-3 & -1-\lambda & 3\\
+-3 & -2 & 4-\lambda
+\end{vmatrix}=0
+\]
+}%
+
+אפשר לפתח כאן את הדטרמיננטה, אבל אז נקבל פולינום ממעלה שלישית ויהיה
+קשה למצוא את שורשיו )נצטרך לנחש איך לפרק אותו למכפלה(.
+
+אנחנו רק צריכים לבדוק מתי היא מתאפסת.
+
+כזכור, פעולות שורה אלמנטריות יכולות לשנות את הדטרמיננטה )למשל את הסימן
+שלה או כפל בקבוע( אבל הן לא משנות את ההתאפסות שלה.
+
+כלומר, הדטרמיננטה לפני פעולות אלו מתאפסת אם\textquotedblright ם הדטרמיננטה
+לאחר פעולות אלו מתאפסת.
+
+נזכיר שהסימון של המטריצה \L{$B$} לאחר שהופכים את השורות שלה לעמודות
+הוא \L{$B^{T}$}.
+
+למדנו בהרצאה \L{$29$} של לינארית 1 שמתקיים \L{%
+\[
+\det\left(B^{T}\right)=\det\left(B\right)
+\]
+}%
+
+ולכן אותו הדבר נכון גם לגבי פעולות עמודה אלמנטריות.
+
+חשוב לבצע את פעולות העמודה או השורה על המטריצה \L{$A-\lambda I$}
+ולא קודם לדרג את \L{$A$} למשל ואז להחסיר את \L{$\lambda I$}, כי
+דירוג של \L{$A$} משנה את הערכים העצמיים.
+
+\L{%
+\[
+\begin{vmatrix}-1-\lambda & -2 & 2\\
+-3 & -1-\lambda & 3\\
+-3 & -2 & 4-\lambda
+\end{vmatrix}\xrightarrow{R_{3}\to R_{3}-R_{2}}\begin{vmatrix}-1-\lambda & -2 & 2\\
+-3 & -1-\lambda & 3\\
+0 & \lambda-1 & 1-\lambda
+\end{vmatrix}
+\]
+}%
+\L{%
+\begin{align*}
+ & \underset{(1)}{=}\left(\lambda-1\right)\begin{vmatrix}-1-\lambda & -2 & 2\\
+-3 & -1-\lambda & 3\\
+0 & 1 & -1
+\end{vmatrix}\\
+ & \xrightarrow{C_{3}\to C_{3}+C_{2}}\left(\lambda-1\right)\begin{vmatrix}-1-\lambda & -2 & 0\\
+-3 & -1-\lambda & 2-\lambda\\
+0 & 1 & 0
+\end{vmatrix}\\
+ & \underset{(2)}{=}\left(\lambda-1\right)\left(0\cdot[]-1\cdot\begin{vmatrix}-1-\lambda & 0\\
+-3 & 2-\lambda
+\end{vmatrix}+0\cdot[]\right)\\
+ & =\left(\lambda-1\right)\left(-1\cdot\left(-1-\lambda\right)\cdot\left(2-\lambda\right)-\left(-1\right)\cdot0\cdot\left(-3\right)\right)\\
+ & =\left(\lambda-1\right)\left(1+\lambda\right)\left(2-\lambda\right)
+\end{align*}
+}%
+
+\L{$(1)$} דטרמיננטה היא פונקציה מולטי-לינארית.
+
+\L{$(2)$} פיתוח לפי השורה השלישית. בתרגילים כאלה כדאי לפתח לפי שורה
+או עמודה עם הרבה אפסים.
+
+\L{$\Leftarrow$} ערכים עצמיים של \L{$A$}: \L{%
+\[
+\lambda_{1}=1,\quad\lambda_{2}=-1,\quad\lambda_{3}=2
+\]
+}%
+
+\subsection{פתרון )ב(}
+
+מחפשים את כל הוקטורים \L{$v$} כך ש-\L{$Av=\lambda v$} כלומר \L{$\left(A-\lambda I\right)v=0$}
+לכן נציב בכל פעם את הערך העצמי שנרצה לחשב את הוקטורים העצמיים שלו
+ב-\L{$A-\lambda I$}.
+
+\L{$\underline{\lambda_{1}=1}$}: \L{%
+\[
+\left(A-\lambda_{1}I\right)v=0
+\]
+}%
+\L{%
+\[
+\begin{pmatrix}-2 & -2 & 2\\
+-3 & -2 & 3\\
+-3 & -2 & 3
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+
+כזכור מלינארית 1, פש\textquotedblright א משמרות את מרחב הפתרונות.
+
+שורות 2 ו-3 זהות אז שורה 3 לא נותנת מידע ואפשר לאפס אותה. \L{%
+\[
+\begin{pmatrix}-2 & -2 & 2\\
+-3 & -2 & 3\\
+0 & 0 & 0
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+
+נוריד משורה 1 את שורה 2. \L{%
+\[
+\begin{pmatrix}1 & 0 & -1\\
+-3 & -2 & 3\\
+0 & 0 & 0
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\begin{cases}
+x-z=0\\
+-3x-2y+3z=0
+\end{cases}
+\]
+}%
+\L{%
+\[
+x=z,y=0
+\]
+}%
+
+לכן הוקטורים העצמיים של \L{$\lambda_{1}$} הם הווקטורים שאינם אפס
+השייכים לתמ\textquotedblright ו \L{%
+\[
+\left\{ \begin{pmatrix}x\\
+0\\
+x
+\end{pmatrix}\middle|x\in\mathbb{C}\right\} =\text{Span}\left(\begin{pmatrix}1\\
+0\\
+1
+\end{pmatrix}\right)=U_{1}
+\]
+}%
+
+\L{$\underline{\lambda_{2}=-1}$}: \L{%
+\[
+\begin{pmatrix}0 & -2 & 2\\
+-3 & 0 & 3\\
+-3 & -2 & 5
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+משורה \L{$1$}: \L{%
+\[
+y=z
+\]
+}%
+משורה \L{$2$}: \L{%
+\[
+-x+z=0\Longrightarrow x=z
+\]
+}%
+ובדיקה בשורה \L{$3$}: \L{%
+\[
+-3x-2y+5z=0\quad\checkmark
+\]
+}%
+
+לכן הוקטורים העצמיים של \L{$\lambda_{2}$} הם הווקטורים שאינם אפס
+השייכים לתמ\textquotedblright ו \L{%
+\[
+\left\{ \begin{pmatrix}x\\
+x\\
+x
+\end{pmatrix}\middle|x\in\mathbb{C}\right\} =\text{Span}\left(\begin{pmatrix}1\\
+1\\
+1
+\end{pmatrix}\right)=U_{2}
+\]
+}%
+
+בדיקה: \L{$A\begin{pmatrix}1\\
+1\\
+1
+\end{pmatrix}$} נותן בכל שורה \L{$-1$}, בדיוק \L{$-1\cdot\begin{pmatrix}1\\
+1\\
+1
+\end{pmatrix}$}.
+
+\L{$\underline{\lambda_{3}=2}$}: \L{%
+\[
+\begin{pmatrix}-3 & -2 & 2\\
+-3 & -3 & 3\\
+-3 & -2 & 2
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\begin{pmatrix}-3 & -2 & 2\\
+-3 & -3 & 3\\
+0 & 0 & 0
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\begin{pmatrix}0 & 1 & -1\\
+-3 & -3 & 3\\
+0 & 0 & 0
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+משורה \L{$1$}: \L{%
+\[
+y=z
+\]
+}%
+משורה \L{$2$}, עם \L{$y=z$}: \L{%
+\[
+-3x-3y+3z=-3x=0\Longrightarrow x=0
+\]
+}%
+
+לכן הוקטורים העצמיים של \L{$\lambda_{3}$} הם הווקטורים שאינם אפס
+השייכים לתמ\textquotedblright ו \L{%
+\[
+\left\{ \begin{pmatrix}0\\
+x\\
+x
+\end{pmatrix}\middle|x\in\mathbb{C}\right\} =\text{Span}\left(\begin{pmatrix}0\\
+1\\
+1
+\end{pmatrix}\right)=U_{3}
+\]
+}%
+
+\subsection{פתרון )ג(}
+
+נשתמש בטענה מהרצאה 3 המציינת כי אם ל-\L{$T_{A}$} יש \L{$n$} ערכים
+עצמיים שונים זה מזה, אז \L{$A$} דומה למטריצה האלכסונית של הערכים
+העצמיים, ומטריצת המעבר היא זו שעמודותיה הן הוקטורים העצמיים.
+
+כלומר, \L{$Q$} היא המטריצה שעמודותיה הן הוקטורים העצמיים \L{%
+\[
+\begin{pmatrix}1 & 1 & 0\\
+0 & 1 & 1\\
+1 & 1 & 1
+\end{pmatrix}
+\]
+}%
+
+ו-\L{$D$} היא מטריצה אלכסונית של הערכים העצמיים התואמים \L{%
+\[
+\begin{pmatrix}1 & 0 & 0\\
+0 & -1 & 0\\
+0 & 0 & 2
+\end{pmatrix}
+\]
+}%
+
+\section{הערה - איברי האלכסון של מטריצה משולשית עליונה הם ערכים עצמיים}
+
+ראינו בהרצאה הקודמת את המשפט לפיו מעל \L{$\mathbb{C}$}, כל אופרטור
+ניתן לייצוג ע\textquotedblright י מטריצה משולשית עליונה. נזכיר:
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{C}$} כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}\left(V\right)
+\]
+}%
+אזי קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} כך ש- \L{%
+\[
+M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)=\begin{pmatrix}a_{1,1} & * & \cdots & *\\
+0 & a_{2,2} & \cdots & *\\
+\vdots &  & \ddots & \vdots\\
+0 & 0 &  & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+נוסיף עכשיו:
+
+ו- \L{$a_{1,1},\ldots,a_{n,n}$} הם ערכים עצמיים של \L{$T$}.
+
+הם לא בהכרח שונים זה מזה, ייתכן שחלקם שווים.
+
+אבל כל אחד מהם הוא ערך עצמי של \L{$T$}. 
+\begin{proof}
+נוכיח בעזרת הפולינום האופייני: \L{%
+\[
+\lambda I-M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)=\begin{pmatrix}\lambda-a_{1,1} & * & \cdots & *\\
+0 & \lambda-a_{2,2} & \cdots & *\\
+\vdots &  & \ddots & \vdots\\
+0 & 0 &  & \lambda-a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+זו מטריצה משולשית עליונה. נפתח לפי העמודה הראשונה: האיבר היחיד בה
+שאינו אפס הוא \L{$\lambda-a_{1,1}$} במקום \L{$\left(1,1\right)$},
+עם סימן \L{$\left(-1\right)^{1+1}=+1$}, והמינור שלו הוא שוב מטריצה
+משולשית עליונה: \L{%
+\[
+\det\left(\lambda I-M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)\right)=\left(\lambda-a_{1,1}\right)\begin{vmatrix}\lambda-a_{2,2} & * & \cdots & *\\
+0 & \lambda-a_{3,3} & \cdots & *\\
+\vdots &  & \ddots & \vdots\\
+0 & 0 &  & \lambda-a_{n,n}
+\end{vmatrix}
+\]
+}%
+\L{%
+\[
+=\left(\lambda-a_{1,1}\right)\left(\lambda-a_{2,2}\right)\begin{vmatrix}\lambda-a_{3,3} & * & \cdots & *\\
+0 & \lambda-a_{4,4} & \cdots & *\\
+\vdots &  & \ddots & \vdots\\
+0 & 0 &  & \lambda-a_{n,n}
+\end{vmatrix}
+\]
+}%
+\L{%
+\[
+=\dots=\left(\lambda-a_{1,1}\right)\left(\lambda-a_{2,2}\right)\cdots\left(\lambda-a_{n,n}\right)
+\]
+}%
+)זו ההוכחה של הטענה מלינארית 1 שדטרמיננטה של מטריצה משולשית היא מכפלת
+איברי האלכסון(
+
+מכאן השורשים הם בדיוק \L{$a_{1,1},\ldots,a_{n,n}$}. 
+\end{proof}
+יש לנו עד עכשיו שתי תוצאות מרכזיות:
+
+)1( מעל כל שדה, אם ל-\L{$T$} יש \L{$n$} ערכים עצמיים שונים, אז \L{$T$}
+לכסינה.
+
+)2( מעל \L{$\mathbb{C}$}, לכל \L{$T$} קיים בסיס שבו המטריצה משולשית
+עליונה.
+
+השאלה: מה אפשר לומר מעל שדה כללי, ומתי מגיעים למטריצה אלכסונית?
+
+לשם כך צריך ללמוד פולינומים שקשורים להעתקה, ובפרט את הפולינום המינימלי.
+
+\part{הפולינום המינימלי}
+
+\section{נוטציה: \L{$p(T)$}}
+
+יהי \L{$V$} מ\textquotedblright ו ויהי \L{$T\in\mathcal{L}(V)$}.
+
+בנוסף, יהי \L{$p\in\mathcal{P}(\mathbb{F})$} הפולינום \L{%
+\[
+\forall z\in\mathbb{F}:p(z)=a_{0}+a_{1}z+a_{2}z^{2}+\dots+a_{m}z^{m}
+\]
+}%
+
+אז \L{$p(T)$} הוא האופרטור על \L{$V$} המוגדר ע\textquotedblright י
+\L{%
+\[
+p(T)=a_{0}I+a_{1}T+a_{2}T^{2}+\dots+a_{m}T^{m}
+\]
+}%
+
+כאשר \L{$T^{k}=\underset{k\text{ times}}{\underbrace{T\circ\dots\circ T}}$}
+)אפשר גם להגדיר \L{$T^{0}=I_{V}$} וזה מקל על הכתיבה( ומתקיים \L{%
+\[
+p(T)(v)=a_{0}\cdot I(v)+a_{1}\cdot T(v)+a_{2}\cdot T\left(T\left(v\right)\right)+\dots
+\]
+}%
+
+הרכבה, חיבור וכפל בסקלר של ה\textquotedblright ל נותנים ה\textquotedblright ל
+לכן גם התוצאה היא אופרטור לינארי על \L{$V$} וזה מוגדר היטב.
+
+\section{פולינום מתוקן}
+
+פולינום מתוקן הוא פולינום בו המקדם המוביל הוא 1.
+
+\section{הגדרה - פולינום מינימלי של \L{$T$}}
+
+יהי \L{$V$} מ\textquotedblright ו נ\textquotedblright ס מעל שדה \L{$\mathbb{F}$}
+ויהי \L{$T\in\mathcal{L}(V)$}.
+
+אז הפולינום המינימלי של \L{$T$} הוא הפולינום המתוקן \L{$p\in\mathcal{P}(\mathbb{F})$}
+מהדרגה הנמוכה ביותר כך ש-\L{$p(T)=0$} )אופרטור האפס(: \L{%
+\[
+\forall v\in V:p(T)(v)=a_{0}v+a_{1}T(v)+\dots+\underset{=1}{a_{m}}T^{m}(v)=0
+\]
+}%
+
+מהדרגה הנמוכה ביותר, דהיינו: \L{%
+\[
+\forall\ 0\ne q\in\mathcal{P}(\mathbb{F}):q(T)=0\Rightarrow\deg p\le\deg q
+\]
+}%
+
+בהרצאה יבגני גם דרש \L{$\dim(V)=n\ge1$} בשביל לא להתעסק עם המקרה
+הטריוויאלי.
+
+כתבנו \textbf{ה}פולינום \textbf{ה}מינימלי ולכן אחרי ההגדרה נצטרך להוכיח
+קיום ויחידות.
+
+על השאלה הרלוונטית, שהיא איך זה קשור לערכים עצמיים, נענה בהרצאה הבאה.
+
+\section{משפט - קיום ויחידות של הפולינום המינימלי}
+
+יהי \L{$V$} מ\textquotedblright ו נ\textquotedblright ס מעל \L{$\mathbb{F}$}
+עם \L{$\dim(V)=n\ge1$} ויהי \L{$T\in\mathcal{L}(V)$} )אקסלר לא מניח
+שהמימד גדול שווה לאחד ומטפל בנפרד במקרה הטריוויאלי בו \L{$I$} הוא
+אופרטור האפס ו-\L{$p$} הוא הפולינום הקבוע 1(.
+
+אז קיים פולינום מתוקן \L{$p\in\mathcal{P}(\mathbb{F})$} כך ש-\L{$p(T)=0$}
+וגם \L{%
+\[
+\forall\ 0\ne q\in\mathcal{P}(\mathbb{F}):q(T)=0\Rightarrow\deg p\le\deg q
+\]
+}%
+
+והוא יחיד.
+
+\subsection{למה - \L{$\mathcal{L}\left(V\right)$} הוא מ\textquotedblright ו
+עם \L{$\dim\left(\mathcal{L}\left(V\right)\right)=n^{2}$}}
+
+)יבגני לא הוכיח זאת אלא התייחס לזה בתור טענה מלינארית 1. לא מצאתי
+אותה ולכן אני מוכיח.(
+
+יהי \L{$V$} מ\textquotedblright ו נ\textquotedblright ס מעל \L{$\mathbb{F}$}
+עם \L{$\dim(V)=n$}. אז לכל \L{$S,T\in\mathcal{L}(V)$}, \L{$v\in V$}
+ו-\L{$c\in\mathbb{F}$} נגדיר \L{%
+\[
+\left(T+S\right)(v)=T(v)+S(v),\quad\left(cT\right)(v)=c\cdot T(v)
+\]
+}%
+
+ניתן לראות )לא אוכיח זאת כאן( ש-\L{$T+S,cT\in\mathcal{L}(V)$} ושהקבוצה
+\L{$\mathcal{L}(V)$} יחד עם הגדרות אלה של חיבור וכפל בסקלר מקיימת
+את האקסיומות של מ\textquotedblright ו.
+
+\L{$V$} מ\textquotedblright ו נ\textquotedblright ס ולכן יש לו בסיס
+\L{$\mathcal{B}_{V}=\left(v_{1},\dots,v_{n}\right)$}.
+
+נגדיר \L{$\Phi:\mathcal{L}(V)\rightarrow\text{Mat}\left(n\times n,\mathbb{F}\right)$}
+על ידי \L{$\Phi(T)=M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)$}.
+
+אראה סקיצה של ההוכחה כיוון שזה שייך ללינארית 1.
+
+\L{$\Phi$} לינארית: \L{%
+\[
+\forall1\le j\le n:\left[\left(T+S\right)\left(v_{j}\right)\right]_{\mathcal{B}_{V}}=\left[T\left(v_{j}\right)+S\left(v_{j}\right)\right]_{\mathcal{B}_{V}}\underset{(1)}{=}\left[T\left(v_{j}\right)\right]_{\mathcal{B}_{V}}+\left[S\left(v_{j}\right)\right]_{\mathcal{B}_{V}}
+\]
+}%
+\L{%
+\[
+\forall1\le j\le n:\left[\left(cT\right)\left(v_{j}\right)\right]_{\mathcal{B}_{V}}=\left[c\cdot T\left(v_{j}\right)\right]_{\mathcal{B}_{V}}\underset{(1)}{=}c\cdot\left[T\left(v_{j}\right)\right]_{\mathcal{B}_{V}}
+\]
+}%
+\L{%
+\[
+\therefore\Phi(S+T)=\Phi(S)+\Phi(T),\quad\Phi(cT)=c\Phi(T)
+\]
+}%
+
+\L{$(1)$} למדנו בהרצאה 11 של לינארית 1 שוקטור הקואורדינטות משמר חיבור
+וכפל בסקלר.
+
+\L{$\Phi$} חח\textquotedblright ע: למדנו בלינארית 1 שה\textquotedblright ל
+נקבעת ע\textquotedblright י המטריצה המייצגת שלה ולכן \L{$\Phi(T)=\Phi(S)\Rightarrow T=S$}.
+
+\L{$\Phi$} על: למדנו בלינארית 1 שכל מטריצה ניתנת לייצוג ע\textquotedblright י
+ה\textquotedblright ל ולכן לכל \L{$A\in\text{Mat}\left(n\times n,\mathbb{F}\right)$}
+קיים \L{$T\in\mathcal{L}(V)$} כך ש-\L{$\Phi(T)=A$}.
+
+מכאן \L{$\Phi$} היא איזומורפיזם.
+
+הבסיס הסטנדרטי של \L{$\text{Mat}\left(n\times n,\mathbb{F}\right)$}
+הוא \L{$E_{1,1},\dots,E_{n,n}$} לכן \L{$\dim\left(\text{Mat}\left(n\times n,\mathbb{F}\right)\right)=n^{2}$}.
+
+אז לפי משפט שלמדנו בלינארית 1 היות ו-\L{$\Phi$} איזומורפיזם, לתחום
+ולטווח שלה אותו מימד דהיינו \L{$\dim\left(\mathcal{L}\left(V\right)\right)=n^{2}$}.
+
+\subsection{למה - \L{$\Phi:\mathcal{L}(V)\rightarrow\text{Mat}\left(n\times n,\mathbb{F}\right)$}
+מכבדת כפל}
+
+)גם את זה יבגני לא הוכיח(
+
+לפי הרצאה \L{$19$} בלינארית 1, המטריצה של הרכבה היא מכפלת המטריצות.
+מכאן \L{%
+\[
+\Phi\left(ST\right)=\Phi(S)\Phi(T)
+\]
+}%
+
+\subsection{הוכחת המשפט}
+\begin{proof}
+\textbf{1. הוכחת קיום:}
+
+לפי הלמה, \L{$\mathcal{L}\left(V\right)$} הוא מ\textquotedblright ו
+עם \L{$\dim\left(\mathcal{L}\left(V\right)\right)=n^{2}$}. נסתכל
+על הרשימה \L{%
+\[
+\left(I,T,T^{2},\ldots,T^{n^{2}}\right)
+\]
+}%
+ברשימה זאת יש \L{$n^{2}+1$} איברים במרחב ממימד \L{$n^{2}$}, ולכן
+לפי משפט מלינארית 1 היא תלויה לינארית במרחב \L{$\mathcal{L}\left(V\right)$}.
+
+לפי למת התלות הלינארית \L{%
+\[
+\exists1\underset{(*)}{\le}m\le n^{2}:T^{m}\in\text{Span}\left(I,T,\ldots,T^{m-1}\right)
+\]
+}%
+
+\L{$(*)$} הלמה מבטיחה במקרה זה רק \L{$m\ge0$}, אבל \L{$n\ge1$}
+לכן \L{$I\ne0$} ועם \L{$m=0$} מקבלים סתירה.
+
+נבחר את ה-\L{$m$} הקטן ביותר המקיים זאת. אז הרשימה \L{$\left(I,T,\ldots,T^{m-1}\right)$}
+בת\textquotedblright ל: אילו הייתה תלויה, מכיוון ש-\L{$I\neq0$} למת
+התלות הלינארית הייתה נותנת \L{$k<m$} עם \L{$T^{k}\in\text{Span}\left(I,\ldots,T^{k-1}\right)$},
+בסתירה למינימליות של \L{$m$}.
+
+אז קיימים \L{$a_{0},\dots,a_{m-1}\in\mathbb{F}$} כך ש- \L{%
+\[
+a_{0}I+a_{1}T+\dots+a_{m-1}T^{m-1}=T^{m}
+\]
+}%
+\L{%
+\[
+\therefore a_{0}I+a_{1}T+\dots+a_{m-1}T^{m-1}+T^{m}=0
+\]
+}%
+ונגדיר את הפולינום הבא: \L{%
+\[
+p(z)=a_{0}+a_{1}z+\dots+a_{m-1}z^{m-1}+z^{m}
+\]
+}%
+אז לכל \L{$v\in V$} \L{%
+\[
+p(T)(v)=a_{0}I(v)+a_{1}T(v)+\dots+a_{m-1}T^{m-1}(v)+T^{m}(v)=0(v)=0
+\]
+}%
+
+בנוסף, היות והרשימה בת\textquotedblright ל, עבור \L{$b_{0},\dots,b_{m-1}\in\mathbb{F}$}
+כך ש- \L{%
+\[
+b_{0}I+b_{1}T+\dots+b_{m-1}T^{m-1}=0
+\]
+}%
+מתקיים \L{%
+\[
+b_{0}=\dots=b_{m-1}=0
+\]
+}%
+כלומר, אם \L{$q$} הוא פולינום שונה מאפס שעבורו מתקיים \L{$q(T)=0$},
+הדרגה שלו חייבת להיות גדולה מ-\L{$m-1$} )אחרת לפי מה שהראינו עכשיו
+הוא פולינום האפס וזאת סתירה( ולכן גדולה שווה מ-\L{$m$}, כלומר \L{$\deg(q)\ge\deg(p)$}
+כנדרש.
+
+\textbf{2. הוכחת יחידות:}
+
+נניח כי קיים פולינום מינימלי נוסף \L{%
+\[
+\widetilde{p}(z)=b_{0}+b_{1}z+\dots+b_{m-1}z^{m-1}+z^{m}
+\]
+}%
+ראשית, יש להם אותה מעלה, כי מהגדרת הפולינום המינימלי \L{$\deg(p)\ge\deg(\widetilde{p})$}
+וגם \L{$\deg(\widetilde{p})\ge\deg(p)$}.
+
+שנית, שניהם מתוקנים, ולכן המקדם של \L{$z^{m}$} אצל שניהם הוא 1 אז
+כשמחסרים אחד מהשני הוא נעלם. \L{%
+\[
+\left(a_{0}-b_{0}\right)I+\left(a_{1}-b_{1}\right)T+\dots+\left(a_{m-1}-b_{m-1}\right)T^{m-1}=\left(p-\widetilde{p}\right)\left(T\right)=0
+\]
+}%
+אבל כפי שהוכחנו, \L{$\left(I,T,\ldots,T^{m-1}\right)$} היא רשימה
+בת\textquotedblright ל, אז \L{%
+\begin{align*}
+a_{0}-b_{0} & =0\\
+ & \vdots\\
+a_{m-1}-b_{m-1} & =0
+\end{align*}
+}%
+\L{%
+\[
+\therefore a_{0}=b_{0},\dots,a_{m-1}=b_{m-1}
+\]
+}%
+כלומר \L{$\widetilde{p}=p$} כנדרש. 
+\end{proof}
+מבחינה מעשית, אין שיטה חכמה כללית למצוא נוסחה מפורשת לפולינום המינימלי;
+גם עבור \L{$3\times3$} זה יכול להיות קשה.
+
+השיטה שראינו עובדת לכל העתקה במ\textquotedblright ו נ\textquotedblright ס:
+בוחרים בסיס, עוברים למטריצה, ומחפשים את המעלה הקטנה ביותר שבה קיים
+פולינום מתוקן שמאפס את המטריצה. אם ההעתקה פשוטה, זה קל.
+
+\section{דוגמה - הפולינום המינימלי של \L{$T\left(z_{1},z_{2}\right)=\left(-z_{2},z_{1}\right)$}}
+
+תהי \L{$T\in\mathcal{L}\left(\mathbb{C}^{2}\right)$} הבאה \L{%
+\[
+T\left(\left(z_{1},z_{2}\right)\right)=\left(-z_{2},z_{1}\right)
+\]
+}%
+מהו הפולינום המינימלי של \L{$T$}?
+
+\subsection{פתרון}
+
+ניקח את הבסיס הסטנדרטי \L{%
+\[
+\mathcal{B}_{V}=\left(\left(1,0\right),\left(0,1\right)\right)=\left(v_{1},v_{2}\right)
+\]
+}%
+
+נפעיל עליו את האופרטור \L{%
+\[
+T\left(\left(1,0\right)\right)=\left(0,1\right)=0\cdot\left(1,0\right)+1\cdot\left(0,1\right)
+\]
+}%
+\L{%
+\[
+T\left(\left(0,1\right)\right)=\left(-1,0\right)=-1\cdot\left(1,0\right)+0\cdot\left(0,1\right)
+\]
+}%
+\L{%
+\[
+M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)=\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}
+\]
+}%
+
+דיברנו כבר על ההעתקה הזאת.
+
+לפי המשפט, מספיק למצוא פולינום מתוקן ממעלה מינימלית שמאפס את המטריצה;
+הוא יהיה הפולינום המינימלי, לפי היחידות.
+
+מתחילים ממעלה \L{$1$} ועולים.
+
+\L{$\underline{m=1}$}: נחפש \L{$a_{0}\in\mathbb{C}$} כך ש- \L{%
+\[
+a_{0}\begin{pmatrix}1 & 0\\
+0 & 1
+\end{pmatrix}+1\cdot\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}=\begin{pmatrix}0 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\begin{pmatrix}a_{0} & -1\\
+1 & a_{0}
+\end{pmatrix}=\begin{pmatrix}0 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+}%
+ובגלל ה-\L{$-1$} וה-\L{$1$} זה לא ייתכן. לכן אין פולינום ממעלה \L{$1$}
+שמאפס את \L{$T$}, והפולינום המינימלי הוא ממעלה גבוהה יותר.
+
+\L{$\underline{m=2}$}: נחפש \L{$a_{0},a_{1}\in\mathbb{C}$} כך ש-
+\L{%
+\[
+a_{0}\begin{pmatrix}1 & 0\\
+0 & 1
+\end{pmatrix}+a_{1}\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}+1\cdot\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}^{2}=\begin{pmatrix}0 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+}%
+נשים לב שמתקיים \L{%
+\[
+\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}^{2}=\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}=-I
+\]
+}%
+אז למעשה אנו מחפשים \L{$a_{0},a_{1}\in\mathbb{C}$} כך ש- \L{%
+\[
+a_{0}\begin{pmatrix}1 & 0\\
+0 & 1
+\end{pmatrix}+a_{1}\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}+1\cdot\left(-1\right)\begin{pmatrix}1 & 0\\
+0 & 1
+\end{pmatrix}=\begin{pmatrix}0 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\left(a_{0}-1\right)\begin{pmatrix}1 & 0\\
+0 & 1
+\end{pmatrix}+a_{1}\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}=\begin{pmatrix}0 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\begin{pmatrix}a_{0}-1 & 0\\
+0 & a_{0}-1
+\end{pmatrix}+\begin{pmatrix}0 & -a_{1}\\
+a_{1} & 0
+\end{pmatrix}=\begin{pmatrix}0 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\begin{pmatrix}a_{0}-1 & -a_{1}\\
+a_{1} & a_{0}-1
+\end{pmatrix}=\begin{pmatrix}0 & 0\\
+0 & 0
+\end{pmatrix}
+\]
+}%
+
+מקבלים \L{$a_{0}=1,a_{1}=0$}.
+
+מכאן, הפולינום המינימלי של \L{$T$} הוא \L{%
+\[
+p(z)=1+z^{2}
+\]
+}%
+
+מצאנו פולינום מתוקן ממעלה \L{$2$} שמתאפס על המטריצה.
+
+השלב הבא הוא להבין שאם זה מתקיים עבור המטריצה, זה מתקיים גם עבור ההעתקה,
+כי המטריצה מייצגת את ההעתקה.
+
+אם לא היינו מצליחים במעלה \L{$2$}, היינו ממשיכים למעלה \L{$3$} וכן
+הלאה.
+
+\subsection{הערה - שורשי הפולינום המינימלי וערכים עצמיים}
+
+שימו לב לשורשים של \L{$z^{2}+1$}: הם \L{$i$} ו-\L{$-i$}.
+
+אלה בדיוק הערכים העצמיים של \L{$T$} שמצאנו בעבר.
+
+בדוגמה הזאת יש קשר בין הפולינום המינימלי לערכים העצמיים, וההשערה היא
+שזה תמיד כך: כל שורש של הפולינום המינימלי של \L{$T$} הוא ערך עצמי
+של \L{$T$}, ולהפך, כל ערך עצמי של \L{$T$} הוא שורש של הפולינום המינימלי.
+
+זה באמת נכון, ונוכיח זאת בהמשך.
+
+בנוסף, גם \L{$\det\left(\lambda I-M\right)$} הוא פולינום )הפולינום
+האופייני(, ומתברר שאם מציבים בו את \L{$T$} במקום \L{$\lambda$} מקבלים
+\L{$0$}.
+
+זה משפט \L{$\text{Cayley-Hamilton}$} )הידוע לשמצה(, וגם אותו נוכיח
+בהמשך.
+
+\section{למה - הפולינום המינימלי של אופרטור שווה לפולינום המינימלי של המטריצה
+המייצגת שלו )לא היה בהרצאה(}
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{F}$} עם \L{$\dim V=n\geq1$}
+ויהי \L{$T\in\mathcal{L}\left(V\right)$}.
+
+יהי \L{$\mathcal{B}_{V}$} בסיס של \L{$V$}. נסמן \L{%
+\[
+M=M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)
+\]
+}%
+אז הפולינום המינימלי של \L{$T$} שווה לפולינום המינימלי של \L{$M$}. 
+\begin{proof}
+1. נסמן \L{$\Phi:\mathcal{L}\left(V\right)\to\text{Mat}\left(n\times n,\mathbb{F}\right)$},
+\L{$\Phi\left(S\right)=M\left(S,\mathcal{B}_{V},\mathcal{B}_{V}\right)$}.
+
+לפי הלמות, \L{$\Phi$} היא איזומורפיזם ומכבדת כפל.
+
+בנוסף \L{$\Phi\left(I\right)=I_{n}$}.
+
+2. נוכיח שלכל פולינום \L{$q\left(z\right)=a_{0}+a_{1}z+\dots+a_{k}z^{k}$}
+מתקיים \L{%
+\[
+\Phi\left(q\left(T\right)\right)=q\left(M\right)
+\]
+}%
+מהכפליות, באינדוקציה על \L{$j$}, \L{%
+\[
+\forall j\ge0:\Phi\left(T^{j}\right)=\Phi\left(T\right)^{j}=M^{j}
+\]
+}%
+לכן \L{%
+\begin{align*}
+\Phi\left(q\left(T\right)\right) & =\Phi\left(a_{0}I+a_{1}T+\dots+a_{k}T^{k}\right)\\
+ & =a_{0}\Phi\left(I\right)+a_{1}\Phi\left(T\right)+\dots+a_{k}\Phi\left(T^{k}\right)\\
+ & =a_{0}I_{n}+a_{1}M+\dots+a_{k}M^{k}\\
+ & =q\left(M\right)
+\end{align*}
+}%
+
+3. נוכיח שלכל פולינום \L{$q$} מתקיים \L{%
+\[
+q\left(T\right)=0\iff q\left(M\right)=0
+\]
+}%
+\L{$\Phi$} ה\textquotedblright ל ולכן \L{$\Phi\left(0\right)=0$}.
+
+\L{$\Phi$} חח\textquotedblright ע ולכן הגרעין שלה הוא אפס כלומר \L{$\Phi\left(X\right)=0$}
+אם\textquotedblright ם \L{$X=0$}.
+
+מכאן \L{%
+\[
+q\left(T\right)=0\iff\Phi\left(q\left(T\right)\right)=0\underset{(2)}{\iff}q\left(M\right)=0
+\]
+}%
+
+4. יהי \L{$p$} הפולינום המינימלי של \L{$T$}. נראה ש-\L{$p$} מקיים
+את שני תנאי ההגדרה עבור \L{$M$}.
+
+\L{$p$} מתוקן, ו-\L{$p\left(T\right)=0$}, ולכן לפי שלב 3 גם \L{$p\left(M\right)=0$}.
+
+יהי \L{$0\neq q$} פולינום עם \L{$q\left(M\right)=0$}.
+
+לפי שלב 3, \L{$q\left(T\right)=0$}.
+
+\L{$p$} מינימלי עבור \L{$T$}, ולכן \L{$\deg p\leq\deg q$}.
+
+לכן \L{$p$} הוא פולינום מינימלי של \L{$M$}, ומיחידות הפולינום המינימלי
+הוא הפולינום המינימלי של \L{$M$}.
+
+5. הכיוון ההפוך זהה עם החלפת התפקידים של \L{$T$} ו-\L{$M$}, כי שלב
+3 הוא שקילות. 
+\end{proof}
+
+\end{document}
