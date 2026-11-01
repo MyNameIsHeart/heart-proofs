@@ -151,7 +151,8 @@ A=\begin{pmatrix}-1 & -2 & 2\\
 \end{align*}
 }%
 
-\L{$(1)$} דטרמיננטה היא פונקציה מולטי-לינארית.
+\L{$(1)$} דטרמיננטה היא פונקציה מולטי-לינארית, לינאריות לפי השורה
+השלישית.
 
 \L{$(2)$} פיתוח לפי השורה השלישית. בתרגילים כאלה כדאי לפתח לפי שורה
 או עמודה עם הרבה אפסים.
@@ -387,6 +388,25 @@ x
 \]
 }%
 
+\section{תזכורת - פיתוח לפלס}
+
+תזכורת: בהרצאות {\beginL 28\endL} ו-{\beginL 29\endL} של לינארית {\beginL 1\endL}
+למדנו על נוסחה לחישוב הדטרמיננטה של מטריצה \L{$n\times n$} שהיא למעשה
+פיתוח לפלס: \L{%
+\[
+\det B=\underset{j=1}{\overset{n}{\sum}}\left(-1\right)^{i+j}b_{i,j}\det\left(B_{i,j}\right)
+\]
+}%
+
+כאשר \L{$i$} שורה קבועה כלשהי, ו-\L{$B_{i,j}$} היא המטריצה שמתקבלת
+ממחיקת שורה \L{$i$} ועמודה \L{$j$} )המינור(.
+
+אותו דבר בדיוק עובד כאשר \L{$j$} עמודה קבועה כלשהי:\L{%
+\[
+\det B=\underset{i=1}{\overset{n}{\sum}}\left(-1\right)^{i+j}b_{i,j}\det\left(B_{i,j}\right)
+\]
+}%
+
 \section{הערה - איברי האלכסון של מטריצה משולשית עליונה הם ערכים עצמיים}
 
 ראינו בהרצאה הקודמת את המשפט לפיו מעל \L{$\mathbb{C}$}, כל אופרטור
@@ -425,10 +445,11 @@ M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)=\begin{pmatrix}a_{1,1} & * & \cd
 \]
 }%
 
-זו מטריצה משולשית עליונה. נפתח לפי העמודה הראשונה: האיבר היחיד בה
-שאינו אפס הוא \L{$\lambda-a_{1,1}$} במקום \L{$\left(1,1\right)$},
-עם סימן \L{$\left(-1\right)^{1+1}=+1$}, והמינור שלו הוא שוב מטריצה
-משולשית עליונה: \L{%
+זו מטריצה משולשית עליונה.
+
+נפתח לפי העמודה הראשונה: האיבר היחיד בה שאינו אפס הוא \L{$\lambda-a_{1,1}$}
+במקום \L{$\left(1,1\right)$}, עם סימן \L{$\left(-1\right)^{1+1}=+1$},
+והמינור שלו הוא שוב מטריצה משולשית עליונה )וכן הלאה...(: \L{%
 \[
 \det\left(\lambda I-M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)\right)=\left(\lambda-a_{1,1}\right)\begin{vmatrix}\lambda-a_{2,2} & * & \cdots & *\\
 0 & \lambda-a_{3,3} & \cdots & *\\
@@ -569,7 +590,7 @@ p(T)(v)=a_{0}\cdot I(v)+a_{1}\cdot T(v)+a_{2}\cdot T\left(T\left(v\right)\right)
 
 אראה סקיצה של ההוכחה כיוון שזה שייך ללינארית 1.
 
-\L{$\Phi$} לינארית: \L{%
+הפונ' \L{$\Phi$} היא העתקה לינארית: \L{%
 \[
 \forall1\le j\le n:\left[\left(T+S\right)\left(v_{j}\right)\right]_{\mathcal{B}_{V}}=\left[T\left(v_{j}\right)+S\left(v_{j}\right)\right]_{\mathcal{B}_{V}}\underset{(1)}{=}\left[T\left(v_{j}\right)\right]_{\mathcal{B}_{V}}+\left[S\left(v_{j}\right)\right]_{\mathcal{B}_{V}}
 \]
@@ -629,19 +650,18 @@ p(T)(v)=a_{0}\cdot I(v)+a_{1}\cdot T(v)+a_{2}\cdot T\left(T\left(v\right)\right)
 ברשימה זאת יש \L{$n^{2}+1$} איברים במרחב ממימד \L{$n^{2}$}, ולכן
 לפי משפט מלינארית 1 היא תלויה לינארית במרחב \L{$\mathcal{L}\left(V\right)$}.
 
-לפי למת התלות הלינארית \L{%
+היות והרשימה ת\textquotedblright ל והאיבר הראשון שלה שונה מאפס כי
+\L{$\dim\left(V\right)\ge1$}, לפי למת התלות הלינארית \L{%
 \[
 \exists1\underset{(*)}{\le}m\le n^{2}:T^{m}\in\text{Span}\left(I,T,\ldots,T^{m-1}\right)
 \]
 }%
 
-\L{$(*)$} הלמה מבטיחה במקרה זה רק \L{$m\ge0$}, אבל \L{$n\ge1$}
-לכן \L{$I\ne0$} ועם \L{$m=0$} מקבלים סתירה.
+\L{$(*)$} הלמה מבטיחה במקרה זה רק \L{$m\ge0$}, אבל \L{$\dim\left(V\right)\ge1$}
+לכן \L{$I\ne0$} ועם \L{$m=0$} מקבלים \L{$I=T^{0}\in\text{Span}\left(\right)=\left\{ 0\right\} $}
+שזו סתירה.
 
-נבחר את ה-\L{$m$} הקטן ביותר המקיים זאת. אז הרשימה \L{$\left(I,T,\ldots,T^{m-1}\right)$}
-בת\textquotedblright ל: אילו הייתה תלויה, מכיוון ש-\L{$I\neq0$} למת
-התלות הלינארית הייתה נותנת \L{$k<m$} עם \L{$T^{k}\in\text{Span}\left(I,\ldots,T^{k-1}\right)$},
-בסתירה למינימליות של \L{$m$}.
+נבחר את ה-\L{$m$} הקטן ביותר המקיים זאת.
 
 אז קיימים \L{$a_{0},\dots,a_{m-1}\in\mathbb{F}$} כך ש- \L{%
 \[
@@ -664,8 +684,12 @@ p(T)(v)=a_{0}I(v)+a_{1}T(v)+\dots+a_{m-1}T^{m-1}(v)+T^{m}(v)=0(v)=0
 \]
 }%
 
-בנוסף, היות והרשימה בת\textquotedblright ל, עבור \L{$b_{0},\dots,b_{m-1}\in\mathbb{F}$}
-כך ש- \L{%
+בנוסף, הרשימה \L{$\left(I,T,\ldots,T^{m-1}\right)$} בת\textquotedblright ל:
+אילו הייתה ת\textquotedblright ל, מכיוון ש-\L{$I\neq0$}, למת התלות
+הלינארית הייתה נותנת \L{$k<m$} עם \L{$T^{k}\in\text{Span}\left(I,\ldots,T^{k-1}\right)$},
+בסתירה למינימליות של \L{$m$}.
+
+מכאן, עבור \L{$b_{0},\dots,b_{m-1}\in\mathbb{F}$} כך ש- \L{%
 \[
 b_{0}I+b_{1}T+\dots+b_{m-1}T^{m-1}=0
 \]
@@ -712,7 +736,7 @@ a_{m-1}-b_{m-1} & =0
 כלומר \L{$\widetilde{p}=p$} כנדרש. 
 \end{proof}
 מבחינה מעשית, אין שיטה חכמה כללית למצוא נוסחה מפורשת לפולינום המינימלי;
-גם עבור \L{$3\times3$} זה יכול להיות קשה.
+גם עבור מטריצה בגודל \L{$3\times3$} זה יכול להיות קשה.
 
 השיטה שראינו עובדת לכל העתקה במ\textquotedblright ו נ\textquotedblright ס:
 בוחרים בסיס, עוברים למטריצה, ומחפשים את המעלה הקטנה ביותר שבה קיים
@@ -720,7 +744,8 @@ a_{m-1}-b_{m-1} & =0
 
 \section{דוגמה - הפולינום המינימלי של \L{$T\left(z_{1},z_{2}\right)=\left(-z_{2},z_{1}\right)$}}
 
-תהי \L{$T\in\mathcal{L}\left(\mathbb{C}^{2}\right)$} הבאה \L{%
+תהי \L{$T\in\mathcal{L}\left(\mathbb{C}^{2}\right)$} ה-ה\textquotedblright ל
+הבאה \L{%
 \[
 T\left(\left(z_{1},z_{2}\right)\right)=\left(-z_{2},z_{1}\right)
 \]
@@ -753,7 +778,7 @@ M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)=\begin{pmatrix}0 & -1\\
 \]
 }%
 
-דיברנו כבר על ההעתקה הזאת.
+ראינו את ההעתקה הזאת בהרצאה 2 ומצאנו שהערכים העצמיים שלה הם \L{$\pm i$}.
 
 לפי המשפט, מספיק למצוא פולינום מתוקן ממעלה מינימלית שמאפס את המטריצה;
 הוא יהיה הפולינום המינימלי, לפי היחידות.
@@ -914,7 +939,7 @@ M=M\left(T,\mathcal{B}_{V},\mathcal{B}_{V}\right)
 \Phi\left(q\left(T\right)\right)=q\left(M\right)
 \]
 }%
-מהכפליות, באינדוקציה על \L{$j$}, \L{%
+מהכפליות, ניתן להוכיח באינדוקציה על \L{$j$} שמתקיים \L{%
 \[
 \forall j\ge0:\Phi\left(T^{j}\right)=\Phi\left(T\right)^{j}=M^{j}
 \]
@@ -938,18 +963,21 @@ q\left(T\right)=0\iff q\left(M\right)=0
 \L{$\Phi$} חח\textquotedblright ע ולכן הגרעין שלה הוא אפס כלומר \L{$\Phi\left(X\right)=0$}
 אם\textquotedblright ם \L{$X=0$}.
 
-מכאן \L{%
+נציב \L{$X=q(T)$} ונקבל\L{%
 \[
 q\left(T\right)=0\iff\Phi\left(q\left(T\right)\right)=0\underset{(2)}{\iff}q\left(M\right)=0
 \]
 }%
 
-4. יהי \L{$p$} הפולינום המינימלי של \L{$T$}. נראה ש-\L{$p$} מקיים
-את שני תנאי ההגדרה עבור \L{$M$}.
+4. יהי \L{$p$} הפולינום המינימלי של \L{$T$}. נראה ש-\L{$p$} הוא
+גם הפולינום המינימלי של \L{$M$}.
 
-\L{$p$} מתוקן, ו-\L{$p\left(T\right)=0$}, ולכן לפי שלב 3 גם \L{$p\left(M\right)=0$}.
+\L{$p$} מתוקן, ו-\L{$p\left(T\right)=0$}, ולכן לפי שלב 3 גם \L{$p\left(M\right)=0$}
+- כלומר הוא מתוקן ומתאפס.
 
-יהי \L{$0\neq q$} פולינום עם \L{$q\left(M\right)=0$}.
+עכשיו נוכיח שהוא גם המינימלי.
+
+יהי \L{$q\neq0$} פולינום עם \L{$q\left(M\right)=0$}.
 
 לפי שלב 3, \L{$q\left(T\right)=0$}.
 
