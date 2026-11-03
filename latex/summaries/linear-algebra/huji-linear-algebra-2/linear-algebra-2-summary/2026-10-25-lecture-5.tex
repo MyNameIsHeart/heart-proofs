@@ -1,0 +1,902 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{אלגברה ליניארית {\beginL 2\endL} - הרצאה {\beginL 5\endL}}
+\author{נעם לב}
+\date{\L{$25.10.2026$}}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
+\L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
+)תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+הסיכום הוא לא רשמי ולא עבר אישור של הסגל, על כן אין להשתמש בו )ובין
+השאר במספור שלו ובשמות הטענות שבו( כמקור רשמי. אם ישנן טעויות, הן
+שלי ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\part{מנהלה}
+
+מבנה המבחן יפורסם לפני המבחן. 
+
+חלוקת המבחן הסופי: \L{$50\%$} מהציון - משפטים, הגדרות, חלק תיאורטי.
+
+\L{$50\%$} - תרגילים.
+
+הבחנים הם רק אימון ומשוב; תחשבו עליהם כמו על בונוס.
+
+הספר של אקסלר קרוב מאוד לקורס ואפשר לקרוא בו.
+
+\part{הפולינום המינימלי )המשך(}
+
+התחלנו לדבר על הפולינום המינימלי של ה\textquotedblright ל.
+
+כרגע עוד לא ברור איך הסיפור הזה קשור לבעיות ספקטרליות, כלומר מה הקשר
+בין הפולינום המינימלי לערכים העצמיים של ה\textquotedblright ל.
+
+היום נראה קשר כזה.
+
+נתחיל בלמה על פולינומים: אפשר לחלק פולינום בפולינום נתון עם שארית,
+כאשר דרגת השארית נמוכה מדרגת הפולינום הנתון.
+
+אפשר לחשוב על זה כמו על תרגיל בלינארית 1.
+
+\section{למה - חילוק עם שארית של פולינומים}
+
+נתונים שני פולינומים מעל \L{$\mathbb{F}$}: \L{%
+\[
+p(x)=a_{n}x^{n}+\dots+a_{1}x+a_{0}
+\]
+}%
+\L{%
+\[
+q(x)=b_{m}x^{m}+\dots+b_{1}x+b_{0}
+\]
+}%
+
+כך ש- \L{%
+\[
+\forall0\le i\le n:a_{i}\in\mathbb{F},\quad\forall0\le i\le m:b_{i}\in\mathbb{F},\quad\underset{\deg\left(p\right)\ge\deg\left(q\right)}{\underbrace{n\ge m}},\quad a_{n},b_{m}\ne0_{\mathbb{F}}
+\]
+}%
+אז קיימים פולינומים \L{$S(x),r(x)$} מעל \L{$\mathbb{F}$} כך ש- \L{%
+\[
+p(x)=S(x)q(x)+r(x)
+\]
+}%
+
+וגם \L{%
+\[
+\deg(r)<\deg(q)=m
+\]
+}%
+
+למעשה יש כאן שתי טענות.
+
+הראשונה - שניתן לכתוב את \L{$p$} בצורה כזו; השנייה, הלא-טריוויאלית
+- שהשארית \L{$r$} היא לא סתם פולינום אלא פולינום מדרגה נמוכה מדרגת
+\L{$q$}.
+
+אפשר היה להשאיר את זה בלי הוכחה, אבל יש הוכחה יפה בעזרת אלגברה לינארית.
+\begin{proof}
+1. נגדיר \L{%
+\[
+V=\mathcal{P}_{n}(\mathbb{F})=\left\{ p\::\:p\text{ is a polynomial over }\mathbb{F},\;0\leq\deg(p)\leq n\right\} 
+\]
+}%
+זהו מ\textquotedblright ו מעל \L{$\mathbb{F}$}, ו- \L{%
+\[
+\dim\mathcal{P}_{n}(\mathbb{F})=n+1
+\]
+}%
+
+כי הבסיס הסטנדרטי שלו הוא \L{$\left(1,x,\dots,x^{n}\right)$} בו \L{$n+1$}
+איברים.
+
+זה המרחב \L{$\mathbb{F}[x]_{\le n}$} מלינארית 1, הרצאה 12.
+
+פולינום האפס שייך אליו )אחרת זה לא מ\textquotedblright ו( ונהוג להגדיר
+\L{$\deg(0)=-\infty$}, כי זה משמר את כללי המעלה.
+
+למשל, לכל פולינום \L{$a$} מתקיים \L{%
+\[
+\deg(a\cdot0)=\deg(0)=-\infty=\deg(a)+(-\infty)=\deg(a)+\deg(0)
+\]
+}%
+\L{%
+\[
+\deg(a+0)=\deg(a)=\max\left\{ \deg(a),-\infty\right\} =\max\left\{ \deg(a),\deg(0)\right\} 
+\]
+}%
+כלומר הכללים \L{%
+\[
+\deg(ab)=\deg(a)+\deg(b)
+\]
+}%
+\L{%
+\[
+\deg(a+b)\le\max\left\{ \deg(a),\deg(b)\right\} 
+\]
+}%
+נשארים נכונים גם כשאחד הפולינומים הוא פולינום האפס.
+
+בנוסף, \L{$-\infty<m$} לכל \L{$m$}, ולכן התנאי \L{$\deg(r)<\deg(q)$}
+בלמה מתקיים גם כשהשארית היא \L{$0$}.
+
+2. נגדיר את הרשימה הסדורה הבאה: \L{%
+\[
+\mathcal{B}_{V}=\left(\underbrace{1,x,\dots,x^{m-1}}_{m\text{ elements}},\underbrace{q(x),xq(x),\dots,x^{n-m}q(x)}_{n-m+1\text{ elements}}\right)
+\]
+}%
+\L{%
+\[
+m+(n-m+1)=n+1=\dim\mathcal{P}_{n}(\mathbb{F})
+\]
+}%
+דרגות הוקטורים ברשימה הן \L{%
+\[
+0,1,\dots,m-1,m,m+1,\dots,n
+\]
+}%
+ כי \L{%
+\[
+\deg\left(x^{k}q(x)\right)=m+k,\quad b_{m}\ne0_{\mathbb{F}}
+\]
+}%
+
+כלומר, דרגת הוקטורים עולה ממש לאורך הרשימה.
+
+צ\textquotedblright ל של פולינומים מדרגות קטנות ממש מ-\L{$d$} הוא
+פולינום מדרגה קטנה ממש מ-\L{$d$}, לכן לא קיים וקטור ברשימה השייך
+לפרוש של קודמיו.
+
+לכן לפי למת התלות הלינארית מלינארית {\beginL 1\endL} הרצאה {\beginL 9\endL}
+האומרת כי סדרה ת\textquotedblright ל אם\textquotedblright ם קיים בה
+וקטור השייך לפרוש של הקודמים לו )שזו ה-\L{$\text{Linear Dependence Lemma}$},
+{\beginL 2.19\endL} במהדורה הרביעית של אקסלר( הרשימה הזאת בת\textquotedblright ל.
+
+אז זאת רשימה בת\textquotedblright ל באורך המימד של המ\textquotedblright ו,
+לכן היא בסיס )משפט מלינארית {\beginL 1\endL} הרצאה {\beginL 21\endL}(. 
+
+דהיינו, \L{$\mathcal{B}_{V}$} בסיס של \L{$V$}.
+
+3. \L{$p(x)\in\mathcal{P}_{n}(\mathbb{F})$}, ולכן קיימים \L{$\alpha_{0},\dots,\alpha_{m-1},\beta_{0},\dots,\beta_{n-m}\in\mathbb{F}$}
+כך ש- \L{%
+\[
+p(x)=\alpha_{0}+\alpha_{1}x+\dots+\alpha_{m-1}x^{m-1}+\beta_{0}q(x)+\beta_{1}xq(x)+\dots+\beta_{n-m}x^{n-m}q(x)
+\]
+}%
+\L{%
+\[
+=\underbrace{\left(\beta_{0}+\beta_{1}x+\dots+\beta_{n-m}x^{n-m}\right)}_{S(x)}q(x)+\underbrace{\left(\alpha_{0}+\alpha_{1}x+\dots+\alpha_{m-1}x^{m-1}\right)}_{r(x)}
+\]
+}%
+ולכן \L{%
+\[
+p(x)=S(x)q(x)+r(x)
+\]
+}%
+\L{%
+\[
+\deg\left(r(x)\right)\leq m-1<m=\deg\left(q(x)\right)
+\]
+}%
+\L{%
+\[
+\deg\left(S(x)\right)\le n-m\le n=\deg\left(p(x)\right)
+\]
+}%
+\end{proof}
+
+\section{משפט - הפולינום המינימלי מחלק כל פולינום שמאפס את \L{$T$}}
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{F}$} כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+נסמן ב-\L{$q_{\min}$} את הפולינום המינימלי של \L{$T$}.
+
+יהי \L{$p$} פולינום המאפס את \L{$T$}, כלומר \L{$p(T)=0$}.
+
+אז \L{$q_{\min}$} מחלק את \L{$p$} )ללא שארית(, כלומר קיים פולינום
+\L{$S$} כך ש- \L{%
+\[
+p(x)=S(x)q_{\min}(x)
+\]
+}%
+
+\begin{proof}
+1. מהגדרת הפולינום המינימלי, \L{$\deg\left(p\right)\ge\deg\left(q_{\text{min}}\right)$}.
+
+לכן, לפי הלמה הקודמת קיימים פולינומים \L{$S,r$} כך ש- \L{%
+\[
+p(x)=S(x)q_{\min}(x)+r(x)
+\]
+}%
+\L{%
+\[
+\deg(r)<\deg(q_{\min})
+\]
+}%
+צ\textquotedblright ל: \L{$r=0$}.
+
+2. \L{%
+\[
+r(x)=p(x)-S(x)q_{\min}(x)
+\]
+}%
+נציב \L{$T$}: \L{%
+\[
+r(T)=p(T)-S(T)q_{\min}(T)=0-S(T)\cdot0=0
+\]
+}%
+
+3. קיבלנו ש-\L{$r(T)=0$} וגם \L{$\deg(r)<\deg(q_{\min})$}. 
+
+אבל \L{$q_{\min}$} הוא הפולינום המינימלי של \L{$T$}, כלומר אין פולינום
+שונה מאפס מדרגה קטנה מ-\L{$\deg(q_{\min})$} שמאפס את \L{$T$}. לכן
+\L{%
+\[
+r=0
+\]
+}%
+\L{%
+\[
+\therefore\ p(x)=S(x)q_{\min}(x)
+\]
+}%
+\end{proof}
+
+\subsection{הערה - מדוע מותר להציב \L{$T$} במקום \L{$x$}}
+
+בהוכחה עברנו משוויון של פולינומים לשוויון של אופרטורים: \L{%
+\[
+r(x)=p(x)-S(x)q_{\min}(x)\quad\Longrightarrow\quad r(T)=p(T)-S(T)q_{\min}(T)
+\]
+}%
+
+מה מצדיק את המעבר: שוויון של שני פולינומים \L{$a=b$} פירושו שלכל
+\L{$k$} המקדם של \L{$x^{k}$} ב-\L{$a$} שווה למקדם של \L{$x^{k}$}
+ב-\L{$b$}.
+
+אבל \L{$a(T)$} ו-\L{$b(T)$} הם אותם מקדמים כפול אותן חזקות \L{$T^{k}$},
+ולכן \L{$a(T)=b(T)$}.
+
+כדי לעבור גם מסכום ומכפלה של פולינומים לסכום ומכפלה של אופרטורים צריך
+שלכל שני פולינומים \L{$a,b$} מעל \L{$\mathbb{F}$} יתקיים \L{%
+\[
+(a+b)(T)=a(T)+b(T),\qquad(ab)(T)=a(T)\,b(T)
+\]
+}%
+
+השוויון הראשון נובע מכך שהמקדמים של \L{$a+b$} הם סכומי המקדמים. 
+
+לגבי השוויון השני, אם פותחים סוגריים )כל איבר של הסכום הראשון כפול
+כל איבר של הסכום השני( מקבלים, \L{%
+\[
+a(T)\,b(T)=\sum_{i=0}^{k}\sum_{j=0}^{l}\alpha_{i}\beta_{j}T^{i}T^{j}\underset{T^{i}T^{j}=T^{i+j}}{=}\sum_{i=0}^{k}\sum_{j=0}^{l}\alpha_{i}\beta_{j}T^{i+j}=(ab)(T)
+\]
+}%
+
+ובאופן מפורש\L{%
+\[
+a(T)\,b(T)=\left(\alpha_{0}I+\alpha_{1}T+\dots+\alpha_{k}T^{k}\right)\left(\beta_{0}I+\beta_{1}T+\dots+\beta_{l}T^{l}\right)
+\]
+}%
+\L{%
+\begin{align*}
+ & \underset{T^{i}T^{j}=T^{i+j}}{=}\alpha_{0}\beta_{0}I+\alpha_{0}\beta_{1}T+\alpha_{0}\beta_{2}T^{2}+\dots+\alpha_{0}\beta_{l}T^{l}\\
+ & \quad+\alpha_{1}\beta_{0}T+\alpha_{1}\beta_{1}T^{2}+\alpha_{1}\beta_{2}T^{3}+\dots+\alpha_{1}\beta_{l}T^{l+1}\\
+ & \quad\ \vdots\\
+ & \quad+\alpha_{k}\beta_{0}T^{k}+\alpha_{k}\beta_{1}T^{k+1}+\alpha_{k}\beta_{2}T^{k+2}+\dots+\alpha_{k}\beta_{l}T^{k+l}
+\end{align*}
+}%
+וכשאוספים לפי חזקות של \L{$T$}: \L{%
+\[
+=\alpha_{0}\beta_{0}I+\left(\alpha_{0}\beta_{1}+\alpha_{1}\beta_{0}\right)T+\left(\alpha_{0}\beta_{2}+\alpha_{1}\beta_{1}+\alpha_{2}\beta_{0}\right)T^{2}+\dots+\left(\alpha_{k-1}\beta_{l}+\alpha_{k}\beta_{l-1}\right)T^{k+l-1}+\alpha_{k}\beta_{l}T^{k+l}
+\]
+}%
+המקדמים בסוגריים הם בדיוק המקדמים של הפולינום \L{$ab$}, כלומר זה
+\L{$(ab)(T)$}.
+
+איפה הסכנה: בפולינום במשתנה אחד הכפל חילופי )\L{$x^{i}x^{j}=x^{j}x^{i}$}(,
+והצבה שומרת על זה כי כל החזקות של אותו אופרטור \L{$T$} מתחלפות זו
+עם זו: \L{$T^{i}T^{j}=T^{i+j}=T^{j}T^{i}$}.
+
+לכן מותר להציב אופרטור יחיד \L{$T$} )או מטריצה יחידה \L{$A$}( בכל
+זהות פולינומית במשתנה אחד.
+
+למשל מ- \L{$(x-c)(x+d)=x^{2}+(d-c)x-cd$} נובע \L{%
+\[
+(T-cI)(T+dI)=T^{2}+(d-c)T-cdI
+\]
+}%
+
+לעומת זאת, בזהות עם שני משתנים אסור להציב שני אופרטורים \L{$A,B$}
+שאינם מתחלפים: הזהות \L{$(x-c)(y+d)=(y+d)(x-c)$} נכונה לפולינומים,
+אבל \L{%
+\[
+(A-cI)(B+dI)=AB+dA-cB-cdI\ne BA+dA-cB-cdI=(B+dI)(A-cI)
+\]
+}%
+כאשר \L{$AB\ne BA$}.
+
+\section{משפט - שורשי הפולינום המינימלי הם הערכים העצמיים}
+
+זה הקשר בין \L{$q_{\text{min}}$} של \L{$T$} לבין הערכים העצמיים
+של \L{$T$}.
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{F}$} כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+
+יהי \L{$q_{\min}$} הפולינום המינימלי של \L{$T$}, ויהי \L{$\lambda\in\mathbb{F}$}.
+
+אז שני התנאים הבאים שקולים:
+
+)I( \L{%
+\[
+q_{\min}(\lambda)=0_{\mathbb{F}}
+\]
+}%
+
+)II( \L{$\lambda$} - ערך עצמי של \L{$T$}.\\
+
+המשפט נכון מעל כל שדה, לא רק \L{$\mathbb{R}$} או \L{$\mathbb{C}$},
+ולכן הוא מעניין: שורשי הפולינום המינימלי נותנים מיד את כל הערכים העצמיים,
+בדיוק כמו שורשי הפולינום האופייני.
+
+זה המשפט הבסיסי הראשון על פולינומים מינימליים שצריך לדעת. 
+
+הפולינומים עצמם לא מעניינים אותנו; מעניין איך משתמשים בהם כדי לומר
+משהו על ה\textquotedblright ל, על ערכיה העצמיים ו-וקטוריה העצמיים,
+ואיך מוצאים בסיס שבו המטריצה המייצגת פשוטה ככל האפשר.
+
+טענות על פולינומים נוכיח כלמות, אבל הן לא המטרה.
+\begin{proof}
+)II( \L{$\Rightarrow$} )I(:
+
+1. נכתוב \L{%
+\[
+q_{\min}(x)=x^{m}+b_{m-1}x^{m-1}+\dots+b_{1}x+b_{0}
+\]
+}%
+לפי )I(, \L{$q_{\min}(\lambda)=0_{\mathbb{F}}$}, ולכן \L{%
+\begin{align*}
+q_{\min}(x) & =q_{\min}(x)-\underbrace{q_{\min}(\lambda)}_{=0_{\mathbb{F}}}\\
+ & =\left(x^{m}-\lambda^{m}\right)+b_{m-1}\left(x^{m-1}-\lambda^{m-1}\right)+\dots+b_{1}\left(x-\lambda\right)
+\end{align*}
+}%
+\L{%
+\begin{align*}
+ & \underset{(1)}{=}\left(x-\lambda\right)\left(x^{m-1}+x^{m-2}\lambda+\dots+x\lambda^{m-2}+\lambda^{m-1}\right)\\
+ & \quad+b_{m-1}\left(x-\lambda\right)\left(x^{m-2}+x^{m-3}\lambda+\dots+x\lambda^{m-3}+\lambda^{m-2}\right)\\
+ & \quad\quad\vdots\\
+ & \quad+b_{2}\left(x-\lambda\right)\left(x+\lambda\right)\\
+ & \quad+b_{1}\left(x-\lambda\right)\\
+ & =\left(x-\lambda\right)\underset{S(x)}{\underbrace{\left[\left(x^{m-1}+\dots+\lambda^{m-1}\right)+b_{m-1}\left(x^{m-2}+\dots+\lambda^{m-2}\right)+\dots+b_{2}\left(x+\lambda\right)+b_{1}\right]}}
+\end{align*}
+}%
+\L{$(1)$} לכל \L{$k\geq2$},\L{%
+\[
+x^{k}-\lambda^{k}=(x-\lambda)\left(x^{k-1}+x^{k-2}\lambda+\dots+x\lambda^{k-2}+\lambda^{k-1}\right)
+\]
+}%
+למשל, \L{$x^{2}-\lambda^{2}=(x-\lambda)(x+\lambda)$}. 
+
+לכן ניתן להוציא גורם משותף \L{$(x-\lambda)$} מכל המחוברים וכמו בפיתוח
+נקבל \L{%
+\[
+q_{\min}(x)=(x-\lambda)S(x)
+\]
+}%
+כאשר \L{$S(x)$} פולינום המקיים \L{%
+\[
+\deg S(x)=m-1<\deg q_{\min}
+\]
+}%
+
+הפולינום המפורש \L{$S$} לא חשוב, רק העובדה שדרגתו נמוכה מדרגת הפולינום
+המינימלי )המחובר הראשון תורם \L{$x^{m-1}$}, האחרים חזקות נמוכות יותר(.
+
+2. נציב \L{$T$} )כיסינו בהערה מדוע זה מותר(: \L{%
+\[
+0\underset{q_{\text{min}}\text{ def}}{=}q_{\min}(T)=(T-\lambda I)S(T)
+\]
+}%
+מצד שני, \L{%
+\[
+S(T)\neq0
+\]
+}%
+כי \L{$S$} פולינום שונה מאפס עם \L{$\deg S<\deg q_{\min}$}, ואילו
+\L{$S(T)=0$} היה \L{$S$} פולינום מדרגה נמוכה יותר שמאפס את \L{$T$},
+בסתירה למינימליות של \L{$q_{\min}$}.
+
+3. לכן קיים \L{$0_{V}\ne v_{0}\in V$} כך ש- \L{%
+\[
+v'\overset{\text{def}}{=}S(T)\left(v_{0}\right)\neq0_{V}
+\]
+}%
+נפעיל את השוויון מ-2 על \L{$v_{0}$}\L{%
+\[
+\left(T-\lambda I\right)\left(S\left(T\right)\left(v_{0}\right)\right)=0\left(v_{0}\right)=0_{V}
+\]
+}%
+כלומר\L{%
+\[
+T\left(S\left(T\right)\left(v_{0}\right)\right)-\lambda I\left(S\left(T\right)\left(v_{0}\right)\right)=0_{V}
+\]
+}%
+\L{%
+\[
+\therefore\ T\left(S\left(T\right)\left(v_{0}\right)\right)=\lambda I\left(S\left(T\right)\left(v_{0}\right)\right)
+\]
+}%
+\L{%
+\[
+\therefore T\left(v'\right)=\lambda v'
+\]
+}%
+
+מכאן \L{$\lambda$} הוא ערך עצמי של \L{$T$}, ו-\L{$v'$} וקטור עצמי
+השייך לו.
+
+יבגני אמר: זה משפט נחמד לתת במבחן - הוא קל ויפה, אין בו יותר מדי.
+יהיו משפטים יותר קשים.
+
+)I( \L{$\Rightarrow$} )II(:
+
+1. \L{$\lambda$} ערך עצמי, לכן קיים \L{$0_{V}\ne v\in V$} כך ש-
+\L{$Tv=\lambda v$}.
+
+2. נפעיל את \L{$T$} על שני הצדדים: \L{%
+\begin{align*}
+ & T^{2}v=T\left(T\left(v\right)\right)=T(\lambda v)=\lambda Tv=\lambda^{2}v\\
+ & T^{3}v=\lambda^{3}v\\
+ & \quad\quad\ \vdots\\
+ & T^{m}v=\lambda^{m}v
+\end{align*}
+}%
+3. נזכיר כי \L{%
+\[
+q_{\min}(x)=x^{m}+b_{m-1}x^{m-1}+\dots+b_{1}x+b_{0}
+\]
+}%
+ולכן \L{%
+\[
+0_{\mathcal{L}(V)}=q_{\min}(T)=T^{m}+b_{m-1}T^{m-1}+\dots+b_{1}T+b_{0}I
+\]
+}%
+נפעיל על \L{$v$}: \L{%
+\begin{align*}
+0_{V} & =q_{\min}(T)\left(v\right)=T^{m}\left(v\right)+b_{m-1}T^{m-1}\left(v\right)+\dots+b_{1}T\left(v\right)+b_{0}\left(v\right)\\
+ & \overset{(2)}{=}\lambda^{m}v+b_{m-1}\lambda^{m-1}v+\dots+b_{1}\lambda v+b_{0}v\\
+ & =\left(\lambda^{m}+b_{m-1}\lambda^{m-1}+\dots+b_{1}\lambda+b_{0}\right)v\\
+ & =q_{\min}(\lambda)\cdot v
+\end{align*}
+}%
+כלומר \L{%
+\[
+0_{V}=q_{\min}(\lambda)\cdot v
+\]
+}%
+כאשר \L{$q_{\min}(\lambda)\in\mathbb{F}$} כלומר הוא סקלר ו-\L{$v\neq0_{V}$}.
+
+כפל של וקטור שונה מאפס בסקלר נותן \L{$0_{V}$} רק אם הסקלר הוא \L{$0_{\mathbb{F}}$},
+לכן \L{%
+\[
+q_{\min}(\lambda)=0_{\mathbb{F}}
+\]
+}%
+\end{proof}
+שימו לב להבדל בין האובייקטים:
+
+\L{$q_{\min}(x)$} הוא פולינום
+
+\L{$q_{\min}(T)$} הוא אופרטור )סכום של חזקות של \L{$T$} כפול סקלרים
+- זו ה\textquotedblright ל על \L{$V$} )אופרטור(, וכאן זה אופרטור
+האפס(
+
+\L{$q_{\min}(T)\left(v\right)$} הוא וקטור
+
+\L{$q_{\min}(\lambda)$} הוא סקלר\\
+
+המשפט נותן קשר בין שני הדברים המהותיים שראינו - ערכים עצמיים והפולינום
+המינימלי.
+
+המוטיבציה: השאלות שנותרו פתוחות הן מתי קיים בסיס של וקטורים עצמיים
+מעל שדה כללי, ומתי מגיעים למטריצה משולשית עליונה; מתברר שעל שאלות
+אלה אפשר לענות בעזרת הפולינום המינימלי.
+
+\section{משפט - המקדם החופשי של הפולינום המינימלי והפיכות \L{$T$}}
+
+יהי \L{$V$} מ\textquotedblright ו מעל \L{$\mathbb{F}$} כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+\L{%
+\[
+q_{\min}(x)=x^{m}+b_{m-1}x^{m-1}+\dots+b_{1}x+b_{0}
+\]
+}%
+
+אז התנאים הבאים שקולים:
+
+)I( \L{%
+\[
+b_{0}=0_{\mathbb{F}}
+\]
+}%
+
+)II( \L{$T$} אינה חח\textquotedblright ע\\
+
+מכאן גם אינה על ובפרט אינה הפיכה, כי עבור אופרטור על מ\textquotedblright ו
+נ\textquotedblright ס זה שקול כפי שראינו בהרצאה {\beginL \L{$16$}\endL}
+של לינארית {\beginL 1\endL}.
+
+גרסה אחרת של המשפט היא ש-\L{$T$} הפיכה אם\textquotedblright ם \L{$b_{0}\neq0_{\mathbb{F}}$}.
+
+כלומר, ברגע שיש פולינום מינימלי, מיד אפשר לומר משהו על ההעתקה עצמה
+- האם היא הפיכה - וזו הייתה שאלה מרכזית בלינארית 1.
+\begin{proof}
+)II( \L{$\Rightarrow$} )I(:
+
+1. \L{$b_{0}=0_{\mathbb{F}}$}, לכן \L{%
+\[
+q_{\min}(x)=x^{m}+b_{m-1}x^{m-1}+\dots+b_{1}x
+\]
+}%
+\L{%
+\[
+\therefore\ q_{\min}(0_{\mathbb{F}})=0_{\mathbb{F}}
+\]
+}%
+כלומר \L{$0_{\mathbb{F}}$} הוא שורש של \L{$q_{\min}$}.
+
+2. לפי המשפט הקודם, \L{$\lambda=0_{\mathbb{F}}$} הוא ערך עצמי של
+\L{$T$}.
+
+אז קיים \L{$0_{V}\ne v_{0}\in V$} כך ש- \L{%
+\[
+T(v_{0})=0_{\mathbb{F}}\cdot v_{0}=0_{V}
+\]
+}%
+\L{%
+\[
+\therefore v_{0}\in\text{Null}(T),\;v_{0}\neq0_{V}
+\]
+}%
+אז \L{$\text{Null}(T)\neq\left\{ 0_{V}\right\} $}, ולכן \L{$T$}
+אינה חח\textquotedblright ע )לינארית 1, הרצאה \L{$16$}(.
+
+)I( \L{$\Rightarrow$} )II(:
+
+1. \L{$T$} אינה חח\textquotedblright ע, לכן קיים \L{$0_{V}\ne v_{0}\in\text{Null}(T)$}.
+אז מתקיים \L{%
+\[
+T(v_{0})=0_{V}=0_{\mathbb{F}}\cdot v_{0}
+\]
+}%
+\L{$\Leftarrow$} \L{$\lambda=0_{\mathbb{F}}$} ערך עצמי של \L{$T$}.
+
+2. לפי המשפט הקודם, \L{$0_{\mathbb{F}}$} הוא שורש של \L{$q_{\min}(x)$}:
+\L{%
+\[
+0_{\mathbb{F}}=q_{\min}(0_{\mathbb{F}})=0^{m}+b_{m-1}0^{m-1}+\dots+b_{1}\cdot0+b_{0}=b_{0}
+\]
+}%
+\L{%
+\[
+\therefore\ b_{0}=0_{\mathbb{F}}
+\]
+}%
+\end{proof}
+השלב הבא הוא להוכיח שאם מציבים את \L{$T$} בפולינום האופייני מקבלים
+\L{$0$} - זה משפט קיילי-המילטון.
+
+הוא נראה פשוט, אבל ההוכחה די קשה; המשפט לא יידרש להוכחה במבחן, אבל
+יוכח בהרצאה. 
+
+לשם כך צריך קודם למה טכנית על מטריצות - חישוב המטריצה ההופכית בעזרת
+דטרמיננטות - שהיא חומר של לינארית 1.
+
+ההמשך בהרצאה הבאה.
+
+\part{לקראת משפט קיילי-המילטון}
+
+\section{משפט - נוסחה למטריצה ההופכית באמצעות דטרמיננטות}
+
+תהי \L{%
+\[
+A=\begin{pmatrix}a_{1,1} & a_{1,2} & \cdots & a_{1,n}\\
+a_{2,1} & a_{2,2} & \cdots & a_{2,n}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{n,1} & a_{n,2} & \cdots & a_{n,n}
+\end{pmatrix}\in\text{Mat}\left(n\times n,\mathbb{F}\right)\text{ s.t. }\det(A)\ne0_{\mathbb{F}}
+\]
+}%
+
+נגדיר \L{%
+\[
+B=\begin{pmatrix}b_{1,1} & b_{1,2} & \cdots & b_{1,n}\\
+b_{2,1} & b_{2,2} & \cdots & b_{2,n}\\
+\vdots & \vdots & \ddots & \vdots\\
+b_{n,1} & b_{n,2} & \cdots & b_{n,n}
+\end{pmatrix}\in\text{Mat}\left(n\times n,\mathbb{F}\right)
+\]
+}%
+
+כאשר לכל \L{$1\le i,j\le n$}
+
+\L{%
+\[
+b_{i,j}=\frac{(-1)^{i+j}}{\det(A)}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-9.2ex]{0.4pt}{11.6ex}}}a_{1,i} & \cdots & a_{1,n}\\
+\vdots &  & \vdots &  & \vdots\\
+\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,i} & \cdots & a_{j,n}\\
+\vdots &  & \vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,i} & \cdots & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+הקווים מסמנים את השורה ה-\L{$j$} ואת העמודה ה-\L{$i$}, שאותן מוחקים;
+הדטרמיננטה היא של המטריצה \L{$(n-1)\times(n-1)$} שנותרת.
+
+כלומר, \L{$b_{i,j}$} מתקבל ממחיקת השורה ה-\L{$j$} והעמודה ה-\L{$i$}
+של \L{$A$} )שימו לב להיפוך האינדקסים(, חישוב הדטרמיננטה של המטריצה
+שנותרה, כפל בסימן \L{$\left(-1\right)^{i+j}$} וחלוקה ב-\L{$\det(A)$}.
+
+המטריצה שנותרה היא המינור \L{$A_{j,i}$} )לינארית 1, הרצאה \L{$28$}(,
+ולכן \L{%
+\[
+b_{i,j}=\frac{\left(-1\right)^{i+j}\det\left(A_{j,i}\right)}{\det(A)}
+\]
+}%
+
+אז\L{%
+\[
+AB=I_{n}
+\]
+}%
+ 
+
+יבגני: אם אתם לא מכירים את הנוסחה, בואו נבדוק שהיא נכונה. 
+
+מומלץ מאוד לבצע את החישוב בעצמכם - לא בגלל המבחן )זה חומר של לינארית
+1 ולא יישאל(, אלא כדי להבין אותו.
+
+\subsection{מבוא להוכחה}
+
+\L{%
+\[
+AB=\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots & \ddots & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix}\begin{pmatrix}b_{1,1} & \cdots & b_{1,n}\\
+\vdots & \ddots & \vdots\\
+b_{n,1} & \cdots & b_{n,n}
+\end{pmatrix}=\begin{pmatrix}\sum_{k=1}^{n}a_{1,k}b_{k,1} & \cdots & \sum_{k=1}^{n}a_{1,k}b_{k,n}\\
+\vdots & \ddots & \vdots\\
+\sum_{k=1}^{n}a_{n,k}b_{k,1} & \cdots & \sum_{k=1}^{n}a_{n,k}b_{k,n}
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+=\begin{pmatrix}\sum_{k=1}^{n}a_{1,k}\frac{\left(-1\right)^{k+1}\det\left(A_{1,k}\right)}{\det(A)} & \cdots & \sum_{k=1}^{n}a_{1,k}\frac{\left(-1\right)^{k+n}\det\left(A_{n,k}\right)}{\det(A)}\\
+\vdots & \ddots & \vdots\\
+\sum_{k=1}^{n}a_{n,k}\frac{\left(-1\right)^{k+1}\det\left(A_{1,k}\right)}{\det(A)} & \cdots & \sum_{k=1}^{n}a_{n,k}\frac{\left(-1\right)^{k+n}\det\left(A_{n,k}\right)}{\det(A)}
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+=\frac{1}{\det(A)}\begin{pmatrix}\sum_{k=1}^{n}\left(-1\right)^{1+k}a_{1,k}\det\left(A_{1,k}\right) & \cdots & \sum_{k=1}^{n}\left(-1\right)^{n+k}a_{1,k}\det\left(A_{n,k}\right)\\
+\vdots & \ddots & \vdots\\
+\sum_{k=1}^{n}\left(-1\right)^{1+k}a_{n,k}\det\left(A_{1,k}\right) & \cdots & \sum_{k=1}^{n}\left(-1\right)^{n+k}a_{n,k}\det\left(A_{n,k}\right)
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\underset{(1)}{=}\frac{1}{\det(A)}\begin{pmatrix}\det\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+a_{2,1} & \cdots & a_{2,n}\\
+\vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix} & \cdots & \det\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{n-1,1} & \cdots & a_{n-1,n}\\
+a_{1,1} & \cdots & a_{1,n}
+\end{pmatrix}\\
+\vdots & \ddots & \vdots\\
+\det\begin{pmatrix}a_{n,1} & \cdots & a_{n,n}\\
+a_{2,1} & \cdots & a_{2,n}\\
+\vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix} & \cdots & \det\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{n-1,1} & \cdots & a_{n-1,n}\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix}
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+=\frac{1}{\det(A)}\begin{pmatrix}\det(A) & \cdots & 0\\
+\vdots & \ddots & \vdots\\
+0 & \cdots & \det(A)
+\end{pmatrix}=\begin{pmatrix}1 & 0 & \cdots & 0\\
+0 & 1 & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & 1
+\end{pmatrix}=I_{n}
+\]
+}%
+
+\L{$(1)$} באלכסון )\L{$i=j$}(: מחליפים שורה \L{$j$} בעצמה, זו \L{$A$}
+עצמה, והדטרמיננטה היא \L{$\det(A)$}.
+
+מחוץ לאלכסון )\L{$i\ne j$}(: אותה שורה מופיעה פעמיים.
+
+דטרמיננטה עם שתי שורות זהות היא \L{$0$}.\\
+
+מאחר ש-\L{$AB=I_{n}$} ואלו מטריצות ריבועיות, \L{$BA=I_{n}$} )לינארית
+1, הרצאה \L{$21$}(, מתקבל \L{$B=A^{-1}$}.
+
+זו הנוסחה \L{$A^{-1}=\frac{1}{\det A}\text{adj}(A)$}.\\
+
+רעיון ההוכחה - הקשר לפיתוח לפלס: פיתוח \L{$\det(A)$} לפי השורה ה-\L{$j$}
+הוא \L{%
+\[
+\det(A)=\sum_{k=1}^{n}\left(-1\right)^{j+k}a_{j,k}\det\left(A_{j,k}\right)
+\]
+}%
+כלומר כל איבר \L{$a_{j,k}$} בשורה \L{$j$} מוכפל ב-\L{$\left(-1\right)^{j+k}\det\left(A_{j,k}\right)$}.
+
+האיבר במקום \L{$\left(j,j\right)$} של \L{$AB$} הוא שורה \L{$j$}
+של \L{$A$} כפול עמודה \L{$j$} של \L{$B$}, ולפי הגדרת \L{$B$} \L{%
+\[
+\sum_{k=1}^{n}a_{j,k}b_{k,j}=\sum_{k=1}^{n}a_{j,k}\frac{\left(-1\right)^{j+k}\det\left(A_{j,k}\right)}{\det(A)}=\frac{1}{\det(A)}\underset{=\det(A)}{\underbrace{\sum_{k=1}^{n}\left(-1\right)^{j+k}a_{j,k}\det\left(A_{j,k}\right)}}=1
+\]
+}%
+זה נותן את האלכסון. מחוץ לאלכסון מקבלים פיתוח של דטרמיננטה עם שתי
+שורות זהות, ולכן \L{$0$}. זו ההוכחה שלהלן.
+\begin{proof}
+1. נסמן \L{%
+\[
+C=AB
+\]
+}%
+\L{%
+\[
+C=\left(c_{i,j}\right)_{\substack{1\leq i\leq n\\
+1\leq j\leq n
+}
+}
+\]
+}%
+
+2. לפי הגדרת כפל מטריצות )לינארית 1, הרצאה \L{$19$}(, \L{%
+\[
+c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}b_{\ell,j}
+\]
+}%
+נציב את \L{$b_{\ell,j}$} )במקום האינדקס \L{$i$} של \L{$b_{i,j}$}
+מופיע כעת אינדקס הסכימה \L{$\ell$}, ולכן מוחקים את העמודה ה-\L{$\ell$}
+ואת השורה ה-\L{$j$}(: \L{%
+\[
+c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}\frac{(-1)^{\ell+j}}{\det(A)}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-9.2ex]{0.4pt}{11.6ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
+\vdots &  & \vdots &  & \vdots\\
+\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,\ell} & \cdots & a_{j,n}\\
+\vdots &  & \vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
+\end{pmatrix}\tag{\ensuremath{*}}
+\]
+}%
+וזה נכון לכל \L{$1\leq i,j\leq n$}.
+
+3. המקרה \L{$i=j$}: \L{%
+\[
+c_{i,i}=\frac{1}{\det(A)}\sum_{\ell=1}^{n}a_{i,\ell}(-1)^{\ell+i}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-9.2ex]{0.4pt}{11.6ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
+\vdots &  & \vdots &  & \vdots\\
+\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{i,1} & \cdots & a_{i,\ell} & \cdots & a_{i,n}\\
+\vdots &  & \vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
+\end{pmatrix}=\frac{\det(A)}{\det(A)}=1
+\]
+}%
+כי הסכום הוא בדיוק פיתוח הדטרמיננטה של \L{$A$} לפי השורה ה-\L{$i$}.
+
+לכן על האלכסון של \L{$C$} יש \L{$1$}-ים.
+
+4. המקרה \L{$i\neq j$}. לצורך העניין נניח \L{$1\leq i<j\leq n$}
+)המקרה \L{$i>j$} זהה(. נכפול את \L{$(*)$} ב-\L{$\det(A)$}: \L{%
+\[
+\det(A)\cdot c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}(-1)^{\ell+j}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-13.9ex]{0.4pt}{16.3ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
+\vdots &  & \vdots &  & \vdots\\
+a_{i,1} & \cdots & a_{i,\ell} & \cdots & a_{i,n}\\
+\vdots &  & \vdots &  & \vdots\\
+\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,\ell} & \cdots & a_{j,n}\\
+\vdots &  & \vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
+\end{pmatrix}
+\]
+}%
+זהו בדיוק פיתוח לפי השורה ה-\L{$j$} של דטרמיננטה של מטריצה שבה במקום
+השורה ה-\L{$j$} כתובה השורה ה-\L{$i$} של \L{$A$} )האיברים בשורה
+זו הם \L{$a_{i,\ell}$}, והמינורים הם אותם מינורים, כי מחיקת השורה
+ה-\L{$j$} מוחקת את השורה שהוחלפה(: \L{%
+\[
+\det(A)\cdot c_{i,j}=\det\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{i,1} & \cdots & a_{i,n}\\
+a_{i+1,1} & \cdots & a_{i+1,n}\\
+\vdots &  & \vdots\\
+a_{i,1} & \cdots & a_{i,n}\\
+\vdots &  & \vdots\\
+a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix}\;\leftarrow\text{row }j
+\]
+}%
+במטריצה זו יש שתי שורות זהות )השורה ה-\L{$i$} והשורה ה-\L{$j$}(,
+ולכן הדטרמיננטה שווה ל-\L{$0$} )לינארית 1, הרצאה \L{$26$}, טענה
+11(.
+
+מכאן \L{$\det(A)\cdot c_{i,j}=0$}, ומאחר ש-\L{$\det(A)\neq0_{\mathbb{F}}$},
+\L{%
+\[
+c_{i,j}=0_{\mathbb{F}}
+\]
+}%
+
+5. מ-3 ו-4: \L{$C=AB=I_{n}$}. 
+\end{proof}
+יבגני: זו למה טכנית, ונמשיך איתה ביום רביעי.
+\end{document}
