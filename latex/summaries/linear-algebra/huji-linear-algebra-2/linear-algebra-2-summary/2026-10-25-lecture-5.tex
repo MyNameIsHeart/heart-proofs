@@ -676,9 +676,9 @@ b_{n,1} & b_{n,2} & \cdots & b_{n,n}
 
 \L{%
 \[
-b_{i,j}=\frac{(-1)^{i+j}}{\det(A)}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-9.2ex]{0.4pt}{11.6ex}}}a_{1,i} & \cdots & a_{1,n}\\
+b_{i,j}=\frac{(-1)^{i+j}}{\det(A)}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-16ex]{0.4pt}{18ex}}}a_{1,i} & \cdots & a_{1,n}\\
 \vdots &  & \vdots &  & \vdots\\
-\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,i} & \cdots & a_{j,n}\\
+\smash{\rlap{\rule[0.5ex]{4.2cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,i} & \cdots & a_{j,n}\\
 \vdots &  & \vdots &  & \vdots\\
 a_{n,1} & \cdots & a_{n,i} & \cdots & a_{n,n}
 \end{pmatrix}
@@ -832,9 +832,9 @@ c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}b_{\ell,j}
 מופיע כעת אינדקס הסכימה \L{$\ell$}, ולכן מוחקים את העמודה ה-\L{$\ell$}
 ואת השורה ה-\L{$j$}(: \L{%
 \[
-c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}\frac{(-1)^{\ell+j}}{\det(A)}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-9.2ex]{0.4pt}{11.6ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
+c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}\frac{(-1)^{\ell+j}}{\det(A)}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-18ex]{0.4pt}{20ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
 \vdots &  & \vdots &  & \vdots\\
-\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,\ell} & \cdots & a_{j,n}\\
+\smash{\rlap{\rule[0.1ex]{4cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,\ell} & \cdots & a_{j,n}\\
 \vdots &  & \vdots &  & \vdots\\
 a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
 \end{pmatrix}\tag{\ensuremath{*}}
@@ -844,9 +844,9 @@ a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
 
 3. המקרה \L{$i=j$}: \L{%
 \[
-c_{i,i}=\frac{1}{\det(A)}\sum_{\ell=1}^{n}a_{i,\ell}(-1)^{\ell+i}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-9.2ex]{0.4pt}{11.6ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
+c_{i,i}=\frac{1}{\det(A)}\sum_{\ell=1}^{n}a_{i,\ell}(-1)^{\ell+i}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-18ex]{0.4pt}{20ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
 \vdots &  & \vdots &  & \vdots\\
-\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{i,1} & \cdots & a_{i,\ell} & \cdots & a_{i,n}\\
+\smash{\rlap{\rule[0.1ex]{4cm}{0.4pt}}}a_{i,1} & \cdots & a_{i,\ell} & \cdots & a_{i,n}\\
 \vdots &  & \vdots &  & \vdots\\
 a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
 \end{pmatrix}=\frac{\det(A)}{\det(A)}=1
@@ -859,11 +859,11 @@ a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
 4. המקרה \L{$i\neq j$}. לצורך העניין נניח \L{$1\leq i<j\leq n$}
 )המקרה \L{$i>j$} זהה(. נכפול את \L{$(*)$} ב-\L{$\det(A)$}: \L{%
 \[
-\det(A)\cdot c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}(-1)^{\ell+j}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-13.9ex]{0.4pt}{16.3ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
+\det(A)\cdot c_{i,j}=\sum_{\ell=1}^{n}a_{i,\ell}(-1)^{\ell+j}\det\begin{pmatrix}a_{1,1} & \cdots & \smash{\rlap{\hspace{0.7em}\rule[-24ex]{0.4pt}{24ex}}}a_{1,\ell} & \cdots & a_{1,n}\\
 \vdots &  & \vdots &  & \vdots\\
 a_{i,1} & \cdots & a_{i,\ell} & \cdots & a_{i,n}\\
 \vdots &  & \vdots &  & \vdots\\
-\smash{\rlap{\rule[0.5ex]{4.6cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,\ell} & \cdots & a_{j,n}\\
+\smash{\rlap{\rule[0.1ex]{4cm}{0.4pt}}}a_{j,1} & \cdots & a_{j,\ell} & \cdots & a_{j,n}\\
 \vdots &  & \vdots &  & \vdots\\
 a_{n,1} & \cdots & a_{n,\ell} & \cdots & a_{n,n}
 \end{pmatrix}
