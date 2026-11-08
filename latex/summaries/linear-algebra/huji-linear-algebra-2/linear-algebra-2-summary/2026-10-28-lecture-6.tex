@@ -1,0 +1,766 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{אלגברה ליניארית {\beginL 2\endL} - הרצאה {\beginL 6\endL}}
+\author{נעם לב}
+\date{\L{$28.10.2026$}}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
+\L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
+)תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+הסיכום הוא לא רשמי ולא עבר אישור של הסגל, על כן אין להשתמש בו )ובין
+השאר במספור שלו ובשמות הטענות שבו( כמקור רשמי. אם ישנן טעויות, הן
+שלי ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\section{משפט קיילי-המילטון - \L{$\text{The Cayley-Hamilton Theorem}$}}
+
+יהי \L{$V$} מ\textquotedblright ו מעל שדה \L{$\mathbb{F}$} כלשהו
+כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+ויהי \L{$\mathcal{B}_{V}$} בסיס של \L{$V$}.
+
+נסמן ב- \L{$P_{ch}$} את הפולינום האופייני של \L{$T$} \L{$\left(\text{ch stands for \textbf{ch}aracteristic polynomial}\right)$}.
+
+דהיינו,\L{%
+\[
+P_{ch}(x)=\det\left(I_{n}x-\underset{A}{\underbrace{M(T,\mathcal{B}_{V},\mathcal{B}_{V})}}\right)
+\]
+}%
+
+כפי שהגדרנו בהרצאה {\beginL 2\endL}, \L{$P_{ch}$} הוא פולינום שאינו
+תלוי בבחירת הבסיס, עם מקדמים ב-\L{$\mathbb{F}$} וממעלה לכל היותר
+\L{$n$}.
+
+לכן קיימים \L{$a_{n},a_{n-1},\dots,a_{0}\in\mathbb{F}$} כך ש-\L{%
+\[
+P_{ch}(x)=a_{n}x^{n}+a_{n-1}x^{n-1}+\dots+a_{1}x+a_{0}
+\]
+}%
+
+בנוסף )זה לא חלק ממה שהמשפט אומר, זו עובדה(, \L{$a_{n}=1$} לכן\L{%
+\[
+P_{ch}(x)=x^{n}+a_{n-1}x^{n-1}+\dots+a_{1}x+a_{0}
+\]
+}%
+
+אז:\L{%
+\[
+P_{ch}(T)=0_{\mathcal{L}(V)}
+\]
+}%
+
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+בהרצאה {\beginL 2\endL} המחשנו מדוע המקדם המוביל הוא {\beginL 1\endL}. 
+
+אנסה להראות זאת כאן שוב קצת יותר פורמאלית, על אף שיבגני התייחס לזה
+כבר כעובדה.
+
+לפי פיתוח לפלס לפי השורה הראשונה,\L{%
+\[
+P_{ch}(x)=\det\left(I_{n}x-\underset{A}{\underbrace{M(T,\mathcal{B}_{V},\mathcal{B}_{V})}}\right)=\begin{vmatrix}x-a_{1,1} & -a_{1,2} & \dots & -a_{1,n}\\
+-a_{2,1} & x-a_{2,2} & \dots & -a_{2,n}\\
+\vdots &  & \ddots & \vdots\\
+-a_{n,1} & -a_{n,2} & \dots & x-a_{n,n}
+\end{vmatrix}=
+\]
+}%
+\L{%
+\[
+\left(x-a_{1,1}\right)\cdot\begin{vmatrix}x-a_{2,2} & \dots & -a_{2,n}\\
+\vdots & \ddots & \vdots\\
+-a_{n,2} & \dots & x-a_{n,n}
+\end{vmatrix}+a_{1,2}\cdot\begin{vmatrix}-a_{2,1} & -a_{2,3} & \dots & -a_{2,n}\\
+\vdots &  &  & \vdots\\
+-a_{n,1} & -a_{n,3} & \dots & x-a_{n,n}
+\end{vmatrix}+
+\]
+}%
+\L{%
+\[
+\dots+\left(-1\right)^{1+n}\cdot\left(-a_{1,n}\right)\begin{vmatrix}-a_{2,1} & x-a_{2,2} & \dots & -a_{2,n-1}\\
+\vdots &  &  & \vdots\\
+-a_{n,1} & -a_{n,2} & \dots & -a_{n,n-1}
+\end{vmatrix}
+\]
+}%
+
+המחוברים כאן הם כשלעצמם פולינומים.
+
+ניתן להוכיח באינדוקציה בעזרת פיתוח לפלס שמעלת הפולינומים למעט המחובר
+הראשון היא לכל היותר \L{$n-1$} ושמעלת המחובר הראשון היא \L{$n$}.
+
+כאשר ממשיכים לפתח בעזרת פיתוח לפלס את המחובר הראשון, היות והמקדם של
+כל \L{$x$} באלכסון הוא {\beginL 1\endL}, מקבלים \L{$1\cdot x^{n}$}
+כנדרש.
+
+ניתן להוכיח גם זאת באינדוקציה.%
+\end{minipage}}
+
+\medskip{}
+
+אז \L{$P_{ch}(T)$} הוא אופרטור על \L{$V$}, כי חזקה של אופרטור, כפל
+אופרטור בסקלר וסכום אופרטורים הם אופרטורים. 
+
+התוכן של המשפט הוא שזה בדיוק אופרטור האפס.
+
+\subsection{\textcolor{violet}{\textquotedblright הוכחה\textquotedblright{} שגויה}}
+
+\textcolor{violet}{יבגני רצה שנבין גם איך עלולים לשגות כאן.}
+
+\textcolor{violet}{אפשר לנסות להוכיח בעזרת \L{%
+\begin{align*}
+P_{ch}\left(M(T,\mathcal{B}_{V},\mathcal{B}_{V})\right) & =\det\left(I_{n}M(T,\mathcal{B}_{V},\mathcal{B}_{V})-M(T,\mathcal{B}_{V},\mathcal{B}_{V})\right)\\
+ & =\det\begin{pmatrix}0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+\vdots &  & \vdots\\
+0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}
+\end{pmatrix}=0_{\mathbb{F}}
+\end{align*}
+}%
+}
+
+\textcolor{violet}{אבל זו הוכחה לא נכונה.}
+
+\textcolor{violet}{רמז ראשוני לכך הוא שהטענה במשפט היא על שוויון של
+העתקות לינאריות )או של מטריצות(, ואילו כאן באגף ימין מתקבל סקלר, איבר
+בשדה.}
+
+\textcolor{violet}{\L{$P_{ch}(A)$} מוגדר ע\textquotedblright י הצבת
+\L{$A$} בפולינום האופייני של האופרטור, כלומר אחרי שהמקדמים של \L{$x^{n}+a_{n-1}x^{n-1}+\dots+a_{1}x+a_{0}$}
+כבר חושבו.}
+
+\textcolor{violet}{כאן עושים משהו אחר: מחשבים את הדטרמיננטה של ביטוי
+כלשהו )הביטוי \L{$I_{n}M(T,\mathcal{B}_{V},\mathcal{B}_{V})-M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}(,
+וזה כמובן יוצא סקלר - לעומת חישוב של הפולינום האופייני ולאחר מכן הצבה
+של המטריצה בו. }
+
+\subsection{הוכחת המשפט}
+\begin{proof}
+1. נסמן \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})=A$}. מספיק להוכיח
+כי \L{%
+\[
+P_{ch}(A)=A^{n}+a_{n-1}A^{n-1}+\dots+a_{1}A+a_{0}I_{n}=0
+\]
+}%
+
+כיוון שיש איזומורפיזם בין מרחב האופרטורים למרחב המטריצות, ולכן שוויון
+אלגברי במרחב המטריצות נותן את אותו שוויון במרחב האופרטורים, במיוחד
+כש-\L{$A$} היא המטריצה של \L{$T$} בבסיס הנתון.
+
+\textcolor{teal}{\emph{התמקדתי בזה בלמה בסוף סיכום הרצאה \L{$4$}.}}
+
+\textcolor{teal}{\emph{עבור \L{$\Phi(S)=M(S,\mathcal{B}_{V},\mathcal{B}_{V})$}
+ראינו ש- \L{$\Phi(q(T))=q(A)$} לכל פולינום \L{$q$} )ובפרט עם \L{$q=P_{ch}$}(,
+ולכן \L{$q(T)=0\iff q(A)=0$}.}}
+
+2. נזכיר את הנוסחה מהרצאה \L{$5$}: אם \L{%
+\[
+Q=\left(q_{i,j}\right)_{i,j=1}^{n}
+\]
+}%
+הפיכה, אז \L{%
+\[
+Q^{-1}=\left(d_{i,j}\right)_{i,j=1}^{n}\cdot\frac{1}{\det(Q)}
+\]
+}%
+כאשר לכל \L{$1\leq i,j\leq n$} \L{%
+\[
+d_{i,j}=(-1)^{i+j}\cdot\det\left(\begin{array}{cc|c|cc}
+q_{1,1} & \cdots & q_{1,i} & \cdots & q_{1,n}\\
+\vdots &  & \vdots &  & \vdots\\
+\hline q_{j,1} & \cdots & q_{j,i} & \cdots & q_{j,n}\\
+\hline \vdots &  & \vdots &  & \vdots\\
+q_{n,1} & \cdots & q_{n,i} & \cdots & q_{n,n}
+\end{array}\right)=(-1)^{i+j}\cdot\det\left(Q_{j,i}\right)
+\]
+}%
+)מוחקים את השורה ה-\L{$j$} ואת העמודה ה-\L{$i$}: הקווים מסמנים את
+השורה ה-\L{$j$} ואת העמודה ה-\L{$i$}, שאותן מוחקים; \L{$Q_{j,i}$}
+הוא המינור המתאים(.
+
+נגדיר \L{%
+\[
+Q\overset{\text{def}}{=}I_{n}x-A
+\]
+}%
+\L{%
+\[
+\text{adj}(Q)\overset{\text{def}}{=}\left(d_{i,j}\right)_{i,j=1}^{n}
+\]
+}%
+כלומר \L{%
+\[
+Q^{-1}=\text{adj}(Q)\cdot\frac{1}{\det(Q)}
+\]
+}%
+ולכן \L{%
+\[
+\text{adj}(Q)\cdot Q=I_{n}\cdot\text{adj}(Q)\cdot Q=\det(Q)\cdot\frac{1}{\det(Q)}\cdot\text{adj}(Q)\cdot Q=\det(Q)\cdot Q^{-1}\cdot Q=\det(Q)\cdot I_{n}
+\]
+}%
+\L{%
+\[
+Q\cdot\text{adj}(Q)=Q\cdot\text{adj}(Q)\cdot I_{n}=Q\cdot\text{adj}(Q)\cdot\frac{1}{\det(Q)}\cdot\det(Q)=Q\cdot Q^{-1}\cdot\det(Q)=I_{n}\cdot\det(Q)=\det(Q)\cdot I_{n}
+\]
+}%
+
+לפעמים קוראים ל- \L{$\text{adj}(Q)$} ה- \L{$\text{\textbf{adjoint}}$}
+של \L{$Q$}, אבל יהיה לנו גם \L{$\text{adjoint}$} של העתקה לינארית
+במובן אחר, אז כאן זו פשוט מטריצה שמוגדרת לצורך ההוכחה.
+
+בפרט, \L{$\text{adj}(Q)$} ו-\L{$Q$} מתחלפות, וזה לא היה ברור מראש.
+
+כאן הוכחנו זאת בעזרת שימוש בזה ש-\L{$Q$} הפיכה, אך חשוב לציין שיש
+הוכחה שלא משתמשת בכך ודומה מאוד להוכחה של המשפט בסוף הרצאה {\beginL 5\endL}.
+
+לכן השוויונות שהוכחנו עכשיו\L{%
+\[
+Q\cdot\text{adj}(Q)=\det(Q)\cdot I_{n}=\text{adj}(Q)\cdot Q
+\]
+}%
+נכונים לכל מטריצה ריבועית \L{$Q$}, גם אם היא לא הפיכה.
+
+זה רלוונטי כי \L{$Q=I_{n}x-A$} אינה הפיכה בדיוק כאשר \L{$x$} ערך
+עצמי של \L{$A$}, ובשלב 3 אנחנו צריכים את השוויון לכל \L{$x$}.\\
+
+\textcolor{teal}{סקירה של ההוכחה בדרך האחרת: }
+
+\textcolor{teal}{השוויון הראשון הוא בדיוק מה שהוכחנו בשלבים 3 ו-4
+בהוכחה מהרצאה \L{$5$}, אם לא מחלקים בדטרמיננטה: האיבר במקום \L{$(i,i)$}
+של \L{$Q\cdot\text{adj}(Q)$} הוא פיתוח של \L{$\det(Q)$} לפי השורה
+ה-\L{$i$}, והאיבר במקום \L{$(i,j)$} עבור \L{$i\neq j$} הוא פיתוח
+של דטרמיננטה עם שתי שורות זהות, ולכן \L{$0$}.}
+
+\textcolor{teal}{ההנחה \L{$\det(Q)\neq0$} שימשה שם רק לחלוקה בסוף.}
+
+\textcolor{teal}{השוויון השני נובע מהראשון דרך שחלוף: מההגדרה \L{$\text{adj}(Q^{T})=\text{adj}(Q)^{T}$},
+כי המינור של \L{$Q^{T}$} במקום \L{$(j,i)$} הוא השחלוף של המינור
+של \L{$Q$} במקום \L{$(i,j)$}, ודטרמיננטה לא משתנה בשחלוף )לינארית
+1, הרצאה \L{$29$}(.}
+
+\textcolor{teal}{לכן מהשוויון הראשון עבור \L{$Q^{T}$}: \L{%
+\[
+Q^{T}\cdot\text{adj}(Q)^{T}=\det(Q^{T})\cdot I_{n}=\det(Q)\cdot I_{n}
+\]
+}%
+ובשחלוף שני האגפים )\L{$(XY)^{T}=Y^{T}X^{T}$}( מקבלים \L{$\text{adj}(Q)\cdot Q=\det(Q)\cdot I_{n}$}.}
+
+3. נציב \L{$Q=I_{n}x-A$}: \L{%
+\[
+(I_{n}x-A)\cdot\text{adj}(I_{n}x-A)=\det(I_{n}x-A)\cdot I_{n}
+\]
+}%
+
+באגף ימין יש למעשה בדיוק את \L{$P_{ch}(x)\cdot I_{n}$}, כלומר בדיוק
+המקדמים שאנחנו רוצים.
+
+\textcolor{violet}{עוד \textquotedblright הוכחה\textquotedblright{}
+שגויה: להציב \L{$x=A$} ולקבל \L{%
+\[
+0\cdot\text{adj}(I_{n}x-A)=P_{ch}(A)
+\]
+}%
+זה נראה בדיוק כמו מה שרצינו, אבל זה לא נכון.}
+
+\textcolor{violet}{מותר להציב מטריצה \L{$A$} בזהות פולינומית כשהמקדמים
+סקלרים )הרצאה \L{$5$}(, או כשהם מטריצות המתחלפות עם \L{$A$}.}
+
+\textcolor{violet}{בשלב הזה לא ידוע לנו דבר על המקדמים של \L{$\text{adj}(I_{n}x-A)$},
+ולכן ההצבה אינה מוצדקת.}
+
+\textcolor{violet}{)בדיעבד, משלב 6 נובע שהם כן מתחלפים עם \L{$A$},
+אבל אז ההוכחה כבר הושלמה בלעדיה(.}
+
+\textcolor{violet}{יבגני המחיש בדוגמה מה קורה כשהמקדמים לא מתחלפים:
+השוויון \L{%
+\[
+(xI_{n}-A)(xI_{n}+B)=x^{2}I_{n}+(B-A)x-AB
+\]
+}%
+נכון לכל סקלר \L{$x$}, אבל בהצבת \L{$x=A$} אגף שמאל מתאפס ואגף ימין
+הוא \L{$BA-AB$}, שאינו \L{$0$}, למשל עבור \L{%
+\[
+A=\begin{pmatrix}0 & 1\\
+1 & 0
+\end{pmatrix},\quad B=\begin{pmatrix}1 & 0\\
+0 & -1
+\end{pmatrix}
+\]
+}%
+}
+
+{\beginL 4\endL}. כל איבר של \L{$\text{adj}(I_{n}x-A)$} הוא, עד כדי
+סימן, דטרמיננטה של מטריצת המינור שהיא בגודל \L{$(n-1)\times(n-1)$}
+ואיברי המינור הם פולינומים במשתנה \L{$x$} ממעלה לכל היותר \L{$1$},
+ולכן הדטרמיננטה של המינור הוא פולינום במשתנה \L{$x$} ממעלה לכל היותר
+\L{$n-1$}.
+
+דהיינו, כל איבר של \L{$\text{adj}(I_{n}x-A)$} הוא פולינום במשתנה
+\L{$x$} ממעלה לכל היותר \L{$n-1$}.
+
+נפרק את \L{$\text{adj}(I_{n}x-A)$} לפי החזקות שלו: \L{%
+\[
+\text{adj}(I_{n}x-A)=B_{n-1}x^{n-1}+B_{n-2}x^{n-2}+\dots+B_{1}x+B_{0}
+\]
+}%
+ולפי 3\L{%
+\[
+(I_{n}x-A)\left(B_{n-1}x^{n-1}+B_{n-2}x^{n-2}+\dots+B_{1}x+B_{0}\right)=x^{n}I_{n}+x^{n-1}a_{n-1}I_{n}+\dots+xa_{1}I_{n}+a_{0}I_{n}
+\]
+}%
+
+נשים לב שמתקיים: \L{%
+\begin{align*}
+(I_{n}x-A)\left(B_{n-1}x^{n-1}+\dots+B_{1}x+B_{0}\right) & =B_{n-1}x^{n}+B_{n-2}x^{n-1}+\dots+B_{1}x^{2}+B_{0}x\\
+ & \quad-AB_{n-1}x^{n-1}-AB_{n-2}x^{n-2}-\dots-AB_{1}x-AB_{0}
+\end{align*}
+}%
+\L{%
+\[
+=B_{n-1}x^{n}+\left(B_{n-2}-AB_{n-1}\right)x^{n-1}+\dots+\left(B_{0}-AB_{1}\right)x-AB_{0}
+\]
+}%
+
+{\beginL 5\endL}. נשווה את המקדמים לפני כל חזקה של \L{$x$} בשני האגפים:
+\L{%
+\begin{align*}
+x^{n}: & \quad B_{n-1}=I_{n}\\
+x^{n-1}: & \quad B_{n-2}-AB_{n-1}=a_{n-1}I_{n}\\
+x^{n-2}: & \quad B_{n-3}-AB_{n-2}=a_{n-2}I_{n}\\
+ & \quad\vdots\\
+x^{2}: & \quad B_{1}-AB_{2}=a_{2}I_{n}\\
+x: & \quad B_{0}-AB_{1}=a_{1}I_{n}\\
+1: & \quad-AB_{0}=a_{0}I_{n}
+\end{align*}
+}%
+מותר להשוות מקדמים: השוויון ב-{\beginL 4\endL} מתקיים לכל \L{$x\in\mathbb{F}$},
+ובכל איבר \L{$(i,j)$} שני האגפים הם פולינומים ב-\L{$x$}.
+
+מעל \L{$\mathbb{R}$} או \L{$\mathbb{C}$}, פולינום שמתאפס באינסוף
+נקודות הוא פולינום האפס, ולכן המקדמים שווים איבר-איבר.
+
+זו מערכת של \L{$n+1$} משוואות, כל אחת היא קשר בין מטריצות. 
+
+יש כאן \textquotedblright קונספירציה\textquotedblright : המקדמים של
+הפולינום האופייני תלויים במטריצה \L{$A$}, ובזכות זה מתקבל \L{$0$}.
+
+{\beginL 6\endL}. לכן \L{%
+\begin{align*}
+P_{ch}(x)I_{n} & =x^{n}I_{n}+x^{n-1}(a_{n-1}I_{n})+x^{n-2}(a_{n-2}I_{n})\\
+ & \quad+\dots+x^{2}(a_{2}I_{n})+x(a_{1}I_{n})+a_{0}I_{n}
+\end{align*}
+}%
+
+נכפול כל משוואה מ-5 ב-\L{$A^{k}$} המתאים משמאל ונסכום: \L{%
+\begin{align*}
+P_{ch}(A) & =A^{n}B_{n-1}+A^{n-1}(B_{n-2}-AB_{n-1})+A^{n-2}(B_{n-3}-AB_{n-2})+\dots\\
+ & \quad+A^{2}(B_{1}-AB_{2})+A(B_{0}-AB_{1})-AB_{0}\\
+ & =A^{n}B_{n-1}+\left(A^{n-1}B_{n-2}-A^{n}B_{n-1}\right)+\left(A^{n-2}B_{n-3}-A^{n-1}B_{n-2}\right)+\dots\\
+ & \quad+\left(A^{2}B_{1}-A^{3}B_{2}\right)+\left(AB_{0}-A^{2}B_{1}\right)-AB_{0}\\
+ & =A^{n}B_{n-1}-A^{n}B_{n-1}+A^{n-1}B_{n-2}-A^{n-1}B_{n-2}+\dots+AB_{0}-AB_{0}\\
+ & =0
+\end{align*}
+}%
+
+זה נראה כמו ההצבה \L{$x=A$} מ-4, אבל יש הבדל: ב-4 הצבנו \L{$A$}
+בזהות אחת שבה \L{$x$} מופיע גם מימין למקדמים המטריציוניים, וזה דרש
+להעביר את \L{$A$} מעבר ל-\L{$B_{k}$}. 
+
+כאן, לעומת זאת, כל משוואה מ-5 היא שוויון בין מטריצות קבועות )בלי \L{$x$}(,
+ואפשר לכפול שוויון כזה ב-\L{$A^{k}$} משמאל.
+
+כלומר, אין כאן בעיה כי לא שינינו את סדר הכפל בשום מקום; מההתחלה התייחסנו
+לכפל כלא קומוטטיבי.
+
+יבגני אמר שההוכחה לא תינתן במבחן כי היא טכנית מדי: מספיק לטעות קצת
+באינדקס וכל ההוכחה נופלת.
+\end{proof}
+
+\section{מסקנה - הפולינום המינימלי מחלק את הפולינום האופייני}
+
+יהי \L{$V$} מ\textquotedblright ו מעל שדה \L{$\mathbb{F}$} כלשהו
+כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+ויהי \L{$q_{\min}(x)$} הפולינום המינימלי של \L{$T$}. אז:
+
+)א( \L{$q_{\min}$} מחלק את הפולינום האופייני של \L{$T$}.
+
+)ב( \L{%
+\[
+1\leq\deg(q_{\min})\leq n
+\]
+}%
+
+\begin{proof}
+)א( לפי משפט קיילי-המילטון \L{$P_{ch}(T)=0$}, ולפי המשפט מהרצאה \L{$5$}
+הפולינום המינימלי מחלק כל פולינום שמאפס את \L{$T$}.
+
+)ב( \L{$q_{\min}$} מחלק את \L{$P_{ch}$}, ו-\L{$\deg(P_{ch})=n$},
+ולכן \L{$\deg(q_{\min})\leq n$}.
+
+בנוסף, \L{$q_{\min}$} לא יכול להיות קבוע, כי קבוע שונה מאפס כפול
+\L{$I$} אינו אופרטור האפס:
+
+דהיינו, בגלל שהפולינום המינימלי מחלק את הפולינום האופייני, קיים פולינום
+\L{$S$} כך ש{\beginL -\endL} \L{$P_{ch}=S\cdot q_{\min}$}
+
+וגם הפולינום האופייני הוא לא פולינום האפס כי המקדם המוביל שלו הוא
+{\beginL 1\endL}. 
+
+לכן \L{$S\neq0$} ומכאן\L{%
+\[
+n=\deg(S)+\deg(q_{\min})\geq\deg(q_{\min})
+\]
+}%
+אם \L{$\deg(q_{\min})=0$} אז היות והפולינום המינימלי הוא פולינום
+מתוקן נקבל \L{$q_{\min}=1$}.
+
+אבל \L{$\dim V\geq1$} לכן \L{$q_{\min}(T)=I\neq0$} וזו סתירה.
+\end{proof}
+החסם \L{$\deg(q_{\min})\leq n$} לא ברור מאליו, והוא נובע רק מקיילי-המילטון. 
+
+בהוכחת הקיום בהרצאה \L{$4$} קיבלנו רק \L{$\deg(q_{\min})\leq n^{2}$},
+מהרשימה \L{$(I,T,\dots,T^{n^{2}})$}.
+
+\section{משפט - הפולינום המינימלי וייצוג ע\textquotedblright י מטריצה משולשית
+עליונה}
+
+יהי \L{$V$} מ\textquotedblright ו מעל שדה \L{$\mathbb{F}$} כלשהו
+כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+ויהי \L{$q_{\min}$} הפולינום המינימלי של \L{$T$}. אז התנאים הבאים
+שקולים:
+
+\L{$(\text{I})$} קיים בסיס \L{$\mathcal{B}_{V}$} במרחב הווקטורי
+\L{$V$} כך ש- \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} & \cdots & a_{1,n}\\
+0_{\mathbb{F}} & \ddots & \vdots\\
+0_{\mathbb{F}} & \cdots0_{\mathbb{F}} & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+\L{$(\text{II})$} ניתן לפרק את הפולינום המינימלי לגורמים \L{%
+\[
+q_{\min}(z)=(z-\lambda_{1})\cdots(z-\lambda_{m})
+\]
+}%
+כאשר \L{%
+\[
+\lambda_{1},\dots,\lambda_{m}\in\mathbb{F}
+\]
+}%
+
+\L{$\lambda_{1},\dots,\lambda_{m}$} לא חייבים להיות שונים זה מזה;
+ייתכן שחלקם, או אפילו כולם, שווים. \\
+
+\textcolor{teal}{זה המשפט המשמעותי השני על פולינומים מינימליים.}
+
+\textcolor{teal}{מבחינה שימושית הכיוון \L{$(\text{II})\Rightarrow(\text{I})$}
+חשוב יותר: כדי לדעת אם אפשר להציג את \L{$T$} ע\textquotedblright י
+מטריצה משולשית עליונה, בודקים את הפולינום המינימלי.}
+
+\textcolor{teal}{מעל \L{$\mathbb{C}$} אנחנו יודעים מראש שזה תמיד
+אפשרי, מעל \L{$\mathbb{R}$} לא.}
+
+\textcolor{teal}{לפי המשפט מהרצאה \L{$5$}, \L{$\lambda_{1},\dots,\lambda_{m}$}
+הם בדיוק הערכים העצמיים של \L{$T$} )עם חזרות(, כלומר \L{$(\text{II})$}
+אומר ש-\L{$q_{\min}$} מתפרק לגורמים לינאריים מעל \L{$\mathbb{F}$}.}
+
+\textcolor{teal}{מעל \L{$\mathbb{C}$} זה תמיד מתקיים לפי המשפט היסודי
+של האלגברה )הרצאה \L{$2$}(, ולכן המשפט מהרצאה \L{$3$} )מעל \L{$\mathbb{C}$}
+כל אופרטור ניתן לייצוג ע\textquotedblright י מטריצה משולשית עליונה(
+הוא מקרה פרטי של המשפט הזה. }
+
+\textcolor{teal}{מעל \L{$\mathbb{R}$}, הסיבוב \L{$T(x,y)=(-y,x)$}
+מהרצאה \L{$4$} הוא דוגמה נגדית: אותו חישוב נותן \L{$q_{\min}(z)=z^{2}+1$},
+שאין לו שורשים ממשיים.}
+
+\subsection{הערה - שורשי \L{$q_{\min}$} הם איברי אלכסון}
+
+מתקיים \L{%
+\[
+\lambda_{1},\dots,\lambda_{m}\in\left\{ a_{1,1},\dots,a_{n,n}\right\} 
+\]
+}%
+
+כאן \L{$a_{1,1},\dots,a_{n,n}$} הם איברי האלכסון של המטריצה מ-\L{$(\text{I})$}.
+
+למעשה זה שוויון של קבוצות כי כבר יש לנו את הכיוון השני: לפי ההערה
+בהרצאה \L{$4$}, כל \L{$a_{i,i}$} הוא ערך עצמי של \L{$T$}, ולכן
+לפי הרצאה \L{$5$} הוא שורש של \L{$q_{\min}$}.
+
+\L{$m\leq n$}, ולא בהכרח \L{$m=n$}.
+
+למשל, אם \L{$P_{ch}(z)=(z-2)^{3}(z-1)$} )כלומר \L{$n=4$}(, האפשרויות
+ל-\L{$q_{\min}$} הן \L{%
+\[
+(z-2)^{3}(z-1),\quad(z-2)^{2}(z-1),\quad(z-2)(z-1)
+\]
+}%
+כי כל ערך עצמי הוא שורש של הפולינום המינימלי, ולכן \L{$z-2$} ו-\L{$z-1$}
+חייבים להופיע.
+
+\subsection{הוכחת המשפט}
+\begin{proof}
+\L{$(\text{I})$} \L{$\Leftarrow$} \L{$(\text{II})$}
+
+1. \L{%
+\begin{align*}
+\det\left(zI_{n}-M(T,\mathcal{B}_{V},\mathcal{B}_{V})\right) & =(z-a_{1,1})(z-a_{2,2})\cdots(z-a_{n,n})\\
+ & =P_{ch}(z)
+\end{align*}
+}%
+
+מפתחים לפי העמודה הראשונה, שבה רק האיבר הראשון שונה מאפס, וממשיכים
+באינדוקציה.
+
+זה החישוב מההערה \textquotedblright איברי האלכסון של מטריצה משולשית
+עליונה הם ערכים עצמיים\textquotedblright{} בהרצאה \L{$4$}.
+
+2. \L{$q_{\min}(z)$} מחלק את \L{$P_{ch}(z)$} לכן\L{%
+\[
+q_{\min}(z)=(z-\lambda_{1})\cdots(z-\lambda_{m})
+\]
+}%
+
+יבגני התייחס לזה כמובן מאליו שמחלק של מכפלת גורמים לינאריים הוא מכפלה
+של חלק מהם אבל ניתן להוכיח זאת באינדוקציה על הדרגה: פולינום מתוקן
+שמחלק מכפלה של גורמים לינאריים הוא מכפלה של חלק מהם.
+
+אם \L{$\deg(q_{\min})=0$} אז \L{$q_{\min}=1$} )מתוקן(, וזה מתקיים
+באופן טריוויאלי.
+
+אחרת, היות והפולינום המינימלי מחלק אותו נוכל לכתוב\L{%
+\[
+q_{\min}(z)S(z)=(z-a_{1,1})\cdot_{\dots}(z-a_{n,n})
+\]
+}%
+
+ונציב \L{$z=a_{1,1}$}: אגף שמאל מתאפס, לכן \L{$q_{\min}(a_{1,1})=0_{\mathbb{F}}$}
+או \L{$S(a_{1,1})=0_{\mathbb{F}}$}.
+
+אם \L{$q_{\min}(a_{1,1})=0_{\mathbb{F}}$}, אז \L{$q_{\min}(z)=(z-a_{1,1})q_{1}(z)$}
+כאשר \L{$q_{1}$} הוא פולינום מתוקן ממעלה \L{$\deg(q_{\min})-1$}. 
+
+נציב בשוויון ונצמצם את \L{$(z-a_{1,1})$}: \L{%
+\[
+q_{1}(z)S(z)=(z-a_{2,2})\cdot_{\dots}(z-a_{n,n})
+\]
+}%
+לפי הנחת האינדוקציה \L{$q_{1}$} הוא מכפלה של חלק מהגורמים, ולכן גם
+\L{$q_{\min}=(z-a_{1,1})q_{1}$}.
+
+אחרת \L{$S(a_{1,1})=0_{\mathbb{F}}$}, לכן \L{$S(z)=(z-a_{1,1})S_{1}(z)$}.
+נצמצם: \L{%
+\[
+q_{\min}(z)S_{1}(z)=(z-a_{2,2})\cdot_{\dots}(z-a_{n,n})
+\]
+}%
+כלומר \L{$q_{\min}$} מחלק מכפלה של \L{$n-1$} גורמים.
+
+נחזור על אותו טיעון עם \L{$a_{2,2}$}, ואם שוב \L{$S_{1}$} הוא שמתאפס
+נמשיך ל-\L{$a_{3,3}$} וכן הלאה.
+
+זה חייב להיעצר במקום מסוים, כי אחרת אחרי \L{$n$} צמצומים נקבל \L{$q_{\min}(z)S_{n}(z)=1$},
+ולכן \L{$\deg(q_{\min})=0$}, בסתירה להנחה.
+
+הצמצום מותר כי אם \L{$(z-c)f=(z-c)g$} אז \L{$(z-c)(f-g)=0$}, ואם
+\L{$f\neq g$} המעלה של אגף שמאל היא לפחות \L{$1$}, בסתירה.
+
+\L{$(\text{II})$} \L{$\Leftarrow$} \L{$(\text{I})$}
+
+באינדוקציה על \L{$m$}.
+
+1. נניח כי \L{$m=1$}, אז \L{%
+\[
+q_{\min}(z)=z-\lambda_{1}
+\]
+}%
+\L{%
+\[
+q_{\min}(T)=T-\lambda_{1}I=0
+\]
+}%
+\L{%
+\[
+\therefore\quad T=\lambda_{1}I
+\]
+}%
+\L{%
+\[
+\therefore\quad M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}\lambda_{1} &  & 0\\
+ & \ddots\\
+0 &  & \lambda_{1}
+\end{pmatrix}
+\]
+}%
+בכל בסיס ב-\L{$V$}, וזו מטריצה אלכסונית שזה מקרה פרטי של משולשית
+עליונה.
+
+2. יהי \L{$m\geq2$}. נניח שאם \L{%
+\[
+\widetilde{q}_{\min}(z)=(z-\alpha_{1})\cdots(z-\alpha_{k})
+\]
+}%
+)כאשר \L{$1\leq k\leq m-1$}( הוא הפולינום המינימלי של \L{$\widetilde{T}\in\mathcal{L}(\widetilde{V})$},
+אז קיים בסיס \L{$\mathcal{B}_{\widetilde{V}}$} ב-\L{$\widetilde{V}$}
+כך ש- \L{$M(\widetilde{T},\mathcal{B}_{\widetilde{V}},\mathcal{B}_{\widetilde{V}})$}
+משולשית עליונה.
+
+זו הנחת אינדוקציה מאוד חזקה: היא על כל מרחב וקטורי \L{$\widetilde{V}$}
+ועל כל אופרטור \L{$\widetilde{T}$} שהפולינום המינימלי שלו הוא מכפלה
+של פחות מ-\L{$m$} גורמים לינאריים. 
+
+ממנה נגיע ל-\L{$V$}, \L{$T$} ו-\L{$q_{\min}$} שלנו.
+
+3. נגדיר \L{%
+\[
+U=\text{Range}(T-\lambda_{m}I)
+\]
+}%
+\L{$U$} - תת-מרחב שמור של \L{$T$}:
+
+אם \L{$u\in U$}, אז \L{%
+\[
+T(u)=\underset{\in\text{Range}(T-\lambda_{m}I)=U}{\underbrace{(T-\lambda_{m}I)(u)}}+\underset{\in U}{\underbrace{\lambda_{m}u}}
+\]
+}%
+ולכן \L{$T(u)\in U$}.
+
+{\beginL 4\endL}. יהי \L{$u\in U$}, כלומר \L{$u=(T-\lambda_{m}I)\left(v_{0}\right)$}
+עבור \L{$v_{0}\in V$} כלשהו. אז
+
+\L{%
+\begin{align*}
+(T-\lambda_{1}I)\cdot_{\dots}(T-\lambda_{m-1}I)\left(u\right) & =\underset{q_{\min}(T)=0}{\underbrace{(T-\lambda_{1}I)\cdot_{\dots}(T-\lambda_{m-1}I)\cdot(T-\lambda_{m}I)}}\left(v_{0}\right)\\
+ & =0
+\end{align*}
+}%
+נגדיר \L{%
+\[
+p(z)=(z-\lambda_{1})\cdots(z-\lambda_{m-1})
+\]
+}%
+ואז \L{%
+\[
+p(T|_{U})=0
+\]
+}%
+
+אם \L{$\widetilde{q}_{\min}$} הוא הפולינום המינימלי של \L{$T|_{U}$},
+אז \L{$\widetilde{q}_{\min}$} מחלק את \L{$p(z)$} ולכן
+
+\L{%
+\[
+\widetilde{q}_{\min}(z)=(z-\alpha_{1})\cdots(z-\alpha_{k})
+\]
+}%
+\L{%
+\[
+1\leq k\leq m-1
+\]
+}%
+
+5. נשתמש ב-2 עבור \L{%
+\[
+\widetilde{V}=U=\text{Range}(T-\lambda_{m}I)
+\]
+}%
+\L{%
+\[
+\widetilde{T}=T|_{U}
+\]
+}%
+ועבור \L{$\widetilde{q}_{\min}$}.
+
+לכן קיים בסיס \L{$\mathcal{B}_{U}$} ב-\L{$U$} כך ש-\L{$M(T|_{U},\mathcal{B}_{U},\mathcal{B}_{U})$}
+משולשית עליונה. \L{%
+\[
+\mathcal{B}_{U}=(u_{1},\dots,u_{p})
+\]
+}%
+\L{%
+\[
+T(u_{j})\in\text{Span}(u_{1},\dots,u_{j}),\quad1\leq j\leq p
+\]
+}%
+
+6. נשלים את \L{$\mathcal{B}_{U}$} לבסיס \L{$\mathcal{B}_{V}$}: \L{%
+\[
+\mathcal{B}_{V}=(u_{1},\dots,u_{p},v_{1},\dots,v_{s})
+\]
+}%
+נרצה להוכיח כי \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$} משולשית
+עליונה. מספיק להוכיח כי \L{%
+\[
+T(v_{\ell})\in\text{Span}(u_{1},\dots,u_{p},v_{1},\dots,v_{\ell})
+\]
+}%
+
+ואכן \L{%
+\begin{align*}
+T(v_{\ell}) & =\underset{\in U=\text{Span}(u_{1},\dots,u_{p})}{\underbrace{(T-\lambda_{m}I)(v_{\ell})}}+\lambda_{m}v_{\ell}\in\text{Span}(u_{1},\dots,u_{p},v_{\ell})\\
+ & \subseteq\text{Span}(u_{1},\dots,u_{p},v_{1},\dots,v_{\ell})
+\end{align*}
+}%
+
+יחד עם 5, כל וקטור ב-\L{$\mathcal{B}_{V}$} נשלח לפרוש של עצמו ושל
+קודמיו, ולכן לפי הלמה מהרצאה 3 המטריצה משולשית עליונה.
+\end{proof}
+
+\end{document}
