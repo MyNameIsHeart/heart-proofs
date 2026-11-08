@@ -1017,11 +1017,25 @@ def scrub_images_under(root: Path) -> int:
     return n
 
 
+def wants_pdf(section: str, side: dict, folder_side: dict) -> bool:
+    """A proof is compiled unless its sidecar says `pdf: false`. A summary is compiled only when its own
+    sidecar, or the `_index.yaml` of its lecture folder, says `pdf: true`; the folder setting covers every
+    lecture added later, and a lecture's own `pdf: false` still wins."""
+    if side.get("pdf") is False:
+        return False
+    if section == "proofs":
+        return True
+    return side.get("pdf") is True or folder_side.get("pdf") is True
+
+
 LATEX_ERR_RE = re.compile(r"^(?:!.*|.*:\d+: .*)$", re.M)
+LIST_EXTS = (".toc", ".lof", ".lot", ".cot", ".fol", ".tol")  # contents, figures, tables; babel-hebrew spells them cot, fol, tol
 
 
 def build_pdf(tex_path: Path, out_pdf: Path) -> bool:
-    """Compile a .tex with pdflatex (cwd = its folder, aux files in a temp dir) into out_pdf."""
+    """Compile a .tex with pdflatex (cwd = its folder, aux files in a temp dir) into out_pdf. pdflatex runs
+    again while the log asks for a rerun or the table of contents is still settling: the first pass has no
+    contents page, the second adds one and shifts every page number it lists, the third is right."""
     if shutil.which("pdflatex") is None:
         print("  ! pdflatex not found; skipping PDF for " + tex_path.name, file=sys.stderr)
         return False
@@ -1031,15 +1045,19 @@ def build_pdf(tex_path: Path, out_pdf: Path) -> bool:
         cmd = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "-file-line-error",
                f"-output-directory={tmp}", f"-jobname={tex_path.stem}",
                "\\RequirePackage[all]{pdfprivacy}\\input{" + tex_path.name + "}"]
-        for _ in range(2):
+        lists = b""
+        for _ in range(4):
             proc = subprocess.run(cmd, cwd=tex_path.parent, capture_output=True, text=True, errors="replace")
             if proc.returncode != 0:
                 errs = LATEX_ERR_RE.findall(proc.stdout)
                 print(f"  ! pdflatex failed for {tex_path.name}: {errs[0] if errs else 'see log'}", file=sys.stderr)
                 return False
             log = Path(tmp, tex_path.stem + ".log")
-            if not log.exists() or "Rerun" not in log.read_text(errors="replace"):
+            rerun = log.exists() and "Rerun" in log.read_text(errors="replace")
+            now = b"".join(p.read_bytes() for p in sorted(Path(tmp).iterdir()) if p.suffix in LIST_EXTS)
+            if not rerun and now == lists:
                 break
+            lists = now
         pdf = Path(tmp, tex_path.stem + ".pdf")
         if not pdf.is_file():
             return False
@@ -1132,6 +1150,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     cover = tex_path.name == COVER
     lectures = [] if cover or not (tex_path.parent / COVER).is_file() else sorted(
         t for t in tex_path.parent.glob("*.tex") if t.name != COVER)
+    folder_side = parse_sidecar(tex_path.parent / "_index.yaml") if lectures else {}
 
     title = side.get("title") or meta.get("title") or slug.replace("-", " ").title()
     author = side.get("author") or meta.get("author", "")
@@ -1164,11 +1183,12 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
     if ready_pdf.exists() and publish_pdf(ready_pdf, out_files / f"{slug}.pdf"):
         links["pdf"] = f"/files/{rel}/{slug}.pdf"
     previews: list[str] = []
-    if pdf and section == "proofs" and side.get("pdf") is not False:
+    if pdf and not cover and wants_pdf(section, side, folder_side):
         dst = out_files / f"{slug}.pdf"
         if "pdf" in links or build_pdf(tex_path, dst):
             links["pdf"] = f"/files/{rel}/{slug}.pdf"
-            previews = [f"/files/{rel}/{p.name}" for p in render_previews(dst, out_files, slug)]
+            if section == "proofs":  # page images go into proof emails; summaries are emailed as a link
+                previews = [f"/files/{rel}/{p.name}" for p in render_previews(dst, out_files, slug)]
 
     files = [url.rsplit("/", 1)[1] for url in [*links.values(), *previews]]
     aliases = keep_old_addresses(tex_path, (section, subject, topic, slug), files)
@@ -1316,7 +1336,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--clean", action="store_true")
     ap.add_argument("-q", "--quiet", action="store_true")
-    ap.add_argument("--pdf", action="store_true", help="compile proofs to PDF and render page previews (needs pdflatex and pdftoppm)")
+    ap.add_argument("--pdf", action="store_true", help="compile proofs, and summaries whose sidecar asks for it, to PDF; render page previews for proofs (needs pdflatex and pdftoppm)")
     args = ap.parse_args()
 
     if shutil.which("pandoc") is None:
