@@ -1,0 +1,151 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\makeatletter
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\theoremstyle{definition}
+\newtheorem{problem}[thm]{\protect\problemname}
+\theoremstyle{definition}
+\newtheorem*{sol*}{\protect\solutionname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\addto\captionsenglish{\renewcommand{\problemname}{Problem}}
+\addto\captionsenglish{\renewcommand{\solutionname}{Solution}}
+\addto\captionsenglish{\renewcommand{\theoremname}{Theorem}}
+\addto\captionshebrew{\renewcommand{\problemname}{בעיה}}
+\addto\captionshebrew{\renewcommand{\solutionname}{פתרון}}
+\addto\captionshebrew{\renewcommand{\theoremname}{משפט}}
+\providecommand{\problemname}{בעיה}
+\providecommand{\solutionname}{פתרון}
+\providecommand{\theoremname}{משפט}
+
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{סמסטר {\beginL 2027\endL}א, בוחן {\beginL 2\endL}}
+\maketitle
+\begin{abstract}
+בוחן {\beginL 2\endL} בקורס אינפי 2, סמסטר תשפ”ז א’. השאלות נכתבו
+על ידי צוות הקורס באוניברסיטה העברית. הפתרון הוא שלי ולא רשמי.
+\end{abstract}
+\begin{problem}
+חשבו והוכיחו את הגבול \L{$\underset{x\rightarrow1}{\lim}x^{\frac{1}{x-1}}$}.
+\end{problem}
+
+\begin{sol*}
+קיימת סביבה מנוקבת של \L{$1$}, דהיינו \L{$\left(1-\delta,1+\delta\right)\setminus\left\{ 1\right\} $},
+בה \L{$x>0$}, למשל \L{$\delta=\frac{1}{2}$}.
+
+אז\L{%
+\[
+\underset{x\rightarrow1}{\lim}x^{\frac{1}{x-1}}=\underset{x\rightarrow1}{\lim}e^{\ln\left(x\right)\cdot\frac{1}{x-1}}=\underset{x\rightarrow1}{\lim}e^{\frac{\ln\left(x\right)}{x-1}}
+\]
+}%
+
+נחשב את הגבול \L{%
+\[
+\underset{x\rightarrow1}{\lim}\left(\frac{\ln\left(x\right)}{x-1}\right)
+\]
+}%
+
+הוא מהצורה \L{$"\frac{0}{0}"$}:\L{%
+\[
+\underset{x\rightarrow1}{\lim}\left(\ln\left(x\right)\right)=0,\quad\underset{x\rightarrow1}{\lim}\left(x-1\right)=0
+\]
+}%
+
+המונה והמכנה גזירים בסביבה מנוקבת של {\beginL 1\endL} )למשל \L{$\delta=\frac{1}{2}$}(:
+\L{%
+\[
+\ln'(x)=\frac{1}{x},\quad\left(x-1\right)'=1
+\]
+}%
+
+וגם נגזרת המכנה שהיא {\beginL 1\endL} לא מתאפסת בסביבה המנוקבת הזו. 
+
+אז לפי משפט לופיטל מתקיים\L{%
+\[
+\underset{x\rightarrow1}{\lim}\left(\frac{\ln\left(x\right)}{x-1}\right)=\underset{x\rightarrow1}{\lim}\left(\frac{\frac{1}{x}}{1}\right)=1
+\]
+}%
+
+הפונקציה \L{$e^{x}$} רציפה ולכן לפי משפט ההצבה בגבולות\L{%
+\[
+\underset{x\rightarrow1}{\lim}x^{\frac{1}{x-1}}=\underset{x\rightarrow1}{\lim}e^{\frac{\ln\left(x\right)}{x-1}}=e^{\underset{x\rightarrow1}{\lim}\left(\frac{\ln\left(x\right)}{x-1}\right)}=e^{1}=e
+\]
+}%
+
+\newpage{}
+\end{sol*}
+\begin{problem}
+האם קיים פולינום \L{$Q$} כך ש-\L{%
+\[
+\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{3}}=0
+\]
+}%
+
+אבל \L{%
+\[
+\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{4}}\ne0
+\]
+}%
+\end{problem}
+
+\begin{sol*}
+נסמן\L{%
+\[
+Q(x)=P_{3,\sin(x),0}(x)+x^{4}
+\]
+}%
+
+אז\L{%
+\[
+\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{3}}=\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-\left(P_{3,\sin(x),0}(x)+x^{4}\right)}{x^{3}}=\underset{x\rightarrow0}{\lim}\left(\frac{R_{3,\sin\left(x\right),0}(x)}{x^{3}}-x\right)=0
+\]
+}%
+
+לפי המשפט על השארית של פולינום טיילור המציין כי \L{$\underset{x\rightarrow a}{\lim}\frac{R_{n,f\left(x\right),a}(x)}{\left(x-a\right)^{n}}=0$}
+ומאריתמטיקה.
+
+בנוסף, לפי משפט השארית בצורת לגראנז' קיים \L{$c\in\left(0,x\right)$}
+)אנו מניחים בה\textquotedblright כ כי \L{$x>0$}( כך ש-\L{%
+\[
+R_{3,\sin\left(x\right),0}(x)=\frac{\sin^{(4)}(c)}{4!}x^{4}=\frac{\sin(c)}{4!}x^{4}
+\]
+}%
+
+אז\L{%
+\[
+\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{4}}=\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-\left(P_{3,\sin(x),0}(x)+x^{4}\right)}{x^{4}}=\underset{x\rightarrow0}{\lim}\left(\frac{\frac{\sin(c)}{4!}x^{4}}{x^{4}}-1\right)=\underset{x\rightarrow0}{\lim}\left(\frac{\sin(c)}{4!}-1\right)\underset{\left(*\right)}{=}-1
+\]
+}%
+ \L{$\left(*\right)$} מאריתמטיקה ומכך ש-\L{$0<c<x$}, ממשפט הסנדרוויץ'
+כאשר \L{$x\rightarrow0$} גם \L{$c\rightarrow0$} לכן לפי משפט ההצבה
+בגבולות \L{$\underset{x\rightarrow0}{\lim}\frac{\sin(c)}{4!}=\frac{\sin(0)}{4!}=0$}.
+\end{sol*}
+
+\end{document}
