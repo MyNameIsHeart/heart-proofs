@@ -102,7 +102,7 @@
 \newpage{}
 \end{sol*}
 \begin{problem}
-האם קיים פולינום \L{$Q$} כך ש-\L{%
+הוכיחו או הפריכו: קיים פולינום \L{$Q$} כך ש-\L{%
 \[
 \underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{3}}=0
 \]
@@ -116,7 +116,7 @@
 \end{problem}
 
 \begin{sol*}
-נסמן\L{%
+נוכיח קיום בעזרת דוגמה. נסמן\L{%
 \[
 Q(x)=P_{3,\sin(x),0}(x)+x^{4}
 \]
@@ -124,7 +124,12 @@ Q(x)=P_{3,\sin(x),0}(x)+x^{4}
 
 אז\L{%
 \[
-\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{3}}=\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-\left(P_{3,\sin(x),0}(x)+x^{4}\right)}{x^{3}}=\underset{x\rightarrow0}{\lim}\left(\frac{R_{3,\sin\left(x\right),0}(x)}{x^{3}}-x\right)=0
+\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{3}}=\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-\left(P_{3,\sin(x),0}(x)+x^{4}\right)}{x^{3}}
+\]
+}%
+\L{%
+\[
+=\underset{x\rightarrow0}{\lim}\left(\frac{R_{3,\sin\left(x\right),0}(x)}{x^{3}}-x\right)=0
 \]
 }%
 
@@ -132,7 +137,7 @@ Q(x)=P_{3,\sin(x),0}(x)+x^{4}
 ומאריתמטיקה.
 
 בנוסף, לפי משפט השארית בצורת לגראנז' קיים \L{$c\in\left(0,x\right)$}
-)אנו מניחים בה\textquotedblright כ כי \L{$x>0$}( כך ש-\L{%
+או \L{$c\in\left(x,0\right)$} כך ש-\L{%
 \[
 R_{3,\sin\left(x\right),0}(x)=\frac{\sin^{(4)}(c)}{4!}x^{4}=\frac{\sin(c)}{4!}x^{4}
 \]
@@ -140,12 +145,17 @@ R_{3,\sin\left(x\right),0}(x)=\frac{\sin^{(4)}(c)}{4!}x^{4}=\frac{\sin(c)}{4!}x^
 
 אז\L{%
 \[
-\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{4}}=\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-\left(P_{3,\sin(x),0}(x)+x^{4}\right)}{x^{4}}=\underset{x\rightarrow0}{\lim}\left(\frac{\frac{\sin(c)}{4!}x^{4}}{x^{4}}-1\right)=\underset{x\rightarrow0}{\lim}\left(\frac{\sin(c)}{4!}-1\right)\underset{\left(*\right)}{=}-1
+\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-Q\left(x\right)}{x^{4}}=\underset{x\rightarrow0}{\lim}\frac{\sin\left(x\right)-\left(P_{3,\sin(x),0}(x)+x^{4}\right)}{x^{4}}
 \]
 }%
- \L{$\left(*\right)$} מאריתמטיקה ומכך ש-\L{$0<c<x$}, ממשפט הסנדרוויץ'
-כאשר \L{$x\rightarrow0$} גם \L{$c\rightarrow0$} לכן לפי משפט ההצבה
-בגבולות \L{$\underset{x\rightarrow0}{\lim}\frac{\sin(c)}{4!}=\frac{\sin(0)}{4!}=0$}.
+\L{%
+\[
+=\underset{x\rightarrow0}{\lim}\left(\frac{\frac{\sin(c)}{4!}x^{4}}{x^{4}}-1\right)=\underset{x\rightarrow0}{\lim}\left(\frac{\sin(c)}{4!}-1\right)\underset{\left(*\right)}{=}-1
+\]
+}%
+ \L{$\left(*\right)$} מאריתמטיקה ומכך ש-\L{$0<c<x$} או \L{$0>c>x$}
+וממשפט הסנדרוויץ' כאשר \L{$x\rightarrow0$} גם \L{$c\rightarrow0$}
+לכן לפי משפט ההצבה בגבולות \L{$\underset{x\rightarrow0}{\lim}\frac{\sin(c)}{4!}=\frac{\sin(0)}{4!}=0$}.
 \end{sol*}
 
 \end{document}
