@@ -1,0 +1,240 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\theoremstyle{definition}
+\newtheorem{problem}[thm]{\protect\problemname}
+\theoremstyle{definition}
+\newtheorem*{sol*}{\protect\solutionname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\addto\captionsenglish{\renewcommand{\problemname}{Problem}}
+\addto\captionsenglish{\renewcommand{\solutionname}{Solution}}
+\addto\captionsenglish{\renewcommand{\theoremname}{Theorem}}
+\addto\captionshebrew{\renewcommand{\problemname}{בעיה}}
+\addto\captionshebrew{\renewcommand{\solutionname}{פתרון}}
+\addto\captionshebrew{\renewcommand{\theoremname}{משפט}}
+\providecommand{\problemname}{בעיה}
+\providecommand{\solutionname}{פתרון}
+\providecommand{\theoremname}{משפט}
+
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{שאלות לקראת בוחן {\beginL 2\endL}}
+\maketitle
+\begin{abstract}
+נושאים בלקט: פולינום טיילור עם משפטי השארית וכלל לופיטל. מבחינת חומר
+לבוחן, זה לא מכסה את הכל.
+\end{abstract}
+\newpage{}
+\begin{problem}
+מצאו את הערך המקסימלי של \L{$n\in\mathbb{N}\cup\{0\}$} שעבורו הגבול
+\L{%
+\[
+\lim_{x\to0}\frac{\ln(1+x^{2})-x\sin(x)}{x^{n}}
+\]
+}%
+קיים במובן הצר, וחשבו את ערכו עבור אותו \L{$n$}.
+\end{problem}
+
+\begin{sol*}
+נחשב את פולינומי טיילור של הפונקציות במונה\L{%
+\[
+P_{n,\ln\left(1+x\right),0}(t)=\underset{k=0}{\overset{n}{\sum}}\frac{\ln^{(k)}(1)}{k!}t^{k}=t-\frac{t^{2}}{2}+\frac{t^{3}}{3}-\frac{t^{4}}{4}+\dots+\left(-1\right)^{n-1}\cdot\frac{t^{n}}{n}
+\]
+}%
+\L{%
+\[
+\therefore\quad P_{n,\ln\left(1+x\right),0}(x^{2})=x^{2}-\frac{x^{4}}{2}+\frac{x^{6}}{3}-\dots
+\]
+}%
+\L{%
+\[
+P_{n,\sin(x),0}(x)=\underset{k=0}{\overset{n}{\sum}}\frac{\sin^{(k)}(0)}{k!}x^{k}=x-\frac{x^{3}}{3!}+\frac{x^{5}}{5!}+\dots
+\]
+}%
+\L{%
+\[
+\therefore\quad x\cdot P_{n,\sin(x),0}(x)=x^{2}-\frac{x^{4}}{3!}+\frac{x^{6}}{5!}+\dots
+\]
+}%
+
+נפתח את הפונ׳ הראשונה עד {\beginL 2\endL} ואת הפונ' השנייה עד {\beginL 3\endL}.
+נקבל\L{%
+\[
+\frac{\ln(1+x^{2})-x\sin(x)}{x^{n}}=\frac{x^{2}-\frac{x^{4}}{2}+R_{2,\ln\left(1+x\right),0}\left(x^{2}\right)-\left(x^{2}-\frac{x^{4}}{3!}+xR_{3,\sin\left(x\right),0}(x)\right)}{x^{n}}
+\]
+}%
+\L{%
+\[
+=\frac{x^{2}-x^{2}-\frac{x^{4}}{2}+\frac{x^{4}}{3!}+R_{2,\ln\left(1+x\right),0}\left(x^{2}\right)-xR_{3,\sin\left(x\right),0}(x)}{x^{n}}
+\]
+}%
+\L{%
+\[
+=\frac{-\frac{1}{3}x^{4}+R_{2,\ln\left(1+x\right),0}\left(x^{2}\right)-xR_{3,\sin\left(x\right),0}(x)}{x^{n}}
+\]
+}%
+
+ננחש \L{$n=4$} ונקבל\L{%
+\[
+\lim_{x\to0}\frac{\ln(1+x^{2})-x\sin(x)}{x^{n}}=\lim_{x\to0}\frac{-\frac{1}{3}x^{4}+R_{2,\ln\left(1+x\right),0}\left(x^{2}\right)-xR_{3,\sin\left(x\right),0}(x)}{x^{n}}
+\]
+}%
+\L{%
+\[
+\underset{(*)}{=}\underset{=-\frac{1}{3}}{\underbrace{\lim_{x\to0}\frac{-\frac{1}{3}x^{4}}{x^{4}}}}+\underset{=0}{\underbrace{\lim_{x\to0}\frac{R_{2,\ln\left(1+x\right),0}\left(x^{2}\right)}{\left(x^{2}\right)^{2}}}}-\underset{=\lim_{x\to0}\frac{R_{3,\sin\left(x\right),0}(x)}{x^{3}}=0}{\underbrace{\lim_{x\to0}\frac{xR_{3,\sin\left(x\right),0}(x)}{x^{4}}}}=-\frac{1}{3}
+\]
+}%
+
+\L{$(*)$} מאריתמטיקה של גבולות, לפי כלל ההצבה של גבולות )\L{$x^{2}$}
+לא מתאפס בסביבה מנוקבת של אפס( ולפי המשפט על התאפסות השארית של פולינום
+טיילור כאשר מעלת המכנה שווה לדרגת הפיתוח של הפולינום.
+
+עבור \L{$n\ge5$} נניח בשלילה שהגבול קיים במובן הצר. אז \L{%
+\[
+\lim_{x\to0}\frac{\ln(1+x^{2})-x\sin(x)}{x^{n}}=\underset{\in\mathbb{R}}{L}=\lim_{x\to0}\frac{-\frac{1}{3}+\frac{R_{2,\ln\left(1+x\right),0}\left(x^{2}\right)}{x^{4}}-\frac{xR_{3,\sin\left(x\right),0}(x)}{x^{4}}}{x^{n-4}}
+\]
+}%
+
+נסמן\L{%
+\[
+g(x)=-\frac{1}{3}+\frac{R_{2,\ln\left(1+x\right),0}\left(x^{2}\right)}{x^{4}}-\frac{xR_{3,\sin\left(x\right),0}(x)}{x^{4}}
+\]
+}%
+
+אז מצד אחד\L{%
+\[
+\lim_{x\to0}g(x)=\lim_{x\to0}\left(x^{n-4}\cdot\frac{g(x)}{x^{n-4}}\right)=\lim_{x\to0}\left(x^{n-4}\cdot\frac{\ln(1+x^{2})-x\sin(x)}{x^{n}}\right)\underset{\left(**\right)}{=}0
+\]
+}%
+
+\L{$\left(**\right)$} לפי משפט חסומה כפול אפסה )פונ' המתכנסת במובן
+הצר בנקודה חסומה בסביבה מנוקבת של הנק'(.
+
+ומצד שני\L{%
+\[
+\lim_{x\to0}g(x)=-\frac{1}{3}
+\]
+}%
+
+כפי שהראנו קודם.
+
+קיבלנו סתירה, מכאן \L{$n=4$} זה ה-\L{$n$} המקסימלי כנדרש.
+
+\newpage{}
+\end{sol*}
+\begin{problem}
+מצאו \L{$q\in\mathbb{Q}$} כך ש-\L{$|\sqrt{e}-q|<10^{-3}$}.
+\end{problem}
+
+\begin{sol*}
+צריך למצוא קירוב עם שגיאה של פחות מ- \L{$\frac{1}{10^{3}}$} עבור
+\L{$e^{x}$} עם \L{$x=\frac{1}{2}$}.
+
+נשתמש בנקודה \L{$x=0$} עבור הפיתוח.
+
+לפי משפט טיילור עם השארית בצורת לגראנז' קיימת נקודה \L{$c\in\left(0,\frac{1}{2}\right)$}
+כך ש-\L{%
+\[
+R_{n,e^{x},0}\left(\frac{1}{2}\right)=\frac{\left(e^{x}\right)^{\left(n+1\right)}(c)}{\left(n+1\right)!}0.5^{n+1}=\frac{e^{c}}{\left(n+1\right)!\cdot2^{n+1}}\underset{(*)}{\le}\frac{e^{\frac{1}{2}}}{\left(n+1\right)!\cdot2^{n+1}}\underset{\left(**\right)}{\le}\frac{2}{\left(n+1\right)!\cdot2^{n+1}}=\frac{1}{\left(n+1\right)!\cdot2^{n}}
+\]
+}%
+
+\L{$(*)$} \L{$e^{x}$} מונוטונית עולה ו-\L{$c\in\left(0,\frac{1}{2}\right)$}. 
+
+\L{$\left(**\right)$} הוכחנו בכיתה ש- \L{$e\le4$} אז \L{$\sqrt{e}\le2$}.
+
+נבחר \L{$n=4$} ונקבל\L{%
+\[
+\left|e^{\frac{1}{2}}-P_{4,e^{x},0}\left(\frac{1}{2}\right)\right|=\left|R_{4,e^{x},0}\left(\frac{1}{2}\right)\right|\le\frac{1}{\left(4+1\right)!\cdot2^{4}}=\frac{1}{5\cdot4\cdot3\cdot2^{5}}=\frac{1}{60\cdot32}<\frac{1}{1000}
+\]
+}%
+נפתח\L{%
+\[
+P_{4,e^{x},0}\left(x\right)=\underset{k=0}{\overset{4}{\sum}}\frac{\left(e^{x}\right)^{(k)}(0)}{k!}x^{k}=e^{0}+e^{0}x+\frac{1}{2}e^{0}x^{2}+\frac{1}{6}e^{0}x^{3}+\frac{1}{24}e^{0}x^{4}=1+x+\frac{x^{2}}{2}+\frac{x^{3}}{6}+\frac{x^{4}}{24}
+\]
+}%
+
+לכן\L{%
+\[
+q=P_{4,e^{x},0}\left(\frac{1}{2}\right)=1+\frac{1}{2}+\frac{1}{8}+\frac{1}{48}+\frac{1}{384}\in\mathbb{Q}
+\]
+}%
+
+מקיים את הנדרש וסיימנו.
+
+\newpage{}
+\end{sol*}
+\begin{problem}
+הוכיחו שהגבול \L{$\underset{x\to0}{\lim}\left(\cos(x)\right)^{1/x^{2}}$}
+קיים, וחשבו את ערכו.
+\end{problem}
+
+\begin{sol*}
+לכל \L{$x\in\left(-\frac{\pi}{2},\frac{\pi}{2}\right)\setminus\left\{ 0\right\} $}
+מתקיים \L{$\cos(x)>0$} ולכן \L{%
+\[
+\underset{x\to0}{\lim}\left(\cos(x)\right)^{1/x^{2}}=\underset{x\to0}{\lim}e^{\ln\left(\cos(x)\right)\cdot\frac{1}{x^{2}}}=\underset{x\to0}{\lim}e^{\frac{\ln\left(\cos(x)\right)}{x^{2}}}
+\]
+}%
+
+\L{$\underset{x\to0}{\lim}\cos(x)=1$} ו-\L{$\ln(x)$} רציפה לכן לפי
+משפט ההרכבה של פונקציות רציפות \L{$\underset{x\to0}{\lim}\ln\left(\cos\left(x\right)\right)=\ln\left(1\right)=0$}.
+בנוסף\L{%
+\[
+\underset{x\to0}{\lim}x^{2}=0,\quad\left(\ln\left(\cos\left(x\right)\right)\right)'=-\frac{\sin(x)}{\cos(x)},\quad\left(x^{2}\right)'=2x
+\]
+}%
+
+ולכל \L{$x\in\left(-\frac{\pi}{2},\frac{\pi}{2}\right)\setminus\left\{ 0\right\} $}
+מתקיים \L{$2x\ne0$} לכן לפי כלל לופיטל אם הגבול הבא קיים גם הגבול
+הזה קיים והם שווים:\L{%
+\[
+\underset{x\to0}{\lim}\frac{\ln\left(\cos(x)\right)}{x^{2}}=\underset{x\to0}{\lim}\frac{-\frac{\sin(x)}{\cos(x)}}{2x}=\underset{x\to0}{\lim}\left(-\frac{\sin(x)}{2x\cos(x)}\right)=-\underset{x\to0}{\lim}\left(\frac{\sin(x)}{x}\cdot\frac{1}{2\cos(x)}\right)
+\]
+}%
+
+הוכחנו בכיתה ש- \L{$\underset{x\to0}{\lim}\left(\frac{\sin(x)}{x}\right)=1$}
+ומתקיים \L{$\underset{x\to0}{\lim}\left(\frac{1}{2\cos(x)}\right)=\frac{1}{2}$}
+לכן \L{%
+\[
+-\underset{x\to0}{\lim}\left(\frac{\sin(x)}{x}\cdot\frac{1}{2\cos(x)}\right)=-\frac{1}{2}
+\]
+}%
+
+\L{$e^{x}$} רציפה לכן לפי משפט ההרכבה של פונקציות רציפות\L{%
+\[
+\underset{x\to0}{\lim}\left(\cos(x)\right)^{1/x^{2}}=\underset{x\to0}{\lim}e^{\frac{\ln\left(\cos(x)\right)}{x^{2}}}=e^{\left(\underset{x\to0}{\lim}\frac{\ln\left(\cos(x)\right)}{x^{2}}\right)}=e^{-\frac{1}{2}}=\frac{1}{e^{\frac{1}{2}}}=\frac{1}{\sqrt{e}}
+\]
+}%
+\end{sol*}
+
+\end{document}
