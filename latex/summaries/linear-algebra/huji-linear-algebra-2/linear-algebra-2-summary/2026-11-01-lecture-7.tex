@@ -1,0 +1,809 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{אלגברה ליניארית {\beginL 2\endL} - הרצאה {\beginL 7\endL}}
+\author{נעם לב}
+\date{\L{$01.11.2026$}}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
+\L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
+)תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+הסיכום הוא לא רשמי ולא עבר אישור של הסגל, על כן אין להשתמש בו )ובין
+השאר במספור שלו ובשמות הטענות שבו( כמקור רשמי. אם ישנן טעויות, הן
+שלי ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\section{תזכורת: הפולינום המינימלי וייצוג ע\textquotedblright י מטריצה משולשית
+עליונה}
+
+המשפט האחרון שהוכחנו )הרצאה \L{$6$}(:
+
+יהי \L{$V$} מ\textquotedblright ו נ\textquotedblright ס מעל \L{$\mathbb{F}$}
+כך ש- \L{%
+\[
+\dim V=n\ge1,\quad T\in\mathcal{L}(V)
+\]
+}%
+אז התנאים הבאים שקולים:
+
+\L{$(\text{I})$} קיים בסיס \L{$\mathcal{B}_{V}$} כך ש-\L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}
+מטריצה משולשית עליונה.
+
+\L{$(\text{II})$} \L{%
+\[
+q_{\min}(z)=(z-\alpha_{1})\cdots(z-\alpha_{m})
+\]
+}%
+כאשר \L{$\alpha_{1},\dots,\alpha_{m}\in\mathbb{F}$}.
+
+כלומר, אפשר להציג את הפולינום המינימלי כמכפלה של פולינומים מדרגה ראשונה.
+
+דרשנו רק ש-\L{$\alpha_{1},\dots,\alpha_{m}$} יהיו מהשדה \L{$\mathbb{F}$},
+ולא דרשנו שום דבר אחר )בפרט הם לא חייבים להיות שונים זה מזה(.
+
+\section{שאלה: האם לסיבוב ב-\L{$\mathbb{R}^{2}$} יש ייצוג משולשי מעל \L{$\mathbb{R}$}?}
+
+מ\textquotedblright ו ושדה:
+
+\L{%
+\[
+\mathbb{F}=\mathbb{R},\quad V=\mathbb{R}^{2}
+\]
+}%
+
+אופרטור:\L{%
+\[
+T((x,y))=(-y,x)
+\]
+}%
+
+בסיס:\L{%
+\[
+\mathcal{B}_{V}=((1,0),(0,1))=(v_{1},v_{2})
+\]
+}%
+
+מטריצה מייצגת של האופרטור לפי הבסיס:\L{%
+\begin{align*}
+T(v_{1}) & =T\left((1,0)\right)=\left(-0,1\right)=\left(0,1\right)=v_{2}=0_{\mathbb{F}}\cdot v_{1}+1\cdot v_{2}\\
+T(v_{2}) & =T\left((0,1)\right)=\left(-1,0\right)=-v_{1}=-1\cdot v_{1}+0\cdot v_{2}
+\end{align*}
+}%
+\L{%
+\[
+\therefore\quad M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}
+\]
+}%
+
+השאלה היא האם עבור אופרטור ומרחב אלה, שהם למעשה סיבוב של חצי פאי נגד
+כיוון השעון סביב הנקודה \L{$\left(0,0\right)$}, קיים בסיס \L{$\widetilde{\mathcal{B}}_{V}$}
+ב-\L{$V$} כך ש- \L{$M(T,\widetilde{\mathcal{B}}_{V},\widetilde{\mathcal{B}}_{V})$}
+היא מטריצה משולשית עליונה.
+
+שאלה זו שקולה לשאלה: האם קיימת מטריצה הפיכה \L{$Q$} כך ש- \L{%
+\[
+Q\begin{pmatrix}0 & -1\\
+1 & 0
+\end{pmatrix}Q^{-1}=\begin{pmatrix}* & *\\
+0 & *
+\end{pmatrix}
+\]
+}%
+
+זו אותה שאלה, כי החלפת בסיס משנה את המטריצה המייצגת בדיוק כך, כאשר
+\L{$Q$} היא מטריצת המעבר בין הבסיסים )לינארית \L{$1$}(.
+
+\subsection{פתרון}
+
+ראשית, נמצא את הפולינום המינימלי.
+
+בהרצאה {\beginL 4\endL} מצאנו את הפולינום המינימלי של אופרטור זה מעל
+\L{$\mathbb{C}$}.
+
+אפשר לעבור על ההוכחה ולראות שבמקרה זה היא תקפה גם לאופרטור הזה מעל
+\L{$\mathbb{R}$}.
+
+אז\L{%
+\[
+q_{\min}(z)=z^{2}+1
+\]
+}%
+
+אילו \L{$z^{2}+1=(z-\alpha_{1})(z-\alpha_{2})$} עם \L{$\alpha_{1},\alpha_{2}\in\mathbb{R}$},
+אז הצבת \L{$z=\alpha_{1}$} נותנת \L{$\alpha_{1}^{2}=-1$}, וזאת סתירה.
+
+לכן לא קיימים \L{$\alpha_{1},\alpha_{2}\in\mathbb{R}$} כך ש- \L{%
+\[
+q_{\min}(z)=(z-\alpha_{1})(z-\alpha_{2})
+\]
+}%
+ולפי המשפט לא קיים בסיס \L{$\widetilde{\mathcal{B}}_{V}$} כך ש- \L{$M(T,\widetilde{\mathcal{B}}_{V},\widetilde{\mathcal{B}}_{V})$}
+מטריצה משולשית עליונה.
+
+השאלות האלו תמיד יהיו מעל השדה \L{$\mathbb{R}$} כי כפי שהוכחנו מעל
+\L{$\mathbb{C}$} תמיד אפשר למצוא בסיס שבו המטריצה משולשית עליונה.
+
+\section{דוגמה: אופרטור על \L{$\mathbb{R}^{2}$} עם פולינום אופייני \L{$(z-2)^{2}$}}
+
+\L{%
+\[
+T\in\mathcal{L}(V),\quad V=\mathbb{R}^{2},\quad\mathbb{F}=\mathbb{R}
+\]
+}%
+\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}1 & -1\\
+1 & 3
+\end{pmatrix}
+\]
+}%
+
+\subsection{שאלה}
+
+האם קיים בסיס \L{$\widetilde{\mathcal{B}}_{V}$} ב- \L{$V=\mathbb{R}^{2}$}
+כך ש- \L{$M(T,\widetilde{\mathcal{B}}_{V},\widetilde{\mathcal{B}}_{V})$}
+מטריצה משולשית עליונה?
+
+\subsection{פתרון}
+
+1. \L{%
+\begin{align*}
+P_{ch}(z) & =\det\begin{bmatrix}z-1 & 1\\
+-1 & z-3
+\end{bmatrix}\\
+ & =(z-1)(z-3)+1\\
+ & =z^{2}-4z+4\\
+ & =(z-2)^{2}
+\end{align*}
+}%
+
+2. 
+
+מתקיים\L{%
+\[
+q_{\min}(z)=z-2
+\]
+}%
+או \L{%
+\begin{align*}
+q_{\min}(z) & =(z-2)^{2}\\
+ & =(z-2)(z-2)
+\end{align*}
+}%
+
+כי הפולינום המינימלי מחלק את הפולינום האופייני ו-{\beginL 2\endL}
+הוא ערך עצמי, לכן בהכרח {\beginL 2\endL} הוא שורש של הפולינום המינימלי
+)לפי המשפטים שלמדנו בהרצאות חמש ושש(. אז אם הפולינום המינימלי ממעלה
+{\beginL 1\endL} הוא חייב להיות \L{$z-2$}, ואם הוא ממעלה {\beginL 2\endL}
+הוא חייב להיות הפולינום האופייני )ואם הוא מעל מעלה {\beginL 2\endL}
+יש סתירה לכך שהוא מחלק את הפולינום האופייני(.
+
+כלומר בכל מקרה אפשר להציג את הפולינום המינימלי כמכפלה של פולינומים
+מדרגה ראשונה לכן קיים בסיס \L{$\widetilde{\mathcal{B}}_{V}$} כך ש-
+\L{$M(T,\widetilde{\mathcal{B}}_{V},\widetilde{\mathcal{B}}_{V})$}
+היא מטריצה משולשית עליונה וסיימנו.
+
+\section{דוגמה: \L{$T(p)=2p+p'$} על \L{$\mathcal{P}_{3}(\mathbb{R})$} )\L{$\mathbb{R}_{\protect\leq3}[x]$}(.}
+
+\L{%
+\[
+V=\mathcal{P}_{3}(\mathbb{R})
+\]
+}%
+\L{%
+\[
+T(p(x))=2p(x)+p'(x)
+\]
+}%
+
+\subsection{שאלה}
+
+האם קיים בסיס \L{$\mathcal{B}_{V}$} במרחב \L{$V$} כך ש- \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}
+משולשית עליונה?\\
+
+\textcolor{teal}{\L{$T$} הוא האגף השמאלי של המד\textquotedblright ר
+\L{$p'+2p=q$}, ולכן הדוגמה מראה איך אפשר לתקוף מד\textquotedblright ר
+לינאריות בכלים של אלגברה לינארית: במקום לפתור את המשוואה ישירות, חוקרים
+את האופרטור \L{$T$} )ערכים עצמיים, פולינום מינימלי, ייצוג מטריציוני(.}
+
+\subsection{פתרון}
+
+1. \L{%
+\[
+T(p(x))=2p(x)+p'(x)
+\]
+}%
+\L{%
+\[
+T(p(x))-2p(x)=p'(x)
+\]
+}%
+\L{%
+\[
+\left(T-2I\right)\left(p(x)\right)=p'(x)
+\]
+}%
+
+כלומר האופרטור \L{$T-2I$} שקול לפעולת הגזירה:\L{%
+\[
+T-2I=D=\frac{d}{dx}
+\]
+}%
+
+הפולינום הוא ממעלה לכל היותר {\beginL 3\endL} ולכן גזירה שלו ארבע
+פעמים תאפס אותו:\L{%
+\[
+\forall p\left(x\right)\in V:D^{4}(p)=0
+\]
+}%
+\L{%
+\[
+\therefore\ (T-2I)^{4}=0
+\]
+}%
+
+2. לעומת זאת, עבור למשל \L{$x^{3}\in V$} מתקיים\L{%
+\[
+D^{3}(x^{3})=6\neq0
+\]
+}%
+
+)\L{$x^{3}\to3x^{2}\to6x\to6$}( כלומר לא לכל \L{$p\in\mathcal{P}_{3}(\mathbb{R})$}
+מתקיים \L{$D^{3}(p)=0$}, דהיינו \L{$(T-2I)^{3}\neq0$} וזו לא העתקת
+האפס.\\
+
+3. קיבלנו שהפולינום \L{$(z-2)^{4}$} מאפס את \L{$T$}.
+
+הפולינום המינימלי מחלק כל פולינום שמאפס את \L{$T$} )הרצאה \L{$5$}(,
+ולכן \L{$q_{\min}(z)=(z-2)^{k}$} עבור \L{$k\in\left\{ 1,\dots,4\right\} $}
+כלשהו.
+
+נבדוק אותם.
+
+אפשר להיווכח )כפי שעשינו ב-{\beginL 2\endL} עבור \L{$k=3$}( שעבור
+\L{$k\in\left\{ 1,\dots,3\right\} $} הפולינום \L{$\left(z-2\right)^{k}$}
+לא מאפס את האופרטור \L{$T$} ולכן נקבל\L{%
+\begin{align*}
+q_{\min}(z) & =(z-2)^{4}\\
+ & =(z-2)(z-2)(z-2)(z-2)
+\end{align*}
+}%
+
+4. לכן מהמשפט שלמדנו קיים בסיס \L{$\mathcal{B}_{V}$} שבו \L{$M(T,\mathcal{B}_{V},\mathcal{B}_{V})$}
+משולשית עליונה.\\
+
+\textcolor{teal}{לא תמיד אפשר לחשב את הפולינום המינימלי בקלות, אבל
+כשיש שאלה על ייצוג ע\textquotedblright י מטריצה משולשית עליונה, כדאי
+לנסות.}
+
+\section{דוגמה: \L{$T=\lambda I$} לכסין עם ערך עצמי יחיד}
+
+עכשיו אנחנו עוברים לשלב הבא, לא מתי יש ייצוג עם מטריצה משולשית עליונה
+אלא מתי יש ייצוג עם מטריצה אלכסונית.
+
+בהרצאה {\beginL 3\endL} למדנו שאם יש כ-\L{$\dim V$} ערכים עצמיים
+שונים, אז אפשר לייצג את \L{$T$} ע\textquotedblright י מטריצה אלכסונית.
+
+נשים לב שזה תנאי מספיק אבל לא הכרחי.
+
+למשל, את האופרטור \L{$T=\lambda I$} על מ\textquotedblright ו ממימד
+\L{$n$} )גם אם \L{$n\ge2$}( תמיד ניתן לייצג בעזרת מטריצה אלכסונית,
+אפילו שיש רק ערך עצמי אחד.
+
+\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}\lambda &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & \lambda
+\end{pmatrix}
+\]
+}%
+
+ולמעשה בכל בסיס המטריצה המייצגת של \L{$T$} אלכסונית.
+\begin{proof}
+יהי \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$} בסיס כלשהו.
+
+לכל \L{$1\le j\le n$} מתקיים \L{%
+\[
+T(v_{j})=\lambda v_{j}=0_{\mathbb{F}}\cdot v_{1}+\dots+\lambda\cdot v_{j}+\dots+0_{\mathbb{F}}\cdot v_{n}
+\]
+}%
+לכן בעמודה ה-\L{$j$} יש \L{$\lambda$} במקום ה-\L{$j$} ואפסים בשאר
+המקומות, כלומר \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\lambda I_{n}
+\]
+}%
+שזו כמובן מטריצה אלכסונית.
+
+\L{$\lambda$} הוא הערך העצמי היחיד: כל \L{$v\neq0_{V}$} מקיים \L{$T(v)=\lambda v$},
+ואם \L{$T(v)=\mu v$} עם \L{$v\neq0_{V}$}, אז \L{$(\lambda-\mu)v=0_{V}$},
+ולכן \L{$\mu=\lambda$}. 
+\end{proof}
+
+\section{משפט: תנאים שקולים ללכסינות}
+
+יהי \L{$V$} מ\textquotedblright ו מעל שדה \L{$\mathbb{F}$} כלשהו
+כך ש- \L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+ויהיו \L{$\lambda_{1},\dots,\lambda_{m}$} כל הערכים העצמיים של \L{$T$}
+)שונים זה מזה(, כלומר\L{%
+\[
+\forall i,j\in\{1,\dots,m\}\text{ s.t. }i\neq j:\quad\lambda_{j}\neq\lambda_{i}
+\]
+}%
+אז התנאים הבאים שקולים:
+
+\L{$(\text{I})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} כך ש-
+\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+\L{$(\text{II})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} המורכב
+מוקטורים עצמיים של \L{$T$}.
+
+\L{$(\text{III})$} \L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{m}I)
+\]
+}%
+
+\L{$(\text{IV})$} \L{%
+\[
+\dim V=\dim\left(\text{Null}(T-\lambda_{1}I)\right)+\dots+\dim\left(\text{Null}(T-\lambda_{m}I)\right)
+\]
+}%
+
+ברור כי \L{$m\leq n$}.
+
+אבל זה ההבדל מהמשפט של הרצאה \L{$3$}, שם בהכרח \L{$m=n$} וכל הערכים
+העצמיים שונים זה מזה.
+
+כאן, על אף שהדרישה היא עדיין שהם שונים זה מזה, אין את הדרישה החזקה
+על \L{$m$}: הוא יכול להיות אפילו \L{$1$}.
+
+נזכיר ש{\beginL -\endL} \L{$\text{Null}(T-\lambda_{i}I)$} הוא המרחב
+העצמי \L{$E_{\lambda_{i}}(T)$} מהרצאה \L{$1$}: כל הוקטורים העצמיים
+השייכים ל- \L{$\lambda_{i}$} ו- \L{$0_{V}$}.
+
+בהמשך נקבל משפט יותר פרקטי, דרך הפולינום האופייני.
+
+נוכיח בצורה הבאה: \L{%
+\[
+(\text{I})\Rightarrow(\text{II})\Rightarrow(\text{III})\Rightarrow(\text{IV})\Rightarrow(\text{II})\Rightarrow(\text{I})
+\]
+}%
+
+\subsection{הוכחה: \L{$(\text{I})\Rightarrow(\text{II})$}}
+
+\L{$(\text{I})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} כך ש-
+\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+\L{$(\text{II})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} המורכב
+מוקטורים עצמיים של \L{$T$}.
+\begin{proof}
+1. יהי \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$} בסיס במרחב וקטורי
+\L{$V$} כך ש- \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & a_{2,2} & \cdots & 0_{\mathbb{F}}\\
+\vdots &  & \ddots & \vdots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} & \cdots & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+2. אז\L{%
+\begin{align*}
+T(v_{1}) & =a_{1,1}v_{1}+0_{\mathbb{F}}v_{2}+\dots+0_{\mathbb{F}}v_{n}\\
+T(v_{2}) & =0_{\mathbb{F}}\cdot v_{1}+a_{2,2}v_{2}+\dots+0_{\mathbb{F}}v_{n}\\
+ & \ \vdots\\
+T(v_{n}) & =0_{\mathbb{F}}\cdot v_{1}+0_{\mathbb{F}}\cdot v_{2}+\dots+a_{n,n}v_{n}
+\end{align*}
+}%
+כלומר \L{%
+\begin{align*}
+T(v_{1}) & =a_{1,1}v_{1}\\
+T(v_{2}) & =a_{2,2}v_{2}\\
+ & \ \vdots\\
+T(v_{n}) & =a_{n,n}v_{n}
+\end{align*}
+}%
+בנוסף, \L{%
+\[
+v_{1}\neq0_{V},\dots,v_{n}\neq0_{V}
+\]
+}%
+ כי \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$} הוא בסיס ולכן בפרט
+בת\textquotedblright ל. 
+
+אז \L{$v_{1},\dots,v_{n}$} הם וקטורים עצמיים של \L{$T$}.
+\end{proof}
+
+\subsection{הוכחה: \L{$(\text{II})\Rightarrow(\text{III})$}}
+
+\L{$(\text{II})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} המורכב
+מוקטורים עצמיים של \L{$T$}.
+
+\L{$(\text{III})$} \L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{m}I)
+\]
+}%
+
+\begin{proof}
+1. יהי \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$} בסיס המורכב מוקטורים
+עצמיים של \L{$T$}.
+
+נסדר את הוקטורים מחדש לפי הערכים העצמיים שלהם.
+
+לכל \L{$i\in\{1,\dots,m\}$}, נסמן את וקטורי הבסיס השייכים ל- \L{$\lambda_{i}$}
+כך: \L{%
+\[
+\mathcal{B}^{(i)}=(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)})
+\]
+}%
+האינדקס העליון אומר לאיזה ערך עצמי הוקטור שייך, והתחתון ממספר את הוקטורים
+בתוך הקבוצה. נשים את הקבוצות אחת אחרי השנייה: \L{%
+\[
+\widetilde{\mathcal{B}}_{V}=(\mathcal{B}^{(1)},\mathcal{B}^{(2)},\dots,\mathcal{B}^{(m)})
+\]
+}%
+\L{$\widetilde{\mathcal{B}}_{V}$} הוא בסיס של \L{$V$}, כי אלה אותם
+וקטורים בסדר אחר.
+
+2. לא החסרנו ולא הוספנו וקטורים מהבסיס לכן\L{%
+\[
+n_{1}+\dots+n_{m}=n
+\]
+}%
+אז לכל \L{$v\in V$}: \L{%
+\[
+v=\underbrace{\alpha_{1}^{(1)}v_{1}^{(1)}+\dots+\alpha_{n_{1}}^{(1)}v_{n_{1}}^{(1)}}_{u_{1}}+\dots+\underbrace{\alpha_{1}^{(m)}v_{1}^{(m)}+\dots+\alpha_{n_{m}}^{(m)}v_{n_{m}}^{(m)}}_{u_{m}}=u_{1}+\dots+u_{m}
+\]
+}%
+כאשר \L{%
+\[
+u_{1}\in\text{Null}(T-\lambda_{1}I),\dots,u_{m}\in\text{Null}(T-\lambda_{m}I)
+\]
+}%
+כי \L{$u_{i}$} הוא צ\textquotedblright ל של וקטורים מ- \L{$\text{Null}(T-\lambda_{i}I)$},
+שהוא תמ\textquotedblright ו.\L{%
+\[
+\therefore\quad V=\text{Null}(T-\lambda_{1}I)+\dots+\text{Null}(T-\lambda_{m}I)
+\]
+}%
+
+3. נרצה להוכיח שזה סכום ישר.
+
+כדי לבדוק שסכום הוא ישר, מספיק להראות שהדרך היחידה להציג את \L{$0_{V}$}
+כסכום כזה היא \L{$0_{V}+\dots+0_{V}$}.
+
+נניח כי \L{%
+\[
+0_{V}=u_{1}+\dots+u_{m}
+\]
+}%
+כאשר \L{%
+\[
+u_{1}\in\text{Null}(T-\lambda_{1}I),\dots,u_{m}\in\text{Null}(T-\lambda_{m}I)
+\]
+}%
+ונניח בשלילה כי לא כל הוקטורים \L{$u_{1},\dots,u_{m}$} הם וקטור האפס.
+
+הסדר לא משנה, ולכן אפשר למספר אותם מחדש כך שוקטורים שאינם וקטור האפס
+יהיו הראשונים.
+
+כלומר קיים \L{$p\geq1$} כך ש-\L{%
+\[
+\forall1\le i\le p:\quad u_{i}\ne0_{V}
+\]
+}%
+\L{%
+\[
+\forall p+1\le j\le m:\quad u_{j}=0_{V}
+\]
+}%
+נמחק מהסכום את האפסים: \L{%
+\[
+u_{1}+\dots+u_{p}=0_{V}
+\]
+}%
+\L{$u_{1},\dots,u_{p}$} הם וקטורים עצמיים השייכים לערכים עצמיים שונים
+)הם שייכים למרחבים שמשרים ערכים עצמיים שונים והם לא וקטור האפס(.
+
+וקטורים עצמיים השייכים לערכים עצמיים שונים הם בת\textquotedblright ל
+)הרצאה \L{$2$}(, ולכן הרשימה \L{$(u_{1},\dots,u_{p})$} בת\textquotedblright ל.
+
+אבל \L{%
+\[
+1\cdot u_{1}+\dots+1\cdot u_{p}=0_{V}
+\]
+}%
+וזאת סתירה לכך שהרשימה בת\textquotedblright ל.
+
+לכן כל הוקטורים הם וקטור האפס.
+
+כלומר, אם \L{%
+\[
+u_{1}+\dots+u_{m}=0_{V}\quad\wedge\quad u_{1}\in\text{Null}(T-\lambda_{1}I),\dots,u_{m}\in\text{Null}(T-\lambda_{m}I)
+\]
+}%
+אז \L{%
+\[
+u_{1}=\dots=u_{m}=0_{V}
+\]
+}%
+ולכן הסכום ישר: \L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{m}I)
+\]
+}%
+\end{proof}
+
+\subsection{הוכחה: \L{$(\text{III})\Rightarrow(\text{IV})$}}
+
+\L{$(\text{III})$} \L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{m}I)
+\]
+}%
+
+\L{$(\text{IV})$} \L{%
+\[
+\dim V=\dim\left(\text{Null}(T-\lambda_{1}I)\right)+\dots+\dim\left(\text{Null}(T-\lambda_{m}I)\right)
+\]
+}%
+
+\begin{proof}
+מלינארית {\beginL 1\endL}, המימד של סכום ישר שווה לסכום המימדים של
+התמ\textquotedblright וים בסכום הישר, כנדרש.
+\end{proof}
+
+\subsection{הוכחה: \L{$(\text{IV})\Rightarrow(\text{II})$}}
+
+\L{$(\text{IV})$} \L{%
+\[
+\dim V=\dim\left(\text{Null}(T-\lambda_{1}I)\right)+\dots+\dim\left(\text{Null}(T-\lambda_{m}I)\right)
+\]
+}%
+
+\L{$(\text{II})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} המורכב
+מוקטורים עצמיים של \L{$T$}.
+\begin{proof}
+1. לכל \L{$i\in\{1,\dots,m\}$} נבחר בסיס של \L{$\text{Null}(T-\lambda_{i}I)$}
+ונסמן אותו: \L{%
+\[
+\mathcal{B}^{(i)}=(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)})
+\]
+}%
+כלומר \L{$n_{i}=\dim\left(\text{Null}(T-\lambda_{i}I)\right)$}, וכל
+הוקטורים ב-\L{$\mathcal{B}^{(i)}$} הם וקטורים עצמיים השייכים ל-\L{$\lambda_{i}$}
+)הם שונים מ-\L{$0_{V}$} כי הם וקטורים בבסיס(.
+
+ולכן לפי ההנחה \L{%
+\[
+n=n_{1}+\dots+n_{m}
+\]
+}%
+
+2. נרצה להוכיח שהרשימה \L{%
+\[
+\mathcal{B}_{V}=(\mathcal{B}^{(1)},\dots,\mathcal{B}^{(m)})=(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)},\dots,v_{1}^{(m)},\dots,v_{n_{m}}^{(m)})
+\]
+}%
+היא בסיס של \L{$V$}.
+
+3. אורך הרשימה הוא \L{$n_{1}+\dots+n_{m}=n=\dim V$}, ורשימה בת\textquotedblright ל
+שאורכה \L{$\dim V$} היא בסיס של \L{$V$} )לינארית \L{$1$}(. 
+
+לכן מספיק להוכיח שהרשימה \L{$\mathcal{B}_{V}$} בת\textquotedblright ל.
+
+יהיו \L{$\alpha_{1}^{(1)},\dots,\alpha_{n_{1}}^{(1)},\dots,\dots,\alpha_{1}^{(m)},\dots,\alpha_{n_{m}}^{(m)}\in\mathbb{F}$}
+סקלרים כך ש- \L{%
+\[
+\underset{u_{1}\in\text{Null}(T-\lambda_{1}I)}{\underbrace{\alpha_{1}^{(1)}v_{1}^{(1)}+\dots+\alpha_{n_{1}}^{(1)}v_{n_{1}}^{(1)}}}+\dots+\underset{u_{m}\in\text{Null}(T-\lambda_{m}I)}{\underbrace{\alpha_{1}^{(m)}v_{1}^{(m)}+\dots+\alpha_{n_{m}}^{(m)}v_{n_{m}}^{(m)}}}=0_{V}
+\]
+}%
+ונראה שכל הסקלרים חייבים להיות \L{$0_{\mathbb{F}}$}.
+
+נקבץ את האיברים לפי הקבוצות. 
+
+לכל \L{$i\in\{1,\dots,m\}$} נסמן: \L{%
+\[
+u_{i}=\alpha_{1}^{(i)}v_{1}^{(i)}+\dots+\alpha_{n_{i}}^{(i)}v_{n_{i}}^{(i)}
+\]
+}%
+אז \L{%
+\[
+u_{1}+\dots+u_{m}=0_{V}
+\]
+}%
+ו- \L{$u_{i}\in\text{Null}(T-\lambda_{i}I)$}, כי הוא צירוף לינארי
+של וקטורים מהתמ\textquotedblright ו הזה.
+
+{\beginL 4\endL}. נראה ש- \L{%
+\[
+u_{1}=\dots=u_{m}=0_{V}
+\]
+}%
+נניח בשלילה שלא כולם \L{$0_{V}$}.
+
+הסדר לא משנה, ולכן אפשר למספר אותם מחדש כך שהוקטורים שאינם וקטור האפס
+יהיו הראשונים.
+
+כלומר קיים \L{$p\geq1$} כך ש-\L{%
+\[
+\forall1\le i\le p:\quad u_{i}\ne0_{V}
+\]
+}%
+\L{%
+\[
+\forall p+1\le j\le m:\quad u_{j}=0_{V}
+\]
+}%
+נמחק מהסכום את האפסים: \L{%
+\[
+u_{1}+\dots+u_{p}=0_{V}
+\]
+}%
+
+\L{$u_{1},\dots,u_{p}$} הם וקטורים עצמיים השייכים לערכים עצמיים שונים
+)הם שייכים למרחבים שמשרים ערכים עצמיים שונים והם לא וקטור האפס(.
+
+וקטורים עצמיים השייכים לערכים עצמיים שונים הם בת\textquotedblright ל
+)הרצאה \L{$2$}(, ולכן הרשימה \L{$(u_{1},\dots,u_{p})$} בת\textquotedblright ל.
+
+אבל \L{%
+\[
+1\cdot u_{1}+\dots+1\cdot u_{p}=0_{V}
+\]
+}%
+וזאת סתירה לכך שהרשימה בת\textquotedblright ל.
+
+לכן כל הוקטורים הם וקטור האפס.
+
+{\beginL 5\endL}. כלומר לכל \L{$i\in\{1,\dots,m\}$}: \L{%
+\[
+\alpha_{1}^{(i)}v_{1}^{(i)}+\dots+\alpha_{n_{i}}^{(i)}v_{n_{i}}^{(i)}=u_{i}=0_{V}
+\]
+}%
+הרשימה \L{$\mathcal{B}^{(i)}$} היא בסיס של \L{$\text{Null}(T-\lambda_{i}I)$},
+ובפרט בת\textquotedblright ל, ולכן: \L{%
+\[
+\alpha_{1}^{(i)}=\dots=\alpha_{n_{i}}^{(i)}=0_{\mathbb{F}}
+\]
+}%
+כלומר כל המקדמים הם \L{$0_{\mathbb{F}}$}, והרשימה \L{$\mathcal{B}_{V}$}
+בת\textquotedblright ל.
+
+לסיכום, \L{$\mathcal{B}_{V}$} בסיס של \L{$V$}.
+
+כל וקטור בו שייך לאחד הבסיסים \L{$\mathcal{B}^{(i)}$}, ולכן הוא וקטור
+עצמי של \L{$T$} השייך ל-\L{$\lambda_{i}$}. 
+
+כלומר \L{$(\text{II})$} מתקיים.
+\end{proof}
+
+\subsection{הוכחה: \L{$(\text{II})\Rightarrow(\text{I})$}}
+
+\L{$(\text{II})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} המורכב
+מוקטורים עצמיים של \L{$T$}.
+
+\L{$(\text{I})$} קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} כך ש-
+\L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+\begin{proof}
+1. נניח כי \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$} בסיס של \L{$V$}
+המורכב מוקטורים עצמיים של \L{$T$}.
+
+כלומר, לכל \L{$i\in\{1,\dots,n\}$} קיים סקלר \L{$b_{i,i}\in\mathbb{F}$}
+)הערך העצמי של \L{$v_{i}$}( כך ש- \L{%
+\[
+T(v_{i})=b_{i,i}v_{i}
+\]
+}%
+
+2. נכתוב את זה כצירוף לינארי של כל וקטורי הבסיס: המקדם של \L{$v_{i}$}
+הוא \L{$b_{i,i}$}, וכל שאר המקדמים הם \L{$0_{\mathbb{F}}$}: \L{%
+\[
+T(v_{i})=0_{\mathbb{F}}\cdot v_{1}+\dots+b_{i,i}\cdot v_{i}+\dots+0_{\mathbb{F}}\cdot v_{n}
+\]
+}%
+העמודה ה-\L{$i$} של המטריצה המייצגת מורכבת מהמקדמים האלה: \L{$b_{i,i}$}
+במקום ה-\L{$i$}, ו-\L{$0_{\mathbb{F}}$} בכל שאר המקומות. לכן: \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}b_{1,1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & b_{2,2} & \cdots & 0_{\mathbb{F}}\\
+\vdots &  & \ddots & \vdots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} & \cdots & b_{n,n}
+\end{pmatrix}
+\]
+}%
+כלומר המטריצה אלכסונית, ועל האלכסון מופיעים הערכים העצמיים. 
+\end{proof}
+
+\section{הערה - המשך הקורס}
+
+מעל שדה כללי זה פחות או יותר סוף הסיפור.
+
+מעל \L{$\mathbb{C}$} אפשר לומר עוד )צורת ז'ורדן(.
+
+אם יהיה זמן בסוף הקורס נחזור לזה, אבל ההוכחה דורשת לפחות ארבע הרצאות
+ואין לזה הרבה שימושים.
+
+אולי במקום זה נדבר על ערכים סינגולריים, שחשובים יותר מבחינה פרקטית.
+
+למשפט הספקטרלי נגיע בהחלט.
+
+עוד מעט נתחיל לדבר על מרחבי מכפלה פנימית ועל אופרטורים במרחבי מכפלה
+פנימית.
+\end{document}
