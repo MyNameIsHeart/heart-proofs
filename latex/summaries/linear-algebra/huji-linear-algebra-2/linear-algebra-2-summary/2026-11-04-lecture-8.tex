@@ -1,0 +1,1271 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{אלגברה ליניארית {\beginL 2\endL} - הרצאה {\beginL 8\endL}}
+\author{נעם לב}
+\date{\L{$04.11.2026$}}
+
+\maketitle
+\noindent\fbox{\begin{minipage}[t]{1\columnwidth - 2\fboxsep - 2\fboxrule}%
+\begin{center}
+האוניברסיטה העברית \textbar{} אלגברה ליניארית ){\beginL 2\endL}( -
+\L{$80135$} \textbar{} סמסטר{\small{} }{\beginL 2027\endL}{\small{} }א'
+)תשפ\textquotedblleft ז א'( \textbar{} מרצה: פרופסור יבגני סטרחוב
+\textbar{} מתרגל: מר לזר גוטרמן
+\par\end{center}%
+\end{minipage}}
+\begin{center}
+הסיכום הוא לא רשמי ולא עבר אישור של הסגל, על כן אין להשתמש בו )ובין
+השאר במספור שלו ובשמות הטענות שבו( כמקור רשמי. אם ישנן טעויות, הן
+שלי ולא של הסגל.
+\par\end{center}
+
+\medskip{}
+
+\tableofcontents{}
+
+\newpage{}
+
+\section{הקדמה - מה נשאר בנושא הלכסון}
+
+אנחנו מדברים על מתי אפשר ללכסן העתקות לינאריות )וספציפית אופרטורים(.
+
+מה שנשאר לעשות בנושא הזה הוא להוכיח שני משפטים: אחד על השימוש בפולינום
+האופייני, והשני על השימוש בפולינום המינימלי.
+
+לשם כך צריך להגדיר שני דברים: ריבוי אלגברי וריבוי גיאומטרי.\\
+
+רלוונטי לכל ההרצאה )אותה הנחה( ולכן נציין רק כאן: \\
+
+יהי \L{$V$} מ\textquotedblright ו מעל שדה \L{$\mathbb{F}$} כלשהו
+כך ש-\L{%
+\[
+\dim V=n\geq1,\quad T\in\mathcal{L}(V)
+\]
+}%
+
+\part{שימוש בפולינום האופייני ללכסון )ריבוי אלגברי וריבוי גיאומטרי(}
+
+\section{הגדרה - ריבוי אלגברי של ערך עצמי \L{$(\text{Algebraic multiplicity})$}}
+
+יהי \L{$\lambda$} ערך עצמי של \L{$T$}.
+
+המספר \L{$m_{a}(\lambda)$} הגדול ביותר כך ש- \L{$(z-\lambda)^{m_{a}(\lambda)}$}
+מחלק את הפולינום האופייני נקרא הריבוי האלגברי של \L{$\lambda$}.\\
+
+\L{$\lambda$} הוא ערך עצמי, ולכן הוא שורש של הפולינום האופייני )הרצאה
+\L{$2$}(, כלומר \L{$(z-\lambda)$} מחלק את הפולינום האופייני.
+
+מכאן, תמיד מתקיים \L{$m_{a}(\lambda)\geq1$}.\\
+
+יבגני: יש יותר מדי \L{$m$} בקורס הזה, אבל זה הסימון הסטנדרטי. מי
+שהסימון לא נראה לו יכול להשתמש בסימון אחר. )-\_-(\\
+
+נעם: מעתה אאמץ את הסימונים מהתרגול: \L{$a_{\lambda}$} עבור הריבוי
+האלגברי של \L{$\lambda$} ו-\L{$g_{\lambda}$} עבור הריבוי הגיאומטרי
+של \L{$\lambda$} )במקום \L{$m_{a}(\lambda)$} ו-\L{$m_{geom}(\lambda)$}
+בהתאמה, מההרצאה(.
+
+\section{דוגמה - ריבוי אלגברי מעל \L{$\mathbb{R}$}}
+
+\L{%
+\[
+\mathbb{F}=\mathbb{R}
+\]
+}%
+\L{%
+\[
+P_{ch}(z)=(z-2)^{3}(z+1)(z^{2}+2z+2)
+\]
+}%
+
+לפולינום \L{$z^{2}+2z+2$} אין שורשים ממשיים )הדיסקרימיננטה היא \L{$4-8<0$}(,
+ולכן מעל \L{$\mathbb{R}$} הערכים העצמיים היחידים הם \L{$2$} ו-\L{$\left(-1\right)$}.
+
+ייתכן מצב כזה.
+
+אז
+
+\L{%
+\[
+a_{\left(2\right)}=3,\quad a_{\left(-1\right)}=1
+\]
+}%
+
+כלומר, הריבוי האלגברי הוא החזקה שמתקבלת בפולינום האופייני.
+
+\section{הגדרה - ריבוי גאומטרי של ערך עצמי}
+
+יהי \L{$\lambda$} ערך עצמי של \L{$T$}.
+
+אז המימד של התמ\textquotedblright ו שמשרה \L{$\lambda$} הוא הריבוי
+הגיאומטרי של \L{$\lambda$}:\L{%
+\[
+g_{\left(\lambda\right)}\overset{\text{def}}{=}\dim\left(\text{Null}(T-\lambda I)\right)
+\]
+}%
+
+למה צריך את זה? מתברר שיש משפט שימושי מאוד, אולי השימושי ביותר בכל
+התחום הזה.
+
+\section{משפט - לכסינות באמצעות ריבוי אלגברי וריבוי גאומטרי}
+
+יהיו \L{$\lambda_{1},\dots,\lambda_{m}$} כל הערכים העצמיים של \L{$T$}
+)שונים זה מזה(, כלומר\L{%
+\[
+\forall i,j\in\{1,\dots,m\}\text{ s.t. }i\neq j:\quad\lambda_{j}\neq\lambda_{i}
+\]
+}%
+
+אז התנאים הבאים שקולים:
+
+)I( קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} כך ש- \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & a_{2,2} &  & \vdots\\
+\vdots &  & \ddots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} &  & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+)II( מתקיימים שני התנאים הבאים:
+
+)II( )א( סכום הריבויים האלגבריים של הערכים העצמיים שווה למימד של \L{$V$}:\L{%
+\[
+a_{\left(\lambda_{1}\right)}+\dots+a_{\left(\lambda_{m}\right)}=n
+\]
+}%
+
+)II( )ב( עבור כל ערך עצמי, הריבוי האלגברי שלו שווה לריבוי הגיאומטרי
+שלו:
+
+\L{%
+\[
+g_{\left(\lambda_{1}\right)}=a_{\left(\lambda_{1}\right)},\dots,g_{\left(\lambda_{m}\right)}=a_{\left(\lambda_{m}\right)}
+\]
+}%
+
+כלומר, התנאי השני הוא )א( ו-)ב( ביחד.
+\begin{proof}
+הכיוון \L{$(\text{I})\Rightarrow(\text{II})$}:
+
+1. לפי המשפט על התנאים השקולים ללכסינות מהרצאה {\beginL 7\endL}, קיים
+בסיס \L{$\mathcal{B}_{V}$} המורכב מוקטורים עצמיים של \L{$T$}.
+
+2. נסדר את הוקטורים מחדש לפי הערכים העצמיים שלהם )כמו בהרצאה {\beginL 7\endL}(.
+
+לכל \L{$i\in\{1,\dots,m\}$}, נסמן את וקטורי הבסיס השייכים ל- \L{$\lambda_{i}$}
+כך: \L{%
+\[
+\mathcal{B}^{(i)}=(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)})
+\]
+}%
+האינדקס העליון אומר לאיזה ערך עצמי הוקטור שייך, והתחתון ממספר את הוקטורים
+בתוך הקבוצה. 
+
+נשים את הקבוצות אחת אחרי השנייה: \L{%
+\[
+\mathcal{B}'_{V}=(\mathcal{B}^{(1)},\mathcal{B}^{(2)},\dots,\mathcal{B}^{(m)})
+\]
+}%
+\L{$\mathcal{B}'_{V}$} הוא בסיס של \L{$V$}, כי אלה אותם וקטורים
+בסדר אחר.
+
+לא החסרנו ולא הוספנו וקטורים מהבסיס לכן\L{%
+\[
+n_{1}+\dots+n_{m}=n
+\]
+}%
+
+3. מאיך שהגדרנו אותו, לכל וקטור בבסיס \L{$v_{j}^{(i)}$} מתקיים \L{$T\left(v_{j}^{(i)}\right)=\lambda_{i}v_{j}^{(i)}$}.
+
+אז מהגדרת המטריצה המייצגת \L{$\lambda_{1}$} מופיע \L{$n_{1}$} פעמים,
+\L{$\lambda_{2}$} מופיע \L{$n_{2}$} פעמים וכן הלאה עד \L{$\lambda_{m}$}
+שמופיע \L{$n_{m}$} פעמים, ובכל מקום אחר יש אפס.
+
+\L{%
+\[
+M(T,\mathcal{B}'_{V},\mathcal{B}'_{V})=\begin{pmatrix}\lambda_{1} &  &  &  &  &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+ &  & \lambda_{1}\\
+ &  &  & \ddots\\
+ &  &  &  & \lambda_{m}\\
+ &  &  &  &  & \ddots\\
+0_{\mathbb{F}} &  &  &  &  &  & \lambda_{m}
+\end{pmatrix}
+\]
+}%
+
+מכאן, \L{%
+\[
+P_{ch}(z)=\det\left(zI_{n}-M(T,\mathcal{B}'_{V},\mathcal{B}'_{V})\right)=(z-\lambda_{1})^{n_{1}}\cdots(z-\lambda_{m})^{n_{m}}
+\]
+}%
+\L{$\lambda_{1},\dots,\lambda_{m}$} שונים זה מזה, לכן החזקה הגדולה
+ביותר של \L{$(z-\lambda_{i})$} שמחלקת את \L{$P_{ch}$} היא בדיוק
+\L{$n_{i}$} ונקבל
+
+\L{%
+\[
+a_{\left(\lambda_{1}\right)}=n_{1},\dots,a_{\left(\lambda_{m}\right)}=n_{m}
+\]
+}%
+\L{%
+\[
+\therefore\quad a_{\left(\lambda_{1}\right)}+\dots+a_{\left(\lambda_{m}\right)}=n_{1}+\dots+n_{m}=n
+\]
+}%
+
+שזה )א(.
+
+{\beginL 4\endL}. כל \L{$v_{j}^{(i)}$} הוא וקטור עצמי של \L{$\lambda_{i}$},
+כלומר שייך ל- \L{$\text{Null}(T-\lambda_{i}I)$}, ו- \L{$\text{Null}(T-\lambda_{i}I)$}
+הוא תמ\textquotedblright ו ולכן מכיל גם את כל הצירופים הלינאריים שלהם.\L{%
+\begin{align*}
+\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right) & \subseteq\text{Null}(T-\lambda_{1}I)\\
+ & \vdots\\
+\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right) & \subseteq\text{Null}(T-\lambda_{m}I)
+\end{align*}
+}%
+
+{\beginL 5\endL}. \L{$\mathcal{B}'_{V}$} הוא בסיס של \L{$V$} שמחולק
+לקבוצות \L{$\mathcal{B}^{(1)},\dots,\mathcal{B}^{(m)}$}, להן אין
+וקטורים משותפים.
+
+כל \L{$v\in V$} נכתב באופן יחיד כצירוף לינארי של וקטורי הבסיס.
+
+אם מקבצים את המחוברים לפי הקבוצות מקבלים הצגה יחידה \L{$v=u_{1}+\dots+u_{m}$}
+כאשר \L{$u_{i}\in\text{Span}\left(\mathcal{B}^{(i)}\right)$}.
+
+לכן \L{$V$} הוא סכום ישר של ה-\L{$\text{Span}$}-ים )זו בדיוק ההגדרה
+של אקסלר לסכום ישר(.
+
+\L{%
+\[
+V=\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right)\oplus\dots\oplus\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right)
+\]
+}%
+
+{\beginL 6\endL}. לפי המשפט על התנאים השקולים ללכסינות מהרצאה \L{$7$},
+\L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{m}I)
+\]
+}%
+
+7. נרצה להוכיח שלכל \L{$i\in\{1,\dots,m\}$} מתקיים \L{%
+\[
+\text{Span}\left(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)}\right)=\text{Null}(T-\lambda_{i}I)
+\]
+}%
+נניח בשלילה שזה לא נכון, כלומר שקיים \L{$i\in\{1,\dots,m\}$} כך ש-
+\L{%
+\[
+\text{Span}\left(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)}\right)\neq\text{Null}(T-\lambda_{i}I)
+\]
+}%
+לפי ){\beginL 4\endL}( מתקיים \L{$\text{Span}\left(\mathcal{B}^{(i)}\right)\subseteq\text{Null}(T-\lambda_{i}I)$},
+לכן בהכרח \L{$\text{Null}(T-\lambda_{i}I)\not\subseteq\text{Span}\left(\mathcal{B}^{(i)}\right)$}.
+
+אז קיים \L{$u\in V$} כך ש- \L{%
+\[
+u\in\text{Null}(T-\lambda_{i}I)
+\]
+}%
+אבל \L{%
+\[
+u\notin\text{Span}\left(\mathcal{B}^{(i)}\right)
+\]
+}%
+בפרט, \L{$0_{V}\in\text{Span}\left(\mathcal{B}^{(i)}\right)$} ולכן
+\L{$u\neq0_{V}$}.
+
+לפי ){\beginL 5\endL}(, קיימים \L{$u_{1},\dots,u_{m}$} כך ש-
+
+\L{%
+\[
+u=\underset{\in\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right)}{\underbrace{u_{1}}}+\quad\dots\quad+\underset{\in\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right)}{\underbrace{u_{m}}}
+\]
+}%
+
+קיים \L{$i\ne\ell\in\{1,\dots,m\}$}, כך ש- \L{$u_{\ell}\neq0_{V}$},
+אחרת כולם וקטור האפס למעט \L{$u_{i}$} ונקבל ש-\L{$u=u_{i}\in\text{Span}\left(\mathcal{B}^{(i)}\right)$}
+וזאת סתירה.
+
+נקבל \L{%
+\[
+0_{V}\neq u_{\ell}\in\text{Span}\left(v_{1}^{(\ell)},\dots,v_{n_{\ell}}^{(\ell)}\right)\underset{(4)}{\subseteq}\text{Null}(T-\lambda_{\ell}I)
+\]
+}%
+נעביר את \L{$u$} אגף.
+
+לפי ){\beginL 4\endL}(, לכל \L{$k\in\left\{ 1,\dots,m\right\} $}
+מתקיים \L{$u_{k}\in\text{Null}(T-\lambda_{k}I)$}.
+
+בנוסף, \L{$u\in\text{Null}(T-\lambda_{i}I)$}.
+
+בסה\textquotedblright כ נקבל\L{%
+\[
+0_{V}=\underset{\in\text{Null}(T-\lambda_{1}I)}{\underbrace{u_{1}}}+\dots+\underset{\in\text{Null}(T-\lambda_{i}I)}{\underbrace{(u_{i}-u)}}+\dots+\underset{\in\text{Null}(T-\lambda_{m}I)}{\underbrace{u_{m}}}
+\]
+}%
+
+נזכיר ש- \L{$u_{\ell}\neq0_{V}$}.
+
+מצד שני,\L{%
+\[
+0_{V}=\underset{\in\text{Null}(T-\lambda_{1}I)}{\underbrace{0_{V}}}+\dots+\underset{\in\text{Null}(T-\lambda_{m}I)}{\underbrace{0_{V}}}
+\]
+}%
+קיבלנו שתי הצגות שונות של \L{$0_{V}$} כסכום של וקטורים מ- \L{$\text{Null}(T-\lambda_{1}I),\dots,\text{Null}(T-\lambda_{m}I)$}.
+
+זאת סתירה ל-){\beginL 6\endL}(, כי בסכום ישר ההצגה יחידה.
+
+לכן ההנחה לא נכונה וקיבלנו: \L{%
+\begin{align*}
+\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right) & =\text{Null}(T-\lambda_{1}I)\\
+ & \vdots\\
+\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right) & =\text{Null}(T-\lambda_{m}I)
+\end{align*}
+}%
+{\beginL 8\endL}. הוקטורים של \L{$\mathcal{B}^{(i)}$} הם חלק מהבסיס
+\L{$\mathcal{B}'_{V}$} ולכן בת\textquotedblright ל.
+
+לכן הרשימה \L{$\mathcal{B}^{(i)}=\left(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)}\right)$}
+היא בת\textquotedblright ל ופורשת, דהיינו בסיס של \L{$\text{Span}\left(\mathcal{B}^{(i)}\right)$},
+ומתקיים\L{%
+\[
+\dim\left(\text{Span}\left(\mathcal{B}^{(i)}\right)\right)=n_{i}
+\]
+}%
+
+לפי ){\beginL 7\endL}(, מתקיים \L{$\dim\left(\text{Null}(T-\lambda_{i}I)\right)=\dim\left(\text{Span}\left(\mathcal{B}^{(i)}\right)\right)=n_{i}$}
+
+9. לפי ){\beginL 3\endL}( מתקיים \L{$a_{(\lambda_{i})}=n_{i}$}, ולפי
+ההגדרה של הריבוי הגאומטרי, \L{$g_{(\lambda_{i})}=\dim\left(\text{Null}(T-\lambda_{i}I)\right)$}.
+
+אז בסה\textquotedblright כ\L{%
+\[
+\forall1\le i\le m:
+\]
+}%
+\L{%
+\[
+a_{(\lambda_{i})}=n_{i}=\dim\left(\text{Null}(T-\lambda_{i}I)\right)=g_{(\lambda_{i})}
+\]
+}%
+שזה )ב(, כנדרש.
+
+יבגני, בתשובה לשאלות בהפסקה: ההוכחה הזו יכולה להופיע במבחן.
+
+לא מספיק להגיע עד שלבים 4, 5, 6 ולכתוב \textquotedblright ולכן יש
+שוויון\textquotedblright ; על זה תרד נקודה, כי זה לא ברור מאליו.
+
+צריך לכתוב לפחות כמה מילים: שאם בוחרים וקטור מכאן אז מגיעים לוקטור
+שם, וזה לא יכול להיות.
+
+ההוכחה של יבגני בכיתה הייתה הוכחה קצת שונה מזו שכתבתי כאן.
+
+ניתן להוכיח גם ישירות )נמצא בנספח(.
+\end{proof}
+\begin{proof}
+הכיוון \L{$(\text{II})\Rightarrow(\text{I})$}:
+
+1. מ-)ב(: \L{%
+\begin{align*}
+a_{\left(\lambda_{1}\right)}= & \dim\text{Null}(T-\lambda_{1}I)\\
+ & \vdots\\
+a_{\left(\lambda_{m}\right)}= & \dim\text{Null}(T-\lambda_{m}I)
+\end{align*}
+}%
+ולכן מ-)א(: \L{%
+\[
+\dim\text{Null}(T-\lambda_{1}I)+\dots+\dim\text{Null}(T-\lambda_{m}I)=\dim V
+\]
+}%
+
+זה תנאי \L{$\left(IV\right)$} במשפט על תנאים שקולים ללכסינות, לכן
+\L{$T$} לכסין כנדרש.
+\end{proof}
+לפי יבגני, המעבר הזה הוא המטרה העיקרית של המשפט הקודם: התנאי די חלש,
+מסתכלים רק על מימדים, ופתאום משוויון המימדים אפשר לומר שהמטריצה לכסינה.\\
+
+יבגני: במבחן לא צריך להוכיח שוב את המשפט הקודם, אבל צריך לצטט אותו
+במפורש {\beginL -\endL} \textquotedblright הייתה טענה שמשוויון המימדים
+נובע שניתן להציג את \L{$T$} על ידי מטריצה אלכסונית\textquotedblright .
+זה הכלל תמיד: מותר להסתמך על משפטים קודמים מהרשימה בלי הוכחה, אבל
+צריך לצטט את הטענה שמתבססים עליה.\\
+
+זהו השימוש בפולינום האופייני.
+
+מחקירת הפולינום האופייני מקבלים מיד את הריבוי האלגברי של כל ערך עצמי
+של \L{$T$}. 
+
+אחר כך צריך לעשות מאמץ ולחשב גם את המימדים של תתי-המרחבים \L{$\text{Null}(T-\lambda_{i}I)$},
+כלומר למצוא בהם בסיס של וקטורים עצמיים.
+
+מי שמצליח בזה יכול לקבוע אם יש ייצוג על ידי מטריצה אלכסונית.
+
+לפי יבגני, זה התנאי הכי פרקטי שיש לבדיקה אם ה\textquotedblright ל
+מעל שדה כלשהו לכסינה.
+
+יש גם תנאי שמשתמש בפולינום המינימלי, ונוכיח אותו אחרי ההפסקה.
+
+דוגמאות נוספות יהיו כנראה בתרגול.
+
+\section{דוגמה - אופרטור שאינו לכסין}
+
+\L{%
+\[
+V=\mathbb{R}^{2}=\left\{ \begin{pmatrix}x\\
+y
+\end{pmatrix}\ \middle|\ x\in\mathbb{R},\ y\in\mathbb{R}\right\} 
+\]
+}%
+\L{%
+\[
+T_{A}\in\mathcal{L}(\mathbb{R}^{2})
+\]
+}%
+\L{%
+\[
+T_{A}(v)=\begin{pmatrix}1 & 1\\
+0 & 1
+\end{pmatrix}\cdot v
+\]
+}%
+
+ההעתקה מוגדרת על ידי מטריצה, וברור שהיא לינארית. 
+
+בשאלה כזו תתבקשו לחקור אם המטריצה לכסינה, כלומר אם ניתן להציג את ההעתקה
+על ידי מטריצה אלכסונית.\\
+
+טענה: \L{$T_{A}$} אינו לכסין.
+
+יש כמה אפשרויות, אפשר גם לחשב כאן את הפולינום המינימלי, אבל נשתמש
+במשפט הקודם.
+\begin{proof}
+1. \L{%
+\[
+P_{ch}(z)=\det\begin{pmatrix}z-1 & -1\\
+0 & z-1
+\end{pmatrix}=(z-1)^{2}
+\]
+}%
+
+המטריצה משולשית עליונה, ולכן הדטרמיננטה היא מכפלת איברי האלכסון.
+
+אזי \L{$\lambda=1$} הוא ערך עצמי של \L{$T_{A}$}, ו- \L{%
+\[
+a_{\left(1\right)}=2
+\]
+}%
+
+2. כדי למצוא את הריבוי הגאומטרי צריך למצוא בסיס לגרעין, כלומר בסיס
+שבנוי מוקטורים עצמיים של הערך העצמי שלנו. \L{%
+\[
+\begin{pmatrix}1 & 1\\
+0 & 1
+\end{pmatrix}\begin{pmatrix}x\\
+y
+\end{pmatrix}=1\cdot\begin{pmatrix}x\\
+y
+\end{pmatrix}
+\]
+}%
+כלומר \L{%
+\[
+\begin{cases}
+x+y=x\\
+y=y
+\end{cases}
+\]
+}%
+ולכן \L{%
+\[
+y=0
+\]
+}%
+\L{%
+\[
+\therefore\quad\text{Null}(T_{A}-1\cdot I)=\text{Span}\left(\begin{pmatrix}1\\
+0
+\end{pmatrix}\right)
+\]
+}%
+
+\L{%
+\[
+\therefore\quad g_{\left(1\right)}=1
+\]
+}%
+
+כלומר\L{%
+\[
+a_{\left(1\right)}\neq g_{\left(1\right)}
+\]
+}%
+ולפי המשפט שלמדנו \L{$A$} אינה לכסינה.
+\end{proof}
+יבגני: זה התרגיל הטיפוסי, כשלא רוצים לתת לכם להסתבך עם חיפוש של וקטורים
+עצמיים.
+
+מבחינה טכנית, הדבר הקשה ביותר בו הוא לפתור מערכת משוואות.
+
+\part{שימוש בפולינום המינימלי ללכסון}
+
+\section{משפט - לכסינות והפולינום המינימלי}
+
+יהי \L{$q_{\min}(z)$} הפולינום המינימלי של \L{$T$}.
+
+אז התנאים הבאים שקולים:\\
+
+)I( קיים בסיס \L{$\mathcal{B}_{V}$} כך ש- \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+)II( \L{%
+\[
+q_{\min}(z)=(z-\lambda_{1})\cdots(z-\lambda_{m})
+\]
+}%
+כאשר \L{$\lambda_{1},\dots,\lambda_{m}$} הם ערכים עצמיים שונים.
+
+כלומר, ניתן לכתוב את הפולינום המינימלי כמכפלה של פולינומים לינאריים,
+כאשר \L{$\lambda_{1},\dots,\lambda_{m}$} שונים זה מזה )זה ההבדל מהמשפט
+מהרצאה \L{$6$} על ייצוג משולשי(.
+\begin{proof}
+הכיוון \L{$(\text{I})\Rightarrow(\text{II})$}:
+
+1. \L{$T$} לכסין ולכן לפי המשפט מהרצאה {\beginL 7\endL} על תנאים
+שקולים ללכסינות יש ל-\L{$V$} בסיס \L{$\mathcal{B}_{V}=(v_{1},\dots,v_{n})$}
+של וקטורים עצמיים של \L{$T$}.
+
+נסמן ב- \L{$\lambda_{1},\dots,\lambda_{m}$} את כל הערכים העצמיים
+השונים של \L{$T$}.
+
+נרצה להוכיח שעבורם מתקיים \L{%
+\[
+q_{\min}(z)=(z-\lambda_{1})\cdots(z-\lambda_{m})
+\]
+}%
+
+{\beginL 2\endL}.\L{%
+\begin{align*}
+\left((T-\lambda_{1}I)\cdots(T-\lambda_{m}I)\right)\left(v_{1}\right) & \underset{\left(*\right)}{=}0_{V}\\
+ & \vdots\\
+\left((T-\lambda_{1}I)\cdots(T-\lambda_{m}I)\right)\left(v_{n}\right) & \underset{\left(**\right)}{=}0_{V}
+\end{align*}
+}%
+
+לא יודעים מהו הערך העצמי של \L{$v_{\ell}$}, אבל הוא אחד מה-\L{$\lambda_{i}$}:
+
+\L{%
+\[
+\left(*\right)\quad\exists1\le k\le m:(T-\lambda_{k}I)\left(v_{1}\right)=0_{V}
+\]
+}%
+\L{%
+\[
+\left(**\right)\quad\exists1\le k\le m:(T-\lambda_{k}I)\left(v_{n}\right)=0_{V}
+\]
+}%
+
+הגורמים מתחלפים זה עם זה כי כולם פולינומים באותו אופרטור \L{$T$}
+)הרצאה {\beginL 5\endL}: הערה - מדוע מותר להציב \L{$T$} במקום \L{$x$}(,
+ולכן תמיד אפשר לסדר את המכפלה כך שהגורם המתאים \L{$(T-\lambda_{i}I)$}
+יפעל ראשון על \L{$v_{\ell}$} ויאפס אותו, ואז כמובן ששאר הגורמים מחזירים
+את וקטור האפס כאשר הם מופעלים על וקטור האפס.
+
+אבל מכך ש-\L{$\mathcal{B}_{V}$} הוא בסיס, כל וקטור ב-\L{$V$} הוא
+צירוף לינארי של הוקטורים האלה וקיבלנו ש-\L{%
+\[
+\forall v\in V:\quad\left((T-\lambda_{1}I)\cdots(T-\lambda_{m}I)\right)\left(v\right)=0_{V}
+\]
+}%
+
+{\beginL 3\endL}. כלומר\L{%
+\[
+(T-\lambda_{1}I)\cdots(T-\lambda_{m}I)=0_{\mathcal{L}(V)}
+\]
+}%
+
+{\beginL 4\endL}. ראינו בהרצאה חמש שהפולינום המינימלי מחלק כל פולינום
+שמאפס את \L{$T$}, לכן הפולינום המינימלי בפרט מחלק את הפולינום הזה.
+
+{\beginL 5\endL}. ראינו בהרצאה {\beginL 5\endL} )משפט - שורשי הפולינום
+המינימלי הם הערכים העצמיים( שהערכים העצמיים של \L{$T$} מאפסים את
+הפולינום המינימלי.
+
+{\beginL 6\endL}. כלומר מצד אחד \L{$q_{\min}$} צריך לחלק את המכפלה,
+ולכן הוא המכפלה של כל הגורמים או של חלק מהם.
+
+מצד שני הוא חייב להתאפס בכל הנקודות \L{$\lambda_{1},\dots,\lambda_{m}$}.
+
+לכן אין ברירה, והוא שווה למכפלה כולה.
+
+בסך הכל קיבלנו \L{%
+\[
+q_{\min}(z)=(z-\lambda_{1})\cdots(z-\lambda_{m})
+\]
+}%
+הכיוון \L{$(\text{II})\Rightarrow(\text{I})$}:
+
+נוכיח באינדוקציה לפי \L{$m$}.
+
+נרצה להוכיח שב-\L{$V$} יש בסיס המורכב מוקטורים עצמיים של \L{$T$},
+שזה אותו דבר כמו לומר שהמטריצה אלכסונית.
+
+1. נניח כי \L{$m=1$}. אזי \L{%
+\[
+q_{\min}(z)=z-\lambda_{1}
+\]
+}%
+\L{%
+\[
+q_{\min}(T)=T-\lambda_{1}I=0
+\]
+}%
+\L{%
+\[
+T=\lambda_{1}I
+\]
+}%
+כלומר \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}\lambda_{1} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & \lambda_{1}
+\end{pmatrix}
+\]
+}%
+
+כנדרש.
+
+2. יהי \L{$m\geq2$}. נניח כי המשפט מתקיים לכל מ\textquotedblright ו
+נ\textquotedblright ס \L{$\widetilde{V}$} מעל אותו שדה \L{$\mathbb{F}$}
+ואופרטור \L{$\widetilde{T}\in\mathcal{L}(\widetilde{V})$}, כך ש-
+\L{%
+\[
+\widetilde{q}_{\min}(z)=(z-\alpha_{1})\cdots(z-\alpha_{k})
+\]
+}%
+כאשר \L{$\alpha_{1},\dots,\alpha_{k}$} שונים זה מזה ו- \L{%
+\[
+1\leq k\leq m-1
+\]
+}%
+נרצה לבנות בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} המורכב מוקטורים
+עצמיים של \L{$T$}.
+
+\textcolor{teal}{חשוב מאוד לכתוב את הנחת האינדוקציה נכון; היא מאוד
+משמעותית כאן.}
+
+\textcolor{teal}{הטענה שמוכיחים באינדוקציה היא: כל אופרטור, על כל
+מרחב נ'’ס מעל \L{$\mathbb{F}$}, שהפולינום המינימלי שלו הוא מכפלה
+של \L{$m$} גורמים לינאריים שונים, הוא לכסין.}
+
+\textcolor{teal}{לא משנה מהו המרחב, מהי ההעתקה, מהו המימד ומהו הפולינום
+המינימלי שלה.}
+
+\textcolor{teal}{חשוב רק שאפשר להציג אותו כמכפלה כזו, ושמספר הגורמים
+קטן יותר.}
+
+\textcolor{teal}{נעבוד לא עם \L{$V$} המקורי אלא עם מרחב אחר, ועם
+הצמצום של ההעתקה אליו, שהוא פורמלית העתקה אחרת.}
+
+\textcolor{teal}{השדה נשאר אותו שדה.}
+
+3. נגדיר \L{%
+\[
+U=\text{Range}(T-\lambda_{m}I)
+\]
+}%
+נרצה להפעיל את הנחת האינדוקציה )שלב 2( על \L{$\widetilde{V}=U$} ו-\L{$\widetilde{T}=T|_{U}$}. 
+
+לשם כך נוכיח שלושה דברים.
+
+)א( \L{$U$} הוא תמ\textquotedblright ו שמור תחת \L{$T$}, ולכן \L{$T|_{U}\in\mathcal{L}(U)$}:
+
+למעשה, הוכחנו זאת כבר כמה פעמים.
+
+למשל, הראינו זאת בהוכחת המשפט על ייצוג משולשי מעל \L{$\mathbb{C}$}
+בהרצאה \L{$3$}.
+
+לכל \L{$u\in U$} מתקיים \L{%
+\[
+T(u)=(T-\lambda_{m}I)(u)+\lambda_{m}u\in U
+\]
+}%
+כי \L{$(T-\lambda_{m}I)(u)\in\text{Range}(T-\lambda_{m}I)=U$}, ו-\L{$\lambda_{m}u\in U$}
+כי \L{$U$} תמ\textquotedblright ו.
+
+לכן הצמצום של \L{$T$} ל-\L{$U$} הוא אופרטור על \L{$U$}: \L{%
+\[
+T|_{U}\in\mathcal{L}(U)
+\]
+}%
+
+)ב( \L{$\dim U\geq1$}:
+
+נניח בשלילה ש- \L{$U=\{0_{V}\}$}.
+
+אז לכל \L{$v\in V$} מתקיים \L{%
+\[
+(T-\lambda_{m}I)(v)=0_{V}
+\]
+}%
+כלומר הפולינום \L{$z-\lambda_{m}$}, שמעלתו \L{$1$}, מאפס את \L{$T$}. 
+
+זאת סתירה לכך שהפולינום המינימלי של \L{$T$} הוא ממעלה \L{$m\geq2$},
+כי הוא הפולינום ממעלה מינימלית שמאפס את \L{$T$}.
+
+לכן \L{$U\neq\{0_{V}\}$}, כלומר \L{%
+\[
+\dim U\geq1
+\]
+}%
+
+)ג( הפולינום המינימלי של \L{$T|_{U}$} הוא מכפלה של \L{$k$} גורמים
+לינאריים שונים זה מזה, כאשר \L{$1\leq k\leq m-1$}:
+
+יהי \L{$u\in U$}. לפי הגדרת הטווח, קיים \L{$v_{0}\in V$} כך ש- \L{%
+\[
+u=(T-\lambda_{m}I)(v_{0})
+\]
+}%
+נפעיל על \L{$u$} את \L{$m-1$} הגורמים הראשונים.
+
+יחד עם הגורם \L{$(T-\lambda_{m}I)$} מקבלים את כל \L{$m$} הגורמים,
+כלומר את \L{$q_{\min}(T)$} )מההנחה(: \L{%
+\begin{align*}
+\left((T-\lambda_{1}I)\cdots(T-\lambda_{m-1}I)\right)(u) & =\left((T-\lambda_{1}I)\cdots(T-\lambda_{m-1}I)(T-\lambda_{m}I)\right)(v_{0})\\
+ & =q_{\min}(T)(v_{0})\\
+ & =0_{V}
+\end{align*}
+}%
+כי \L{$q_{\min}(z)=(z-\lambda_{1})\cdots(z-\lambda_{m})$} הוא הפולינום
+המינימלי של \L{$T$}, ולכן \L{$q_{\min}(T)=0_{\mathcal{L}(V)}$}. 
+
+קיבלנו \L{%
+\[
+\forall u\in U:\quad\left((T-\lambda_{1}I)\cdots(T-\lambda_{m-1}I)\right)(u)=0_{V}
+\]
+}%
+נגדיר \L{%
+\[
+p(z)=(z-\lambda_{1})\cdots(z-\lambda_{m-1})
+\]
+}%
+לכל \L{$u\in U$} מתקיים \L{$T|_{U}(u)=T(u)$}, ולכן לפי מה שקיבלנו
+\L{%
+\[
+p\left(T|_{U}\right)(u)=\left((T-\lambda_{1}I)\cdots(T-\lambda_{m-1}I)\right)(u)=0_{V}
+\]
+}%
+כלומר \L{$p$} מאפס את \L{$T|_{U}$}: \L{%
+\[
+p\left(T|_{U}\right)=0_{\mathcal{L}(U)}
+\]
+}%
+
+יהי \L{$\widetilde{q}_{\min}$} הפולינום המינימלי של \L{$T|_{U}$}.
+
+לפי המשפט מהרצאה \L{$5$}, הפולינום המינימלי מחלק כל פולינום שמאפס
+את האופרטור.
+
+לכן \L{$\widetilde{q}_{\min}$} מחלק את \L{%
+\[
+p(z)=(z-\lambda_{1})\cdots(z-\lambda_{m-1})
+\]
+}%
+מכאן \L{%
+\[
+\widetilde{q}_{\min}(z)=(z-\alpha_{1})\cdots(z-\alpha_{k})
+\]
+}%
+כאשר \L{$\alpha_{1},\dots,\alpha_{k}$} שונים זה מזה וגם \L{%
+\[
+\alpha_{1},\dots,\alpha_{k}\in\{\lambda_{1},\dots,\lambda_{m-1}\}
+\]
+}%
+כאשר \L{%
+\[
+1\leq k\leq m-1
+\]
+}%
+\L{$k\geq1$} כי הפולינום המתוקן היחיד ממעלה \L{$0$} הוא הקבוע \L{$1$},
+והוא לא מאפס את \L{$T|_{U}$}: הצבה בו נותנת את אופרטור הזהות על \L{$U$},
+שאינו אופרטור האפס כי \L{$\dim U\geq1$}.
+
+מ-)א(, )ב( ו-)ג( נובע ש-\L{$U$} ו-\L{$T|_{U}$} מקיימים את התנאים
+של הנחת האינדוקציה )שלב 2(, כלומר היא חלה עבור \L{%
+\[
+\widetilde{V}=U,\quad\widetilde{T}=T|_{U}
+\]
+}%
+
+4. לכן קיים בסיס \L{$\mathcal{B}_{U}$} ב-\L{$U$} המורכב מוקטורים
+עצמיים של \L{$T$}: \L{%
+\[
+\mathcal{B}_{U}=(u_{1},\dots,u_{p})
+\]
+}%
+כאשר \L{$u_{1},\dots,u_{p}$} הם וקטורים עצמיים של \L{$T$}.
+
+הנחת האינדוקציה נותנת ב-\L{$U$} בסיס של וקטורים עצמיים של \L{$T|_{U}$}.
+
+אלה גם וקטורים עצמיים של \L{$T$}, כי בתוך \L{$U$} לא משנה אם מדברים
+על \L{$T$} או על הצמצום.
+
+עכשיו נרצה להרחיב את זה לבסיס של המרחב המקורי.
+
+5. נסתכל על האופרטור \L{$T-\lambda_{m}I\in\mathcal{L}(V)$}.
+
+לפי משפט מלינארית \L{$1$}, המימד של התחום של כל ה\textquotedblright ל
+שווה למימד הגרעין שלה ועוד מימד התמונה שלה: \L{%
+\[
+\dim V=\dim\text{Null}(T-\lambda_{m}I)+\dim\text{Range}(T-\lambda_{m}I)
+\]
+}%
+נרצה להוכיח ש- \L{%
+\[
+V=\text{Null}(T-\lambda_{m}I)\oplus\text{Range}(T-\lambda_{m}I)
+\]
+}%
+כי אז נוכל לצרף את הבסיס של \L{$U=\text{Range}(T-\lambda_{m}I)$}
+משלב 4 לבסיס של \L{$\text{Null}(T-\lambda_{m}I)$}, ולקבל בסיס של
+\L{$V$} המורכב מוקטורים עצמיים של \L{$T$}.
+
+6. נוכיח ש- \L{%
+\[
+\text{Null}(T-\lambda_{m}I)\cap U=\{0_{V}\}
+\]
+}%
+יהי \L{$u\in\text{Null}(T-\lambda_{m}I)\cap U$}.
+
+מכיוון ש- \L{$u\in\text{Null}(T-\lambda_{m}I)$}: \L{%
+\[
+T(u)=\lambda_{m}u
+\]
+}%
+לכן לכל \L{$i\in\{1,\dots,m-1\}$}: \L{%
+\[
+(T-\lambda_{i}I)(u)=\lambda_{m}u-\lambda_{i}u=(\lambda_{m}-\lambda_{i})u
+\]
+}%
+מכיוון ש-\L{$u\in U$}, לפי שלב 3: \L{%
+\[
+\left((T-\lambda_{1}I)\cdots(T-\lambda_{m-1}I)\right)(u)=0_{V}
+\]
+}%
+משתי השורות האחרונות נקבל \L{%
+\[
+0_{V}=(\lambda_{m}-\lambda_{1})\cdots(\lambda_{m}-\lambda_{m-1})u
+\]
+}%
+\L{$\lambda_{1},\dots,\lambda_{m}$} שונים זה מזה, לכן כל הסקלרים
+\L{$\lambda_{m}-\lambda_{i}$} שונים מ-\L{$0_{\mathbb{F}}$}, ומכאן
+\L{%
+\[
+u=0_{V}
+\]
+}%
+כנדרש.
+
+{\beginL 7\endL}. קיבלנו שהחיתוך של שני התמ\textquotedblright וים
+הוא \L{$\left\{ 0_{V}\right\} $}, ולפי ההגדרה מלינארית {\beginL 1\endL}
+זה אומר שהסכום שלהם ישר.
+
+מימד של סכום ישר שווה לסכום המימדים של התמ\textquotedblright וים )משפט
+המימדים הראשון ומימד החיתוך הוא אפס(, ולפי {\beginL 5\endL} סכום המימדים
+של התמ\textquotedblright וים הוא המימד של \L{$V$}.
+
+קיבלנו שמימד הסכום הישר הוא המימד של \L{$V$}.
+
+הסכום הישר הוא תמ\textquotedblright ו של \L{$V$} מהמימד של \L{$V$},
+לכן קיבלנו שהוא שווה ל-\L{$V$}.
+
+\L{%
+\[
+V=\text{Null}(T-\lambda_{m}I)\oplus\text{Range}(T-\lambda_{m}I)
+\]
+}%
+
+8. לפי שלב 4, ל- \L{$U=\text{Range}(T-\lambda_{m}I)$} יש בסיס המורכב
+מוקטורים עצמיים של \L{$T$}. 
+
+גם ל-\L{$\text{Null}(T-\lambda_{m}I)$} יש בסיס כזה.
+
+הוא תמ\textquotedblright ו של \L{$V$}, ולכן לפי לינארית \L{$1$}
+יש לו בסיס.
+
+יהי \L{$w$} וקטור בבסיס הזה.
+
+אז \L{$w\neq0_{V}$}, כי וקטורי בסיס הם בת\textquotedblright ל, ומכיוון
+ש- \L{$w\in\text{Null}(T-\lambda_{m}I)$} מתקיים \L{%
+\[
+T(w)=\lambda_{m}w
+\]
+}%
+כלומר \L{$w$} הוא וקטור עצמי של \L{$T$} עם הערך העצמי \L{$\lambda_{m}$}.
+
+לפי שלב 7 הסכום ישר, ולכן שני הבסיסים יחד הם בסיס של \L{$V$}.
+
+קיבלנו בסיס של \L{$V$} המורכב מוקטורים עצמיים של \L{$T$}. 
+
+לפי המשפט על התנאים השקולים ללכסינות מהרצאה \L{$7$}, \L{$(\text{I})$}
+מתקיים, כנדרש.
+\end{proof}
+
+\part{פונקציות של מטריצות וסיום הפרק}
+
+\section{דוגמה - חזקות ואקספוננט של מטריצה לכסינה}
+
+השימוש העיקרי של לכסון הוא שהוא מאפשר להגדיר פונקציות של מטריצות,
+למשל כדי לפתור מערכות של משוואות דיפרנציאליות.
+
+נניח כי \L{%
+\[
+A=QDQ^{-1}
+\]
+}%
+כאשר \L{%
+\[
+D=\begin{pmatrix}\lambda_{1} &  &  & 0_{\mathbb{F}}\\
+ & \lambda_{2}\\
+ &  & \ddots\\
+0_{\mathbb{F}} &  &  & \lambda_{n}
+\end{pmatrix}
+\]
+}%
+)הערכים העצמיים לא חייבים להיות שונים זה מזה(.
+
+נחשב למה שווה חזקה כלשהי של \L{$A$}.\L{%
+\begin{align*}
+A^{p} & =\underset{p\text{ times}}{\underbrace{(QDQ^{-1})(QDQ^{-1})\cdots(QDQ^{-1})}}\\
+ & =(QDIDID\dots IDQ^{-1})=QD^{p}Q^{-1}\\
+ & =Q\begin{pmatrix}\lambda_{1}^{p} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & \lambda_{n}^{p}
+\end{pmatrix}Q^{-1}
+\end{align*}
+}%
+
+נזכיר מאינפי {\beginL 2\endL} את טור טיילור של \L{$e^{x}$} סביב \L{$0$}:
+\L{%
+\[
+e^{x}=\sum_{p=0}^{\infty}\frac{x^{p}}{p!}
+\]
+}%
+הטור הזה מתכנס לכל \L{$x$}.
+
+באגף ימין יש רק חזקות, חילוק בסקלר וסכום, ואלה פעולות שמוגדרות גם
+עבור מטריצות.
+
+לכן נגדיר את \L{$e^{A}$} על ידי הצבת \L{$A$} במקום \L{$x$}. 
+
+נקבל שלפי החישוב של \L{$A^{p}$}: \L{%
+\[
+\sum_{p=0}^{\infty}\frac{A^{p}}{p!}=\sum_{p=0}^{\infty}\frac{QD^{p}Q^{-1}}{p!}=Q\left(\sum_{p=0}^{\infty}\frac{D^{p}}{p!}\right)Q^{-1}
+\]
+}%
+כל \L{$D^{p}$} אלכסונית, ולכן הסכום שבסוגריים מחושב איבר-איבר על
+האלכסון: \L{%
+\begin{align*}
+e^{A} & \overset{\text{def}}{=}Q\left(\sum_{p=0}^{\infty}\frac{D^{p}}{p!}\right)Q^{-1}\\
+ & =Q\begin{pmatrix}\underset{p=0}{\overset{\infty}{\sum}}\frac{\lambda_{1}^{p}}{p!} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & \underset{p=0}{\overset{\infty}{\sum}}\frac{\lambda_{n}^{p}}{p!}
+\end{pmatrix}Q^{-1}\\
+ & =Q\begin{pmatrix}e^{\lambda_{1}} &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+0_{\mathbb{F}} &  & e^{\lambda_{n}}
+\end{pmatrix}Q^{-1}
+\end{align*}
+}%
+כך אפשר להגדיר כל פונקציה שמיוצגת על ידי טור, כל עוד הטור מתכנס בכל
+ערך עצמי של \L{$A$}.
+
+\section{הערה - סיום הפרק והמבחן}
+
+בזה הסתיים הפרק על לכסון מטריצות.
+
+בשבוע הבא מתחילים מרחבי מכפלה פנימית.\\
+
+על המבחן: לכל פרק תפורסם רשימת משפטים, ומהפרק הזה נכנסו אליה חמישה.
+
+בחלק התיאורטי יופיעו שלושה משפטים מהרשימה, בניסוח של המרצה, וצריך
+לבחור שניים מהם.
+
+כל שאלה שווה \L{$25$} נקודות )למשל הוכחת משפט \L{$20$} נקודות ועוד
+הגדרה \L{$5$} נקודות(, ובסך הכל \L{$50$} נקודות.
+
+\part{נספח}
+
+\section{הוכחה ישירה של הכיוון הראשון במשפט - לכסינות באמצעות ריבוי אלגברי
+וריבוי גאומטרי}
+
+יהיו \L{$\lambda_{1},\dots,\lambda_{m}$} כל הערכים העצמיים של \L{$T$}
+)שונים זה מזה(, כלומר\L{%
+\[
+\forall i,j\in\{1,\dots,m\}\text{ s.t. }i\neq j:\quad\lambda_{j}\neq\lambda_{i}
+\]
+}%
+
+ונניח כי קיים בסיס \L{$\mathcal{B}_{V}$} ב-\L{$V$} כך ש- \L{%
+\[
+M(T,\mathcal{B}_{V},\mathcal{B}_{V})=\begin{pmatrix}a_{1,1} & 0_{\mathbb{F}} & \cdots & 0_{\mathbb{F}}\\
+0_{\mathbb{F}} & a_{2,2} &  & \vdots\\
+\vdots &  & \ddots\\
+0_{\mathbb{F}} & 0_{\mathbb{F}} &  & a_{n,n}
+\end{pmatrix}
+\]
+}%
+
+נוכיח ש:
+
+)א( סכום הריבויים האלגבריים של הערכים העצמיים שווה למימד של \L{$V$}:\L{%
+\[
+a_{\left(\lambda_{1}\right)}+\dots+a_{\left(\lambda_{m}\right)}=n
+\]
+}%
+
+)ב( עבור כל ערך עצמי, הריבוי האלגברי שלו שווה לריבוי הגיאומטרי שלו:
+
+\L{%
+\[
+g_{\left(\lambda_{1}\right)}=a_{\left(\lambda_{1}\right)},\dots,g_{\left(\lambda_{m}\right)}=a_{\left(\lambda_{m}\right)}
+\]
+}%
+
+\begin{proof}
+1. לפי המשפט על התנאים השקולים ללכסינות מהרצאה {\beginL 7\endL}, קיים
+בסיס \L{$\mathcal{B}_{V}$} המורכב מוקטורים עצמיים של \L{$T$}.
+
+2. נסדר את הוקטורים מחדש לפי הערכים העצמיים שלהם )כמו בהרצאה {\beginL 7\endL}(.
+
+לכל \L{$i\in\{1,\dots,m\}$}, נסמן את וקטורי הבסיס השייכים ל- \L{$\lambda_{i}$}
+כך: \L{%
+\[
+\mathcal{B}^{(i)}=(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)})
+\]
+}%
+האינדקס העליון אומר לאיזה ערך עצמי הוקטור שייך, והתחתון ממספר את הוקטורים
+בתוך הקבוצה. 
+
+נשים את הקבוצות אחת אחרי השנייה: \L{%
+\[
+\mathcal{B}'_{V}=(\mathcal{B}^{(1)},\mathcal{B}^{(2)},\dots,\mathcal{B}^{(m)})
+\]
+}%
+\L{$\mathcal{B}'_{V}$} הוא בסיס של \L{$V$}, כי אלה אותם וקטורים
+בסדר אחר.
+
+לא החסרנו ולא הוספנו וקטורים מהבסיס לכן\L{%
+\[
+n_{1}+\dots+n_{m}=n
+\]
+}%
+
+3. מאיך שהגדרנו אותו, לכל וקטור בבסיס \L{$v_{j}^{(i)}$} מתקיים \L{$T\left(v_{j}^{(i)}\right)=\lambda_{i}v_{j}^{(i)}$}.
+
+אז מהגדרת המטריצה המייצגת \L{$\lambda_{1}$} מופיע \L{$n_{1}$} פעמים,
+\L{$\lambda_{2}$} מופיע \L{$n_{2}$} פעמים וכן הלאה עד \L{$\lambda_{m}$}
+שמופיע \L{$n_{m}$} פעמים, ובכל מקום אחר יש אפס.
+
+\L{%
+\[
+M(T,\mathcal{B}'_{V},\mathcal{B}'_{V})=\begin{pmatrix}\lambda_{1} &  &  &  &  &  & 0_{\mathbb{F}}\\
+ & \ddots\\
+ &  & \lambda_{1}\\
+ &  &  & \ddots\\
+ &  &  &  & \lambda_{m}\\
+ &  &  &  &  & \ddots\\
+0_{\mathbb{F}} &  &  &  &  &  & \lambda_{m}
+\end{pmatrix}
+\]
+}%
+
+מכאן, \L{%
+\[
+P_{ch}(z)=\det\left(zI_{n}-M(T,\mathcal{B}'_{V},\mathcal{B}'_{V})\right)=(z-\lambda_{1})^{n_{1}}\cdots(z-\lambda_{m})^{n_{m}}
+\]
+}%
+\L{$\lambda_{1},\dots,\lambda_{m}$} שונים זה מזה, לכן החזקה הגדולה
+ביותר של \L{$(z-\lambda_{i})$} שמחלקת את \L{$P_{ch}$} היא בדיוק
+\L{$n_{i}$} ונקבל
+
+\L{%
+\[
+a_{\left(\lambda_{1}\right)}=n_{1},\dots,a_{\left(\lambda_{m}\right)}=n_{m}
+\]
+}%
+\L{%
+\[
+\therefore\quad a_{\left(\lambda_{1}\right)}+\dots+a_{\left(\lambda_{m}\right)}=n_{1}+\dots+n_{m}=n
+\]
+}%
+
+שזה )א(.
+
+{\beginL 4\endL}. כל \L{$v_{j}^{(i)}$} הוא וקטור עצמי של \L{$\lambda_{i}$},
+כלומר שייך ל- \L{$\text{Null}(T-\lambda_{i}I)$}, ו- \L{$\text{Null}(T-\lambda_{i}I)$}
+הוא תמ\textquotedblright ו ולכן מכיל גם את כל הצירופים הלינאריים שלהם.\L{%
+\begin{align*}
+\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right) & \subseteq\text{Null}(T-\lambda_{1}I)\\
+ & \vdots\\
+\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right) & \subseteq\text{Null}(T-\lambda_{m}I)
+\end{align*}
+}%
+
+{\beginL 5\endL}. \L{$\mathcal{B}'_{V}$} הוא בסיס של \L{$V$} שמחולק
+לקבוצות \L{$\mathcal{B}^{(1)},\dots,\mathcal{B}^{(m)}$}, להן אין
+וקטורים משותפים.
+
+כל \L{$v\in V$} נכתב באופן יחיד כצירוף לינארי של וקטורי הבסיס.
+
+אם מקבצים את המחוברים לפי הקבוצות מקבלים הצגה יחידה \L{$v=u_{1}+\dots+u_{m}$}
+כאשר \L{$u_{i}\in\text{Span}\left(\mathcal{B}^{(i)}\right)$}.
+
+לכן \L{$V$} הוא סכום ישר של ה-\L{$\text{Span}$}-ים )זו בדיוק ההגדרה
+של אקסלר לסכום ישר(.
+
+\L{%
+\[
+V=\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right)\oplus\dots\oplus\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right)
+\]
+}%
+
+{\beginL 6\endL}. לפי המשפט על התנאים השקולים ללכסינות מהרצאה \L{$7$},
+\L{%
+\[
+V=\text{Null}(T-\lambda_{1}I)\oplus\dots\oplus\text{Null}(T-\lambda_{m}I)
+\]
+}%
+
+7. יהי \L{$i\in\{1,\dots,m\}$}. נוכיח שמתקיים \L{%
+\[
+\text{Span}\left(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)}\right)=\text{Null}(T-\lambda_{i}I)
+\]
+}%
+בעזרת הכלה דו-כיוונית.
+
+\L{$\text{Span}\left(\mathcal{B}^{(i)}\right)\subseteq\text{Null}(T-\lambda_{i}I)$}:
+הוכחנו ב-){\beginL 4\endL}(.
+
+\L{$\text{Null}(T-\lambda_{i}I)\subseteq\text{Span}\left(\mathcal{B}^{(i)}\right)$}:
+
+יהי \L{$u\in\text{Null}(T-\lambda_{i}I)$}.
+
+לפי ){\beginL 5\endL}(, קיימים \L{$u_{1},\dots,u_{m}$} כך ש-
+
+\L{%
+\[
+u=\underset{\in\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right)}{\underbrace{u_{1}}}+\quad\dots\quad+\underset{\in\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right)}{\underbrace{u_{m}}}
+\]
+}%
+
+ולפי ){\beginL 4\endL}(, לכל \L{$k\in\left\{ 1,\dots,m\right\} $}
+מתקיים \L{$u_{k}\in\text{Null}(T-\lambda_{k}I)$}.
+
+מצד שני, \L{$u\in\text{Null}(T-\lambda_{i}I)$} ו-\L{$0_{V}$} שייך
+לכל תמ\textquotedblright ו, לכן אפשר לכתוב את \L{$u$} גם כך )\L{$u$}
+במקום ה-\L{$i$}, ו-\L{$0_{V}$} בכל שאר המקומות(: \L{%
+\[
+u=\underbrace{0_{V}}_{\in\text{Null}(T-\lambda_{1}I)}+\dots+\underbrace{u}_{\in\text{Null}(T-\lambda_{i}I)}+\dots+\underbrace{0_{V}}_{\in\text{Null}(T-\lambda_{m}I)}
+\]
+}%
+
+קיבלנו שתי הצגות של \L{$u$} כסכום של וקטורים מ- \L{$\text{Null}(T-\lambda_{1}I),\dots,\text{Null}(T-\lambda_{m}I)$}.
+
+לפי ){\beginL 6\endL}( הסכום של תתי-המרחבים האלה ישר, ולכן ההצגה יחידה,
+כלומר שתי ההצגות שוות רכיב-רכיב.
+
+בפרט, ברכיב ה-\L{$i$}: \L{%
+\[
+u_{i}=u
+\]
+}%
+לכן \L{%
+\[
+u=u_{i}\in\text{Span}\left(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)}\right)
+\]
+}%
+כנדרש.
+
+קיבלנו: \L{%
+\begin{align*}
+\text{Span}\left(v_{1}^{(1)},\dots,v_{n_{1}}^{(1)}\right) & =\text{Null}(T-\lambda_{1}I)\\
+ & \vdots\\
+\text{Span}\left(v_{1}^{(m)},\dots,v_{n_{m}}^{(m)}\right) & =\text{Null}(T-\lambda_{m}I)
+\end{align*}
+}%
+
+{\beginL 8\endL}. הוקטורים של \L{$\mathcal{B}^{(i)}$} הם חלק מהבסיס
+\L{$\mathcal{B}'_{V}$} ולכן בת\textquotedblright ל.
+
+לכן הרשימה \L{$\mathcal{B}^{(i)}=\left(v_{1}^{(i)},\dots,v_{n_{i}}^{(i)}\right)$}
+היא בת\textquotedblright ל ופורשת, דהיינו בסיס של \L{$\text{Span}\left(\mathcal{B}^{(i)}\right)$},
+ומתקיים\L{%
+\[
+\dim\left(\text{Span}\left(\mathcal{B}^{(i)}\right)\right)=n_{i}
+\]
+}%
+
+לפי ){\beginL 7\endL}(, מתקיים \L{$\dim\left(\text{Null}(T-\lambda_{i}I)\right)=\dim\left(\text{Span}\left(\mathcal{B}^{(i)}\right)\right)=n_{i}$}
+
+9. לפי ){\beginL 3\endL}( מתקיים \L{$a_{(\lambda_{i})}=n_{i}$}, ולפי
+ההגדרה של הריבוי הגאומטרי, \L{$g_{(\lambda_{i})}=\dim\left(\text{Null}(T-\lambda_{i}I)\right)$}.
+
+אז בסה\textquotedblright כ\L{%
+\[
+\forall1\le i\le m:
+\]
+}%
+\L{%
+\[
+a_{(\lambda_{i})}=n_{i}=\dim\left(\text{Null}(T-\lambda_{i}I)\right)=g_{(\lambda_{i})}
+\]
+}%
+שזה )ב(, כנדרש.
+\end{proof}
+
+\end{document}
