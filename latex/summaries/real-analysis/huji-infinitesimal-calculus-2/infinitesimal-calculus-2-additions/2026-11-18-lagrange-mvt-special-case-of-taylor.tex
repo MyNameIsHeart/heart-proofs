@@ -1,0 +1,81 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{משפט הערך הממוצע של לגראנז' הוא מקרה פרטי של משפט טיילור עם השארית
+בצורת לגראנז'}
+
+\maketitle
+משפט טיילור עם השארית בצורת לגראנז':
+
+יהיו \L{$a,b\in\mathbb{R}$} כך ש- \L{$a<b$} ויהי \L{$n\in\mathbb{N}\cup\left\{ 0\right\} $}.
+
+תהי \L{$f$} פונקציה הגזירה \L{$n$} פעמים בקטע \L{$\left[a,b\right]$}
+כך שהנגזרת ה-\L{$n$} שלה רציפה והגזירה \L{$n+1$} פעמים בקטע \L{$\left(a,b\right)$}.
+
+אז קיימת נקודה \L{$c\in\left(a,b\right)$} כך ש-\L{%
+\[
+R_{n,f,a}\left(b\right)=f(b)-P_{n,f,a}\left(b\right)=\frac{f^{\left(n+1\right)}(c)}{\left(n+1\right)!}\left(b-a\right)^{n+1}
+\]
+}%
+
+וזה בפרט נכון עבור \L{$n=0$}:
+
+אם \L{$f$} היא פונקציה רציפה בקטע \L{$\left[a,b\right]$} וגזירה
+בקטע \L{$\left(a,b\right)$}, אז קיימת נקודה \L{$c\in\left(a,b\right)$}
+כך ש-\L{%
+\[
+f(b)-P_{0,f,a}\left(b\right)=\frac{f^{\left(0+1\right)}(c)}{\left(0+1\right)!}\left(b-a\right)^{1}
+\]
+}%
+
+נשים לב:\L{%
+\[
+\frac{f^{\left(0+1\right)}(c)}{\left(0+1\right)!}\left(b-a\right)^{1}=f'(c)\cdot\left(b-a\right)
+\]
+}%
+\L{%
+\[
+P_{0,f,a}\left(b\right)=\underset{k=0}{\overset{0}{\sum}}\frac{f^{(k)}(a)}{k!}\left(b-a\right)^{k}=\frac{f(a)}{1}\left(b-a\right)^{0}=f(a)
+\]
+}%
+ בסך הכל קיבלנו\L{%
+\[
+f(b)-f(a)=f'(c)\cdot\left(b-a\right)
+\]
+}%
+
+כלומר, קיימת נקודה \L{$c\in\left(a,b\right)$} כך ש-\L{%
+\[
+f'(c)=\frac{f(b)-f(a)}{b-a}
+\]
+}%
+ וזה בדיוק משפט הערך הממוצע של לגראנז'. 
+\end{document}
