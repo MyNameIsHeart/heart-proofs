@@ -10,8 +10,9 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from html import unescape
+from html import escape, unescape
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 LATEX_DIR = ROOT / "latex"
@@ -403,6 +404,7 @@ def preprocess(tex: str) -> str:
 
     tex = re.sub(r"\\inputencoding\{[^}]*\}", "", tex)
     tex = re.sub(r"\\textbar(\{\})?", "|", tex)
+    tex = re.sub(r"\\(q?)quad\{\}", lambda m: "\u2003" * (2 if m.group(1) else 1), tex)
     tex = dewrapfig(tex)
     tex = unbox(tex)
     tex = margin_notes(tex)
@@ -531,6 +533,7 @@ def postprocess(html: str) -> str:
     html = DIV_RE.sub(add_classes, html)
     html = html.replace(f'<span style="color: {MARGIN_MARK}">', '<span class="marginnote">')
     html = re.sub(r'<div class="blankline">\s*</div>', '<div class="blank-line" aria-hidden="true"></div>', html)
+    html = re.sub(r"<p>\s*</p>\n?", "", html)
     html = html.replace(" ◻", ' <span class="qed" aria-label="end of proof">∎</span>')
     html = html.replace("◻", '<span class="qed" aria-label="end of proof">∎</span>')
     return html
@@ -755,6 +758,28 @@ def copy_images(html: str, tex_dir: Path, rel: str) -> str:
         cls = f' class="fig-wrap fig-{wrap}"' if wrap else ""
         return f'<img src="/files/{rel}/{inner.as_posix()}"{cls}{attrs}>'
     return IMG_RE.sub(repl, html)
+
+
+GIF_LINK_RE = re.compile(r'<a href="([^"]+)" class="uri">[^<]*</a>')
+GIFS_PARA_RE = re.compile(r'<p>((?:\s|</?span[^>]*>|<img [^>]*class="anim"[^>]*>)+)</p>')
+
+
+def inline_gifs(html: str, tex_dir: Path) -> str:
+    """A bare link to a .gif shows as the animation itself when a file of the same name sits next to the
+    .tex; the PDF keeps the link. GIFs alone in a paragraph sit side by side, the first link on the left."""
+    def repl(m: re.Match) -> str:
+        name = unquote(urlsplit(unescape(m.group(1))).path.rsplit("/", 1)[-1])
+        if not name.lower().endswith(".gif"):
+            return m.group(0)
+        if not (tex_dir / name).is_file():
+            print(f"  ! {name} is not next to the .tex (in {tex_dir.name}); the page shows the link", file=sys.stderr)
+            return m.group(0)
+        alt = escape(name[:-4].replace("_", " "))
+        return f'<img src="{escape(name)}" alt="{alt}" lang="en" class="anim" loading="lazy">'
+    def para(m: re.Match) -> str:
+        imgs = re.findall(r"<img [^>]*>", m.group(1))
+        return '<p class="gifs">' + "\n".join(imgs) + "</p>" if imgs else m.group(0)
+    return GIFS_PARA_RE.sub(para, GIF_LINK_RE.sub(repl, html))
 
 
 def copy_asset(src: str, tex_dir: Path, rel: str) -> str | None:
@@ -1221,7 +1246,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
 
     out_dir = CONTENT_DIR / rel
     out_dir.mkdir(parents=True, exist_ok=True)
-    body = colorize(copy_images(body, tex_path.parent, f"{rel}"))
+    body = colorize(copy_images(inline_gifs(body, tex_path.parent), tex_path.parent, f"{rel}"))
     if side.get("figure"):
         fig_url = copy_asset(str(side["figure"]), tex_path.parent, rel)
         if fig_url:

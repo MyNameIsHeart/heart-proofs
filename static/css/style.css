@@ -226,6 +226,8 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .math-post .post-body table.vr-3 :is(th, td):nth-child(3), .math-post .post-body table.vr-4 :is(th, td):nth-child(4),
 .math-post .post-body table.vr-5 :is(th, td):nth-child(5), .math-post .post-body table.vr-6 :is(th, td):nth-child(6) { border-inline-end: 1px solid var(--muted); }
 .post-body p:has(> img:only-child), .post-body p:has(> span:only-child > img:only-child) { text-align: center; }
+.post-body p.gifs { direction: ltr; display: flex; justify-content: center; align-items: flex-start; gap: 0.8rem; }
+.post-body p.gifs img { min-width: 0; }
 .post-body img.fig-wrap { float: right; max-width: 38%; max-height: none; border-radius: var(--radius); margin: 0.3em 0 0.9em 1.5em; }
 .post-body img.fig-left { float: left; margin: 0.3em 1.5em 0.9em 0; }
 .post-body p:has(> img.fig-wrap:only-child), .post-body p:has(> span:only-child > img.fig-wrap:only-child) { text-align: start; margin: 0; }
