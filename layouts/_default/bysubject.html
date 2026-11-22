@@ -19,7 +19,10 @@
 </ol>
 {{ end }}
 
-{{ partial "section-tree.html" (dict "section" . "level" 2) }}
+<nav class="parts tree">
+  {{ with site.Data.text.parts }}<div class="parts-head"><button type="button" class="parts-toggle" data-expand="{{ .expand_all }}" data-collapse="{{ .collapse_all }}" hidden>{{ .expand_all }}</button></div>{{ end }}
+  {{ partial "section-tree.html" (dict "section" . "level" 2) }}
+</nav>
 
 {{ if and (not .Sections) (not .RegularPages) }}{{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}
 {{ end }}
