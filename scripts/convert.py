@@ -223,8 +223,17 @@ def place_toc(html: str, name: str) -> str:
     if not items:
         return TOC_MARK_RE.sub("", html)
     depth = {lvl: i for i, lvl in enumerate(sorted({t["level"] for t in items}))}
-    lis = "".join(f'<li class="toc-l{depth[t["level"]] + 2}"><a href="#{escape(t["id"])}">{escape(t["text"])}</a></li>'
-                  for t in items if depth[t["level"]] < 4)
+    shown = [t for t in items if depth[t["level"]] < 4]
+    under = [0] * len(shown)
+    top = None
+    for i, t in enumerate(shown):
+        if depth[t["level"]] == 0:
+            top = i
+        elif top is not None:
+            under[top] += 1
+    lis = "".join(f'<li class="toc-l{depth[t["level"]] + 2}"><a href="#{escape(t["id"])}">{escape(t["text"])}</a>'
+                  + (f' <span class="toc-count">{n}</span>' if n else "") + "</li>"
+                  for t, n in zip(shown, under))
     nav = f'<nav class="page-toc">\n<p class="page-toc-title">{escape(name)}</p>\n<ul class="part-toc">{lis}</ul>\n</nav>\n'
     return TOC_MARK_RE.sub(lambda m: nav, html, count=1)
 
