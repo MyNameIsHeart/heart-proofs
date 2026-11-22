@@ -1,5 +1,6 @@
 {{ define "main" }}
 {{ $isRoot := and .Parent .Parent.IsHome }}
+{{ $perSubject := and $isRoot (in site.Params.mathSections .Section) }}
 <header class="page-header">
   {{ if not $isRoot }}{{ partial "crumbs.html" . }}{{ end }}
   <h1>{{ if $isRoot }}{{ .Title }}{{ else }}{{ partial "section-name.html" . }}{{ end }}</h1>
@@ -13,13 +14,13 @@
 </ol>
 {{ end }}
 
-<nav class="parts tree">
+{{ if $perSubject }}<div class="parts tree">{{ else }}<nav class="parts tree">{{ end }}
   <div class="parts-head">
     {{ if and $isRoot (gt (len .Sections) 1) }}<div class="subject-jump">{{ range .Sections.ByTitle }}<a href="#{{ .File.ContentBaseName | urlize }}">{{ partial "section-name.html" . }}</a>{{ end }}</div>{{ end }}
-    {{ with site.Data.text.parts }}<button type="button" class="parts-toggle" data-expand="{{ .expand_all }}" data-collapse="{{ .collapse_all }}" hidden>{{ .expand_all }}</button>{{ end }}
+    {{ if not $perSubject }}{{ with site.Data.text.parts }}<button type="button" class="parts-toggle" data-expand="{{ .expand_all }}" data-collapse="{{ .collapse_all }}" hidden>{{ .expand_all }}</button>{{ end }}{{ end }}
   </div>
-  {{ partial "section-tree.html" (dict "section" . "level" 2) }}
-</nav>
+  {{ partial "section-tree.html" (dict "section" . "level" 2 "toggle" $perSubject) }}
+{{ if $perSubject }}</div>{{ else }}</nav>{{ end }}
 
 {{ if and (not .Sections) (not .RegularPages) }}{{ with site.Data.text.lists.empty }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}
 {{ end }}

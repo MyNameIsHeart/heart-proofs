@@ -139,6 +139,8 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .subject-group { max-width: 48rem; margin-bottom: 2.5rem; }
 .subject-group h2 { margin: 0 0 0.9rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
 .subject-group h2 a { color: var(--text); }
+.subject-group .group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 0.9rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.subject-group .group-head h2 { margin: 0; padding: 0; border: 0; }
 .subject-group.level-3 { margin: 1.5rem 0 0; }
 .subject-group.level-4, .subject-group.level-5 { margin: 1.2rem 0 0 var(--tree-indent); }
 .subject-group.level-3 h3, .subject-group.level-4 h4, .subject-group.level-5 h5 { font-family: var(--sans); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 0 0 0.35rem; }

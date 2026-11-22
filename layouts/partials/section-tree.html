@@ -30,7 +30,9 @@
 {{- else }}
 {{- range $subs.ByTitle -}}
 <section class="subject-group level-{{ $lvl }}"{{ if eq $lvl 2 }} id="{{ .File.ContentBaseName | urlize }}"{{ end }}>
+  {{ if $.toggle }}<nav class="parts tree"><div class="group-head">{{ end }}
   {{ printf "<h%d>" $lvl | safeHTML }}<a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a>{{ printf "</h%d>" $lvl | safeHTML }}
+  {{ if $.toggle }}{{ with site.Data.text.parts }}<button type="button" class="parts-toggle" data-expand="{{ .expand_all }}" data-collapse="{{ .collapse_all }}" hidden>{{ .expand_all }}</button>{{ end }}</div>{{ end }}
   {{ if eq $lvl 2 }}{{ with .Params.folder }}{{ with index site.Data.subjects . }}{{ with .description }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}{{ end }}{{ end }}
   {{ with .RegularPages }}
   <ol class="compact-list">
@@ -38,6 +40,7 @@
   </ol>
   {{ end }}
   {{ partial "section-tree.html" (dict "section" . "level" (cond (lt $lvl 5) (add $lvl 1) 5)) }}
+  {{ if $.toggle }}</nav>{{ end }}
 </section>
 {{- end -}}
 {{- end -}}
