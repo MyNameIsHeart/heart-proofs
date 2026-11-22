@@ -275,6 +275,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .parts.tree > .parts-head:has(> :not([hidden])) { margin-bottom: 1.8rem; }
 .parts.tree .parts-toggle { margin-inline-start: auto; border: 0; border-radius: 4px; padding: 0.2rem 0.35rem; margin-inline-end: -0.35rem; font-size: 0.8rem; color: var(--muted); }
 .parts.tree .parts-toggle:hover { color: var(--accent); }
+.parts-toggle:focus-visible, .part > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .parts-list.folders { border-top: 0; margin: 0.15rem 0 0; }
 .parts-list.folders > li { border-bottom: 0; }
 .folders .part.rtl { direction: rtl; }
