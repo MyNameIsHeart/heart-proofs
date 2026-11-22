@@ -707,8 +707,8 @@ def keep_old_addresses(tex_path: Path, here: tuple[str, str, str, str], files: l
     return aliases
 
 
-COLOR_RE = re.compile(r'<span style="color: ([a-zA-Z]+)">')
-KNOWN_COLORS = {"blue", "violet", "teal", "magenta", "red", "green", "orange", "gray", "grey", "brown", "cyan", "purple", "olive", "lime", "pink"}
+COLOR_RE = re.compile(r'<(span|div) style="color: ([a-zA-Z]+)">')
+KNOWN_COLORS = {"black", "blue", "violet", "teal", "magenta", "red", "green", "orange", "gray", "grey", "brown", "cyan", "purple", "olive", "lime", "pink"}
 IMG_RE = re.compile(r'<img src="([^"]+)"([^>]*)/?>')
 H2_RE = re.compile(r'<h2( id="[^"]*")?>(.*?)</h2>', re.S)
 HEAD_RE = re.compile(r'<h([2-6]) id="([^"]*)">(.*?)</h\1>', re.S)
@@ -716,8 +716,8 @@ HEAD_RE = re.compile(r'<h([2-6]) id="([^"]*)">(.*?)</h\1>', re.S)
 
 def colorize(html: str) -> str:
     def repl(m: re.Match) -> str:
-        c = m.group(1).lower()
-        return f'<span class="tc tc-{c}">' if c in KNOWN_COLORS else m.group(0)
+        c = m.group(2).lower()
+        return f'<{m.group(1)} class="tc tc-{c}">' if c in KNOWN_COLORS else m.group(0)
     return COLOR_RE.sub(repl, html)
 
 
