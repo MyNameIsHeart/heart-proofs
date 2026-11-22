@@ -312,14 +312,15 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .nobr { white-space: nowrap; }
 
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.4em 0; margin: 0.8em 0; }
-.katex-display::-webkit-scrollbar { height: 6px; }
-.katex-display::-webkit-scrollbar-track { background: transparent; }
-.katex-display::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-.katex-display:hover::-webkit-scrollbar-thumb { background: var(--muted); }
-@supports not selector(::-webkit-scrollbar) { .katex-display { scrollbar-width: thin; scrollbar-color: var(--border) transparent; } }
-.katex-display.fade-end { mask-image: linear-gradient(to right, #000 calc(100% - 3em), transparent); }
-.katex-display.fade-start { mask-image: linear-gradient(to right, transparent, #000 3em); }
-.katex-display.fade-start.fade-end { mask-image: linear-gradient(to right, transparent, #000 3em, #000 calc(100% - 3em), transparent); }
+.katex.wide { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 0.3em 0; vertical-align: middle; }
+:is(.katex-display, .katex.wide)::-webkit-scrollbar { height: 6px; }
+:is(.katex-display, .katex.wide)::-webkit-scrollbar-track { background: transparent; }
+:is(.katex-display, .katex.wide)::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+:is(.katex-display, .katex.wide):hover::-webkit-scrollbar-thumb { background: var(--muted); }
+@supports not selector(::-webkit-scrollbar) { .katex-display, .katex.wide { scrollbar-width: thin; scrollbar-color: var(--border) transparent; } }
+:is(.katex-display, .katex.wide).fade-end { mask-image: linear-gradient(to right, #000 calc(100% - 3em), transparent); }
+:is(.katex-display, .katex.wide).fade-start { mask-image: linear-gradient(to right, transparent, #000 3em); }
+:is(.katex-display, .katex.wide).fade-start.fade-end { mask-image: linear-gradient(to right, transparent, #000 3em, #000 calc(100% - 3em), transparent); }
 .katex { font-size: 1.05em; white-space: nowrap; }
 
 .subscribe { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.5rem; background: var(--bg-2); max-width: var(--measure); margin: 2rem auto; }
@@ -367,7 +368,8 @@ body.layout-subscribe .photo-credit { position: fixed; right: 1.25rem; bottom: 0
   .site-header, .site-footer, .subscribe, .post-nav, .downloads { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .theorem { background: none; }
-  .katex-display { mask-image: none; }
+  .katex-display, .katex.wide { mask-image: none; }
+  .katex.wide { overflow: visible; }
 }
 
 main { padding-bottom: 4rem; }

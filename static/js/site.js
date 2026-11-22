@@ -44,21 +44,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // 2. Display formulas wider than the page scroll sideways. Mark which edge continues so the
 //    stylesheet can fade it; a hard cut looks like a truncated formula.
+//    An inline formula never wraps, so one wider than its line is made to scroll the same way.
+//    Otherwise it runs off the page, and in Hebrew text off the left edge, where nothing can scroll to it.
 document.addEventListener("DOMContentLoaded", function () {
   var displays = document.querySelectorAll(".katex-display");
-  if (!displays.length) return;
+  var inlines = Array.prototype.filter.call(document.querySelectorAll(".katex"), function (k) {
+    return !k.closest(".katex-display");
+  });
+  if (!displays.length && !inlines.length) return;
   function update(el) {
     var max = el.scrollWidth - el.clientWidth;
     el.classList.toggle("fade-start", el.scrollLeft > 1);
     el.classList.toggle("fade-end", el.scrollLeft < max - 1);
   }
-  function updateAll() { displays.forEach(update); }
+  // An inline formula is too wide when it is wider than the block of text it sits in. A few pixels
+  // over still fit in the page margin.
+  function room(k) {
+    var p = k.parentNode;
+    while (/^(inline|contents)$/.test(getComputedStyle(p).display)) p = p.parentNode;
+    var cs = getComputedStyle(p);
+    return p.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  }
+  function markWide() {
+    var at = inlines.map(function (k) { return k.scrollLeft; });
+    inlines.forEach(function (k) { k.classList.remove("wide", "fade-start", "fade-end"); });
+    var wide = inlines.map(function (k) { return k.getBoundingClientRect().width > room(k) + 4; });
+    inlines.forEach(function (k, i) { if (wide[i]) { k.classList.add("wide"); k.scrollLeft = at[i]; } });
+  }
+  function updateAll() {
+    displays.forEach(update);
+    inlines.forEach(function (k) { if (k.classList.contains("wide")) update(k); });
+  }
+  function relayout() { markWide(); updateAll(); }
   displays.forEach(function (el) {
     el.addEventListener("scroll", function () { update(el); }, { passive: true });
   });
-  updateAll();
-  window.addEventListener("resize", updateAll);
-  if (document.fonts) document.fonts.ready.then(updateAll);
+  document.addEventListener("scroll", function (ev) {
+    if (ev.target.classList && ev.target.classList.contains("wide")) update(ev.target);
+  }, { passive: true, capture: true });
+  relayout();
+  var width = window.innerWidth;
+  window.addEventListener("resize", function () {
+    if (window.innerWidth === width) { updateAll(); return; }
+    width = window.innerWidth;
+    relayout();
+  });
+  if (document.fonts) document.fonts.ready.then(relayout);
+  // A formula inside a closed folder has no size yet; measure again when one opens.
+  var queued = false;
+  document.addEventListener("toggle", function () {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () { queued = false; relayout(); });
+  }, true);
 });
 
 // 3. Subscribe form: always submitted in place with fetch. The form has no action attribute (the
