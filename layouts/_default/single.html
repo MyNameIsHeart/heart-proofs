@@ -40,7 +40,7 @@
     <a class="up" href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a>
     {{ if lt (add $i 1) (len $parts) }}{{ with index $parts (add $i 1) }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }}
   </nav>
-  {{ else if $isPost }}
+  {{ else if and $isPost (or .PrevInSection .NextInSection) }}
   <nav class="post-nav">
     {{ with .PrevInSection }}<a class="prev" href="{{ .RelPermalink }}">{{ with $t.older }}<span class="muted small">{{ . }}</span><br>{{ end }}← {{ .Title }}</a>{{ end }}
     {{ with .NextInSection }}<a class="next" href="{{ .RelPermalink }}">{{ with $t.newer }}<span class="muted small">{{ . }}</span><br>{{ end }}{{ .Title }} →</a>{{ end }}
