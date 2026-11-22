@@ -4,7 +4,7 @@
 {{- $inCourse := and .section.Params.folder (ne .section.Params.folder .section.Params.subject) -}}
 {{- with $sums }}
 <ol class="compact-list">
-  {{ range .ByWeight }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> <a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a></li>{{ end }}
+  {{ range .ByWeight }}<li{{ if eq .Params.lang "he" }} dir="rtl"{{ end }}><a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></li>{{ end }}
 </ol>
 {{- end }}
 {{- if $inCourse }}
@@ -18,7 +18,7 @@
       <summary{{ if $he }} lang="he"{{ end }}><span class="part-link">{{ $name }}</span> <span class="folder-count">{{ len .RegularPagesRecursive }}</span></summary>
       {{ with partial "folder-pages.html" . }}
       <ol class="compact-list">
-        {{ range . }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> <a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a></li>{{ end }}
+        {{ range . }}<li{{ if eq .Params.lang "he" }} dir="rtl"{{ end }}><a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></li>{{ end }}
       </ol>
       {{ end }}
       {{ partial "section-tree.html" (dict "section" . "level" (cond (lt $lvl 5) (add $lvl 1) 5)) }}
@@ -34,7 +34,7 @@
   {{ if eq $lvl 2 }}{{ with .Params.folder }}{{ with index site.Data.subjects . }}{{ with .description }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}{{ end }}{{ end }}
   {{ with .RegularPages }}
   <ol class="compact-list">
-    {{ range . }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> <a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a></li>{{ end }}
+    {{ range . }}<li{{ if eq .Params.lang "he" }} dir="rtl"{{ end }}><a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></li>{{ end }}
   </ol>
   {{ end }}
   {{ partial "section-tree.html" (dict "section" . "level" (cond (lt $lvl 5) (add $lvl 1) 5)) }}
