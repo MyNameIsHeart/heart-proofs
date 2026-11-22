@@ -372,8 +372,11 @@ body.layout-subscribe .photo-credit { position: fixed; right: 1.25rem; bottom: 0
 
 main { padding-bottom: 4rem; }
 .page-toc { margin: 1.6em 0 2em; }
-.page-toc-title { margin: 0 0 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); font-family: var(--sans); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.page-toc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.page-toc-title { margin: 0; font-family: var(--sans); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
 [lang="he"] .page-toc-title { font-size: 0.85rem; letter-spacing: 0; }
+.page-toc .parts-toggle { flex: none; border: 0; border-radius: 4px; padding: 0.2rem 0.35rem; margin-inline-end: -0.35rem; font-size: 0.8rem; color: var(--muted); }
+.page-toc .parts-toggle:hover { color: var(--accent); }
 .page-toc .folders { margin: 0; }
 .page-toc .folders .part > summary::after, .page-toc .compact-list li::after { display: none; }
 .page-toc .toc-row { padding: 0.3rem 0; padding-inline-start: var(--tree-indent); }

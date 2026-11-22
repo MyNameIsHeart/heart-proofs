@@ -215,10 +215,33 @@ def toc_name(tex: str) -> str:
 TOC_MARK_RE = re.compile(r'<div class="tocmark">\s*</div>\n?')
 
 
-def place_toc(html: str, name: str) -> str:
+def toggle_words(lang: str) -> tuple[str, str]:
+    """Expand all / Collapse all as worded in data/text.yaml (parts; a language's own block wins, as in the templates)."""
+    path = ROOT / "data" / "text.yaml"
+    base, own, block, sub = {}, {}, False, ""
+    for line in path.read_text(encoding="utf-8").splitlines() if path.exists() else []:
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        indent = len(line) - len(line.lstrip())
+        key, _, val = line.strip().partition(":")
+        val = val.strip().strip("'\"")
+        if indent == 0:
+            block, sub = key == "parts", ""
+        elif block and indent == 2:
+            sub = "" if val else key
+            if val:
+                base[key] = val
+        elif block and sub and sub == lang and val:
+            own[key] = val
+    words = {**base, **own}
+    return words.get("expand_all", ""), words.get("collapse_all", "")
+
+
+def place_toc(html: str, name: str, lang: str = "") -> str:
     """pandoc drops \\tableofcontents. Put a linked list of the page's headings where it was:
     the four top heading levels on the page (part to subsubsection, as in LaTeX). A top heading
-    with headings under it is a row that opens to show them; any other heading is a plain link."""
+    with headings under it is a row that opens to show them; any other heading is a plain link.
+    When there are rows to open, the label line also carries the Expand all button."""
     from html import escape
     items = toc_of(html, max_level=6)
     if not items:
@@ -243,7 +266,12 @@ def place_toc(html: str, name: str) -> str:
         else:
             rows.append(f'<li class="toc-row">{link(t)}</li>')
         i = j
-    nav = (f'<nav class="page-toc">\n<p class="page-toc-title">{escape(name)}</p>\n'
+    expand, collapse = toggle_words(lang)
+    toggle = ""
+    if expand and collapse and any(r.startswith("<li><details") for r in rows):
+        toggle = (f'<button type="button" class="parts-toggle" data-expand="{escape(expand)}" '
+                  f'data-collapse="{escape(collapse)}" hidden>{escape(expand)}</button>')
+    nav = (f'<nav class="page-toc parts">\n<div class="page-toc-head"><p class="page-toc-title">{escape(name)}</p>{toggle}</div>\n'
            f'<ol class="parts-list folders">{"".join(rows)}</ol>\n</nav>\n')
     return TOC_MARK_RE.sub(lambda m: nav, html, count=1)
 
@@ -1283,7 +1311,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
             print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)}")
         return out_path
     if lectures:
-        body = place_toc(normalize_levels(body), toc_name(tex))
+        body = place_toc(normalize_levels(body), toc_name(tex), lang)
         extra = [] if side.get("weight") else [f"weight: {lectures.index(tex_path) + 1}"]
         fm[-1:-1] = extra + ["part: true", f"toc: {json.dumps(toc_of(body), ensure_ascii=False)}"]
     elif should_split(side, body):
@@ -1315,7 +1343,7 @@ def convert_one(tex_path: Path, section: str, subject: str, topic: str, verbose:
             print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)} (+{len(parts)})")
         return out_path
     out_path = out_dir / f"{slug}.html"
-    body = place_toc(body, toc_name(tex))
+    body = place_toc(body, toc_name(tex), lang)
     out_path.write_text("\n".join(fm) + "\n" + body, encoding="utf-8")
     if verbose:
         print(f"  {tex_path.relative_to(ROOT)}  ->  {out_path.relative_to(ROOT)}")
