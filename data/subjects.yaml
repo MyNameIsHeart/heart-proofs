@@ -2,6 +2,13 @@ real-analysis:
   topics:
     huji-infinitesimal-calculus-1: HUJI Infinitesimal Calculus 1
     huji-infinitesimal-calculus-2: HUJI Infinitesimal Calculus 2
+    all-chapters: "כל הפרקים"
+    chapter-0-prologue-exp-and-the-indefinite-integral: "פרולוג: אקספוננט והאינטגרל הלא מסוים"
+    chapter-1-taylor-polynomial-and-lhopitals-rule: "פרק ראשון: פולינום טיילור וכלל לופיטל"
+    chapter-2-the-definite-integral: "פרק שני: האינטגרל המסוים"
+    chapter-3-the-improper-integral: "פרק שלישי: האינטגרל הלא אמיתי"
+    chapter-4-numerical-series: "פרק רביעי: טורי מספרים"
+    chapter-5-sequences-and-series-of-functions: "פרק חמישי: סדרות וטורים של פונקציות"
 measure-theory:
   name: Measure Theory
 dast:
