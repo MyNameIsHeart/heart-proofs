@@ -7,7 +7,7 @@
 </ol>
 {{- end }}
 {{- range $subs.ByTitle -}}
-<section class="subject-group level-{{ $lvl }}" id="{{ .File.ContentBaseName | urlize }}">
+<section class="subject-group level-{{ $lvl }}"{{ if eq $lvl 2 }} id="{{ .File.ContentBaseName | urlize }}"{{ end }}>
   {{ printf "<h%d>" $lvl | safeHTML }}<a href="{{ .RelPermalink }}">{{ partial "section-name.html" . }}</a>{{ printf "</h%d>" $lvl | safeHTML }}
   {{ if eq $lvl 2 }}{{ with .Params.folder }}{{ with index site.Data.subjects . }}{{ with .description }}<p class="muted">{{ . }}</p>{{ end }}{{ end }}{{ end }}{{ end }}
   {{ with .RegularPages }}
