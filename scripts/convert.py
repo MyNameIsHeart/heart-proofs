@@ -217,24 +217,34 @@ TOC_MARK_RE = re.compile(r'<div class="tocmark">\s*</div>\n?')
 
 def place_toc(html: str, name: str) -> str:
     """pandoc drops \\tableofcontents. Put a linked list of the page's headings where it was:
-    the four top heading levels on the page (part to subsubsection, as in LaTeX), indented by depth."""
+    the four top heading levels on the page (part to subsubsection, as in LaTeX). A top heading
+    with headings under it is a row that opens to show them; any other heading is a plain link."""
     from html import escape
     items = toc_of(html, max_level=6)
     if not items:
         return TOC_MARK_RE.sub("", html)
     depth = {lvl: i for i, lvl in enumerate(sorted({t["level"] for t in items}))}
     shown = [t for t in items if depth[t["level"]] < 4]
-    under = [0] * len(shown)
-    top = None
-    for i, t in enumerate(shown):
+
+    def link(t: dict, part: bool = False) -> str:
+        cls = ' class="part-link"' if part else ""
+        return f'<a{cls} href="#{escape(t["id"])}">{escape(t["text"])}</a>'
+
+    rows, i = [], 0
+    while i < len(shown):
+        t, j = shown[i], i + 1
         if depth[t["level"]] == 0:
-            top = i
-        elif top is not None:
-            under[top] += 1
-    lis = "".join(f'<li class="toc-l{depth[t["level"]] + 2}"><a href="#{escape(t["id"])}">{escape(t["text"])}</a>'
-                  + (f' <span class="toc-count">{n}</span>' if n else "") + "</li>"
-                  for t, n in zip(shown, under))
-    nav = f'<nav class="page-toc">\n<p class="page-toc-title">{escape(name)}</p>\n<ul class="part-toc">{lis}</ul>\n</nav>\n'
+            while j < len(shown) and depth[shown[j]["level"]] > 0:
+                j += 1
+        if j > i + 1:
+            subs = "".join(f'<li class="toc-l{depth[u["level"]] + 2}">{link(u)}</li>' for u in shown[i + 1:j])
+            rows.append(f'<li><details class="part"><summary>{link(t, True)}</summary>'
+                        f'<ol class="compact-list">{subs}</ol></details></li>')
+        else:
+            rows.append(f'<li class="toc-row">{link(t)}</li>')
+        i = j
+    nav = (f'<nav class="page-toc">\n<p class="page-toc-title">{escape(name)}</p>\n'
+           f'<ol class="parts-list folders">{"".join(rows)}</ol>\n</nav>\n')
     return TOC_MARK_RE.sub(lambda m: nav, html, count=1)
 
 

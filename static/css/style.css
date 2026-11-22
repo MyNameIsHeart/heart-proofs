@@ -374,14 +374,12 @@ main { padding-bottom: 4rem; }
 .page-toc { margin: 1.6em 0 2em; }
 .page-toc-title { margin: 0 0 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); font-family: var(--sans); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
 [lang="he"] .page-toc-title { font-size: 0.85rem; letter-spacing: 0; }
-.page-toc .part-toc { margin: 0; padding: 0; border: 0; font-size: 1rem; }
-.page-toc .part-toc li { display: flex; align-items: baseline; align-items: last baseline; gap: 0.6rem; padding: 0.2rem 0; text-align: start; }
-.page-toc .part-toc a { min-width: 0; color: var(--text); }
-.page-toc .part-toc a:hover, .page-toc .part-toc a:focus-visible { color: var(--accent); }
-.page-toc .part-toc .toc-l2 { padding-block: 0.3rem; font-size: 1.0625rem; font-weight: 600; }
-.page-toc .part-toc .toc-l2:has(> .toc-count)::after { content: ""; order: 1; flex: 1 1 1.5rem; min-width: 1.5rem; height: 2px; background: radial-gradient(circle, var(--leader) 0.8px, transparent 1.1px) 0 0 / 7px 2px repeat-x; transform: translateY(-0.2em); }
-.toc-count { order: 2; flex: none; min-width: 1.2em; text-align: end; font-family: var(--sans); font-size: 0.8rem; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
-.page-toc .part-toc :is(.toc-l3, .toc-l4, .toc-l5) { margin-inline-start: 0.2rem; padding-inline-start: calc(var(--tree-indent) - 0.2rem - 1px); border-inline-start: 1px solid var(--accent); }
-.page-toc .part-toc .toc-l4 { padding-inline-start: calc(var(--tree-indent) * 2 - 0.2rem - 1px); }
-.page-toc .part-toc .toc-l5 { padding-inline-start: calc(var(--tree-indent) * 3 - 0.2rem - 1px); }
+.page-toc .folders { margin: 0; }
+.page-toc .folders .part > summary::after, .page-toc .compact-list li::after { display: none; }
+.page-toc .toc-row { padding: 0.3rem 0; padding-inline-start: var(--tree-indent); }
+.page-toc .folders:not(:has(details)) > .toc-row { padding-inline-start: 0; }
+.page-toc .toc-row a { color: var(--text); }
+.page-toc .toc-row a:hover, .page-toc .toc-row a:focus-visible { color: var(--accent); }
+.page-toc .folders .compact-list li.toc-l4 { padding-inline-start: var(--tree-indent); }
+.page-toc .folders .compact-list li.toc-l5 { padding-inline-start: calc(var(--tree-indent) * 2); }
 .lang-tag { display: inline-block; margin-inline-start: 0.45em; padding: 0.1em 0.5em; border: 1px solid var(--border); border-radius: 999px; font-size: 0.68em; font-weight: 500; letter-spacing: 0.08em; vertical-align: 0.15em; }
