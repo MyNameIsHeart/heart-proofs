@@ -157,6 +157,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .compact-list a:hover, .compact-list a:focus-visible { color: var(--accent); }
 .compact-list time { order: 2; flex: none; color: var(--muted); font-family: var(--sans); font-size: 0.8rem; font-variant-numeric: tabular-nums; white-space: nowrap; direction: ltr; unicode-bidi: isolate; }
 .compact-list:has(+ .folders) > li { padding-inline-start: var(--tree-indent); }
+.compact-list li, .parts-list.folders > li { text-align: start; }
 @media (max-width: 480px) {
   .compact-list li { flex-wrap: wrap; gap: 0 0.6rem; }
   .compact-list li::after { display: none; }
