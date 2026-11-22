@@ -18,7 +18,7 @@ except ModuleNotFoundError:  # Python < 3.11 (local runs); CI has 3.11+
     tomllib = None
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from convert import CONTENT_DIR, LATEX_DIR, ROOT, TYPES, locate, parse_sidecar
+from convert import CONTENT_DIR, LATEX_DIR, ROOT, TYPES, locate, parse_sidecar, url_part
 
 API = "https://connect.mailerlite.com/api"
 PUBLIC_DIR = ROOT / "public"
@@ -100,12 +100,8 @@ def front_matter(path: Path) -> dict:
     return fm
 
 
-def urlize(s: str) -> str:
-    return re.sub(r"\s+", "-", s.strip().lower())
-
-
 def page_path(section: str, subject: str, topic: str, slug: str) -> str | None:
-    want = "/".join(urlize(p) for p in [section, subject, *topic.split("/")] if p) + f"/{slug}"
+    want = "/".join(url_part(p) for p in [section, subject, *topic.split("/")] if p) + f"/{slug}"
     matches = [p.parent.relative_to(PUBLIC_DIR).as_posix() for p in (PUBLIC_DIR / section).glob(f"**/{slug}/index.html")]
     if want in matches:
         return want
