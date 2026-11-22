@@ -404,6 +404,9 @@ def preprocess(tex: str) -> str:
 
     tex = re.sub(r"\\inputencoding\{[^}]*\}", "", tex)
     tex = re.sub(r"\\textbar(\{\})?", "|", tex)
+    head, sep, body = tex.partition("\\begin{document}")
+    if sep:
+        tex = head + sep + re.sub(r"\\textquotedbl(?![A-Za-z])(?:\{\}|[ \t]*)", '"', body)
     tex = re.sub(r"\\(q?)quad\{\}", lambda m: "\u2003" * (2 if m.group(1) else 1), tex)
     tex = dewrapfig(tex)
     tex = unbox(tex)
