@@ -26,7 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.querySelectorAll(".katex:not(.katex-display .katex)").forEach(function (k) {
     var el = k;
-    while (!el.nextSibling && el.parentNode && el.parentNode.tagName === "SPAN") el = el.parentNode;
+    // Climb only through wrappers that hold nothing but the formula. A coloured sentence that ends in a
+    // formula is not one of them: wrapping it whole would keep the entire sentence on one line.
+    while (!el.nextSibling && !el.previousSibling && el.parentNode && el.parentNode.tagName === "SPAN") el = el.parentNode;
     var n = el.nextSibling;
     if (!n || n.nodeType !== 3) return;
     var m = /^[,.;:!?)\]]+/.exec(n.nodeValue);
