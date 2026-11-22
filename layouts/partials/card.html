@@ -4,6 +4,6 @@
     {{ partial "crumbs.html" . }}
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time>
   </div>
-  <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-  {{ with .Params.summary }}<p class="card-summary">{{ . }}</p>{{ end }}
+  <h3 class="card-title"{{ with .Params.lang }} lang="{{ . }}"{{ end }}><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  {{ with .Params.summary }}<p class="card-summary"{{ with $.Params.lang }} lang="{{ . }}"{{ end }}>{{ . }}</p>{{ end }}
 </article>
