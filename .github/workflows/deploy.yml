@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 8
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment-retry.outputs.page_url }}
     env:
       HUGO_VERSION: 0.134.3
       HUGO_SHA256: 287e562749a7df45900e21d5dcb737f307a2b272cfc8aefef24255c3674a9793
@@ -79,6 +79,17 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+
+      # The deploy action looks the uploaded artifact up once; right after the upload the listing can still be empty.
+      - name: Wait before the second deploy attempt
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 20
+
+      - name: Deploy to GitHub Pages, second attempt
+        id: deployment-retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
 
       - name: Email subscribers
