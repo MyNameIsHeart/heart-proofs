@@ -16,7 +16,7 @@
   <li>
     <details class="part{{ if $he }} rtl{{ end }}">
       <summary{{ if $he }} lang="he"{{ end }}><span class="part-link">{{ $name }}</span> <span class="folder-count">{{ len .RegularPagesRecursive }}</span></summary>
-      {{ with .RegularPages }}
+      {{ with partial "folder-pages.html" . }}
       <ol class="compact-list">
         {{ range . }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> <a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a></li>{{ end }}
       </ol>

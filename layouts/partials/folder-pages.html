@@ -1,0 +1,12 @@
+{{- /* The pages of a folder in listing order: the site default (newest first), except inside a course of the
+       summaries, where a chapter reads in the order it was written: by date, then by file name. */ -}}
+{{- $pages := .RegularPages -}}
+{{- $chapter := false -}}
+{{- with .Parent }}{{ $chapter = and .Params.folder (ne .Params.folder .Params.subject) }}{{ end -}}
+{{- if and $chapter (eq .Section "summaries") -}}
+  {{- $rows := slice -}}
+  {{- range $pages }}{{ $rows = $rows | append (dict "key" (printf "%s %s" (.Date.Format "2006-01-02") .File.Path) "page" .) }}{{ end -}}
+  {{- $pages = slice -}}
+  {{- range sort $rows "key" }}{{ $pages = $pages | append .page }}{{ end -}}
+{{- end -}}
+{{- return $pages -}}
