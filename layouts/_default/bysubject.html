@@ -7,12 +7,6 @@
   {{ if not $isRoot }}{{ with .Params.subject }}{{ with index site.Data.subjects . }}{{ if eq $.Params.folder $.Params.subject }}{{ with .description }}<p class="lede">{{ . }}</p>{{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
 </header>
 
-{{ if and $isRoot (gt (len .Sections) 1) }}
-<nav class="subject-jump">
-  {{ range .Sections.ByTitle }}<a href="#{{ .File.ContentBaseName | urlize }}">{{ partial "section-name.html" . }}</a>{{ end }}
-</nav>
-{{ end }}
-
 {{ with partial "folder-pages.html" . }}
 <ol class="compact-list top-level">
   {{ range . }}<li{{ if eq .Params.lang "he" }} dir="rtl"{{ end }}><a href="{{ .RelPermalink }}"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></li>{{ end }}
@@ -20,7 +14,10 @@
 {{ end }}
 
 <nav class="parts tree">
-  {{ with site.Data.text.parts }}<div class="parts-head"><button type="button" class="parts-toggle" data-expand="{{ .expand_all }}" data-collapse="{{ .collapse_all }}" hidden>{{ .expand_all }}</button></div>{{ end }}
+  <div class="parts-head">
+    {{ if and $isRoot (gt (len .Sections) 1) }}<div class="subject-jump">{{ range .Sections.ByTitle }}<a href="#{{ .File.ContentBaseName | urlize }}">{{ partial "section-name.html" . }}</a>{{ end }}</div>{{ end }}
+    {{ with site.Data.text.parts }}<button type="button" class="parts-toggle" data-expand="{{ .expand_all }}" data-collapse="{{ .collapse_all }}" hidden>{{ .expand_all }}</button>{{ end }}
+  </div>
   {{ partial "section-tree.html" (dict "section" . "level" 2) }}
 </nav>
 

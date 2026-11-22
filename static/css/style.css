@@ -133,7 +133,7 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 .page-body h2 { margin-top: 2em; }
 .page-body p { margin-bottom: 1.1em; }
 
-.subject-jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2rem; font-family: var(--sans); font-size: 0.85rem; }
+.subject-jump { display: flex; flex-wrap: wrap; gap: 0.4rem; font-family: var(--sans); font-size: 0.85rem; }
 .subject-jump a { border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.8rem; color: var(--text); }
 .subject-jump a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 .subject-group { max-width: 48rem; margin-bottom: 2.5rem; }
@@ -271,9 +271,10 @@ th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; let
 [lang="he"] .part > summary::before, [lang="ar"] .part > summary::before { transform: rotate(135deg); }
 [lang="he"] .part[open] > summary::before, [lang="ar"] .part[open] > summary::before { transform: rotate(45deg); }
 .parts.tree { margin: 0; max-width: 48rem; }
-.parts.tree > .parts-head { justify-content: flex-end; margin: 0 0 0.2rem; }
-.parts.tree .parts-toggle { border: 0; padding: 0.1rem 0; font-size: 0.8rem; color: var(--muted); }
-.parts.tree .parts-toggle:hover { color: var(--accent); text-decoration: underline; }
+.parts.tree > .parts-head { flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; margin: 0; }
+.parts.tree > .parts-head:has(> :not([hidden])) { margin-bottom: 1.8rem; }
+.parts.tree .parts-toggle { margin-inline-start: auto; border: 0; border-radius: 4px; padding: 0.2rem 0.35rem; margin-inline-end: -0.35rem; font-size: 0.8rem; color: var(--muted); }
+.parts.tree .parts-toggle:hover { color: var(--accent); }
 .parts-list.folders { border-top: 0; margin: 0.15rem 0 0; }
 .parts-list.folders > li { border-bottom: 0; }
 .folders .part.rtl { direction: rtl; }
