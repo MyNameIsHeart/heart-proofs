@@ -1381,13 +1381,18 @@ def write_section_indexes(base: Path, section: str) -> None:
         out.parent.mkdir(parents=True, exist_ok=True)
         folder = d.name
         title = folder_title(folder)
+        # Old addresses that should lead to this folder page, e.g. of a collection cover that was removed.
+        aliases = parse_sidecar(d / "_index.yaml").get("aliases") or []
+        if isinstance(aliases, str):
+            aliases = [aliases]
         out.write_text(
             "---\n"
             f"title: {yaml_str(title)}\n"
             "layout: bysubject\n"
             f"folder: {yaml_str(folder)}\n"
             f"subject: {yaml_str(rel.parts[0])}\n"
-            "---\n"
+            + (f"aliases: {json.dumps(aliases)}\n" if aliases else "")
+            + "---\n"
         )
 
 
