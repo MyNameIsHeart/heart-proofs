@@ -82,7 +82,7 @@ document.querySelectorAll("form.subscribe-form").forEach(function (form) {
       .then(function (d) {
         if (!d || !d.success) {
           var f = d && d.errors && d.errors.fields && d.errors.fields.email;
-          throw new Error(f && f[0] ? f[0] : "");
+          throw { field: f && f[0] };
         }
         fields.hidden = true;
         show(form.dataset.success, "is-success");
@@ -90,7 +90,7 @@ document.querySelectorAll("form.subscribe-form").forEach(function (form) {
       .catch(function (e) {
         btn.disabled = false;
         btn.textContent = idle;
-        show((e && e.message) || form.dataset.error, "is-error");
+        show((e && e.field) || form.dataset.error, "is-error");
         input.focus();
       });
   });
