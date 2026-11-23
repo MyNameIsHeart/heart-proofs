@@ -1,0 +1,472 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\theoremstyle{definition}
+\newtheorem{xca}[thm]{\protect\exercisename}
+\theoremstyle{definition}
+\newtheorem*{sol*}{\protect\solutionname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\addto\captionsenglish{\renewcommand{\exercisename}{Exercise}}
+\addto\captionsenglish{\renewcommand{\solutionname}{Solution}}
+\addto\captionsenglish{\renewcommand{\theoremname}{Theorem}}
+\addto\captionshebrew{\renewcommand{\exercisename}{תרגיל}}
+\addto\captionshebrew{\renewcommand{\solutionname}{פתרון}}
+\addto\captionshebrew{\renewcommand{\theoremname}{משפט}}
+\providecommand{\exercisename}{תרגיל}
+\providecommand{\solutionname}{פתרון}
+\providecommand{\theoremname}{משפט}
+
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{לקט שאלות - האינטגרל המסוים ורציפות במ\textquotedblright ש}
+\author{נעם לב}
+\maketitle
+\begin{abstract}
+חלק מהשאלות )ציינתי אילו( נכתבו על ידי צוות הקורס באוניברסיטה העברית.
+הפתרון הוא שלי ולא רשמי.
+\end{abstract}
+\medskip{}
+
+\newpage{}
+\begin{xca}
+)שאלה מתרגול פעיל( תהי \L{$f:[0,1]\to\mathbb{R}$} פונקציה רציפה כך
+ש-\L{$\int_{0}^{1}f(x)dx=0$}. 
+
+הוכיחו שקיים \L{$c\in[0,1]$} כך ש-\L{$f(c)=0$}. 
+\end{xca}
+
+\begin{sol*}
+נניח בשלילה כי \L{%
+\[
+\forall x\in\left[0,1\right]:f(x)>0
+\]
+}%
+
+לפי טענה שראינו, היות והפונקציה רציפה, היא אינטגרבילית.
+
+אז בפרט האינטגרל שלה שווה לאינטגרל התחתון שלה, שהוא הסופרמום של קבוצת
+סכומי הדארבו התחתונים שלה.
+
+נבחר חלוקה \L{$P$} ונסתכל על תת-קטע כלשהו \L{$\left[x_{i-1},x_{i}\right]$}. 
+
+זהו תת-קטע לא מנוון וכל ערכי הפונקציה בו גדולים ממש מאפס.
+
+בנוסף, זהו קטע סגור וחסום והפונ' רציפה, לכן לפי המשפט השני של ויירשטראס
+האינפימום של ערכי הפונקציה בו שווה למינימום של ערכי הפונקציה בו, מכאן
+האינפימום גם הוא גדול ממש מאפס.
+
+נקבל \L{%
+\[
+m_{i}\left(x_{i}-x_{i-1}\right)>0
+\]
+}%
+
+בנוסף, היות והפונקציה חיובית בכל הקטע, אין איבר בסכום \L{$L\left(f,P\right)$}
+בעל סימן שלילי.
+
+מכאן, \L{$L\left(f,P\right)>0$} ולכן \L{%
+\[
+\int_{0}^{1}f(x)\ dx=\underline{\int_{0}^{1}}f(x)\ dx\ge L\left(f,P\right)>0
+\]
+}%
+
+בסתירה לנתון.
+
+באופן דומה, נניח בשלילה כי \L{%
+\[
+\forall x\in\left[0,1\right]:f(x)<0
+\]
+}%
+
+נגדיר את הפונקציה \L{$g(x)=-f(x)$} ונקבל לפי מה שהוכחנו \L{%
+\[
+\int_{0}^{1}g(x)\ dx>0
+\]
+}%
+
+אז לפי הומוגניות\L{%
+\[
+\int_{0}^{1}f(x)\ dx=-\int_{0}^{1}g(x)\ dx<0
+\]
+}%
+
+בסתירה לנתון.
+
+משתי הסתירות נקבל שקיים \L{$x_{1}$} עבורו \L{$f\left(x_{1}\right)\le0$}
+וקיים \L{$x_{2}$} עבורו \L{$f\left(x_{2}\right)\ge0$}.
+
+לכן, לפי משפט ערך הביניים, קיים \L{$c\in\left[0,1\right]$} עבורו
+\L{$f\left(c\right)=0$} כנדרש.
+\end{sol*}
+\begin{xca}
+)שאלה מתרגול פעיל( בכל סעיף נתונה \L{$f:[0,6]\to\mathbb{R}$}.
+
+וודאו ש-\L{$f$} אינטגרבילית ב-\L{$[0,6]$} וקבלו ביטוי מפורש )ללא
+סימן האינטגרל( לפונקציה \L{$\tilde{F}:[0,6]\to\mathbb{R}$} המוגדרת
+על ידי \L{$\tilde{F}(x)=\int_{0}^{x}f(t)dt$}.
+
+מצאו את תחום הגזירות של \L{$\tilde{F}$} וחשבו את \L{$\tilde{F}'$}.
+\L{%
+\[
+(i)\ \forall t\in[0,6]\quad f(t)=1\qquad\qquad(ii)\ f(t)=\begin{cases}
+0 & 0\le t<4\\
+1 & t=4\\
+0 & 4<t\le6
+\end{cases}
+\]
+}%
+\end{xca}
+
+\begin{sol*}
+\L{$\left(i\right)$} לפי תכונות האינטגרל המסוים )תכונה: יחידה(, הפונקציה
+\L{$1$} אינטגרבילית ב-\L{$\left[0,6\right]$} ומתקיים\L{%
+\[
+\int_{0}^{x_{0}}f(x)\ dx=\int_{0}^{x_{0}}1(x)\ dx=x_{0}-0=x_{0}
+\]
+}%
+
+כלומר \L{$\tilde{F}:\left[0,6\right]\rightarrow\mathbb{R}$} זו הפונקציה
+\L{$\tilde{F}\left(x\right)=x$}.
+
+היא גזירה בכל התחום )עם גזירה חד-צדדית בקצוות( ונגזרתה שווה לאחד.
+
+\L{$\left(ii\right)$} נסתכל על הפונקציה \L{$g(t)=0$} בקטע \L{$\left[0,6\right]$}.
+
+אז לפי תכונת ההומוגניות של האינטגרל המסוים\L{%
+\[
+\int_{0}^{x_{0}}0(x)\ dx=\int_{0}^{x_{0}}0\cdot1(x)\ dx=0\cdot\int_{0}^{x_{0}}1(x)\ dx=0
+\]
+}%
+
+ניזכר בטענה: שינוי ערכי פונקציה אינטגרבילית במספר סופי של נקודות לא
+משנה את האינטגרביליות ולא את האינטגרל.
+
+מכאן, גם הפונקציה \L{$f(t)$} אינטגרבילית ומתקיים\L{%
+\[
+\int_{0}^{x_{0}}f(x)\ dx=0
+\]
+}%
+
+כלומר \L{$\tilde{F}:\left[0,6\right]\rightarrow\mathbb{R}$} זו הפונקציה
+\L{$\tilde{F}\left(x\right)=0$}.
+
+היא גזירה בכל התחום )עם גזירה חד-צדדית בקצוות( ונגזרתה שווה לאפס.
+\end{sol*}
+\begin{xca}
+)שאלה מתרגול פעיל( יהיו \L{$a,b\in\mathbb{R}$} כך ש- \L{$a<b$} ו-\L{$f,g:[a,b]\to\mathbb{R}$}
+פונקציות חסומות המקיימות \L{$f(x)\le g(x)$} לכל \L{$x\in[a,b]$}.
+הוכיחו או הפריכו:
+
+)א( \L{%
+\[
+\underline{\int_{a}^{b}}f(x)dx\le\underline{\int_{a}^{b}}g(x)dx
+\]
+}%
+
+)ב( \L{%
+\[
+\overline{\int_{a}^{b}}f(x)dx\le\overline{\int_{a}^{b}}g(x)dx
+\]
+}%
+\end{xca}
+
+\begin{sol*}
+)א( תהי \L{$P$} חלוקה של הקטע \L{$\left[a,b\right]$}.
+
+נסתכל על \L{$L\left(f,P\right)$} ועל \L{$L\left(g,P\right)$}.
+
+נשים לב שאנו משתמשים באותה חלוקה עבור שתי הפונ'.
+
+נסתכל על קטע \L{$\left[x_{i-1},x_{i}\right]$} כלשהו.
+
+מהנתון, לכל \L{$x$} בקטע מתקיים \L{$f(x)\le g(x)$}.
+
+מהגדרת האינפימום, \L{$m_{f,i}\le f(x)\le g(x)$}.
+
+כלומר, \L{$m_{f,i}$} הוא חסם מלרע של ערכי \L{$g(x)$} בקטע.
+
+לכן, האינפימום של ערכי \L{$g(x)$} בקטע גדול או שווה אליו, ונקבל \L{$m_{f,i}\le m_{g,i}$}.
+
+מכאן, לכל \L{$i$} מתקיים \L{$m_{f,i}\left(x_{i}-x_{i-1}\right)\le m_{g,i}\left(x_{i}-x_{i-1}\right)$}.
+
+נסכום את אי-השוויונות ונקבל\L{%
+\[
+\underset{i=1}{\overset{n}{\sum}}m_{f,i}\left(x_{i}-x_{i-1}\right)\le\underset{i=1}{\overset{n}{\sum}}m_{g,i}\left(x_{i}-x_{i-1}\right)
+\]
+}%
+
+כלומר\L{%
+\[
+L\left(f,P\right)\le L\left(g,P\right)
+\]
+}%
+
+האינטגרל התחתון הוא הסופרמום של קבוצת סכומי הדרבו התחתונים, מכאן לכל
+חלוקה \L{$P$} מתקיים\L{%
+\[
+L\left(f,P\right)\le L\left(g,P\right)\le\underline{\int_{a}^{b}}g(x)dx
+\]
+}%
+
+קיבלנו ש-\L{$\underline{\int_{a}^{b}}g(x)dx$} הוא חסם מלעיל של הקבוצה
+\L{$\left\{ L\left(f,P\right)\text{ s.t P is a partition}\right\} $}.
+
+לכן, מהגדרת הסופרמום, הסופרמום של הקבוצה קטן או שווה אליו. 
+
+בסך הכל, זה יוצא בדיוק\L{%
+\[
+\underline{\int_{a}^{b}}f(x)dx\le\underline{\int_{a}^{b}}g(x)dx
+\]
+}%
+
+כנדרש.
+
+)ב( תהי \L{$P$} חלוקה של הקטע \L{$\left[a,b\right]$}.
+
+נסתכל על \L{$U\left(f,P\right)$} ועל \L{$U\left(g,P\right)$}.
+
+אנו משתמשים באותה חלוקה, לכן אורכי תת הקטעים שווים.
+
+נסתכל על קטע \L{$\left[x_{i-1},x_{i}\right]$} כלשהו.
+
+מהנתון, לכל \L{$x$} בקטע מתקיים \L{$f(x)\le g(x)$}.
+
+מהגדרת הסופרמום, \L{$f(x)\le g(x)\le M_{g,i}$}.
+
+כלומר, \L{$M_{g,i}$} הוא חסם מלעיל של ערכי \L{$f(x)$} בקטע.
+
+לכן, הסופרמום של ערכי \L{$f(x)$} קטן או שווה אליו, ונקבל \L{$M_{f,i}\le M_{g,i}$}.
+
+מכאן, לכל \L{$i$} מתקיים \L{$M_{f,i}\left(x_{i}-x_{i-1}\right)\le M_{g,i}\left(x_{i}-x_{i-1}\right)$}.
+
+נסכום את אי-השוויונות ונקבל\L{%
+\[
+\underset{i=1}{\overset{n}{\sum}}M_{f,i}\left(x_{i}-x_{i-1}\right)\le\underset{i=1}{\overset{n}{\sum}}M_{g,i}\left(x_{i}-x_{i-1}\right)
+\]
+}%
+
+כלומר\L{%
+\[
+U\left(f,P\right)\le U\left(g,P\right)
+\]
+}%
+
+האינטגרל העליון הוא האינפימום של קבוצת סכומי הדרבו העליונים, מכאן
+לכל חלוקה \L{$P$} מתקיים\L{%
+\[
+\overline{\int_{a}^{b}}f(x)dx\le U\left(f,P\right)\le U\left(g,P\right)
+\]
+}%
+
+קיבלנו ש-\L{$\overline{\int_{a}^{b}}f(x)dx$} הוא חסם מלרע של הקבוצה
+\L{$\left\{ U\left(g,P\right)\text{ s.t P is a partition}\right\} $}.
+
+לכן, מהגדרת האינפימום, האינפימום שלה גדול או שווה אליו.
+
+בסך הכל, זה יוצא בדיוק\L{%
+\[
+\overline{\int_{a}^{b}}f(x)dx\le\overline{\int_{a}^{b}}g(x)dx
+\]
+}%
+
+כנדרש.
+
+)ב( הוכחה נוספת, מעט יותר מסורבלת ובשלילה, לצורך העשרה )ציטוט של המתרגל
+ומפעיל קנדה-עליון-וירטואלי האגדי: ג'נטלמן לא מוכיח בשלילה כשאפשר שלא(:
+
+הטענה שקולה למעשה לטענה\L{%
+\[
+I_{f}\overset{\text{def}}{=}\inf\left\{ U\left(f,P\right)\text{ s.t P is a partition}\right\} \le\inf\left\{ U\left(g,P\right)\text{ s.t P is a partition}\right\} \overset{\text{def}}{=}I_{g}
+\]
+}%
+נניח בשלילה כי\L{%
+\[
+I_{f}>I_{g}
+\]
+}%
+
+נבחר\L{%
+\[
+\varepsilon=I_{f}-I_{g}>0
+\]
+}%
+
+ולפי הגדרת האינפימום קיימת חלוקה \L{$P'$} עבורה \L{%
+\[
+I_{g}\le U\left(g,P'\right)<I_{g}+\varepsilon=I_{f}
+\]
+}%
+
+היות ו-\L{$I_{f}$} הוא האינפימום, בפרט מתקיים\L{%
+\[
+I_{f}\le U\left(f,P'\right)
+\]
+}%
+
+כלומר, כאשר תת-הקטעים הם אותם תת-הקטעים של \L{$\left[a,b\right]$}
+לפי החלוקה \L{$P'$}, קיבלנו ש-\L{%
+\[
+\underset{i=1}{\overset{n}{\sum}}M_{g,i}\left(x_{i}-x_{i-1}\right)<\underset{i=1}{\overset{n}{\sum}}M_{f,i}\left(x_{i}-x_{i-1}\right)
+\]
+}%
+
+נשים לב שאנו משתמשים באותה חלוקה עבור שתי הפונ'.
+
+נסתכל על קטע \L{$\left[x_{i-1},x_{i}\right]$} כלשהו.
+
+מהנתון, לכל \L{$x$} בקטע מתקיים \L{$f(x)\le g(x)$}.
+
+מהגדרת הסופרמום, \L{$f(x)\le g(x)\le M_{g,i}$}.
+
+כלומר, \L{$M_{g,i}$} הוא חסם מלעיל של ערכי \L{$f(x)$} בקטע.
+
+לכן, הסופרמום של ערכי \L{$f(x)$} קטן או שווה אליו, ונקבל \L{$M_{f,i}\le M_{g,i}$}.
+
+מכאן, לכל \L{$i$} מתקיים \L{$M_{f,i}\left(x_{i}-x_{i-1}\right)\le M_{g,i}\left(x_{i}-x_{i-1}\right)$}.
+
+מאיחוד אי-השוויונות נקבל את הסתירה\L{%
+\[
+\underset{i=1}{\overset{n}{\sum}}M_{f,i}\left(x_{i}-x_{i-1}\right)\le\underset{i=1}{\overset{n}{\sum}}M_{g,i}\left(x_{i}-x_{i-1}\right)
+\]
+}%
+\end{sol*}
+\begin{xca}
+)שאלה מתרגול פעיל( יהיו \L{$\alpha,\beta\in\mathbb{R}$} ויהי \L{$D\subseteq\mathbb{R}$}
+מקטע. הפריכו או הוכיחו את הטענות הבאות:
+
+)א( אם הפונקציות \L{$f$} ו-\L{$g$} רציפות במידה שווה ב-\L{$D$},
+אז הפונקציה \L{$\alpha f+\beta g$} רציפה במידה שווה ב-\L{$D$}.
+
+)ב( אם פונקציה \L{$f$} רציפה במידה שווה ב-\L{$D$}, אז הפונקציה \L{$|f|$}
+גם היא רציפה במידה שווה ב-\L{$D$}. 
+\end{xca}
+
+\begin{sol*}
+)א( יהי \L{$f$} ו-\L{$g$} פונ' רציפות במידה שווה. 
+
+יהי \L{$\varepsilon>0$}. נרצה להוכיח כי קיימת \L{$\delta>0$} עבורה\L{%
+\[
+\forall x_{1},x_{2}\in D:\left|x_{1}-x_{2}\right|<\delta\Rightarrow\left|\left(\alpha f+\beta g\right)\left(x_{1}\right)-\left(\alpha f+\beta g\right)\left(x_{2}\right)\right|<\varepsilon
+\]
+}%
+הביטוי הנגרר שקול לביטוי\L{%
+\[
+\left|\alpha\cdot f\left(x_{1}\right)-\alpha\cdot f\left(x_{2}\right)+\beta\cdot g\left(x_{1}\right)-\beta\cdot g\left(x_{2}\right)\right|<\varepsilon
+\]
+}%
+
+לפי א\textquotedblright ש המשולש\L{%
+\[
+\left|\alpha\cdot f\left(x_{1}\right)-\alpha\cdot f\left(x_{2}\right)+\beta\cdot g\left(x_{1}\right)-\beta\cdot g\left(x_{2}\right)\right|\le\left|\alpha\cdot f\left(x_{1}\right)-\alpha\cdot f\left(x_{2}\right)\right|+\left|\beta\cdot g\left(x_{1}\right)-\beta\cdot g\left(x_{2}\right)\right|
+\]
+}%
+לכן מספיק להוכיח שנובע \L{%
+\[
+\left|\alpha\cdot f\left(x_{1}\right)-\alpha\cdot f\left(x_{2}\right)\right|+\left|\beta\cdot g\left(x_{1}\right)-\beta\cdot g\left(x_{2}\right)\right|<\varepsilon
+\]
+}%
+שזה שקול לביטוי\L{%
+\[
+\left|\alpha\right|\left|f\left(x_{1}\right)-f\left(x_{2}\right)\right|+\left|\beta\right|\left|g\left(x_{1}\right)-g\left(x_{2}\right)\right|<\varepsilon
+\]
+}%
+
+אם \L{$\left|\alpha\right|=0$} אז \L{$\alpha=0$} והפונקציה \L{$\alpha f$}
+היא פונ' האפס לכן נותר להוכיח רק עבור \L{$\beta g$}.
+
+במקרה זה אפשר להשתמש רק בחצי השני של ההוכחה שמניחה \L{$\left|\alpha\right|,\left|\beta\right|>0$}.
+
+אם \L{$\left|\beta\right|=0$} אז \L{$\beta=0$} והפונקציה \L{$\beta g$}
+היא פונ' האפס לכן נותר להוכיח רק עבור \L{$\alpha f$}.
+
+במקרה זה אפשר להשתמש רק בחצי הראשון של ההוכחה שמניחה \L{$\left|\alpha\right|,\left|\beta\right|>0$}.
+
+אם שתיהן פונ' האפס אז הפונקציה \L{$\alpha f+\beta g$} קבועה ולכן
+רציפה במ\textquotedblright ש.
+
+נניח כי \L{$\left|\alpha\right|,\left|\beta\right|>0$}.
+
+אז \L{$\frac{\varepsilon}{2\left|\alpha\right|}>0$} וגם \L{$\frac{\varepsilon}{2\left|\beta\right|}>0$}.
+
+מכך ש-\L{$f$} ו-\L{$g$} רציפות במ\textquotedblright ש, קיימות \L{$\delta_{1},\delta_{2}>0$}
+כך ש-\L{%
+\[
+\forall x_{1},x_{2}\in D:\left|x_{1}-x_{2}\right|<\delta_{1}\Rightarrow\left|f\left(x_{1}\right)-f\left(x_{2}\right)\right|<\frac{\varepsilon}{2\left|\alpha\right|}
+\]
+}%
+\L{%
+\[
+\forall x_{1},x_{2}\in D:\left|x_{1}-x_{2}\right|<\delta_{2}\Rightarrow\left|g\left(x_{1}\right)-g\left(x_{2}\right)\right|<\frac{\varepsilon}{2\left|\beta\right|}
+\]
+}%
+
+מכאן\L{%
+\[
+\forall x_{1},x_{2}\in D:\left|x_{1}-x_{2}\right|<\delta_{1}\Rightarrow\left|\alpha\right|\left|f\left(x_{1}\right)-f\left(x_{2}\right)\right|<\frac{\varepsilon}{2}
+\]
+}%
+\L{%
+\[
+\forall x_{1},x_{2}\in D:\left|x_{1}-x_{2}\right|<\delta_{2}\Rightarrow\left|\beta\right|\left|g\left(x_{1}\right)-g\left(x_{2}\right)\right|<\frac{\varepsilon}{2}
+\]
+}%
+
+נבחר \L{$\delta=\min\left\{ \delta_{1},\delta_{2}\right\} $}.
+
+יהיו \L{$x_{1},x_{2}\in D$} כך ש- \L{$\left|x_{1}-x_{2}\right|<\delta$}.
+
+אז \L{%
+\[
+\left|\alpha\right|\left|f\left(x_{1}\right)-f\left(x_{2}\right)\right|+\left|\beta\right|\left|g\left(x_{1}\right)-g\left(x_{2}\right)\right|<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon
+\]
+}%
+
+כנדרש.
+
+)ב( יהי \L{$\varepsilon>0$}. הפונ' \L{$f$} רציפה במ\textquotedblright ש
+לכן \L{$\exists\delta>0$} עבורה לכל \L{$x_{1},x_{2}\in D$} מתקיים\L{%
+\[
+\left|x_{1}-x_{2}\right|<\delta\Rightarrow\left|f\left(x_{1}\right)-f\left(x_{2}\right)\right|<\varepsilon
+\]
+}%
+
+נניח כי \L{$\left|x_{1}-x_{2}\right|<\delta$}. אז לפי א\textquotedblright ש
+המשולש ההפוך\L{%
+\[
+\left|\left|f\left(x_{1}\right)\right|-\left|f\left(x_{2}\right)\right|\right|\le\left|f\left(x_{1}\right)-f\left(x_{2}\right)\right|<\varepsilon
+\]
+}%
+
+כנדרש.
+\end{sol*}
+
+\end{document}
