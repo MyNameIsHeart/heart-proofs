@@ -65,7 +65,8 @@
 
 \L{%
 \begin{align*}
-|f(x_{2})-f(x_{1})| & =|\sin(x_{2})-\sin(x_{1})|=\left|2\sin\left(\frac{x_{2}-x_{1}}{2}\right)\cos\left(\frac{x_{2}+x_{1}}{2}\right)\right|=2\left|\sin\left(\frac{x_{2}-x_{1}}{2}\right)\right|\left|\cos\left(\frac{x_{2}+x_{1}}{2}\right)\right|\\
+|f(x_{2})-f(x_{1})| & =|\sin(x_{2})-\sin(x_{1})|=\left|2\sin\left(\frac{x_{2}-x_{1}}{2}\right)\cos\left(\frac{x_{2}+x_{1}}{2}\right)\right|\\
+ & =2\left|\sin\left(\frac{x_{2}-x_{1}}{2}\right)\right|\left|\cos\left(\frac{x_{2}+x_{1}}{2}\right)\right|\\
  & \leqslant2\left|\sin\left(\frac{x_{2}-x_{1}}{2}\right)\right|\cdot1\leqslant2\left|\frac{x_{2}-x_{1}}{2}\right|=|x_{2}-x_{1}|<\delta=\varepsilon
 \end{align*}
 }%
@@ -103,8 +104,7 @@
 וכמובן ראינו שרציפות במידה שווה גוררת רציפות, לכן ליפשיציות גוררת
 רציפות.\\
 
-\textbf{הוכחה:}
-
+\begin{proof}
 יהי \L{$\varepsilon>0$}. נרצה למצוא \L{$\delta>0$} מתאים. נפריד
 למקרים.
 
@@ -130,15 +130,15 @@
 }%
 
 כנדרש.
-
-\hfill{}\L{$\square$}
-
+\end{proof}
 אנו למדים שאם שיפוע הפונקציה חסום אז היא רציפה במ\textquotedblright ש. 
 
 לכן, מבחינה אינטואיטיבית, כאשר שיפוע הפונקציה גדול כרצוננו נחשוד שהפונקציה
-אינה רציפה במ\textquotedblright ש. חשוב לציין שזה לא תמיד נכון ועל
-כן רציפות במ\textquotedblright ש היא לא אם\textquotedblright ם ליפשיציות...
-דוגמה נגדית היא \L{$\sqrt{x}:[0,1]\rightarrow\mathbb{R}$} .
+אינה רציפה במ\textquotedblright ש.
+
+חשוב לציין שזה לא תמיד נכון ועל כן רציפות במ\textquotedblright ש היא
+לא אם\textquotedblright ם ליפשיציות... דוגמה נגדית היא \L{$\sqrt{x}:[0,1]\rightarrow\mathbb{R}$}
+.
 \begin{center}
 \L{\includegraphics[scale=0.2]{sqrt-is-not-lipschitz}}
 \par\end{center}
