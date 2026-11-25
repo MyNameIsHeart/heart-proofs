@@ -429,6 +429,18 @@ def is_hebrew(tex: str) -> bool:
     return HEBREW_RE.search(tex) is not None
 
 
+LIST_START_RE = re.compile(r"(\\begin\{enumerate\})\[([^\]\n]*?)\bstart\s*=\s*(\d+)\s*,?\s*([^\]\n]*)\]")
+
+
+def list_starts(tex: str) -> str:
+    """\\begin{enumerate}[start=14], a numbered list that goes on after a figure or a remark, keeps its
+    numbers: pandoc drops the option but reads \\setcounter{enumi}{13}, so say it that way."""
+    def repl(m: re.Match) -> str:
+        rest = (m.group(2) + m.group(4)).strip().strip(",").strip()
+        return f"{m.group(1)}\\setcounter{{enumi}}{{{int(m.group(3)) - 1}}}" + (f"[{rest}]" if rest else "")
+    return LIST_START_RE.sub(repl, tex)
+
+
 def preprocess(tex: str) -> str:
 
     tex = re.sub(r"\\global\s*\\long\s*\\def", r"\\def", tex)
@@ -458,6 +470,7 @@ def preprocess(tex: str) -> str:
     tex = dewrapfig(tex)
     tex = unbox(tex)
     tex = margin_notes(tex)
+    tex = list_starts(tex)
     tex = keep_layout(tex)
     tex = bidi(tex)
     if is_hebrew(tex):
