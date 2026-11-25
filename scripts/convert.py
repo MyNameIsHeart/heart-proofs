@@ -441,8 +441,19 @@ def list_starts(tex: str) -> str:
     return LIST_START_RE.sub(repl, tex)
 
 
+OWN_HREF_RE = re.compile(r"^\\(?:provide|renew|new)command\*?\{\\href\}.*$", re.M)
+
+
+def own_links(tex: str) -> str:
+    """A Hebrew document cannot load hyperref (pdflatex stops on a link inside right-to-left text), so it
+    defines \\href itself in its preamble. Drop that definition here: pandoc already reads \\href as a link."""
+    head, sep, body = tex.partition("\\begin{document}")
+    return OWN_HREF_RE.sub("", head) + sep + body if sep else tex
+
+
 def preprocess(tex: str) -> str:
 
+    tex = own_links(tex)
     tex = re.sub(r"\\global\s*\\long\s*\\def", r"\\def", tex)
     tex = re.sub(r"\\global\s*\\def", r"\\def", tex)
     tex = re.sub(r"\\long\s*\\def", r"\\def", tex)
