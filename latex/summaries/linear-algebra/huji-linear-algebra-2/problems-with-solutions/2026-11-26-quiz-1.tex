@@ -1,0 +1,285 @@
+\documentclass[english,hebrew]{article}
+\usepackage[HE8,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{-2}
+\setlength{\parindent}{0bp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+\theoremstyle{definition}
+\newtheorem*{problem*}{\protect\problemname}
+\theoremstyle{definition}
+\newtheorem*{sol*}{\protect\solutionname}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\newcommand{\limi}{\underset{n\rightarrow\infty}{\lim}}
+\newcommand{\limxz}{\underset{x\rightarrow x_{0}}{\lim}}
+\newcommand{\limfxz}{\underset{x\rightarrow x_{0}}{\lim}f(x)}
+\newcommand{\limfxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}f(x)}
+\newcommand{\limfxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}f(x)}
+\newcommand{\limxm}{\underset{x\rightarrow x_{0}^{-}}{\lim}}
+\newcommand{\limxp}{\underset{x\rightarrow x_{0}^{+}}{\lim}}
+\newcommand{\sqrm}{M_{m\times m}(\mathbb{F})}
+\newcommand{\seqa}{(a_{n})_{n=1}^{\infty}}
+\newcommand{\seqx}{(x_{n})_{n=1}^{\infty}}
+\newcommand{\funcdr}{f:D\rightarrow\mathbb{R}}
+\newcommand{\der}{\limxz\frac{f(x)-f(x_{0})}{x-x_{0}}}
+\usepackage[all]{pdfprivacy}
+
+\makeatother
+
+\usepackage{babel}
+\addto\captionsenglish{\renewcommand{\problemname}{Problem}}
+\addto\captionsenglish{\renewcommand{\solutionname}{Solution}}
+\addto\captionshebrew{\renewcommand{\problemname}{בעיה}}
+\addto\captionshebrew{\renewcommand{\solutionname}{פתרון}}
+\providecommand{\problemname}{בעיה}
+\providecommand{\solutionname}{פתרון}
+
+\begin{document}
+\newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
+\title{סמסטר {\beginL 2027\endL}א, בוחן {\beginL 1\endL}}
+\date{{\beginL 30.10.2026\endL}}
+\maketitle
+\begin{abstract}
+בוחן {\beginL 1\endL} בקורס אלגברה לינארית 2, סמסטר תשפ”ז א’. השאלות
+נכתבו על ידי צוות הקורס באוניברסיטה העברית. הפתרון הוא שלי ולא רשמי.
+\end{abstract}
+\begin{problem*}
+נתונה מטריצה \L{$A$}: \L{%
+\[
+\begin{pmatrix}-1 & 0 & 2\\
+0 & 2 & 0\\
+-4 & 0 & 5
+\end{pmatrix}
+\]
+}%
+
+א. מצאו את הערכים עצמיים של \L{$A$}.
+
+ב. מצאו את הוקטורים העצמיים המתאימים לכל ערך עצמי.
+
+ג. הוכיחו כי מטריצה \L{$A$} לכסינה, מצאו מטריצה הפיכה \L{$Q$} ומטריצה
+אלכסונית \L{$D$} כך ש-\L{$A=QDQ^{-1}$}.
+
+ד. הגדירו מושג: \textquotedblright תת-מרחב שמור של אופרטור לינארי\textquotedblright .
+\end{problem*}
+\begin{sol*}
+א. נבדוק מתי הפולינום האופייני של המטריצה מתאפס.\L{%
+\[
+\det\left(\lambda I-A\right)=0
+\]
+}%
+\L{%
+\[
+\iff\det\left(\begin{array}{ccc}
+\lambda+1 & 0 & -2\\
+0 & \lambda-2 & 0\\
+4 & 0 & \lambda-5
+\end{array}\right)=0
+\]
+}%
+\L{%
+\[
+\iff\begin{vmatrix}\lambda+1 & 0 & -2\\
+0 & \lambda-2 & 0\\
+4 & 0 & \lambda-5
+\end{vmatrix}=0
+\]
+}%
+\L{%
+\[
+\iff\left(\lambda+1\right)\cdot\begin{vmatrix}\lambda-2 & 0\\
+0 & \lambda-5
+\end{vmatrix}+\left(-2\right)\cdot\begin{vmatrix}0 & \lambda-2\\
+4 & 0
+\end{vmatrix}=0
+\]
+}%
+\L{%
+\[
+\iff\left(\lambda+1\right)\left(\lambda-2\right)\left(\lambda-5\right)+8\left(\lambda-2\right)=0
+\]
+}%
+\L{%
+\[
+\iff\left(\lambda-2\right)\left(\left(\lambda+1\right)\left(\lambda-5\right)+8\right)=0
+\]
+}%
+\L{%
+\[
+\iff\left(\lambda-2\right)\left(\lambda^{2}-4\lambda+3\right)=0
+\]
+}%
+\L{%
+\[
+\iff\left(\lambda-2\right)\left(\lambda-3\right)\left(\lambda-1\right)=0
+\]
+}%
+
+ולפי המשפט על אפיון ערכים עצמיים באמצעות הפולינום האופייני נקבל שהערכים
+העצמיים הם \L{$2,3,1$}.
+
+ב. אנו יודעים שעבור וקטור עצמי \L{$v_{\lambda}$} של ערך עצמי \L{$\lambda$}
+מתקיים \L{$A\cdot v_{\lambda}=\lambda I\cdot v_{\lambda}$}, כלומר
+\L{$\left(\lambda I-A\right)v_{\lambda}=0$}.
+
+נציב כל אחד מהערכים העצמיים, נציג וקטור כללי ונקבל בסיס לתמ\textquotedblright ו
+שמשרה כל ערך עצמי.
+
+\L{$\lambda=1$}:\L{%
+\[
+\begin{pmatrix}2 & 0 & -2\\
+0 & -1 & 0\\
+4 & 0 & -4
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\iff\begin{cases}
+2x-2z & =0\\
+-y & =0\\
+4x-4z & =0
+\end{cases}
+\]
+}%
+\L{%
+\[
+\iff x=z,\quad y=0
+\]
+}%
+
+נציב \L{$x=1$} ונקבל\L{%
+\[
+E_{\lambda=1}=\text{Span}\begin{pmatrix}1\\
+0\\
+1
+\end{pmatrix}
+\]
+}%
+
+כאשר הוקטורים העצמיים של \L{$\lambda=1$} הם \L{$v\in E_{\lambda=1}\setminus\left\{ 0_{V}\right\} $}.
+
+\L{$\lambda=3$}:\L{%
+\[
+\begin{pmatrix}4 & 0 & -2\\
+0 & 1 & 0\\
+4 & 0 & -2
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\iff\begin{cases}
+4x-2z & =0\\
+y & =0\\
+4x-2z & =0
+\end{cases}
+\]
+}%
+\L{%
+\[
+\iff2x=z,\quad y=0
+\]
+}%
+
+נציב \L{$x=1$} ונקבל\L{%
+\[
+E_{\lambda=3}=\text{Span}\begin{pmatrix}1\\
+0\\
+2
+\end{pmatrix}
+\]
+}%
+
+כאשר הוקטורים העצמיים של \L{$\lambda=3$} הם \L{$v\in E_{\lambda=3}\setminus\left\{ 0_{V}\right\} $}.
+
+\L{$\lambda=2$}:\L{%
+\[
+\begin{pmatrix}3 & 0 & -2\\
+0 & 0 & 0\\
+4 & 0 & -3
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}0\\
+0\\
+0
+\end{pmatrix}
+\]
+}%
+\L{%
+\[
+\iff\begin{cases}
+3x-2z & =0\\
+4x-3z & =0
+\end{cases}
+\]
+}%
+\L{%
+\[
+\iff x=z=0
+\]
+}%
+
+נציב \L{$y=1$} ונקבל\L{%
+\[
+E_{\lambda=2}=\text{Span}\begin{pmatrix}0\\
+1\\
+0
+\end{pmatrix}
+\]
+}%
+
+כאשר הוקטורים העצמיים של \L{$\lambda=2$} הם \L{$v\in E_{\lambda=2}\setminus\left\{ 0_{V}\right\} $}.
+
+ג. הראינו שיש ל-\L{$A$} שלושה ערכים עצמיים שונים ומתקיים \L{$\dim\left(\mathbb{F}^{3}\right)=3$},
+לכן לפי המשפט שאומר שאם לאופרטור על מ\textquotedblright ו ממימד \L{$n$}
+יש \L{$n$} ערכים עצמיים שונים, האופרטור לכסין, נקבל שהמטריצה \L{$A$}
+היא לכסינה. 
+
+לפי אותו משפט והאלגוריתם שלמדנו, \L{$A$} היא לכסינה כאשר המטריצה
+האלכסונית הדומה לה היא המטריצה עם הערכים העצמיים על האלכסון:\L{%
+\[
+D=\begin{pmatrix}1 & 0 & 0\\
+0 & 3 & 0\\
+0 & 0 & 2
+\end{pmatrix}
+\]
+}%
+ ומטריצת מעבר בסיס היא מטריצה שעמודותיה הן וקטורים שפורשים את התמ\textquotedblright וים
+שמשרים הערכים העצמיים בהתאמה\L{%
+\[
+Q=\begin{pmatrix}1 & 1 & 0\\
+0 & 0 & 1\\
+1 & 2 & 0
+\end{pmatrix}
+\]
+}%
+
+ד. יהיו \L{$V$} מ\textquotedblright ו, \L{$T\in\mathcal{L}\left(V\right)$}.
+אז \L{$U\subseteq V$} תמ\textquotedblright ו שמור תחת \L{$T$} אם\L{%
+\[
+\forall u\in U:T\left(u\right)\in U
+\]
+}%
+\end{sol*}
+
+\end{document}
