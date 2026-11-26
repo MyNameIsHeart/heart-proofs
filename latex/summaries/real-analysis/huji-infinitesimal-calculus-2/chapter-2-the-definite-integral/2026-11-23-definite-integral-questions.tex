@@ -6,6 +6,8 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
 
 \makeatletter
 \theoremstyle{plain}
@@ -47,7 +49,7 @@
 
 \begin{document}
 \newgeometry{top=1cm, bottom=2cm, left=1cm, right=1cm}
-\title{לקט שאלות - האינטגרל המסוים ורציפות במ\textquotedblright ש}
+\title{לקט שאלות - האינטגרל המסוים}
 \author{נעם לב}
 \maketitle
 \begin{abstract}
@@ -56,10 +58,13 @@
 \end{abstract}
 \medskip{}
 
+\tableofcontents{}
+
 \newpage{}
 \begin{xca}
-)שאלה מתרגול פעיל( תהי \L{$f:[0,1]\to\mathbb{R}$} פונקציה רציפה כך
-ש-\L{$\int_{0}^{1}f(x)dx=0$}. 
+)שאלה מתרגול פעיל(
+
+תהי \L{$f:[0,1]\to\mathbb{R}$} פונקציה רציפה כך ש-\L{$\int_{0}^{1}f(x)dx=0$}. 
 
 הוכיחו שקיים \L{$c\in[0,1]$} כך ש-\L{$f(c)=0$}. 
 \end{xca}
@@ -128,7 +133,9 @@ m_{i}\left(x_{i}-x_{i-1}\right)>0
 \L{$f\left(c\right)=0$} כנדרש.
 \end{sol*}
 \begin{xca}
-)שאלה מתרגול פעיל( בכל סעיף נתונה \L{$f:[0,6]\to\mathbb{R}$}.
+)שאלה מתרגול פעיל(
+
+בכל סעיף נתונה \L{$f:[0,6]\to\mathbb{R}$}.
 
 וודאו ש-\L{$f$} אינטגרבילית ב-\L{$[0,6]$} וקבלו ביטוי מפורש )ללא
 סימן האינטגרל( לפונקציה \L{$\tilde{F}:[0,6]\to\mathbb{R}$} המוגדרת
@@ -182,8 +189,11 @@ m_{i}\left(x_{i}-x_{i-1}\right)>0
 היא גזירה בכל התחום )עם גזירה חד-צדדית בקצוות( ונגזרתה שווה לאפס.
 \end{sol*}
 \begin{xca}
-)שאלה מתרגול פעיל( יהיו \L{$a,b\in\mathbb{R}$} כך ש- \L{$a<b$} ו-\L{$f,g:[a,b]\to\mathbb{R}$}
+)שאלה מתרגול פעיל(
+
+יהיו \L{$a,b\in\mathbb{R}$} כך ש- \L{$a<b$} ו-\L{$f,g:[a,b]\to\mathbb{R}$}
 פונקציות חסומות המקיימות \L{$f(x)\le g(x)$} לכל \L{$x\in[a,b]$}.
+
 הוכיחו או הפריכו:
 
 )א( \L{%
@@ -360,8 +370,12 @@ I_{f}\le U\left(f,P'\right)
 }%
 \end{sol*}
 \begin{xca}
-)שאלה מתרגול פעיל( יהיו \L{$\alpha,\beta\in\mathbb{R}$} ויהי \L{$D\subseteq\mathbb{R}$}
-מקטע. הפריכו או הוכיחו את הטענות הבאות:
+)שאלה מתרגול פעיל(
+
+יהיו \L{$\alpha,\beta\in\mathbb{R}$} ויהי \L{$D\subseteq\mathbb{R}$}
+מקטע.
+
+הפריכו או הוכיחו את הטענות הבאות:
 
 )א( אם הפונקציות \L{$f$} ו-\L{$g$} רציפות במידה שווה ב-\L{$D$},
 אז הפונקציה \L{$\alpha f+\beta g$} רציפה במידה שווה ב-\L{$D$}.
@@ -468,5 +482,100 @@ I_{f}\le U\left(f,P'\right)
 
 כנדרש.
 \end{sol*}
+\begin{xca}
+תהא \L{$f:\left[a,b\right]\rightarrow\mathbb{R}$} פונקציה מונוטונית. 
+
+הוכיחו כי \L{$f$} אינטגרבילית לפי רימן.
+\end{xca}
+
+\begin{proof}
+כרגע לא בעמוד.
+\end{proof}
+\begin{xca}
+תהא \L{$f:\left[a,b\right]\rightarrow\mathbb{R}$} פונקציה רציפה. 
+
+הוכיחו כי \L{$f$} אינטגרבילית לפי רימן.
+\end{xca}
+
+\begin{proof}
+כרגע לא בעמוד.
+\end{proof}
+\begin{xca}
+)שאלה מתרגול פעיל(
+
+)א( חשבו את האינטגרל \L{$\int_{0}^{\pi}\sin^{2}(x)dx$} בשתי דרכים:
+
+)i( ישירות, באמצעות הזהות \L{$\cos(2x)=\cos^{2}(x)-\sin^{2}(x)=1-2\sin^{2}(x)$}.
+
+)ii( באמצעות אינטגרציה בחלקים ושימוש בזהות \L{$\cos^{2}(x)+\sin^{2}(x)=1$}.
+
+)ב( מהו הערך הממוצע של \L{$f(x)=\sin^{2}(x)$} בקטע \L{$[-\pi,\pi]$}? 
+\end{xca}
+
+\begin{sol*}
+כרגע לא בעמוד.
+\end{sol*}
+\begin{xca}
+)שאלה מתרגול פעיל(
+
+יהיו \L{$a,b\in\mathbb{R}$} כך ש- \L{$a<b$} ותהי \L{$f:[a,b]\to\mathbb{R}$}
+פונקציה רציפה.
+
+נתון כי \L{$\int_{a}^{b}f(x)g(x)dx=0$} עבור כל פונקציה אינטגרבילית
+\L{$g:[a,b]\to\mathbb{R}$}.
+
+הוכיחו כי \L{$f(x)=0$} לכל \L{$x\in[a,b]$}.
+\end{xca}
+
+\begin{proof}
+כרגע לא בעמוד.
+\end{proof}
+\begin{xca}
+)שאלה מתרגול פעיל(
+
+)א( הוכיחו \textbackslash{} הפריכו: אם \L{$f:[1,\infty)\to\mathbb{R}$}
+אינטגרבילית ב-\L{$[a,b]$} עבור \uline{כל} \L{$a,b\in\mathbb{R}$}
+המקיימים \L{$1\leq a<b$}, אזי \L{$f$} חסומה.
+
+)ב( הוכיחו \textbackslash{} הפריכו: אם \L{$f$} ו-\L{$g$} רציפות
+במידה שווה ב-\L{$\mathbb{R}$}, אז גם פונקציית ההרכבה \L{$g\circ f$}
+רציפה במידה שווה ב-\L{$\mathbb{R}$}.
+
+)ג( הוכיחו \textbackslash{} הפריכו: אם \L{$f$} פונקציה חיובית )דהיינו
+\L{$0<f(x)$} לכל \L{$x$} בקטע \L{$[a,b]$}(, אז \L{$\ln(f)$} אינטגרבילית
+בקטע \L{$[a,b]$}. 
+\end{xca}
+
+\begin{sol*}
+כרגע לא בעמוד.
+\end{sol*}
+\begin{xca}
+)שאלה מתרגול פעיל(
+
+חשבו את ערכו של הגבול \L{%
+\[
+\lim_{x\to1}\frac{\int_{1}^{x}e^{t^{2}}dt}{\sin(x-1)}
+\]
+}%
+)אל תנסו למצוא ביטוי מפורש ללא סימן האינטגרל עבור המונה(
+\end{xca}
+
+\begin{sol*}
+כרגע לא בעמוד.
+\end{sol*}
+\begin{xca}
+הוכיחו את המשפט היסודי של החדו\textquotedblright א.
+\end{xca}
+
+\begin{proof}
+כרגע לא בעמוד.
+\end{proof}
+\begin{xca}
+הוכיחו כי פונקציית רימן רציפה בכל נקודה אי-רציונלית.
+\end{xca}
+
+\begin{proof}
+כרגע לא בעמוד.
+\end{proof}
 
 \end{document}
